@@ -1,0 +1,49 @@
+#summary General and specific information on the Jaguars
+#labels Jaguar
+
+= Jaguar Info =
+http://www.ti.com/lit/ug/spmu131b/spmu131b.pdf
+
+Pages 9-10
+
+Status LED:
+||*LED State*||*Module Status*||
+||*Normal Operating Conditions*||
+||Solid Yellow Neutral||(speed set to 0)||
+||Fast Flashing||Green Forward||
+||Fast Flashing||Red Reverse||
+||Solid Green||Full-speed forward||
+||Solid Red||Full-speed reverse||
+||*Fault Conditions*||
+||Slow Flashing Yellow||Loss of servo or Network link||
+||Fast Flashing Yellow||Invalid CAN ID||
+||Slow Flashing Red||Voltage, Temperature, or Limit Switch fault condition||
+||Slow Flashing Red and Yellow||Current fault condition||
+||*Calibration Conditions*||
+||Fast Flashing Red and Green||Calibration mode active||
+||Fast Flashing Red and Yellow||Calibration mode failure||
+||Slow Flashing Green and Yellow||Calibration mode success||
+||Slow Flashing Red and Green||Calibration mode reset to factorydefault settings success||
+||*Other Conditions*||
+||Slow Flashing Green||Waiting in CAN Assignment mode||
+
+
+=New Jaguar Setup=
+ #1 Go to Web IP for 2CAN ( 10.39.58.10 )after you connect to the robot.
+ #2 Click Diagnostics
+ #3 Click Main
+ #4 New Jaguar should come up as one
+ #5 Set the ID, NOTYPE =JAG,
+ #6 Press Set with paperclip on Jaguar.
+ #7 Go to load update to check for firmware update.
+ #8 DO NOT EVER ANY CIRCUMSTANCES EVER EVER USE THE WEBSITE TO UPDATE THE FIRMWARE!!!!!!!!!!!
+
+=New Jaguar Firmware=
+ #1 Put Serial (Special)Cable into  serial port (10101) and plug other end into usb port on laptop.
+ #2 Turn on Jaguar Power (robot)
+ #3 Start the BDC Comm
+ #4 Click enumerate and wait, there should be a pop-up
+ #5 File -> Update Firmware
+ #6 Go to: users/students/downloads/ and select right type of firmware for the Jaguar.
+ #7 Update wait for status bar to complete (don't turn off the robot or the laptop.)
+ #8 Turn it off and you are DONE Updating!!!!!!!!!!!!!!!!!!
