@@ -1,0 +1,57 @@
+#summary This page has various links that may (or may not) be of use.
+#labels Links,General,Info
+
+= Introduction =
+
+Use this page as a place to put useful software links
+
+*Team Calendar*
+ *We should get a google calendar set up*
+
+= LEARNING JAVA =
+  * http://docs.oracle.com/javase/tutorial/
+  * http://firstforge.wpi.edu/sf/wiki/do/viewPage/projects.wpilib/wiki/LearningJava
+  * http://netbeans.org/kb/articles/learn-java.html
+
+== Using Java ==
+  * http://docs.oracle.com/javase/1.5.0/docs/api/
+  * http://java.sun.com/docs/books/jls/
+  * http://java.sun.com/reference/api/
+  * http://www.wbrobotics.com/javadoc/overview-summary.html *Robot API Javadoc*
+
+== NetBeans ==
+http://netbeans.org/kb/index.html
+
+= Other Links =
+*Chief Delphi*
+ http://www.chiefdelphi.com/forums/portal.php
+
+*WPI First Resources* 
+  * http://first.wpi.edu/ 
+  * http://thinktank.wpi.edu/Portal
+  * http://first.wpi.edu/FRC/frcjava.html
+  * http://firstforge.wpi.edu/
+
+*First Forge Dashboard Extension*
+ http://firstforge.wpi.edu/sf/wiki/do/viewPage/projects.smartdashboard/wiki/Extensions
+
+*Subversion Manual*
+ http://svnbook.red-bean.com/
+
+*Game Animation*
+ http://www.youtube.com/watch?v=nOXsdhZZSdM&list=UUHA7zyPRS3VPDvl4ehss-zw&index=1&feature=plcp
+
+
+*2012 Kit of Parts* 
+ http://www.usfirst.org/roboticsprograms/frc/2012-kit-of-parts-technical-resources
+
+ http://www.ni.com/pdf/manuals/374639e.pdf - *cRIO Manual*
+  
+*2012 Software Updates* 
+ http://chiefdelphi.com/forums/showthread.php?p=1097454
+
+*2012 Java & C++ Doc*
+ http://firstforge.wpi.edu/sf/docman/do/listDocuments/projects.wpilib/docman.root.c_and_java_documentation
+
+3958 Google Code Wiki
+http://code.google.com/p/schrodingers-cat/w/list
