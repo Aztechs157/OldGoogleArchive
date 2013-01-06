@@ -6,7 +6,11 @@
 Use this page as a place to put useful software links
 
 *Team Calendar*
- *We should get a google calendar set up*
+https://www.google.com/calendar/embed?src=92tbm1mdutb6d8mmf33811t78k%40group.calendar.google.com&ctz=America/New_York 
+
+= 2013 Software Links =
+http://wpilib.screenstepslive.com/s/3120/m/8559
+http://wpilib.screenstepslive.com/s/3120/m/8559/l/88414-2013-frc-software-component-overview
 
 = LEARNING JAVA =
   * http://docs.oracle.com/javase/tutorial/
