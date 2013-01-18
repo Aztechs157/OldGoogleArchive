@@ -32,6 +32,7 @@ public class TestRobot extends IterativeRobot {
      */
     public void robotInit() {
         // instantiate the command used for the autonomous period
+        System.out.println("I AM A SECOND ROBOT hehehehe...");
         autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
@@ -56,6 +57,7 @@ public class TestRobot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+                // useless comment
     }
 
     /**
