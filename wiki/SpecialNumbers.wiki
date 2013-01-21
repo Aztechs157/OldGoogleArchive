@@ -4,6 +4,7 @@
 This is a list of the IP address in use for the Robot
   * cRIO 10.1.57.2
   * 2CAN 10.1.57.10
+  * Axis Camera 10.1.57.11
   * Router 10.1.57.1
   * OFFICIAL Driver Station 10.1.57.5 (wired interface)
   * OFFICIAL Driver Station 10.1.57.9 (wireless interface)
