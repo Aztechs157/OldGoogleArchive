@@ -160,17 +160,6 @@ public class OI {
     m_setFirst_LeftStickButton.whenReleased(new PrintMessage("Button <m_setFirst_LeftStickButton> released\n"));
     m_setFirst_RightStickButton.whenReleased(new PrintMessage("Button <m_setFirst_RightStickButton> released\n"));
     
-    // Recenter all the axis (assumes they are being left alone at start...)
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisGameX.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisGameY.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisLeftX.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisLeftY.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisRightX.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisRightY.value);
-    m_FirstGamePad.recenter(LogitechController.AxisType.kAxisTriggers.value);
-    
-    
-    
     }
     
     public LogitechController getFirstController()
