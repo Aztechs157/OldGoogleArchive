@@ -26,11 +26,12 @@ public class ManualDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double x = Robot.oi.getFirstController().getLeftX();
-        double y = Robot.oi.getFirstController().getGameY();
-        double rotation = Robot.oi.getFirstController().getTriggers();
+        double rotation = -Robot.oi.getFirstController().getLeftX();
+        double y = -Robot.oi.getFirstController().getGameY();
+        double x = -Robot.oi.getFirstController().getTriggers();
         double gyroAngle = 0;
        
+//        RobotMap.driveMechanumDrive.mecanumDrive_Cartesian( rotation, 0, 0, 0);
         RobotMap.driveMechanumDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
         System.out.println("X= " + x + " Y= " + y + " 0= " + rotation);
     }
