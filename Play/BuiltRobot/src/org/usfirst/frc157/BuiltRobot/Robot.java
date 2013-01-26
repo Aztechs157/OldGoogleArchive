@@ -72,6 +72,16 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
     }
     public void teleopInit() {
+        
+        // Recenter all the axis (assumes they are being left alone at start of teleop...)
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisTriggers.value);
+
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
