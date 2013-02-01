@@ -124,18 +124,21 @@ public class VisionSampleProject2013 extends SimpleRobot {
                     scores[i].yEdge = scoreYEdge(thresholdImage, report);
                     scores[i].onEdge = isTouchingEdge(report);
 
+                    boolean goalFound = false;     
+                    
                     if(scoreCompare(scores[i], HIGH_GOAL)) // High Goal
                     {
                         System.out.println("particle: " + i + "is a === High Goal === Strength: " + scores[i].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
 //			System.out.println("Distance: " + computeDistance(thresholdImage, report, i, false));
-
+                        goalFound = true; 
 
                     }
                     else if (scoreCompare(scores[i], MIDDLE_GOAL)) // Mid Goal 
                     {
-			System.out.println("particle: " + i + "is a === Middle Goal === Strength: " + scores[i].middleGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-//			System.out.println("Distance: " + computeDistance(thresholdImage, report, i, true));
+                        System.out.println("particle: " + i + "is a === Middle Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
 
+                         goalFound = true; 
+			
                     }
                     else if (scoreCompare(scores[i], LOW_GOAL)) // Mid Goal 
                     {
@@ -143,13 +146,25 @@ public class VisionSampleProject2013 extends SimpleRobot {
 //			System.out.println("Distance: " + computeDistance(thresholdImage, report, i, true));
 //                        System.out.println("----------------------------------------------- L: " + report.boundingRectLeft + " R: " + (report.boundingRectLeft + report.boundingRectWidth));
 //                        System.out.println("||||||||||||||||||||||||||||||||||||||||||||||| T: " + report.boundingRectTop  + " B: " + (report.boundingRectTop  + report.boundingRectHeight)); 
-
+                         goalFound = true; 
                     }
                     else
                     {
                         System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                     }
-
+                    
+                    if (goalFound) { 
+                       //			System.out.println("Distance: " + computeDistance(thresholdImage, report, i, true));
+                        double yMinDeg = -24.0;
+                        double yMaxDeg = +24.0;
+                        double xMinDeg = -24.0;
+                        double xMaxDeg = +24.0;
+                        // get target normalized within image
+//                        double tiltDeltaAngleDeg = report.center_mass_y_normalized * tiltCameraConv + tiltCameraMin;
+                        double xDeltaDeg = (double)(report.center_mass_x_normalized + 1) / 2.0 * (xMaxDeg - xMinDeg) + xMinDeg;
+                        double yDeltaDeg = (double)(-report.center_mass_y_normalized + 1) / 2.0 * (yMaxDeg - yMinDeg) + yMinDeg;
+                        System.out.println("tilt: delta= *****************************************************************************x=" + xDeltaDeg + ",y="+yDeltaDeg);
+                    }
 //                    int centeredX = report.center_mass_x - (320 / 2);
 //                    int centeredY = report.center_mass_y - (240 / 2);
 //                    double azimuth = (VIEW_ANGLE / 320.0) * (double) centeredY;
