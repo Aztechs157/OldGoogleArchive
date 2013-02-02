@@ -15,7 +15,7 @@ public class Potentiometer extends AnalogChannel implements PIDSource {
     private int min_, max_, range_;
     private double minAngle_, maxAngle_, rangeAngle_;
 
-    public Potentiometer(int channel, int min, int max, float minAngle, float maxAngle)
+    public Potentiometer(int channel, int min, int max, double minAngle, double maxAngle)
     {
         super(channel);
 	setRange(min, max);
@@ -79,7 +79,7 @@ public class Potentiometer extends AnalogChannel implements PIDSource {
 	range_ = max - min;
     }
 
-    public final void setRangeAngle(float min, float max)
+    public final void setRangeAngle(double min, double max)
     {
 	minAngle_ = min;
 	maxAngle_ = max;
