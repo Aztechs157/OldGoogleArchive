@@ -1,6 +1,7 @@
 
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -11,15 +12,17 @@ import edu.wpi.first.wpilibj.Victor;
 public class VisionSampleProject2013 extends SimpleRobot {
 
     VisionThread vision_;
-    Potentiometer yAngle_;
-    Victor yMotor_;
-    PIDController yPid_;
+    Jaguar yMotor_;
+    MotorControlAssembly yControl_;
  
     public void robotInit() {
         System.out.println("robotInit() ================================================================================");
-        yAngle_ = new Potentiometer(2,0,1024,-135,135);
-        yMotor_ = new Victor(1);
-        yPid_ = new PIDController(1,0,0,yAngle_,yMotor_);
+        yMotor_ = new Jaguar(1);
+
+        yControl_ = new MotorControlAssembly(yMotor_, 2);
+        yControl_.setRange(300, 900,0,45);
+        yControl_.setInvertedMotor(false);
+
         vision_ = new VisionThread();
         vision_.start();
     }
@@ -29,19 +32,12 @@ public class VisionSampleProject2013 extends SimpleRobot {
             vision_.enable();
             if(vision_.goalFound())
             {
-                System.out.println("pot = "+yAngle_.getAngle()+", vision = "+vision_.getYError());
-                yMotor_.set(vision_.getYError() / 28.0);
-//                    yPid_.setSetpoint(yAngle_.getAngle() + vision_.getYAngle());
- //                   if(!yPid_.isEnable())
- //                   {
- //                       yPid_.enable();
- //                   }
+                System.out.println("angle = "+yControl_.getAngle()+", vision = "+vision_.getYError());
+                yControl_.runFromInput(vision_.getYError()/28.0);
             }
             else
             {
-//                    yPid_.disable();
-                yMotor_.set(0.0);
-                System.out.println("Cannot see goal!");
+                yControl_.runFromInput(0);
             }
         }
         System.out.println("Out of loop... Finished");
