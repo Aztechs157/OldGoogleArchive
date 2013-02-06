@@ -1,0 +1,6 @@
+MIDlet-Name: TestRobot
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: FIRST
+MIDlet-1: TestRobot, , edu.wpi.first.wpilibj.templates.TestRobot
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1
