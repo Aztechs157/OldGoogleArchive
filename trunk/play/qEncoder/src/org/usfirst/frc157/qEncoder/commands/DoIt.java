@@ -41,11 +41,11 @@ public class  DoIt extends Command {
         if(delta == 0){
             theValue = 0;
         }
+        Robot.encJag.setSpeed(theValue);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.encJag.setSpeed(theValue);
     }
 
     // Make this return true when this Command no longer needs to run execute()
