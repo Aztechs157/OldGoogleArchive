@@ -74,7 +74,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     AxisCamera camera_;          // the axis camera object (connected to the switch)
     CriteriaCollection cc_;      // the criteria for doing the particle filter operation
 
-    boolean goalFound_;
+    int goalFound_;
+    double xDeltaNorm_;
+    double yDeltaNorm_;
     double xDeltaDeg_;
     double yDeltaDeg_;
     
@@ -84,10 +86,13 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     final double yMaxDeg_ = +24.0;
     final double xMinDeg_ = -24.0;
     final double xMaxDeg_ = +24.0;
-
-    private static final int HIGH_GOAL = 0;
-    private static final int MIDDLE_GOAL = 1;
-    private static final int LOW_GOAL = 2;
+    
+//    public enum GoalType { GOAL__NONE, GOAL__HIGH, GOAL__MIDDLE, GOAL__LOW }
+    
+    public static final int GOAL__NONE = 0;
+    public static final int GOAL__HIGH = 1;
+    public static final int GOAL__MIDDLE = 2;
+    public static final int GOAL__LOW = 3;
     
     public class Scores {
         double rectangularity;
@@ -111,24 +116,37 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         cc_ = new CriteriaCollection();      // create the criteria for the particle filter
         cc_.addCriteria(NIVision.MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
 
-        goalFound_ = false;
+
+        goalFound_ = GOAL__NONE;
+        xDeltaNorm_ = 0.0;
+        yDeltaNorm_ = 0.0;
         xDeltaDeg_ = 0.0;
         yDeltaDeg_ = 0.0;
-    
+
         enabled_ = false;
     }
     
-    public boolean goalFound()
+    public int goalFound()
     {
         return goalFound_;
     }
     
-    public double getXError()
+    public double getXErrorNorm()
+    {
+        return xDeltaNorm_;
+    }
+    
+    public double getYErrorNorm()
+    {
+        return yDeltaNorm_;
+    }
+    
+    public double getXErrorDeg()
     {
         return xDeltaDeg_;
     }
     
-    public double getYError()
+    public double getYErrorDeg()
     {
         return yDeltaDeg_;
     }
@@ -141,7 +159,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     public void disable()
     {
         enabled_ = false;
-        goalFound_ = false;
+        goalFound_ = GOAL__NONE;
     }
     
     public void run()
@@ -164,9 +182,11 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 
         while(true)
         {
+            
             if(enabled_)
             {
                 try{
+//                    System.out.println("Processing new image.");
                     ColorImage image;
                     image = camera_.getImage();     // comment if using stored images
 
@@ -182,93 +202,77 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 
                     //iterate through each particle and score to see if it is a target
                     Scores scores[] = new Scores[filteredImage.getNumberParticles()];
+                    double lowestDist = 10.0; 
                     int closestTargetIdx = 0; 
-                    double lowestDist = 10; 
-                    boolean goalFound = false; 
+                    int closestGoalType = GOAL__NONE;
+                    int goalFound = GOAL__NONE; 
                     if(scores.length>0)
                     {
+//                        System.out.println("Scoring "+scores.length+" particles");
                         for (int i = 0; i < scores.length; i++) {
                             ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
                             scores[i] = new Scores();
                     
                             scores[i].rectangularity = scoreRectangularity(report);
-                            scores[i].middleGoalAspectRatio = scoreAspectRatio(filteredImage,report, i, MIDDLE_GOAL);
-                            scores[i].highGoalAspectRatio = scoreAspectRatio(filteredImage, report, i, HIGH_GOAL);
-                            scores[i].lowGoalAspectRatio = scoreAspectRatio(filteredImage, report, i, LOW_GOAL);
+                            scores[i].middleGoalAspectRatio = scoreAspectRatio(filteredImage,report, i, GOAL__MIDDLE);
+                            scores[i].highGoalAspectRatio = scoreAspectRatio(filteredImage, report, i, GOAL__HIGH);
+                            scores[i].lowGoalAspectRatio = scoreAspectRatio(filteredImage, report, i, GOAL__LOW);
                             scores[i].xEdge = scoreXEdge(thresholdImage, report);
                             scores[i].yEdge = scoreYEdge(thresholdImage, report);
                             scores[i].onEdge = isTouchingEdge(report); 
                     
-                            if(scoreCompare(scores[i], HIGH_GOAL)) // High Goal
+                            if(scoreCompare(scores[i], GOAL__HIGH)) // High Goal
                             {
-                                System.out.println("particle: " + i + "is a === High Goal === Strength: " + scores[i].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-    //			System.out.println("Distance: " + computeDistance(thresholdImage, report, i, false));
-                                goalFound = true;
- 
+  //                              System.out.println("particle: " + i + "is a === High Goal === Strength: " + scores[i].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                                goalFound = GOAL__HIGH; 
                             }
-                            else if (scoreCompare(scores[i], MIDDLE_GOAL)) // Mid Goal 
+                            else if (scoreCompare(scores[i], GOAL__MIDDLE)) // Mid Goal 
                             {
-                                System.out.println("particle: " + i + "is a === Middle Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                                goalFound = true; 
+ //                               System.out.println("particle: " + i + "is a === Middle Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                                goalFound = GOAL__MIDDLE; 
                             }
-                            else if (scoreCompare(scores[i], LOW_GOAL)) // Mid Goal 
+                            else if (scoreCompare(scores[i], GOAL__LOW)) // Mid Goal 
                             {
-                                System.out.println("particle: " + i + "is a === Low Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-//                  	System.out.println("Distance: " + computeDistance(thresholdImage, report, i, true));
-//                        System.out.println("----------------------------------------------- L: " + report.boundingRectLeft + " R: " + (report.boundingRectLeft + report.boundingRectWidth));
-//                        System.out.println("||||||||||||||||||||||||||||||||||||||||||||||| T: " + report.boundingRectTop  + " B: " + (report.boundingRectTop  + report.boundingRectHeight)); 
-                                 goalFound = true; 
-                            }
-                            else
-                            {
-
-                                
-                                //                        System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+//                                System.out.println("particle: " + i + "is a === Low Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                                goalFound = GOAL__LOW; 
                             }
                     
-                            if (goalFound) { 
-                                
+                            if (goalFound != GOAL__NONE) { 
+//                                System.out.println("Particle "+i+" is a goal.");
                                 if ( Math.abs(report.center_mass_x_normalized) < lowestDist) { 
-                        
+//                                    System.out.println("  particle "+i+" is closer than "+closestTargetIdx+" @ "+lowestDist);
+//                                    System.out.println("Replacing "+lowestDist+" with "+Math.abs(report.center_mass_x_normalized));
+                                    closestGoalType = goalFound;
                                     closestTargetIdx = i; 
                                     lowestDist = Math.abs(report.center_mass_x_normalized); 
+//                                    System.out.println("  new lowest is "+lowestDist);
                                 }  
-                                
                                 
                                 // get target normalized within image
                                                       
                             }
                             
-                    
-
-//                    int centeredX = report.center_mass_x - (320 / 2);
-//                    int centeredY = report.center_mass_y - (240 / 2);
-//                    double azimuth = (VIEW_ANGLE / 320.0) * (double) centeredY;
-//                    double elevation = ((VIEW_ANGLE * (3.0 / 4.0)) / 240.0) * (double) centeredX;
-//                    System.out.println("P[" + i + "] " + centeredX + "-" + centeredY + " Az, El, Range = " + azimuth + ", " + elevation + ", " + range);
-
-//                    System.out.println("rect: " + scores[i].rectangularity + "ARinner: " + scores[i].highGoalAspectRatio);
-//                    System.out.println("ARouter: " + scores[i].middleGoalAspectRatio + "xEdge: " + scores[i].xEdge + "yEdge: " + scores[i].yEdge);	
-//
-//                    System.out.println("P[" + i + "] AREA = " + report.particleArea);
-//                    System.out.println("P[" + i + "] ASPECT = " + ((double)report.boundingRectHeight / (double)report.boundingRectWidth));
-//                    System.out.println("P[" + i + "] X,Y = " + report.center_mass_x + ", " + report.center_mass_y);
-
                         }
                         
-                        if (goalFound)
+                        if (goalFound != GOAL__NONE)
                         {
-                           
                             ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(closestTargetIdx);
-                            System.out.println("particle: " + closestTargetIdx + "is the  === PICKED === Strength: " + scores[closestTargetIdx].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                            xDeltaDeg_ = (double)(report.center_mass_x_normalized + 1) / 2.0 * (xMaxDeg_ - xMinDeg_) + xMinDeg_;
-                            yDeltaDeg_ = (double)(-report.center_mass_y_normalized + 1) / 2.0 * (yMaxDeg_ - yMinDeg_) + yMinDeg_;
-                            goalFound_ = true; 
+                            System.out.println("                                                               ** "+closestTargetIdx+" of "+scores.length+"**");
+                            //System.out.println("particle: " + closestTargetIdx + " is the  === PICKED === Strength: " + scores[closestTargetIdx].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                            xDeltaNorm_ = report.center_mass_x_normalized;
+                            yDeltaNorm_ = -report.center_mass_y_normalized;
+                            xDeltaDeg_ = (double)(xDeltaNorm_ + 1) / 2.0 * (xMaxDeg_ - xMinDeg_) + xMinDeg_;
+                            yDeltaDeg_ = (double)(yDeltaNorm_ + 1) / 2.0 * (yMaxDeg_ - yMinDeg_) + yMinDeg_;
+                            goalFound_ = closestGoalType; 
+                        }
+                        else
+                        {
+                            goalFound_ = GOAL__NONE;
                         }
                     }
                     else
                     {
-                        goalFound_ = false; 
+                        goalFound_ = GOAL__NONE; 
                     }
 
 
@@ -326,9 +330,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         int bottom = report.boundingRectTop  + report.boundingRectHeight;
                 
         if ((left < BORDER_TOL) ||
-            (right > (Y_IMAGE_RES - BORDER_TOL)) ||
-            (top > (X_IMAGE_RES - BORDER_TOL)) ||
-            (bottom < BORDER_TOL))
+            (right > (X_IMAGE_RES - BORDER_TOL)) ||
+            (top < BORDER_TOL ) ||
+            (bottom > (Y_IMAGE_RES - BORDER_TOL)))
         {
             return true;
         }
@@ -364,9 +368,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 //        idealAspectRatio = outer ? (62/29) : (62/20);	//Dimensions of goal opening + 4 inches on all 4 sides for reflective tape
 	
         double idealAspectRatio = 62/20;  // default is high goal  
-        if (goal == HIGH_GOAL) idealAspectRatio = 62/20;        // high goal AR (outside tape)
-        else if (goal == MIDDLE_GOAL) idealAspectRatio = 62/29; // mid goal AR (outside tape)
-        else if (goal == LOW_GOAL) idealAspectRatio = 37/32;    // low goal AR (outside tape)
+        if (goal == GOAL__HIGH) idealAspectRatio = 62/20;        // high goal AR (outside tape)
+        else if (goal == GOAL__MIDDLE) idealAspectRatio = 62/29; // mid goal AR (outside tape)
+        else if (goal == GOAL__LOW) idealAspectRatio = 37/32;    // low goal AR (outside tape)
             
         //Divide width by height to measure aspect ratio
         if(report.boundingRectWidth > report.boundingRectHeight){
@@ -390,18 +394,25 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     boolean scoreCompare(Scores scores, int goal) {
         boolean isTarget = true;
 
-        if (goal == HIGH_GOAL) {
-            isTarget &= scores.highGoalAspectRatio > ASPECT_RATIO_LIMIT;
-        } else if (goal == MIDDLE_GOAL) {
-            isTarget &= scores.middleGoalAspectRatio > ASPECT_RATIO_LIMIT;
-        } else if (goal == LOW_GOAL) {
-            isTarget &= scores.lowGoalAspectRatio > ASPECT_RATIO_LIMIT;
+        if(scores.onEdge)
+        {
+            return false;
         }
-        isTarget &= scores.rectangularity > RECTANGULARITY_LIMIT;
-        isTarget &= scores.xEdge > X_EDGE_LIMIT;
-        isTarget &= scores.yEdge > Y_EDGE_LIMIT;
+        else
+        {
+            if (goal == GOAL__HIGH) {
+                isTarget &= scores.highGoalAspectRatio > ASPECT_RATIO_LIMIT;
+            } else if (goal == GOAL__MIDDLE) {
+                isTarget &= scores.middleGoalAspectRatio > ASPECT_RATIO_LIMIT;
+            } else if (goal == GOAL__LOW) {
+                isTarget &= scores.lowGoalAspectRatio > ASPECT_RATIO_LIMIT;
+            }
+            isTarget &= scores.rectangularity > RECTANGULARITY_LIMIT;
+            isTarget &= scores.xEdge > X_EDGE_LIMIT;
+            isTarget &= scores.yEdge > Y_EDGE_LIMIT;
 
-        return isTarget;
+            return isTarget;
+        }
     }
     
     /**
