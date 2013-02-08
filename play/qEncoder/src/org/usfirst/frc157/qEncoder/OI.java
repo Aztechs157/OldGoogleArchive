@@ -129,8 +129,8 @@ public class OI {
     m_setFirst_GamepadUp.whenPressed(new PrintMessage("Button <m_setFirst_GamepadLeft> pressed\n"));
     m_setFirst_GamepadDown.whenPressed(new PrintMessage("Button <m_setFirst_GamepadRight> pressed\n"));
     // X,Y,A,B Buttons
-    m_setFirst_X.whenPressed(new PrintMessage("Button <m_setFirst_X> pressed\n"));
-    m_setFirst_Y.whenPressed(new PrintMessage("Button <m_setFirst_Y> pressed\n"));
+    m_setFirst_X.whenPressed(new ReadJag(RobotMap.encJagLRMotorDrive));
+    m_setFirst_Y.whenPressed(new ReadJag(RobotMap.encJagLFMotorDrive));
     m_setFirst_A.whenPressed(new ReadJag(RobotMap.encJagRRMotorDrive));
     m_setFirst_B.whenPressed(new ReadJag(RobotMap.encJagRFMotorDrive));
     // Start/Back Buttoins
