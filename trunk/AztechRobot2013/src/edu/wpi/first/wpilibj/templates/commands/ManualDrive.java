@@ -28,7 +28,7 @@ public class ManualDrive extends Command {
     protected void execute() {
         double rotation = -AztechRobot.oi.getFirstController().getRightY();
         double y = -AztechRobot.oi.getFirstController().getRightX();
-        double x = -AztechRobot.oi.getFirstController().getTriggers();
+        double x = AztechRobot.oi.getFirstController().getTriggers();
         double gyroAngle = 0;
 
 //        RobotMap.driveMechanumDrive.mecanumDrive_Cartesian( rotation, 0, 0, 0);
