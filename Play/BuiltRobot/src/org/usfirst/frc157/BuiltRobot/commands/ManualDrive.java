@@ -26,8 +26,8 @@ public class ManualDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double rotation = -Robot.oi.getFirstController().getLeftX();
-        double y = -Robot.oi.getFirstController().getGameY();
+        double rotation = -Robot.oi.getFirstController().getRightY();
+        double y = -Robot.oi.getFirstController().getRightX();
         double x = -Robot.oi.getFirstController().getTriggers();
         double gyroAngle = 0;
        
