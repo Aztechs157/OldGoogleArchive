@@ -39,21 +39,21 @@ public class RobotMap {
         try {
             driveDriveFL = new CANJaguar(FrontLeftMotorID);
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating JAG 3");
+            System.out.println("FAIL - Instantiating FL JAG " + FrontLeftMotorID);
             ex.printStackTrace();
         }
 
         try {
             driveDriveFR = new CANJaguar(FrontRightMotorID);
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating JAG 2");
+            System.out.println("FAIL - Instantiating FR JAG " + FrontRightMotorID);
             ex.printStackTrace();
         }
 
         try {
             driveDriveRL = new CANJaguar(RearLeftMotorID);
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating JAG 7");
+            System.out.println("FAIL - Instantiating RL JAG " + RearLeftMotorID);
             ex.printStackTrace();
         }
 
@@ -61,16 +61,11 @@ public class RobotMap {
         try {
             driveDriveRR = new CANJaguar(RearRightMotorID);
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating JAG 8");
+            System.out.println("FAIL - Instantiating RR JAG " + RearRightMotorID);
             ex.printStackTrace();
         }
         try {
-//public RobotDrive(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor) {
-//    FL, RL, FR, RR
             driveMechanumDrive = new RobotDrive(driveDriveFL, driveDriveRL, driveDriveFR, driveDriveRR);
-//            driveMechanumDrive = new RobotDrive(driveDriveFL, driveDriveFL, driveDriveFL, driveDriveFL);
-//            driveMechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-//            driveMechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         } catch (Exception e) {
             System.out.println("Can't get mech drive going...  FAIL");
         }
