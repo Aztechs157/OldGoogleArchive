@@ -52,7 +52,16 @@ public class AztechRobot extends IterativeRobot {
         // make the robot subsystems
         drive = new Drive();
 
-        
+        // Recenter all the axis (assumes they are being left alone at start of robot...)
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisTriggers.value);
+
+
         // Initialize all subsystems
         CommandBase.init();
     }
@@ -74,6 +83,16 @@ public class AztechRobot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+        // Recenter all the axis (assumes they are being left alone at start of teleop...)
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightX.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightY.value);
+        oi.getFirstController().recenter(LogitechController.AxisType.kAxisTriggers.value);
+
+        
         autonomousCommand.cancel();
     }
 
