@@ -21,25 +21,49 @@ public class RobotMap {
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
     
-    private static double SpeedScale = 1;
-//    private static double SpeedScale = 130;
-    
-    private static int FrontLeftMotorID = 7;
-    private static int FrontRightMotorID = 6;
-    private static int RearLeftMotorID = 4;
-    private static int RearRightMotorID = 5;
+    //=====================================================================
+    // Drive System Constants
+    //=====================================================================
+    private static double SpeedScale = 130;
+       
+    private static int FrontLeftMotorID = 7;   // CAN
+    private static int FrontRightMotorID = 6;  // CAN
+    private static int RearLeftMotorID = 4;    // CAN
+    private static int RearRightMotorID = 5;   // CAN
 
-    private static int ShooterElevationMotorID = 3;
-    
     public static ScaledCANJaguar driveDriveFL;
     public static ScaledCANJaguar driveDriveFR;
     public static ScaledCANJaguar driveDriveRL;
     public static ScaledCANJaguar driveDriveRR;
     
-    public static CANJaguar shooterElevation;
-        
     public static RobotDrive driveMechanumDrive;
 
+
+    //=====================================================================
+    // Shooter System Constants
+    //=====================================================================
+    private static int ShooterElevationMotorID = 3;         // CAN
+    private static int ShooterFirstStageDrivePWMPort = 3;   // PWM
+    private static int ShooterSecondStageDrivePWMPort = 4;  // PWM
+    public static CANJaguar shooterElevation;
+    // Compressor Info
+    public static final int PressureSwitchGPIOPort = 9;  // GPIO 
+    public static final int CompressorRelayChannel = 4;  // Analog 
+    
+    // Loader Piston
+    public static final int LoaderRetractPort = 2;      // Relay
+    public static final int LoaderDeployPort = 3;       // Relay
+
+    // Shoot Piston
+    public static final int ShooterRetractPort = 4;     // Relay
+    public static final int ShooterDeployPort = 5;      // Relay
+    
+         
+    //=====================================================================
+    //  System Constants
+    //=====================================================================
+    
+        
     public static void init() {
 
 
@@ -87,10 +111,10 @@ public class RobotMap {
             ex.printStackTrace();
         }
         
-//        setupJagForSpeedControl(driveDriveFL);
-//        setupJagForSpeedControl(driveDriveRL);
-//        setupJagForSpeedControl(driveDriveFR);
-//        setupJagForSpeedControl(driveDriveRR);
+        setupJagForSpeedControl(driveDriveFL);
+        setupJagForSpeedControl(driveDriveRL);
+        setupJagForSpeedControl(driveDriveFR);
+        setupJagForSpeedControl(driveDriveRR);
         
         try {
             driveMechanumDrive = new RobotDrive(driveDriveFL, driveDriveRL, driveDriveFR, driveDriveRR);
