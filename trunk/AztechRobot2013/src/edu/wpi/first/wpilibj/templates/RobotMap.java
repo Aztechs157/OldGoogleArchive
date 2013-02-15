@@ -31,12 +31,6 @@ public class RobotMap {
     public static int RearLeftMotorID = 4;    // CAN
     public static int RearRightMotorID = 5;   // CAN
 
-    public static int LiftLPwmID = 1;
-    public static int LiftRPwmID = 2;
-    
-    public static int LiftLimitHighLGPIOPort = 1;
-    public static int LiftLimitHighRGPIOPort = 2;
-    
     public static ScaledCANJaguar driveDriveFL;
     public static ScaledCANJaguar driveDriveFR;
     public static ScaledCANJaguar driveDriveRL;
@@ -57,17 +51,25 @@ public class RobotMap {
     
     // Loader Piston
     public static final int LoaderRetractPort = 2;      // Relay
-    public static final int LoaderDeployPort = 3;       // Relay
+    public static final int LoaderExtendPort = 3;       // Relay
 
     // Shoot Piston
     public static final int ShooterRetractPort = 4;     // Relay
-    public static final int ShooterDeployPort = 5;      // Relay
+    public static final int ShooterExtendPort = 5;      // Relay
     
          
     //=====================================================================
-    //  System Constants
+    // Lift System Constants
     //=====================================================================
+    public static int LiftLPwmID = 1;
+    public static int LiftRPwmID = 2;
     
+    public static int LiftLimitHighLGPIOPort = 1;
+    public static int LiftLimitHighRGPIOPort = 2;
+    
+    
+    //=====================================================================
+    //=====================================================================
         
     public static void init() {
         
