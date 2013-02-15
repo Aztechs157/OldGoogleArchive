@@ -15,15 +15,16 @@ public class ScaledCANJaguar extends CANJaguar {
     
     private double scalingFactor = 1;
     
-    ScaledCANJaguar(int deviceNumber) throws CANTimeoutException
+    public ScaledCANJaguar(int deviceNumber) throws CANTimeoutException
     {
         super(deviceNumber);
     }
     
-    ScaledCANJaguar(int deviceNumber, ControlMode controlMode) throws CANTimeoutException 
+    public ScaledCANJaguar(int deviceNumber, ControlMode controlMode) throws CANTimeoutException 
     {
         super(deviceNumber, controlMode);
     }
+    
     public void setScalingFactor(double scale)
     {
         scalingFactor = scale;
