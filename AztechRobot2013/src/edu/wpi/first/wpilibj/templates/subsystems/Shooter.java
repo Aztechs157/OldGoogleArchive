@@ -24,9 +24,9 @@ public class Shooter extends Subsystem {
     public static Compressor compressor;
 
     Solenoid loaderRetract;
-    Solenoid loaderDeploy;
+    Solenoid loaderExtend;
     Solenoid shooterRetract;
-    Solenoid shooterDeploy;
+    Solenoid shooterExtend;
             
     public void init()
     {
@@ -34,9 +34,9 @@ public class Shooter extends Subsystem {
         compressor.start();
 
         loaderRetract = new Solenoid(RobotMap.LoaderRetractPort);
-        loaderDeploy = new Solenoid(RobotMap.LoaderDeployPort);
+        loaderExtend = new Solenoid(RobotMap.LoaderExtendPort);
         shooterRetract = new Solenoid(RobotMap.ShooterRetractPort);
-        shooterDeploy = new Solenoid(RobotMap.ShooterDeployPort);
+        shooterExtend = new Solenoid(RobotMap.ShooterExtendPort);
          
         try {
             shooterElevation = new CANJaguar(RobotMap.ShooterElevationMotorID);
@@ -89,13 +89,13 @@ public class Shooter extends Subsystem {
     
     private void setLoaderExtended(boolean extend) {
         if (extend) {
-            if ((loaderRetract != null) && (loaderDeploy != null)) {
-                loaderDeploy.set(true);
+            if ((loaderRetract != null) && (loaderExtend != null)) {
+                loaderExtend.set(true);
                 loaderRetract.set(false);
             } else {
-                if ((loaderRetract != null) && (loaderDeploy != null)) {
+                if ((loaderRetract != null) && (loaderExtend != null)) {
                     loaderRetract.set(true);
-                    loaderDeploy.set(false);
+                    loaderExtend.set(false);
                 }
             }
         }
@@ -133,13 +133,13 @@ public class Shooter extends Subsystem {
     
     private void setShooterExtended(boolean extend) {
         if (extend) {
-            if ((shooterRetract != null) && (shooterDeploy != null)) {
-                shooterDeploy.set(true);
+            if ((shooterRetract != null) && (shooterExtend != null)) {
+                shooterExtend.set(true);
                 shooterRetract.set(false);
             } else {
-                if ((shooterRetract != null) && (shooterDeploy != null)) {
+                if ((shooterRetract != null) && (shooterExtend != null)) {
                     shooterRetract.set(true);
-                    shooterDeploy.set(false);
+                    shooterExtend.set(false);
                 }
             }
         }
