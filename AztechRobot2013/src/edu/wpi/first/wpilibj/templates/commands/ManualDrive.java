@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.subsystems.Drive;
 
 /**
  *
@@ -32,13 +33,13 @@ public class ManualDrive extends Command {
         double gyroAngle = 0;
 
 //        RobotMap.driveMechanumDrive.mecanumDrive_Cartesian( rotation, 0, 0, 0);
-        RobotMap.driveMechanumDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
+        Drive.mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
         System.out.println("X= " + x + " Y= " + y + " 0= " + rotation);
                 try {
-            System.out.print("FR.getX()=" + RobotMap.driveDriveFR.getX());
-            System.out.print(" FL.getX()=" + RobotMap.driveDriveFL.getX());
-            System.out.print(" RR.getX()=" + RobotMap.driveDriveRR.getX());
-            System.out.println(" RL.getX()=" + RobotMap.driveDriveRL.getX());
+            System.out.print("FR.getX()=" + Drive.driveFR.getX());
+            System.out.print(" FL.getX()=" + Drive.driveFL.getX());
+            System.out.print(" RR.getX()=" + Drive.driveRR.getX());
+            System.out.println(" RL.getX()=" + Drive.driveRL.getX());
         } catch (CANTimeoutException ex) {
             // don't care
         }
