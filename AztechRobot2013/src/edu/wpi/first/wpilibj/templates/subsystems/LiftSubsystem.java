@@ -26,11 +26,11 @@ public class LiftSubsystem extends Subsystem {
     public MotorControlAssembly liftAssemblyL;
     public MotorControlAssembly liftAssemblyR;
     
-    public double LIFT_EXTEND_SPEED_L = 0.2;
+    public double LIFT_EXTEND_SPEED_L = 0.25;
     public double LIFT_RETRACT_SPEED_L = 0.1;
     public boolean LIFT_INVERTED_L = false;
     
-    public double LIFT_EXTEND_SPEED_R = 0.2;
+    public double LIFT_EXTEND_SPEED_R = 0.25;
     public double LIFT_RETRACT_SPEED_R = 0.1;
     public boolean LIFT_INVERTED_R = false;
     
@@ -40,8 +40,8 @@ public class LiftSubsystem extends Subsystem {
         liftMotorR = new Victor(RobotMap.LiftRPwmID);
         liftLimitHighL = new DigitalInput(RobotMap.LiftLimitHighLGPIOPort);
         liftLimitHighR = new DigitalInput(RobotMap.LiftLimitHighRGPIOPort);
-        liftAssemblyL = new MotorControlAssembly(liftMotorL, null, null, liftLimitHighL);
-        liftAssemblyR = new MotorControlAssembly(liftMotorR, null, null, liftLimitHighR);
+        liftAssemblyL = new MotorControlAssembly(liftMotorL, null, liftLimitHighL, null);
+        liftAssemblyR = new MotorControlAssembly(liftMotorR, null, liftLimitHighR, null);
         liftAssemblyL.setInvertedMotor(LIFT_INVERTED_L);
         liftAssemblyR.setInvertedMotor(LIFT_INVERTED_R);
     }
@@ -58,15 +58,22 @@ public class LiftSubsystem extends Subsystem {
     }
     
     public void extend() {
-        System.out.println("Extending... limitL="+liftAssemblyL.getLimit(LIFT_EXTEND_SPEED_L)+", limitR="+liftAssemblyR.getLimit(LIFT_EXTEND_SPEED_R));
-        liftAssemblyL.runFromInput(LIFT_EXTEND_SPEED_L);
-        liftAssemblyR.runFromInput(LIFT_EXTEND_SPEED_R);
+//        System.out.println("Extending... limitL="+liftAssemblyL.getLimit(-LIFT_EXTEND_SPEED_L)+", limitR="+liftAssemblyR.getLimit(-LIFT_EXTEND_SPEED_R));
+//        System.out.println("Extending... limitL="+liftLimitHighL.get()+", limitR="+liftLimitHighR.get());
+        liftAssemblyL.runFromInput(-LIFT_EXTEND_SPEED_L);
+        liftAssemblyR.runFromInput(-LIFT_EXTEND_SPEED_R);
     }
     
     public void retract() {
-        System.out.println("Retracting... limitL="+liftAssemblyL.getLimit(-LIFT_RETRACT_SPEED_L)+", limitR="+liftAssemblyR.getLimit(-LIFT_RETRACT_SPEED_R));
-        liftAssemblyL.runFromInput(-LIFT_RETRACT_SPEED_L);
-        liftAssemblyR.runFromInput(-LIFT_RETRACT_SPEED_R);
+//        System.out.println("Retracting... limitL="+liftAssemblyL.getLimit(LIFT_RETRACT_SPEED_L)+", limitR="+liftAssemblyR.getLimit(LIFT_RETRACT_SPEED_R));
+//        System.out.println("Retracting... limitL="+liftLimitHighL.get()+", limitR="+liftLimitHighR.get());
+        liftAssemblyL.runFromInput(LIFT_RETRACT_SPEED_L);
+        liftAssemblyR.runFromInput(LIFT_RETRACT_SPEED_R);
+    }
+    
+    public void stop(){
+        liftAssemblyL.runFromInput(0);
+        liftAssemblyR.runFromInput(0);        
     }
 }
 
