@@ -92,7 +92,7 @@ public class OI {
         // Associate the Buttons with Commands
         m_setFirst_LeftShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_LeftShoulderButton> pressed\n"));
         m_setFirst_LeftTrigger.whenPressed(new PrintMessage("Button <m_setFirst_LeftTrigger> pressed\n"));
-        m_setFirst_RightShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_RightShoulderButton> pressed\n"));
+        m_setFirst_RightShoulderButton.whenPressed(new LaunchDisk());
         m_setFirst_RightTrigger.whenPressed(new PrintMessage("Button <m_setFirst_RightTrigger> pressed\n"));
         // Gamepad
         m_setFirst_GamepadLeft.whenPressed(new PrintMessage("Button <m_setFirst_GamepadLeft> pressed\n"));
