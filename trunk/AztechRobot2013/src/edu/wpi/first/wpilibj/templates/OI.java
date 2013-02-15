@@ -102,8 +102,8 @@ public class OI {
         // X,Y,A,B Buttons
         m_setFirst_X.whenPressed(new PrintMessage("Button <m_setFirst_X> pressed\n"));
         m_setFirst_Y.whenPressed(new PrintMessage("Button <m_setFirst_Y> pressed\n"));
-        m_setFirst_A.whenPressed(new PrintMessage("Button <m_setFirst_A> pressed\n"));
-        m_setFirst_B.whenPressed(new PrintMessage("Button <m_setFirst_B> pressed\n"));
+//        m_setFirst_A.whenPressed(new PrintMessage("Button <m_setFirst_A> pressed\n"));
+//        m_setFirst_B.whenPressed(new PrintMessage("Button <m_setFirst_B> pressed\n"));
         // Start/Back Buttoins
         m_setFirst_Start.whenPressed(new PrintMessage("Button <m_setFirst_Start> pressed\n"));
         m_setFirst_Back.whenPressed(new PrintMessage("Button <m_setFirst_Back> pressed\n"));
