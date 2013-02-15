@@ -31,6 +31,12 @@ public class RobotMap {
     public static int RearLeftMotorID = 4;    // CAN
     public static int RearRightMotorID = 5;   // CAN
 
+    public static int LiftLPwmID = 1;
+    public static int LiftRPwmID = 2;
+    
+    public static int LiftLimitHighLGPIOPort = 1;
+    public static int LiftLimitHighRGPIOPort = 2;
+    
     public static ScaledCANJaguar driveDriveFL;
     public static ScaledCANJaguar driveDriveFR;
     public static ScaledCANJaguar driveDriveRL;
@@ -64,8 +70,6 @@ public class RobotMap {
     
         
     public static void init() {
-
-        AztechRobot.shooter.init();
         
         try {
             driveDriveFL = new ScaledCANJaguar(FrontLeftMotorID);
@@ -122,7 +126,7 @@ public class RobotMap {
         } catch (Exception e) {
             System.out.println("Can't configure mech drive ...  FAIL");
         }
-
+        
     }
     
         private static void setupJagForSpeedControl(CANJaguar jag) {
