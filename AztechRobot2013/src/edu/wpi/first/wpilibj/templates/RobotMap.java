@@ -66,7 +66,9 @@ public class RobotMap {
         
     public static void init() {
 
-
+        AztechRobot.shooter.init();
+        
+        
         try {
             shooterElevation = new CANJaguar(ShooterElevationMotorID);
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
