@@ -26,10 +26,10 @@ public class RobotMap {
     //=====================================================================
     private static double SpeedScale = 130;
        
-    private static int FrontLeftMotorID = 7;   // CAN
-    private static int FrontRightMotorID = 6;  // CAN
-    private static int RearLeftMotorID = 4;    // CAN
-    private static int RearRightMotorID = 5;   // CAN
+    public static int FrontLeftMotorID = 7;   // CAN
+    public static int FrontRightMotorID = 6;  // CAN
+    public static int RearLeftMotorID = 4;    // CAN
+    public static int RearRightMotorID = 5;   // CAN
 
     public static ScaledCANJaguar driveDriveFL;
     public static ScaledCANJaguar driveDriveFR;
@@ -42,10 +42,9 @@ public class RobotMap {
     //=====================================================================
     // Shooter System Constants
     //=====================================================================
-    private static int ShooterElevationMotorID = 3;         // CAN
-    private static int ShooterFirstStageDrivePWMPort = 3;   // PWM
-    private static int ShooterSecondStageDrivePWMPort = 4;  // PWM
-    public static CANJaguar shooterElevation;
+    public static int ShooterElevationMotorID = 3;         // CAN
+    public static int ShooterFirstStageDrivePWMPort = 3;   // PWM
+    public static int ShooterSecondStageDrivePWMPort = 4;  // PWM
     // Compressor Info
     public static final int PressureSwitchGPIOPort = 9;  // GPIO 
     public static final int CompressorRelayChannel = 4;  // Analog 
@@ -68,19 +67,6 @@ public class RobotMap {
 
         AztechRobot.shooter.init();
         
-        
-        try {
-            shooterElevation = new CANJaguar(ShooterElevationMotorID);
-            shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
-            shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            shooterElevation.setPID(1, 0, 0);  //TODO: Set PID Constants for elevation conrol
-            shooterElevation.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating Shoter Elevation JAG " + ShooterElevationMotorID);
-            ex.printStackTrace();
-        }
-
         try {
             driveDriveFL = new ScaledCANJaguar(FrontLeftMotorID);
             driveDriveFL.setScalingFactor(SpeedScale);
