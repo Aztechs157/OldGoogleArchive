@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.image.LinearAverages;
 import edu.wpi.first.wpilibj.image.NIVision;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 
 /**
@@ -74,6 +75,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     AxisCamera camera_;          // the axis camera object (connected to the switch)
     CriteriaCollection cc_;      // the criteria for doing the particle filter operation
 
+    int quality_;
     int goalFound_;
     double xDeltaNorm_;
     double yDeltaNorm_;
@@ -117,6 +119,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         cc_.addCriteria(NIVision.MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
 
         goalFound_ = GOAL__NONE;
+        quality_ = 0;
         xDeltaNorm_ = 0.0;
         yDeltaNorm_ = 0.0;
         xDeltaDeg_ = 0.0;
@@ -130,7 +133,19 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     
     public int goalFound()
     {
-        return goalFound_;
+        if(quality_ >= RobotMap.VisionQualityRequired)
+        {
+            return goalFound_;
+        }
+        else
+        {
+            return GOAL__NONE;
+        }
+    }
+    
+    public int getQuality()
+    {
+        return quality_;
     }
     
     public double getXErrorNorm()
@@ -166,7 +181,6 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     
     public void run()
     {
-        System.out.println("vision run..");
         while(true)
         {
             try
@@ -260,22 +274,26 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                         if (goalFound != GOAL__NONE)
                         {
                             ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(closestTargetIdx);
-                            System.out.println("                                                               ** "+closestTargetIdx+" of "+scores.length+"**");
+//                            System.out.println("                                                               ** "+closestTargetIdx+" of "+scores.length+"**");
                             //System.out.println("particle: " + closestTargetIdx + " is the  === PICKED === Strength: " + scores[closestTargetIdx].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                             xDeltaNorm_ = report.center_mass_x_normalized;
                             yDeltaNorm_ = -report.center_mass_y_normalized;
                             xDeltaDeg_ = (double)(xDeltaNorm_ + 1) / 2.0 * (xMaxDeg_ - xMinDeg_) + xMinDeg_;
                             yDeltaDeg_ = (double)(yDeltaNorm_ + 1) / 2.0 * (yMaxDeg_ - yMinDeg_) + yMinDeg_;
+                            
                             goalFound_ = closestGoalType; 
+                            tally_hit();
                         }
                         else
                         {
                             goalFound_ = GOAL__NONE;
+                            tally_miss();
                         }
                     }
                     else
                     {
                         goalFound_ = GOAL__NONE; 
+                        tally_miss();
                     }
 
 
@@ -300,6 +318,21 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 //                System.out.println("Camera Disabled");
                 Timer.delay(0.5);
             }
+        }
+    }
+    
+    void tally_hit()
+    {
+        if(quality_ < RobotMap.VisionQualityMax)
+        {
+            quality_++;
+        }
+    }
+    void tally_miss()
+    {
+        if(quality_ > 0)
+        {
+            quality_--;
         }
     }
     
