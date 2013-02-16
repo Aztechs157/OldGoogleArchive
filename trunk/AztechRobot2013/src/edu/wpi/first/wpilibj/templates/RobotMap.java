@@ -51,7 +51,7 @@ public class RobotMap {
     
     // Request Light Panel
     public static final int RedLightPort = 6;            // Relay
-    public static final int GreenLightPort = 7;          // Relay
+    public static final int WhiteLightPort = 7;          // Relay
     public static final int BlueLightPort = 8;           // Relay
     
          

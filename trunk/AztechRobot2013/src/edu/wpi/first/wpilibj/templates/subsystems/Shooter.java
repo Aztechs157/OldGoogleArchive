@@ -63,7 +63,7 @@ public class Shooter extends Subsystem {
         shooterExtend = new Solenoid(RobotMap.ShooterExtendPort);
 
         redRelay = new Relay(RobotMap.RedLightPort);
-        greenRelay = new Relay(RobotMap.GreenLightPort);
+        greenRelay = new Relay(RobotMap.WhiteLightPort);
         blueRelay = new Relay(RobotMap.BlueLightPort);
         
         try {
