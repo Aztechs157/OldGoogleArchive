@@ -94,6 +94,10 @@ public class Drive extends Subsystem {
             mechanumDrive.setExpiration(4.0);
             mechanumDrive.setSensitivity(0.5);
             mechanumDrive.setMaxOutput(1.0);
+            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, RobotMap.FrontLeftMotorInverted);
+            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, RobotMap.RearLeftMotorInverted);
+            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, RobotMap.FrontRightMotorInverted);
+            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, RobotMap.FrontRightMotorInverted);
         } catch (Exception ex) {
             System.out.println("Can't configure mech drive ...  FAIL");
             ex.printStackTrace();
@@ -113,7 +117,7 @@ public class Drive extends Subsystem {
     }
     
     public void mecanumDrive_Cartesian(double x, double y, double rotation)
-    {
+    {      
         mechanumDrive.mecanumDrive_Cartesian(x,y,rotation,0);
     }
 }
