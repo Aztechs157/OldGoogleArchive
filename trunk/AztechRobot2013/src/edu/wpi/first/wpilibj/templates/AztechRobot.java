@@ -43,18 +43,18 @@ public class AztechRobot extends IterativeRobot {
         // make the robot pieces
         RobotMap.init();
                
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousCommand();
-        
-        // make the operator interfaces
-        oi = new OI();
-        
         // make the robot subsystems
         vision = new VisionSubsystem();
         drive = new Drive();
         shooter = new Shooter();
         lift = new LiftSubsystem();
+
+        // instantiate the command used for the autonomous period
+        autonomousCommand = new AutonomousCommand();
         
+        // make the operator interfaces
+        oi = new OI();
+               
         shooter.init();
         drive.init();
         lift.init();        

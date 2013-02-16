@@ -15,17 +15,33 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReadJag extends Command {
     
     CANJaguar theJag;
+    boolean continuous;
     
-    public ReadJag(CANJaguar inJag) {
+    public ReadJag(CANJaguar inJag, boolean inContinuous) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         System.out.println("Setting up ReadJag for - " + inJag.getDescription());
         theJag = inJag;
         System.out.println("Setting up ReadJag for = " + theJag.getDescription());
+        
+        continuous = inContinuous;
+    }
+
+    public ReadJag(int motorID, boolean inContinuous) {
+        try {
+            theJag = new CANJaguar(motorID);
+        } catch (CANTimeoutException ex) {
+            System.out.println("Exception while creating JAG for reading");
+        }
+        continuous = inContinuous;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
         String description = "";
         int fwRev = 0;
         double busVoltage = 0.0;
@@ -34,7 +50,7 @@ public class ReadJag extends Command {
         double position = 0.0;
         double speed = 0.0;
         double setPoint = 0.0;
-        CANJaguar.ControlMode ctlMode = CANJaguar.ControlMode.kPercentVbus;
+        CANJaguar.ControlMode ctlMode = CANJaguar.ControlMode.kCurrent;
         
         try{
             description = theJag.getDescription();
@@ -61,13 +77,9 @@ public class ReadJag extends Command {
         System.out.println("");
     }
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return !continuous;
     }
 
     // Called once after isFinished returns true

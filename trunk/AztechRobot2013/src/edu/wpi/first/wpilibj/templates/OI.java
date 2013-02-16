@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.LogitechController;
 import edu.wpi.first.wpilibj.templates.LogitechControllerButton;
 import edu.wpi.first.wpilibj.templates.commands.*;
+import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -136,8 +137,8 @@ public class OI {
       m_OperatorButton_8.whenPressed(new PrintMessage("Operator Button <8>"));
       m_OperatorButton_9.whenPressed(new PrintMessage("Operator Button <9>"));
       m_OperatorButton_10.whenPressed(new PrintMessage("Operator Button <10>"));
-      m_OperatorButton_11.whenPressed(new PrintMessage("Operator Button <11>"));
-      m_OperatorButton_12.whenPressed(new PrintMessage("Operator Button <12>"));
+      m_OperatorButton_11.whenPressed(new ReadJag(RobotMap.ShooterElevationMotorID, true));
+      m_OperatorButton_12.whenPressed(new ReadJag(RobotMap.ShooterElevationMotorID, false));
 
     }
 

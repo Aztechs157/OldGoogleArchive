@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.ManualAim;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Shooter extends Subsystem {
     Solenoid shooterExtend;
 
     public void init() {
+        System.out.println("== Initializing Shooter ==");
         compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
         compressor.start();
 
@@ -42,7 +44,7 @@ public class Shooter extends Subsystem {
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
             shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
             shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            shooterElevation.setPID(1, 0, 0);  //TODO: Set PID Constants for elevation conrol
+            shooterElevation.setPID(.1, 0, 0);  //TODO: Set PID Constants for elevation conrol
             shooterElevation.enableControl();
         } catch (CANTimeoutException ex) {
             System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
@@ -58,7 +60,7 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ManualAim());
     }
 
     public void spinLaunchWheels(double power) {
