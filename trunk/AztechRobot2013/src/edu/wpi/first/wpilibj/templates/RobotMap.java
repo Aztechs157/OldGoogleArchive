@@ -20,16 +20,16 @@ public class RobotMap {
     //=====================================================================
     // Drive System Constants
     //=====================================================================
-    public static double SpeedScale = 130;
-    public static boolean FrontLeftMotorInverted = true;
-    public static boolean RearLeftMotorInverted = true;
-    public static boolean FrontRightMotorInverted = false;
-    public static boolean RearRightMotorInverted = false;
+    public static final double SpeedScale = 130;
+    public static final boolean FrontLeftMotorInverted = true;
+    public static final boolean RearLeftMotorInverted = true;
+    public static final boolean FrontRightMotorInverted = false;
+    public static final boolean RearRightMotorInverted = false;
     
-    public static int FrontLeftMotorID = 7;   // CAN
-    public static int FrontRightMotorID = 6;  // CAN
-    public static int RearLeftMotorID = 4;    // CAN
-    public static int RearRightMotorID = 5;   // CAN
+    public static final int FrontLeftMotorID = 7;   // CAN
+    public static final int FrontRightMotorID = 6;  // CAN
+    public static final int RearLeftMotorID = 4;    // CAN
+    public static final int RearRightMotorID = 5;   // CAN
 
     //=====================================================================
     // Shooter System Constants
@@ -53,12 +53,21 @@ public class RobotMap {
     //=====================================================================
     // Lift System Constants
     //=====================================================================
-    public static int LiftLPwmID = 1;
-    public static int LiftRPwmID = 2;
+    public static final int LiftLeftPWMPort = 1;
+    public static final int LiftRightPWMPort = 2;
     
-    public static int LiftLimitHighLGPIOPort = 1;
-    public static int LiftLimitHighRGPIOPort = 2;
+    public static final int LiftLeftLimitRetractGPIOPort = 1;
+    public static final int LiftRightLimitRetractGPIOPort = 2;
+    public static final int LiftLeftLimitExtendGPIOPort = 3;
+    public static final int LiftRightLimitExtendGPIOPort = 4;
     
+    public static final double LiftLeftExtendSpeed = 0.6;
+    public static final double LiftLeftRetractSpeed = 0.6;
+    public static final boolean LiftLeftMotorInverted = false;
+    
+    public static final double LiftRightExtendSpeed = 0.6;
+    public static final double LiftRightRetractSpeed = 0.6;
+    public static final boolean LiftRightMotorInverted = false;
     
     //=====================================================================
     //=====================================================================
