@@ -21,7 +21,11 @@ public class RobotMap {
     // Drive System Constants
     //=====================================================================
     public static double SpeedScale = 130;
-       
+    public static boolean FrontLeftMotorInverted = true;
+    public static boolean RearLeftMotorInverted = true;
+    public static boolean FrontRightMotorInverted = false;
+    public static boolean RearRightMotorInverted = false;
+    
     public static int FrontLeftMotorID = 7;   // CAN
     public static int FrontRightMotorID = 6;  // CAN
     public static int RearLeftMotorID = 4;    // CAN

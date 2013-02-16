@@ -3,11 +3,8 @@
  * and open the template in the editor.
  */
 package edu.wpi.first.wpilibj.templates.commands;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
-import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.subsystems.Drive;
 
 /**
  *
@@ -27,18 +24,26 @@ public class ManualDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double rotation = -AztechRobot.oi.getDriverController().getRightY();
-        double y = -AztechRobot.oi.getDriverController().getRightX();
-        double x = AztechRobot.oi.getDriverController().getTriggers();
-        double gyroAngle = 0;
+        double x = -AztechRobot.oi.getDriverController().getTriggers();
+        double y = -AztechRobot.oi.getDriverController().getLeftY();
+        double rotation = -AztechRobot.oi.getDriverController().getLeftX();
 
-        if(x*x < 0.025) x = 0;
-        if(y*y < 0.025) y = 0;
-        if(rotation*rotation < 0.05) rotation = 0;
-//        RobotMap.driveMechanumDrive.mecanumDrive_Cartesian( rotation, 0, 0, 0);
+        if(x*x < 0.01)
+        {
+            x = 0;
+        }
+        if(y*y < 0.01)
+        {
+            y = 0;
+        }
+        if(rotation*rotation < 0.01)
+        {
+            rotation = 0;
+        }
+
         AztechRobot.drive.mecanumDrive_Cartesian(x, y, rotation);
 
-//        System.out.println("X= " + x + " Y= " + y + " 0= " + rotation);
+        //        System.out.println("x="+x+",    y="+y+",    r="+rotation);
 //                try {
 //            System.out.print("FR.getX()=" + RobotMap.driveDriveFR.getX());
 //            System.out.print(" FL.getX()=" + RobotMap.driveDriveFL.getX());
