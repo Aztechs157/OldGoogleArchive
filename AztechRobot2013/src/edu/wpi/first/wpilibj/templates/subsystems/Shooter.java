@@ -28,7 +28,30 @@ public class Shooter extends Subsystem {
     Solenoid loaderExtend;
     Solenoid shooterRetract;
     Solenoid shooterExtend;
+    
+    Relay redRelay;
+    Relay blueRelay;
+    Relay greenRelay;
 
+        public static class Color {
+
+        public final int value;
+        // Drive Mode enumeration constants
+        protected static final int m_kBlack = 0;
+        protected static final int m_kRed = 1;
+        protected static final int m_kWhite = 2;
+        protected static final int m_kBlue = 3;
+        
+        public static final Color Black  = new Color(m_kBlack);
+        public static final Color Red    = new Color(m_kRed);
+        public static final Color White  = new Color(m_kWhite);
+        public static final Color Blue   = new Color(m_kBlue);
+
+        private Color(int Color) {
+            this.value = Color;
+        }
+    }
+    
     public void init() {
         System.out.println("== Initializing Shooter ==");
         compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
@@ -39,6 +62,10 @@ public class Shooter extends Subsystem {
         shooterRetract = new Solenoid(RobotMap.ShooterRetractPort);
         shooterExtend = new Solenoid(RobotMap.ShooterExtendPort);
 
+        redRelay = new Relay(RobotMap.RedLightPort);
+        greenRelay = new Relay(RobotMap.GreenLightPort);
+        blueRelay = new Relay(RobotMap.BlueLightPort);
+        
         try {
             shooterElevation = new CANJaguar(RobotMap.ShooterElevationMotorID);
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
@@ -146,6 +173,32 @@ public class Shooter extends Subsystem {
                     shooterExtend.set(false);
                 }
             }
+        }
+    }
+    
+    public void setColor(Color color)
+    {
+        switch (color.value) {
+            case Color.m_kBlack:
+                redRelay.set(Relay.Value.kOff);
+                greenRelay.set(Relay.Value.kOff);
+                blueRelay.set(Relay.Value.kOff);
+                break;
+            case Color.m_kRed:
+                redRelay.set(Relay.Value.kOn);
+                greenRelay.set(Relay.Value.kOff);
+                blueRelay.set(Relay.Value.kOff);
+                break;
+            case Color.m_kWhite:
+                redRelay.set(Relay.Value.kOff);
+                greenRelay.set(Relay.Value.kOn);
+                blueRelay.set(Relay.Value.kOff);
+                break;
+            case Color.m_kBlue:
+                redRelay.set(Relay.Value.kOff);
+                greenRelay.set(Relay.Value.kOff);
+                blueRelay.set(Relay.Value.kOn);
+                break;
         }
     }
 }
