@@ -28,12 +28,11 @@ public class Shooter extends Subsystem {
     Solenoid loaderExtend;
     Solenoid shooterRetract;
     Solenoid shooterExtend;
-    
     Relay redRelay;
     Relay blueRelay;
     Relay greenRelay;
 
-        public static class Color {
+    public static class Color {
 
         public final int value;
         // Drive Mode enumeration constants
@@ -41,18 +40,22 @@ public class Shooter extends Subsystem {
         protected static final int m_kRed = 1;
         protected static final int m_kWhite = 2;
         protected static final int m_kBlue = 3;
-        
-        public static final Color Black  = new Color(m_kBlack);
-        public static final Color Red    = new Color(m_kRed);
-        public static final Color White  = new Color(m_kWhite);
-        public static final Color Blue   = new Color(m_kBlue);
+        public static final Color Black = new Color(m_kBlack);
+        public static final Color Red = new Color(m_kRed);
+        public static final Color White = new Color(m_kWhite);
+        public static final Color Blue = new Color(m_kBlue);
 
         private Color(int Color) {
             this.value = Color;
         }
     }
+
+    public Shooter()
+    {
+        init();
+    }
     
-    public void init() {
+    public final void init() {
         System.out.println("== Initializing Shooter ==");
         compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
         compressor.start();
@@ -65,7 +68,7 @@ public class Shooter extends Subsystem {
         redRelay = new Relay(RobotMap.RedLightPort);
         greenRelay = new Relay(RobotMap.WhiteLightPort);
         blueRelay = new Relay(RobotMap.BlueLightPort);
-        
+
         try {
             shooterElevation = new CANJaguar(RobotMap.ShooterElevationMotorID);
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
@@ -175,26 +178,29 @@ public class Shooter extends Subsystem {
             }
         }
     }
-    
-    public void setColor(Color color)
-    {
+
+    public void setColor(Color color) {
         switch (color.value) {
             case Color.m_kBlack:
+                System.out.println("No Lighs");
                 redRelay.set(Relay.Value.kOff);
                 greenRelay.set(Relay.Value.kOff);
                 blueRelay.set(Relay.Value.kOff);
                 break;
             case Color.m_kRed:
+                System.out.println("Red Lights");
                 redRelay.set(Relay.Value.kOn);
                 greenRelay.set(Relay.Value.kOff);
                 blueRelay.set(Relay.Value.kOff);
                 break;
             case Color.m_kWhite:
+                System.out.println("White Lights");
                 redRelay.set(Relay.Value.kOff);
                 greenRelay.set(Relay.Value.kOn);
                 blueRelay.set(Relay.Value.kOff);
                 break;
             case Color.m_kBlue:
+                System.out.println("Blue Lights");
                 redRelay.set(Relay.Value.kOff);
                 greenRelay.set(Relay.Value.kOff);
                 blueRelay.set(Relay.Value.kOn);

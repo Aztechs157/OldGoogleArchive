@@ -23,7 +23,7 @@ public class SetColor extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        AztechRobot.shooter.setColor(theColor);
+        CommandBase.shooter.setColor(theColor);
     }
 
     // Called repeatedly when this Command is scheduled to run

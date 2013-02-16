@@ -16,6 +16,7 @@ public class ReadJag extends Command {
     
     CANJaguar theJag;
     boolean continuous;
+    int jagID = -1;
     
     public ReadJag(CANJaguar inJag, boolean inContinuous) {
         // Use requires() here to declare subsystem dependencies
@@ -52,6 +53,8 @@ public class ReadJag extends Command {
         double setPoint = 0.0;
         CANJaguar.ControlMode ctlMode = CANJaguar.ControlMode.kCurrent;
         
+        if(theJag != null)
+        {
         try{
             description = theJag.getDescription();
             fwRev = theJag.getFirmwareVersion();
@@ -75,6 +78,14 @@ public class ReadJag extends Command {
         System.out.print("speed=<" + speed + "> ");
         System.out.print("ctlMode=<" + ControlMode2String(ctlMode) + ">");
         System.out.println("");
+        } else {
+            System.out.print("Read Jag trying to read null jag ");
+            if (jagID == -1) {
+                System.out.println("- null jag provided");
+            } else {
+                System.out.println("- jag ID " + jagID + " not instantiated");
+            }
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -28,7 +28,11 @@ public class LiftSubsystem extends Subsystem {
     public MotorControlAssembly liftAssemblyL;
     public MotorControlAssembly liftAssemblyR;
     
-    public void init()
+    public LiftSubsystem()
+    {
+        init();
+    }
+    public final void init()
     {
         liftMotorL = new Victor(RobotMap.LiftLeftPWMPort);
         liftMotorR = new Victor(RobotMap.LiftRightPWMPort);

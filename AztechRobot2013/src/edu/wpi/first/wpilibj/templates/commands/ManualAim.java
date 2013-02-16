@@ -16,7 +16,7 @@ public class ManualAim extends CommandBase {
     
     public ManualAim() {
         // Use requires() here to declare subsystem dependencies
-        requires(AztechRobot.shooter);
+        requires(CommandBase.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -34,7 +34,7 @@ public class ManualAim extends CommandBase {
 
 //        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, rotation);
 //        AztechRobot.shooter.adjustShooterElevation(elevation);
-        System.out.println("Elevation = " + AztechRobot.shooter.getShooterElevation() + " + " + elevation + "  -- Az  += " + rotation);
+//        System.out.println("Elevation = " + AztechRobot.shooter.getShooterElevation() + " + " + elevation + "  -- Az  += " + rotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()

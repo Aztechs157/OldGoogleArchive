@@ -15,7 +15,7 @@ public class ManualDrive extends Command {
     public ManualDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(AztechRobot.drive);
+        requires(CommandBase.drive);
     }
 
     // Called just before this Command runs the first time
@@ -24,9 +24,9 @@ public class ManualDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double x = -AztechRobot.oi.getDriverController().getTriggers();
-        double y = -AztechRobot.oi.getDriverController().getLeftY();
-        double rotation = -AztechRobot.oi.getDriverController().getLeftX();
+        double x = -CommandBase.oi.getDriverController().getTriggers();
+        double y = -CommandBase.oi.getDriverController().getLeftY();
+        double rotation = -CommandBase.oi.getDriverController().getLeftX();
 
         if(x*x < 0.01)
         {
@@ -41,7 +41,7 @@ public class ManualDrive extends Command {
             rotation = 0;
         }
 
-        AztechRobot.drive.mecanumDrive_Cartesian(x, y, rotation);
+        CommandBase.drive.mecanumDrive_Cartesian(x, y, rotation);
 
         //        System.out.println("x="+x+",    y="+y+",    r="+rotation);
 //                try {
