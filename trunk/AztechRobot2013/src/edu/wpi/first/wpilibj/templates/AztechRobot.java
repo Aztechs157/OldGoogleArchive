@@ -44,10 +44,10 @@ public class AztechRobot extends IterativeRobot {
         RobotMap.init();
                
         // make the robot subsystems
-        vision = new VisionSubsystem();
         drive = new Drive();
         shooter = new Shooter();
         lift = new LiftSubsystem();
+        vision = new VisionSubsystem();
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new AutonomousCommand();
@@ -57,7 +57,8 @@ public class AztechRobot extends IterativeRobot {
                
         shooter.init();
         drive.init();
-        lift.init();        
+        lift.init();
+        vision.init();
 
         // Recenter all the axis (assumes they are being left alone at start of robot...)
         oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameX.value);
