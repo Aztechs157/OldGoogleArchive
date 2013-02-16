@@ -28,16 +28,23 @@ public class ManualAim extends CommandBase {
         double rotation;
         double elevation;
 
+        
+        rotation = oi.getOperatorJoystick().getX();
+        elevation = oi.getOperatorJoystick().getY();
+//        System.out.print("Axis");
         for(int idx = 0; idx < 10; idx++)
         {
-            System.out.println("Axis [" + idx + "] = " + oi.getOperatorJoystick().getRawAxis(idx));
+//            System.out.print("[" + idx + "]=" + oi.getOperatorJoystick().getRawAxis(idx));
         }
-        for(int idx = 0; idx < 25; idx++)
+//        System.out.println("");
+//        System.out.print("Button");
+        for(int idx = 10; idx < 25; idx++)
         {
-            System.out.println("Button [" + idx + "] = " + oi.getOperatorJoystick().getRawButton(idx));
+//            System.out.print(" [" + idx + "]=" + oi.getOperatorJoystick().getRawButton(idx));
         }        
-//        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, rotation);
-//        AztechRobot.shooter.adjustShooterElevation(elevation);
+//        System.out.println("");
+        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, rotation);
+        AztechRobot.shooter.adjustShooterElevation(elevation);
     }
 
     // Make this return true when this Command no longer needs to run execute()
