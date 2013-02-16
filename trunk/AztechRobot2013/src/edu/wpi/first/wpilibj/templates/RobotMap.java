@@ -73,7 +73,14 @@ public class RobotMap {
     public static final double LiftRightExtendSpeed = 0.6;
     public static final double LiftRightRetractSpeed = 0.6;
     public static final boolean LiftRightMotorInverted = false;
-    
+
+    //=====================================================================
+    // Lift System Constants
+    //=====================================================================
+    public static final int VisionQualityRequired = 4;
+    public static final int VisionQualityMax = 6;
+
+
     //=====================================================================
     //=====================================================================
         
