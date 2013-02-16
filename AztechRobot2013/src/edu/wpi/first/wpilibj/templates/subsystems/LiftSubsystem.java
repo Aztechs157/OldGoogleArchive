@@ -20,30 +20,26 @@ public class LiftSubsystem extends Subsystem {
     private static Victor liftMotorL;
     private static Victor liftMotorR;
     
-    private static DigitalInput liftLimitHighL;
-    private static DigitalInput liftLimitHighR;
+    private static DigitalInput liftLimitRetractL;
+    private static DigitalInput liftLimitRetractR;
+    private static DigitalInput liftLimitExtendL;
+    private static DigitalInput liftLimitExtendR;
     
     public MotorControlAssembly liftAssemblyL;
     public MotorControlAssembly liftAssemblyR;
     
-    public double LIFT_EXTEND_SPEED_L = 0.4;
-    public double LIFT_RETRACT_SPEED_L = 0.4;
-    public boolean LIFT_INVERTED_L = false;
-    
-    public double LIFT_EXTEND_SPEED_R = 0.4;
-    public double LIFT_RETRACT_SPEED_R = 0.4;
-    public boolean LIFT_INVERTED_R = false;
-    
-    public LiftSubsystem()
+    public void init()
     {
-        liftMotorL = new Victor(RobotMap.LiftLPwmID);
-        liftMotorR = new Victor(RobotMap.LiftRPwmID);
-        liftLimitHighL = new DigitalInput(RobotMap.LiftLimitHighLGPIOPort);
-        liftLimitHighR = new DigitalInput(RobotMap.LiftLimitHighRGPIOPort);
-        liftAssemblyL = new MotorControlAssembly(liftMotorL, null, liftLimitHighL, null);
-        liftAssemblyR = new MotorControlAssembly(liftMotorR, null, liftLimitHighR, null);
-        liftAssemblyL.setInvertedMotor(LIFT_INVERTED_L);
-        liftAssemblyR.setInvertedMotor(LIFT_INVERTED_R);
+        liftMotorL = new Victor(RobotMap.LiftLeftPWMPort);
+        liftMotorR = new Victor(RobotMap.LiftRightPWMPort);
+        liftLimitRetractL = new DigitalInput(RobotMap.LiftLeftLimitRetractGPIOPort);
+        liftLimitRetractR = new DigitalInput(RobotMap.LiftRightLimitRetractGPIOPort);
+        liftLimitExtendL = new DigitalInput(RobotMap.LiftLeftLimitExtendGPIOPort);
+        liftLimitExtendR = new DigitalInput(RobotMap.LiftRightLimitExtendGPIOPort);
+        liftAssemblyL = new MotorControlAssembly(liftMotorL, null, liftLimitRetractL, liftLimitExtendL);
+        liftAssemblyR = new MotorControlAssembly(liftMotorR, null, liftLimitRetractR, liftLimitExtendR);
+        liftAssemblyL.setInvertedMotor(RobotMap.LiftLeftMotorInverted);
+        liftAssemblyR.setInvertedMotor(RobotMap.LiftRightMotorInverted);
     }
     
         // Put methods for controlling this subsystem
@@ -60,15 +56,15 @@ public class LiftSubsystem extends Subsystem {
     public void retract() {
 //        System.out.println("Retracting... limitL="+liftAssemblyL.getLimit(-LIFT_EXTEND_SPEED_L)+", limitR="+liftAssemblyR.getLimit(-LIFT_EXTEND_SPEED_R));
 //        System.out.println("Retracting... limitL="+liftLimitHighL.get()+", limitR="+liftLimitHighR.get());
-        liftAssemblyL.runFromInput(-LIFT_RETRACT_SPEED_L);
-        liftAssemblyR.runFromInput(-LIFT_RETRACT_SPEED_R);
+        liftAssemblyL.runFromInput(-RobotMap.LiftLeftRetractSpeed);
+        liftAssemblyR.runFromInput(-RobotMap.LiftRightRetractSpeed);
     }
     
     public void extend() {
 //        System.out.println("Extending... limitL="+liftAssemblyL.getLimit(LIFT_RETRACT_SPEED_L)+", limitR="+liftAssemblyR.getLimit(LIFT_RETRACT_SPEED_R));
 //        System.out.println("Extending... limitL="+liftLimitHighL.get()+", limitR="+liftLimitHighR.get());
-        liftAssemblyL.runFromInput(LIFT_EXTEND_SPEED_L);
-        liftAssemblyR.runFromInput(LIFT_EXTEND_SPEED_R);
+        liftAssemblyL.runFromInput(RobotMap.LiftLeftExtendSpeed);
+        liftAssemblyR.runFromInput(RobotMap.LiftRightExtendSpeed);
     }
     
     public void stop(){

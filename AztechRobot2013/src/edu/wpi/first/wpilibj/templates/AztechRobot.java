@@ -57,7 +57,7 @@ public class AztechRobot extends IterativeRobot {
         
         shooter.init();
         drive.init();
-//        lift.init();        
+        lift.init();        
 
         // Recenter all the axis (assumes they are being left alone at start of robot...)
         oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameX.value);
