@@ -57,16 +57,16 @@ public class AztechRobot extends IterativeRobot {
         
         shooter.init();
         drive.init();
-//        AztechRobot.lift.init();        
+//        lift.init();        
 
         // Recenter all the axis (assumes they are being left alone at start of robot...)
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisTriggers.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisLeftX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisLeftY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisRightX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisRightY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisTriggers.value);
 
 
         // Initialize all subsystems
@@ -91,13 +91,13 @@ public class AztechRobot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         // Recenter all the axis (assumes they are being left alone at start of teleop...)
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisGameY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisLeftY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightX.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisRightY.value);
-        oi.getFirstController().recenter(LogitechController.AxisType.kAxisTriggers.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisGameY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisLeftX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisLeftY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisRightX.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisRightY.value);
+        oi.getDriverController().recenter(LogitechController.AxisType.kAxisTriggers.value);
 
         
         autonomousCommand.cancel();

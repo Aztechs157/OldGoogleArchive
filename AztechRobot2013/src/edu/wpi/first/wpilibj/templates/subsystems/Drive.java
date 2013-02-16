@@ -27,7 +27,6 @@ public class Drive extends Subsystem {
     public static ScaledCANJaguar driveFR;
     public static ScaledCANJaguar driveRL;
     public static ScaledCANJaguar driveRR;
-    
     public static RobotDrive mechanumDrive;
 
     // Put methods for controlling this subsystem
@@ -40,7 +39,7 @@ public class Drive extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    
+
     public void init() {
         try {
             driveFL = new ScaledCANJaguar(RobotMap.FrontLeftMotorID);
@@ -81,8 +80,9 @@ public class Drive extends Subsystem {
 
         try {
             mechanumDrive = new RobotDrive(driveFL, driveRL, driveFR, driveRR);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             System.out.println("Can't get mech drive going...  FAIL");
+            ex.printStackTrace();
         }
 
         if (mechanumDrive == null) {
@@ -94,16 +94,13 @@ public class Drive extends Subsystem {
             mechanumDrive.setExpiration(4.0);
             mechanumDrive.setSensitivity(0.5);
             mechanumDrive.setMaxOutput(1.0);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             System.out.println("Can't configure mech drive ...  FAIL");
+            ex.printStackTrace();
         }
-
-
-
     }
-    
-    
-            private static void setupJagForSpeedControl(CANJaguar jag) {
+
+    private static void setupJagForSpeedControl(CANJaguar jag) {
         try {
             jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
             jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
@@ -113,7 +110,10 @@ public class Drive extends Subsystem {
         } catch (CANTimeoutException ex) {
             System.out.println("Exception while configuring speed");
         }
-
     }
-
+    
+    public void mecanumDrive_Cartesian(double x, double y, double rotation)
+    {
+        mechanumDrive.mecanumDrive_Cartesian(x,y,rotation,0);
+    }
 }
