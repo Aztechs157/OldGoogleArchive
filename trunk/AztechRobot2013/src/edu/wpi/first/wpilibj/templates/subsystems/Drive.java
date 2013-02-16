@@ -116,6 +116,42 @@ public class Drive extends Subsystem {
         }
     }
     
+    private static void setupJagForPositionControl(CANJaguar jag) {
+        try {
+            jag.changeControlMode(CANJaguar.ControlMode.kPosition);
+            jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+            jag.configEncoderCodesPerRev(360);
+//                encJagRRMotorDrive.setPID(25, 0.04, 5);
+            jag.setPID(15, 0.08, 25);
+//                encJagRRMotorDrive.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            jag.enableControl();
+        } catch (CANTimeoutException ex) {
+            System.out.println("Exception while configuring position");
+        }
+    }
+    
+     private static void setupJagCoastMode(CANJaguar jag, boolean coast) {
+        try {
+            if(!coast)
+            {
+                jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            } else {
+                jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+            }
+            jag.enableControl();
+        } catch (CANTimeoutException ex) {
+            System.out.println("Exception while coast mode");
+        }
+    }
+
+    public void setCoastMode(boolean coast)
+    {
+        setupJagCoastMode(driveFL, coast);
+        setupJagCoastMode(driveRL, coast);
+        setupJagCoastMode(driveFR, coast);
+        setupJagCoastMode(driveRR, coast);
+    }
+    
     public void mecanumDrive_Cartesian(double x, double y, double rotation)
     {      
         mechanumDrive.mecanumDrive_Cartesian(x,y,rotation,0);
