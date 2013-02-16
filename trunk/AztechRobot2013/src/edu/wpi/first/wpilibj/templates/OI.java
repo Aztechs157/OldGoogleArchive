@@ -3,6 +3,7 @@ package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.LogitechController;
 import edu.wpi.first.wpilibj.templates.LogitechControllerButton;
 import edu.wpi.first.wpilibj.templates.commands.*;
@@ -15,11 +16,11 @@ public class OI {
 
     // Controller Ports
     public static final int kLogitechFirstPort = 1;
-    public static final int kJoystickFirstPort = 2;
+    public static final int kOperatorJoystickPort = 2;
     
     // Controllers
     private LogitechController m_FirstGamePad;
-    private Joystick m_FirstJoystick;
+    private Joystick m_OperatorJoystick;
     
     //// CREATING Logitech BUTTONS
     // Trigger Buttons (at index fingers)
@@ -45,7 +46,19 @@ public class OI {
     private LogitechControllerButton m_setFirst_RightStickButton;
 
     //// CREATING Joystick BUTTONS
-
+    private JoystickButton m_OperatorButton_Trigger;
+    private JoystickButton m_OperatorButton_Side;
+    private JoystickButton m_OperatorButton_3;
+    private JoystickButton m_OperatorButton_4;
+    private JoystickButton m_OperatorButton_5;
+    private JoystickButton m_OperatorButton_6;
+    private JoystickButton m_OperatorButton_7;
+    private JoystickButton m_OperatorButton_8;
+    private JoystickButton m_OperatorButton_9;
+    private JoystickButton m_OperatorButton_10;
+    private JoystickButton m_OperatorButton_11;
+    private JoystickButton m_OperatorButton_12;
+    
     
     public OI() {
 
@@ -97,7 +110,34 @@ public class OI {
         m_setFirst_RightStickButton.whenPressed(new PrintMessage("Button <m_setFirst_RightStickButton> pressed\n"));
 
         // Create the Joystick
-        m_FirstJoystick = new Joystick(kJoystickFirstPort);
+        m_OperatorJoystick = new Joystick(kOperatorJoystickPort);
+        
+
+      m_OperatorButton_Trigger = new JoystickButton(m_OperatorJoystick, 1);
+      m_OperatorButton_Side = new JoystickButton(m_OperatorJoystick, 2);
+      m_OperatorButton_3 = new JoystickButton(m_OperatorJoystick, 3);
+      m_OperatorButton_4 = new JoystickButton(m_OperatorJoystick, 4);
+      m_OperatorButton_5 = new JoystickButton(m_OperatorJoystick, 5);
+      m_OperatorButton_6 = new JoystickButton(m_OperatorJoystick, 6);
+      m_OperatorButton_7 = new JoystickButton(m_OperatorJoystick, 7);
+      m_OperatorButton_8 = new JoystickButton(m_OperatorJoystick, 8);
+      m_OperatorButton_9 = new JoystickButton(m_OperatorJoystick, 9);
+      m_OperatorButton_10 = new JoystickButton(m_OperatorJoystick, 10);
+      m_OperatorButton_11 = new JoystickButton(m_OperatorJoystick, 11);
+      m_OperatorButton_12 = new JoystickButton(m_OperatorJoystick, 12);
+
+      m_OperatorButton_Trigger.whenPressed(new PrintMessage("Operator Button <trigger>"));
+      m_OperatorButton_Side.whenPressed(new PrintMessage("Operator Button <side>"));
+      m_OperatorButton_3.whenPressed(new PrintMessage("Operator Button <3>"));
+      m_OperatorButton_4.whenPressed(new PrintMessage("Operator Button <4>"));
+      m_OperatorButton_5.whenPressed(new PrintMessage("Operator Button <5>"));
+      m_OperatorButton_6.whenPressed(new PrintMessage("Operator Button <6>"));
+      m_OperatorButton_7.whenPressed(new PrintMessage("Operator Button <7>"));
+      m_OperatorButton_8.whenPressed(new PrintMessage("Operator Button <8>"));
+      m_OperatorButton_9.whenPressed(new PrintMessage("Operator Button <9>"));
+      m_OperatorButton_10.whenPressed(new PrintMessage("Operator Button <10>"));
+      m_OperatorButton_11.whenPressed(new PrintMessage("Operator Button <11>"));
+      m_OperatorButton_12.whenPressed(new PrintMessage("Operator Button <12>"));
 
     }
 
@@ -106,6 +146,6 @@ public class OI {
     }
 
     public Joystick getOperatorJoystick() {
-        return m_FirstJoystick;
+        return m_OperatorJoystick;
     }
 }
