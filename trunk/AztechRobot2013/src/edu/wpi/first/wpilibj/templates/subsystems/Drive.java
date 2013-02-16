@@ -87,73 +87,78 @@ public class Drive extends Subsystem {
 
         if (mechanumDrive == null) {
             System.out.println("MD = NULL");
-        }
-
-        try {
-            mechanumDrive.setSafetyEnabled(false);
-            mechanumDrive.setExpiration(4.0);
-            mechanumDrive.setSensitivity(0.5);
-            mechanumDrive.setMaxOutput(1.0);
-            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, RobotMap.FrontLeftMotorInverted);
-            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, RobotMap.RearLeftMotorInverted);
-            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, RobotMap.FrontRightMotorInverted);
-            mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, RobotMap.FrontRightMotorInverted);
-        } catch (Exception ex) {
-            System.out.println("Can't configure mech drive ...  FAIL");
-            ex.printStackTrace();
+        } else {
+            try {
+                mechanumDrive.setSafetyEnabled(false);
+                mechanumDrive.setExpiration(4.0);
+                mechanumDrive.setSensitivity(0.5);
+                mechanumDrive.setMaxOutput(1.0);
+                mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, RobotMap.FrontLeftMotorInverted);
+                mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, RobotMap.RearLeftMotorInverted);
+                mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, RobotMap.FrontRightMotorInverted);
+                mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, RobotMap.FrontRightMotorInverted);
+            } catch (Exception ex) {
+                System.out.println("Can't configure mech drive ...  FAIL");
+                ex.printStackTrace();
+            }
         }
     }
 
     private static void setupJagForSpeedControl(CANJaguar jag) {
-        try {
-            jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
-            jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            jag.configEncoderCodesPerRev(360 * 3);
-            jag.setPID(.75, 0.05, 0);
-            jag.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("Exception while configuring speed");
-        }
-    }
-    
-    private static void setupJagForPositionControl(CANJaguar jag) {
-        try {
-            jag.changeControlMode(CANJaguar.ControlMode.kPosition);
-            jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
-            jag.configEncoderCodesPerRev(360);
-//                encJagRRMotorDrive.setPID(25, 0.04, 5);
-            jag.setPID(15, 0.08, 25);
-//                encJagRRMotorDrive.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            jag.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("Exception while configuring position");
-        }
-    }
-    
-     private static void setupJagCoastMode(CANJaguar jag, boolean coast) {
-        try {
-            if(!coast)
-            {
-                jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            } else {
-                jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+        if (jag != null) {
+            try {
+                jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
+                jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+                jag.configEncoderCodesPerRev(360 * 3);
+                jag.setPID(.75, 0.05, 0);
+                jag.enableControl();
+            } catch (CANTimeoutException ex) {
+                System.out.println("Exception while configuring speed");
             }
-            jag.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("Exception while coast mode");
         }
     }
 
-    public void setCoastMode(boolean coast)
-    {
+    private static void setupJagForPositionControl(CANJaguar jag) {
+        if (jag != null) {
+            try {
+                jag.changeControlMode(CANJaguar.ControlMode.kPosition);
+                jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+                jag.configEncoderCodesPerRev(360);
+//                encJagRRMotorDrive.setPID(25, 0.04, 5);
+                jag.setPID(15, 0.08, 25);
+//                encJagRRMotorDrive.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                jag.enableControl();
+            } catch (CANTimeoutException ex) {
+                System.out.println("Exception while configuring position");
+            }
+        }
+    }
+
+    private static void setupJagCoastMode(CANJaguar jag, boolean coast) {
+        if (jag != null) {
+            try {
+                if (!coast) {
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                } else {
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+                }
+                jag.enableControl();
+            } catch (CANTimeoutException ex) {
+                System.out.println("Exception while coast mode");
+            }
+        }
+    }
+
+    public void setCoastMode(boolean coast) {
         setupJagCoastMode(driveFL, coast);
         setupJagCoastMode(driveRL, coast);
         setupJagCoastMode(driveFR, coast);
         setupJagCoastMode(driveRR, coast);
     }
-    
-    public void mecanumDrive_Cartesian(double x, double y, double rotation)
-    {      
-        mechanumDrive.mecanumDrive_Cartesian(x,y,rotation,0);
+
+    public void mecanumDrive_Cartesian(double x, double y, double rotation) {
+        if (mechanumDrive != null) {
+            mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
+        }
     }
 }
