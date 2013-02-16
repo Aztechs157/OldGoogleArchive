@@ -133,11 +133,13 @@ public class OI {
       m_OperatorButton_4.whenPressed(new PrintMessage("Operator Button <4>"));
       m_OperatorButton_5.whenPressed(new PrintMessage("Operator Button <5>"));
       m_OperatorButton_6.whenPressed(new PrintMessage("Operator Button <6>"));
-      m_OperatorButton_7.whenPressed(new PrintMessage("Operator Button <7>"));
       m_OperatorButton_8.whenPressed(new PrintMessage("Operator Button <8>"));
-      m_OperatorButton_9.whenPressed(new PrintMessage("Operator Button <9>"));
-      m_OperatorButton_10.whenPressed(new PrintMessage("Operator Button <10>"));
-      m_OperatorButton_11.whenPressed(new ReadJag(RobotMap.ShooterElevationMotorID, true));
+
+      m_OperatorButton_7.whenPressed(new SetColor(Shooter.Color.Red));
+      m_OperatorButton_9.whenPressed(new SetColor(Shooter.Color.Blue));
+      m_OperatorButton_11.whenPressed(new SetColor(Shooter.Color.White));
+
+      m_OperatorButton_10.whenPressed(new ReadJag(RobotMap.ShooterElevationMotorID, true));
       m_OperatorButton_12.whenPressed(new ReadJag(RobotMap.ShooterElevationMotorID, false));
 
     }

@@ -49,6 +49,11 @@ public class RobotMap {
     public static final int ShooterRetractPort = 4;     // Relay
     public static final int ShooterExtendPort = 5;      // Relay
     
+    // Request Light Panel
+    public static final int RedLightPort = 6;            // Relay
+    public static final int GreenLightPort = 7;          // Relay
+    public static final int BlueLightPort = 8;           // Relay
+    
          
     //=====================================================================
     // Lift System Constants
