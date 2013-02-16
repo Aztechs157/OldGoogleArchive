@@ -26,14 +26,16 @@ public class LaunchDisk extends CommandBase {
 
         public final int value;
         // Drive Mode enumeration constants
-        protected static final int m_kStart = 0;
-        protected static final int m_kLoad = 1;
-        protected static final int m_kLoading = 5;
-        protected static final int m_kSpinUp = 2;
-        protected static final int m_kSpinningUp = 6;
-        protected static final int m_kShoot = 3;
-        protected static final int m_kFinish = 4;
+        protected static final int m_kIdle = 0;
+        protected static final int m_kStart = 1;
+        protected static final int m_kLoad = 2;
+        protected static final int m_kLoading = 3;
+        protected static final int m_kSpinUp = 4;
+        protected static final int m_kSpinningUp = 5;
+        protected static final int m_kShoot = 6;
+        protected static final int m_kFinish = 7;
         
+        public static final LaunchState Idle   = new LaunchState(m_kIdle);
         public static final LaunchState Start  = new LaunchState(m_kStart);
         public static final LaunchState Load   = new LaunchState(m_kLoad);
         public static final LaunchState Loading= new LaunchState(m_kLoading);
@@ -49,7 +51,7 @@ public class LaunchDisk extends CommandBase {
 
     private boolean isFinished = false;
     private double startTime = 0;
-    private LaunchState state = LaunchState.Start;
+    private LaunchState state = LaunchState.Idle;
     
     public LaunchDisk() {
         // Use requires() here to declare subsystem dependencies
@@ -59,7 +61,10 @@ public class LaunchDisk extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
            isFinished = false;
-           state = LaunchState.Start;
+           if(state == LaunchState.Idle)
+           {
+               state = LaunchState.Start;
+           }
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -115,10 +120,13 @@ public class LaunchDisk extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        state = LaunchState.Idle;        
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
+        end();
+    }    
 }
+    
