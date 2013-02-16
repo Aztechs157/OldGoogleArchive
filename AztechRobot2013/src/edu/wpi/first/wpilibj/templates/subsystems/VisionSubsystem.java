@@ -106,16 +106,15 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 
     
     public void initDefaultCommand() {
-        Thread t = new Thread(this);
+//        Thread t = new Thread(this);
 //        t.start();
     }
     
-    public VisionSubsystem()
+    public void init()
     {
-//        camera_ = AxisCamera.getInstance("10.1.57.11");  // get an instance of the camera
+        camera_ = AxisCamera.getInstance("10.1.57.11");  // get an instance of the camera
         cc_ = new CriteriaCollection();      // create the criteria for the particle filter
         cc_.addCriteria(NIVision.MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
-
 
         goalFound_ = GOAL__NONE;
         xDeltaNorm_ = 0.0;
@@ -124,6 +123,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         yDeltaDeg_ = 0.0;
 
         enabled_ = false;
+        
+        Thread t = new Thread(this);
+        t.start();
     }
     
     public int goalFound()
@@ -164,6 +166,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     
     public void run()
     {
+        System.out.println("vision run..");
         while(true)
         {
             try
@@ -294,7 +297,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
             }
             else
             {
-                System.out.println("Camera Disabled");
+//                System.out.println("Camera Disabled");
                 Timer.delay(0.5);
             }
         }
