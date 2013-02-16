@@ -4,42 +4,40 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
-import edu.wpi.first.wpilibj.templates.subsystems.LiftSubsystem;
 
 /**
  *
- * @author aztechs
+ * @author MattKahn
  */
-public class LiftCommand extends CommandBase {
+public class ManualAim extends CommandBase {
     
-    LiftSubsystem lift = AztechRobot.lift;
-
-    public LiftCommand() {
+    public ManualAim() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(lift);
     }
-    
+
     // Called just before this Command runs the first time
     protected void initialize() {
-        
+        System.out.println("MANUAL AIM ===================================================");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if( oi.getDriverController().getButtonA() )
+        double rotation;
+        double elevation;
+
+        for(int idx = 0; idx < 10; idx++)
         {
-            lift.retract();
+            System.out.println("Axis [" + idx + "] = " + oi.getOperatorJoystick().getRawAxis(idx));
         }
-        else if( oi.getDriverController().getButtonB() )
+        for(int idx = 0; idx < 25; idx++)
         {
-            lift.extend();
-        }
-        else
-        {
-            lift.stop();
+            System.out.println("Button [" + idx + "] = " + oi.getOperatorJoystick().getRawButton(idx));
         }        
+//        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, rotation);
+//        AztechRobot.shooter.adjustShooterElevation(elevation);
     }
 
     // Make this return true when this Command no longer needs to run execute()

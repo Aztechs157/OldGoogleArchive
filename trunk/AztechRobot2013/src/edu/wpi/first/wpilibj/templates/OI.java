@@ -1,5 +1,6 @@
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 import edu.wpi.first.wpilibj.templates.LogitechController;
@@ -12,9 +13,15 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  */
 public class OI {
 
-    //// CREATING BUTTONS
+    // Controller Ports
     public static final int kLogitechFirstPort = 1;
+    public static final int kJoystickFirstPort = 2;
+    
+    // Controllers
     private LogitechController m_FirstGamePad;
+    private Joystick m_FirstJoystick;
+    
+    //// CREATING Logitech BUTTONS
     // Trigger Buttons (at index fingers)
     private LogitechControllerButton m_setFirst_LeftShoulderButton;
     private LogitechControllerButton m_setFirst_LeftTrigger;
@@ -37,31 +44,9 @@ public class OI {
     private LogitechControllerButton m_setFirst_LeftStickButton;
     private LogitechControllerButton m_setFirst_RightStickButton;
 
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    // Another type of button you can create is a DigitalIOButton, which is
-    // a button or switch hooked up to the cypress module. These are useful if
-    // you want to build a customized operator interface.
-    // Button button = new DigitalIOButton(1);
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+    //// CREATING Joystick BUTTONS
+
+    
     public OI() {
 
         // Create the Controller
@@ -90,7 +75,7 @@ public class OI {
         m_setFirst_RightStickButton = new LogitechControllerButton(m_FirstGamePad, LogitechController.ButtonType.kButtonRightTop.value);
 
         // Associate the Buttons with Commands
-        m_setFirst_LeftShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_LeftShoulderButton> pressed\n"));
+        m_setFirst_LeftShoulderButton.whenPressed(new ManualAim());
         m_setFirst_LeftTrigger.whenPressed(new PrintMessage("Button <m_setFirst_LeftTrigger> pressed\n"));
         m_setFirst_RightShoulderButton.whenPressed(new LaunchDisk());
         m_setFirst_RightTrigger.whenPressed(new PrintMessage("Button <m_setFirst_RightTrigger> pressed\n"));
@@ -110,9 +95,17 @@ public class OI {
         // Stick Buttons (Push down on stick)
         m_setFirst_LeftStickButton.whenPressed(new PrintMessage("Button <m_setFirst_LeftStickButton> pressed\n"));
         m_setFirst_RightStickButton.whenPressed(new PrintMessage("Button <m_setFirst_RightStickButton> pressed\n"));
+
+        // Create the Joystick
+        m_FirstJoystick = new Joystick(kJoystickFirstPort);
+
     }
 
-    public LogitechController getFirstController() {
+    public LogitechController getDriverController() {
         return m_FirstGamePad;
+    }
+
+    public Joystick getOperatorJoystick() {
+        return m_FirstJoystick;
     }
 }
