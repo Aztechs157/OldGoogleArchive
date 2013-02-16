@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
  */
 public class AutonomousCommand extends CommandBase {
 
-    static VisionSubsystem vision_ = AztechRobot.vision;
-    static Drive drive_ = AztechRobot.drive;
+    static VisionSubsystem vision_ = vision;
+    static Drive drive_ = drive;
     
     public AutonomousCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(AztechRobot.vision);
-        requires(AztechRobot.drive);
+        requires(vision);
+        requires(drive);
     }
 
     // Called just before this Command runs the first time

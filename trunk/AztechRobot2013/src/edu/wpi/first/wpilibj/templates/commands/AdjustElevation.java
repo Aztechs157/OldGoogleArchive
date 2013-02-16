@@ -5,46 +5,33 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.templates.AztechRobot;
-import edu.wpi.first.wpilibj.templates.subsystems.LiftSubsystem;
 
 /**
  *
- * @author aztechs
+ * @author MattKahn
  */
-public class LiftCommand extends CommandBase {
+public class AdjustElevation extends CommandBase {
     
-    LiftSubsystem lift = CommandBase.lift;
-
-    public LiftCommand() {
+    private double degrees;
+    
+    public AdjustElevation(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(lift);
+        degrees = inDegrees;
     }
-    
+
     // Called just before this Command runs the first time
     protected void initialize() {
-        
+        CommandBase.shooter.adjustShooterElevation(degrees);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if( oi.getDriverController().getButtonA() )
-        {
-            lift.retract();
-        }
-        else if( oi.getDriverController().getButtonB() )
-        {
-            lift.extend();
-        }
-        else
-        {
-            lift.stop();
-        }        
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

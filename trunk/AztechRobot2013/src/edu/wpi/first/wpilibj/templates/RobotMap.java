@@ -1,5 +1,10 @@
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.templates.subsystems.Drive;
+import edu.wpi.first.wpilibj.templates.subsystems.LiftSubsystem;
+import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
+import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -83,10 +88,4 @@ public class RobotMap {
 
     //=====================================================================
     //=====================================================================
-        
-    public static void init() {
-        
-
-    }
-    
 }

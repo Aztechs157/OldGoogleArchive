@@ -2,8 +2,10 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.templates.AztechRobot;
+import edu.wpi.first.wpilibj.templates.LogitechController;
 import edu.wpi.first.wpilibj.templates.OI;
-import edu.wpi.first.wpilibj.templates.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.templates.subsystems.*;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -16,6 +18,10 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     // Create a single static instance of all of your subsystems
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    public static Drive drive = new Drive();
+    public static LiftSubsystem lift = new LiftSubsystem();
+    public static VisionSubsystem vision = new VisionSubsystem();
+    public static Shooter shooter = new Shooter();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

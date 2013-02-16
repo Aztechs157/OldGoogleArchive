@@ -26,8 +26,8 @@ public class Turn extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        AztechRobot.drive.setCoastMode(false);
-        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, degrees);
+        CommandBase.drive.setCoastMode(false);
+        CommandBase.drive.mecanumDrive_Cartesian(0, 0, degrees);
 
         duration = .75;
         startTime = Timer.getFPGATimestamp();
@@ -36,7 +36,7 @@ public class Turn extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (startTime >= (Timer.getFPGATimestamp() + duration)) {
-            AztechRobot.drive.mecanumDrive_Cartesian(0, 0, 0);
+            CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
         }
     }
 
@@ -50,7 +50,7 @@ public class Turn extends CommandBase {
     }
     // Called once after isFinished returns true
     protected void end() {
-        AztechRobot.drive.setCoastMode(true);
+        CommandBase.drive.setCoastMode(true);
     }
 
     // Called when another command which requires one or more of the same

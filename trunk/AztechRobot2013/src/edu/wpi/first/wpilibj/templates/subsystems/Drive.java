@@ -40,7 +40,11 @@ public class Drive extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
-    public void init() {
+    public Drive()
+    {
+        init();
+    }
+    public final void init() {
         try {
             driveFL = new ScaledCANJaguar(RobotMap.FrontLeftMotorID);
             driveFL.setScalingFactor(RobotMap.SpeedScale);
