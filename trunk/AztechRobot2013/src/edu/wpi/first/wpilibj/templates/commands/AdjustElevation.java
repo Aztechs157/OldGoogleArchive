@@ -20,7 +20,7 @@ public class AdjustElevation extends CommandBase {
     
     public AdjustElevation(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+//        requires(CommandBase.shooter);
         degrees = inDegrees;
     }
 

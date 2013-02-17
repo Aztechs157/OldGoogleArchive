@@ -128,7 +128,6 @@ public class Drive extends Subsystem {
                 jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                 jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
                 jag.configEncoderCodesPerRev(360);
-//                encJagRRMotorDrive.setPID(25, 0.04, 5);
                 jag.setPID(15, 0.08, 25);
 //                encJagRRMotorDrive.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 jag.enableControl();

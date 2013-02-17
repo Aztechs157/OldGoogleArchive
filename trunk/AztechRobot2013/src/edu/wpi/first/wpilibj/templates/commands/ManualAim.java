@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
  */
 public class ManualAim extends CommandBase {
     
+    private static double commandElevation;
+    
     public ManualAim() {
         // Use requires() here to declare subsystem dependencies
         requires(CommandBase.shooter);
@@ -22,19 +24,27 @@ public class ManualAim extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         System.out.println("MANUAL AIM ===================================================");
+        commandElevation = CommandBase.shooter.getShooterElevation();
+        CommandBase.shooter.enableElevation(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double rotation;
-        double elevation;
+        double rotationStick = oi.getOperatorJoystick().getX();
+        double elevationStick = oi.getOperatorJoystick().getY();
+        
+        if((rotationStick * rotationStick) < 0.025) rotationStick = 0;
+        if((elevationStick * elevationStick) < 0.025) elevationStick = 0;
  
-        rotation = 0.2 * oi.getOperatorJoystick().getX();
-        elevation = oi.getOperatorJoystick().getY();
+        double elevationDelta = elevationStick * 0.1;
+        commandElevation -= elevationDelta;
 
-//        AztechRobot.drive.mecanumDrive_Cartesian(0, 0, rotation);
-//        AztechRobot.shooter.adjustShooterElevation(elevation);
-//        System.out.println("Elevation = " + AztechRobot.shooter.getShooterElevation() + " + " + elevation + "  -- Az  += " + rotation);
+        double rotationSpeed =  0.2 * rotationStick;
+
+//        System.out.println("ManualAim - elDelta=" + elevationDelta + "   comEl=" + commandElevation + "   rotSPeed=" + rotationSpeed);
+        
+//        CommandBase.shooter.setShooterElevation(commandElevation);
+        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rotationSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
