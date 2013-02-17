@@ -82,8 +82,15 @@ public class RobotMap {
     //=====================================================================
     // Vision System Constants
     //=====================================================================
+    public static final double VisionXMinDeg = -24.0;
+    public static final double VisionXMaxDeg = +24.0;
+    public static final double VisionYMinDeg = -24.0;
+    public static final double VisionYMaxDeg = +24.0;
+    
+    public static final int VisionBorderTolerance = 5;
+    
     public static final int VisionQualityRequired = 4;
-    public static final int VisionQualityMax = 6;
+    public static final int VisionQualityMax = 10;
     
     //=====================================================================
     // Vision Align Command Constants

@@ -22,13 +22,12 @@ public class VisionAlign extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        vision.enable();
         System.out.println("VisionAlign commanded.");
+        vision.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        System.out.println("execute called...");
         if(vision.goalFound() != VisionSubsystem.GOAL__NONE) {
             System.out.println("Aligning... x="+vision.getXErrorDeg()+",  y="+vision.getYErrorDeg()+",   quality="+vision.getQuality()+"");
             drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.8);
@@ -38,15 +37,14 @@ public class VisionAlign extends CommandBase {
             drive.mecanumDrive_Cartesian(0, 0, 0);
         }
         
-    }
+    }    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        System.out.println("checking if finished.");
         // quit if ...
-        //    a. cycled for min cycles and still have no target, or
+        //    a. cycled for min frames and still have no target, or
         //    b. have the target and are within the required alignment tolerance
-        return ((vision.reachedMinCycles() && 
+        return ((vision.reachedMinFrames() && 
                 (vision.goalFound() == VisionSubsystem.GOAL__NONE))) ||
                ((vision.goalFound() != VisionSubsystem.GOAL__NONE) && 
                 (vision.getXErrorDeg() < RobotMap.AlignToleranceXDeg) &&
