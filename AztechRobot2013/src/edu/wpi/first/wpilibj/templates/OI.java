@@ -140,13 +140,14 @@ public class OI {
         m_OperatorButton_4.whenPressed(new AdjustElevation(-5.0));
         m_OperatorButton_5.whenPressed(new SetElevation(Shooter.basicShotAngle));
         m_OperatorButton_6.whenPressed(new AdjustElevation(5.0));
-        m_OperatorButton_8.whenPressed(new PrintMessage("Operator Button <8>"));
+        m_OperatorButton_8.whenPressed(new Turn(45.0));
 
         m_OperatorButton_7.whenPressed(new SetColor(Shooter.Color.Red));
         m_OperatorButton_9.whenPressed(new SetColor(Shooter.Color.Blue));
         m_OperatorButton_11.whenPressed(new SetColor(Shooter.Color.White));
 
-        m_OperatorButton_10.whenPressed(new ReadJag(Shooter.shooterElevation, true));
+//        m_OperatorButton_10.whenPressed(new ReadJag(Shooter.shooterElevation, true));
+        m_OperatorButton_10.whenPressed(new Turn(-45));
         m_OperatorButton_12.whenPressed(new ReadJag(Shooter.shooterElevation, false));
     }
 
