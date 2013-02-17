@@ -43,7 +43,7 @@ public class RobotMap {
     public static int ShooterFirstStageDrivePWMPort = 3;   // PWM
     public static int ShooterSecondStageDrivePWMPort = 4;  // PWM
     // Compressor Info
-    public static final int PressureSwitchGPIOPort = 9;  // GPIO 
+    public static final int PressureSwitchGPIOPort = 12;  // GPIO 
     public static final int CompressorRelayChannel = 4;  // Analog 
     
     // Loader Piston
@@ -51,8 +51,8 @@ public class RobotMap {
     public static final int LoaderExtendPort = 3;       // Relay
 
     // Shoot Piston
-    public static final int ShooterRetractPort = 4;     // Relay
-    public static final int ShooterExtendPort = 5;      // Relay
+    public static final int ShooterRetractPort = 7;     // Relay
+    public static final int ShooterExtendPort = 6;      // Relay
     
     // Request Light Panel
     public static final int RedLightPort = 6;            // Relay
