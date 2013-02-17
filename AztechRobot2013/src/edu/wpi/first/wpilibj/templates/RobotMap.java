@@ -80,11 +80,17 @@ public class RobotMap {
     public static final boolean LiftRightMotorInverted = false;
 
     //=====================================================================
-    // Lift System Constants
+    // Vision System Constants
     //=====================================================================
     public static final int VisionQualityRequired = 4;
     public static final int VisionQualityMax = 6;
-
+    
+    //=====================================================================
+    // Vision Align Command Constants
+    //=====================================================================
+    public static final double AlignToleranceXDeg = 3.0;
+    public static final double AlignToleranceYDeg = 3.0;
+    
 
     //=====================================================================
     //=====================================================================

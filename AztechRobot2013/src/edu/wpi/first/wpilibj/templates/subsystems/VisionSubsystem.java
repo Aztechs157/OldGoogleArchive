@@ -75,8 +75,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     AxisCamera camera_;          // the axis camera object (connected to the switch)
     CriteriaCollection cc_;      // the criteria for doing the particle filter operation
 
-    int quality_;
-    int goalFound_;
+    int quality_; 
+    int cycles_;
+    int lastGoalSeen_;
     double xDeltaNorm_;
     double yDeltaNorm_;
     double xDeltaDeg_;
@@ -118,7 +119,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         cc_ = new CriteriaCollection();      // create the criteria for the particle filter
         cc_.addCriteria(NIVision.MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
 
-        goalFound_ = GOAL__NONE;
+        lastGoalSeen_ = GOAL__NONE;
         quality_ = 0;
         xDeltaNorm_ = 0.0;
         yDeltaNorm_ = 0.0;
@@ -135,7 +136,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     {
         if(quality_ >= RobotMap.VisionQualityRequired)
         {
-            return goalFound_;
+            return lastGoalSeen_;
         }
         else
         {
@@ -146,6 +147,11 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     public int getQuality()
     {
         return quality_;
+    }
+    
+    public boolean reachedMinCycles()
+    {
+        return cycles_ >= RobotMap.VisionQualityMax;
     }
     
     public double getXErrorNorm()
@@ -176,7 +182,8 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     public void disable()
     {
         enabled_ = false;
-        goalFound_ = GOAL__NONE;
+        cycles_ = 0;
+        lastGoalSeen_ = GOAL__NONE;
     }
     
     public void run()
@@ -206,6 +213,8 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 //                    System.out.println("Processing new image.");
                     ColorImage image;
                     image = camera_.getImage();     // comment if using stored images
+                    
+                    ++cycles_;
 
 //                System.out.println("Got Image");
 //                BinaryImage thresholdImage = image.thresholdRGB(60, 100, 90, 255, 20, 255);   // keep only red objects
@@ -222,7 +231,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                     double lowestDist = 10.0; 
                     int closestTargetIdx = 0; 
                     int closestGoalType = GOAL__NONE;
-                    int goalFound = GOAL__NONE; 
+                    int goalSeen = GOAL__NONE; 
                     if(scores.length>0)
                     {
 //                        System.out.println("Scoring "+scores.length+" particles");
@@ -241,25 +250,25 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                             if(scoreCompare(scores[i], GOAL__HIGH)) // High Goal
                             {
   //                              System.out.println("particle: " + i + "is a === High Goal === Strength: " + scores[i].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                                goalFound = GOAL__HIGH; 
+                                goalSeen = GOAL__HIGH; 
                             }
                             else if (scoreCompare(scores[i], GOAL__MIDDLE)) // Mid Goal 
                             {
  //                               System.out.println("particle: " + i + "is a === Middle Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                                goalFound = GOAL__MIDDLE; 
+                                goalSeen = GOAL__MIDDLE; 
                             }
                             else if (scoreCompare(scores[i], GOAL__LOW)) // Mid Goal 
                             {
 //                                System.out.println("particle: " + i + "is a === Low Goal === Strength: " + scores[i].lowGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                                goalFound = GOAL__LOW; 
+                                goalSeen = GOAL__LOW; 
                             }
                     
-                            if (goalFound != GOAL__NONE) { 
+                            if (goalSeen != GOAL__NONE) { 
 //                                System.out.println("Particle "+i+" is a goal.");
                                 if ( Math.abs(report.center_mass_x_normalized) < lowestDist) { 
 //                                    System.out.println("  particle "+i+" is closer than "+closestTargetIdx+" @ "+lowestDist);
 //                                    System.out.println("Replacing "+lowestDist+" with "+Math.abs(report.center_mass_x_normalized));
-                                    closestGoalType = goalFound;
+                                    closestGoalType = goalSeen;
                                     closestTargetIdx = i; 
                                     lowestDist = Math.abs(report.center_mass_x_normalized); 
 //                                    System.out.println("  new lowest is "+lowestDist);
@@ -271,7 +280,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                             
                         }
                         
-                        if (goalFound != GOAL__NONE)
+                        if (goalSeen != GOAL__NONE)
                         {
                             ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(closestTargetIdx);
 //                            System.out.println("                                                               ** "+closestTargetIdx+" of "+scores.length+"**");
@@ -281,18 +290,18 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                             xDeltaDeg_ = (double)(xDeltaNorm_ + 1) / 2.0 * (xMaxDeg_ - xMinDeg_) + xMinDeg_;
                             yDeltaDeg_ = (double)(yDeltaNorm_ + 1) / 2.0 * (yMaxDeg_ - yMinDeg_) + yMinDeg_;
                             
-                            goalFound_ = closestGoalType; 
+                            lastGoalSeen_ = closestGoalType; 
                             tally_hit();
                         }
                         else
                         {
-                            goalFound_ = GOAL__NONE;
+//                            goalFound_ = GOAL__NONE;
                             tally_miss();
                         }
                     }
                     else
                     {
-                        goalFound_ = GOAL__NONE; 
+//                        goalFound_ = GOAL__NONE; 
                         tally_miss();
                     }
 
