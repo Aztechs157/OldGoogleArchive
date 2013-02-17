@@ -1,0 +1,80 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.wpi.first.wpilibj.templates.commands;
+
+import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
+
+/**
+ *
+ * @author aztechs
+ */
+public class VisionAlign extends CommandBase {
+    
+    public VisionAlign() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(vision);
+        requires(drive);
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+        vision.enable();
+        System.out.println("VisionAlign commanded.");
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+        System.out.println("execute called...");
+        if(vision.goalFound() != VisionSubsystem.GOAL__NONE) {
+            System.out.println("Aligning... x="+vision.getXErrorDeg()+",  y="+vision.getYErrorDeg()+",   quality="+vision.getQuality()+"");
+            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.8);
+        }
+        else
+        {
+            drive.mecanumDrive_Cartesian(0, 0, 0);
+        }
+        
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        System.out.println("checking if finished.");
+        // quit if ...
+        //    a. cycled for min cycles and still have no target, or
+        //    b. have the target and are within the required alignment tolerance
+        return ((vision.reachedMinCycles() && 
+                (vision.goalFound() == VisionSubsystem.GOAL__NONE))) ||
+               ((vision.goalFound() != VisionSubsystem.GOAL__NONE) && 
+                (vision.getXErrorDeg() < RobotMap.AlignToleranceXDeg) &&
+                (vision.getYErrorDeg() < RobotMap.AlignToleranceYDeg));
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+        switch(vision.goalFound())
+        {
+            case VisionSubsystem.GOAL__HIGH:
+                System.out.println("Found High Goal: Quality = "+vision.getQuality());
+                break;
+            case VisionSubsystem.GOAL__MIDDLE:
+                System.out.println("Found Middle Goal: Quality = "+vision.getQuality());
+                break;
+            case VisionSubsystem.GOAL__LOW:
+                System.out.println("Found Low Goal: Quality = "+vision.getQuality());
+                break;
+            default:
+                System.out.println("Found No Goal: Quality = "+vision.getQuality());
+        }
+        vision.disable();
+        drive.mecanumDrive_Cartesian(0, 0, 0);
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }    
+}
