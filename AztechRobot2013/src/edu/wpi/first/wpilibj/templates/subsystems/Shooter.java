@@ -24,10 +24,10 @@ public class Shooter extends Subsystem {
     // Top Stop    0.652    50.9
     
     // Sensor values per degree .004 
-    public static final double zeroSensorReading = 0.227;
-    public static final double maxSensorReading = 0.428;
-    public static final double zeroElevationAngle = 0;
-    public static final double maxElevationAngle =  49.5;
+    public static final double zeroSensorReading = 0.482;
+    public static final double maxSensorReading = 0.697;
+    public static final double zeroElevationAngle = 0.9;
+    public static final double maxElevationAngle =  51.2;
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading)/(maxElevationAngle - zeroElevationAngle));
 
     public static CANJaguar shooterElevation;
@@ -92,7 +92,7 @@ public class Shooter extends Subsystem {
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
             shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
             shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            shooterElevation.setPID(-2500, -1, 0);  //TODO: Set PID Constants for elevation conrol
+            shooterElevation.setPID(-2500, -.1, 0);  //TODO: Set PID Constants for elevation conrol
             shooterElevation.enableControl();
         } catch (CANTimeoutException ex) {
             System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
