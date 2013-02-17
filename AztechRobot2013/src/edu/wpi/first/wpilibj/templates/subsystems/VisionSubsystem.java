@@ -69,26 +69,19 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     final double VIEW_ANGLE = 48;       //Axis M1011 camera
     
     final boolean SAVE_IMAGE = false;
-    final int BORDER_TOL = 5;
-
     
     AxisCamera camera_;          // the axis camera object (connected to the switch)
     CriteriaCollection cc_;      // the criteria for doing the particle filter operation
 
     int quality_; 
-    int cycles_;
+    int frames_;
     int lastGoalSeen_;
     double xDeltaNorm_;
     double yDeltaNorm_;
     double xDeltaDeg_;
     double yDeltaDeg_;
     
-    boolean enabled_;
-    
-    final double yMinDeg_ = -24.0;
-    final double yMaxDeg_ = +24.0;
-    final double xMinDeg_ = -24.0;
-    final double xMaxDeg_ = +24.0;
+    int enableRequests_;
     
 //    public enum GoalType { GOAL__NONE, GOAL__HIGH, GOAL__MIDDLE, GOAL__LOW }
     
@@ -108,6 +101,11 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     }
 
     
+    public VisionSubsystem()
+    {
+        init();
+    }
+    
     public void initDefaultCommand() {
 //        Thread t = new Thread(this);
 //        t.start();
@@ -126,7 +124,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         xDeltaDeg_ = 0.0;
         yDeltaDeg_ = 0.0;
 
-        enabled_ = false;
+        enableRequests_ = 0;
         
         Thread t = new Thread(this);
         t.start();
@@ -149,9 +147,9 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         return quality_;
     }
     
-    public boolean reachedMinCycles()
+    public boolean reachedMinFrames()
     {
-        return cycles_ >= RobotMap.VisionQualityMax;
+        return frames_ >= RobotMap.VisionQualityMax;
     }
     
     public double getXErrorNorm()
@@ -176,14 +174,30 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     
     public void enable()
     {
-        enabled_ = true;
+        if(!isEnabled())
+        {
+            System.out.println("Enabling Vision System.");
+        }
+        enableRequests_++;
     }
     
     public void disable()
     {
-        enabled_ = false;
-        cycles_ = 0;
+        if(isEnabled())
+        {
+            enableRequests_--;
+            if(!isEnabled())
+            {
+                System.out.println("Disabling Vision System.");
+            }
+        }
+        frames_ = 0;
         lastGoalSeen_ = GOAL__NONE;
+    }
+    
+    public boolean isEnabled()
+    {
+        return enableRequests_ > 0;
     }
     
     public void run()
@@ -206,20 +220,16 @@ public class VisionSubsystem extends Subsystem implements Runnable {
 
         while(true)
         {
-            
-            if(enabled_)
+            if(isEnabled())
             {
                 try{
-//                    System.out.println("Processing new image.");
                     ColorImage image;
                     image = camera_.getImage();     // comment if using stored images
                     
-                    ++cycles_;
+                    ++frames_;
+//                    System.out.println("Processing image for frame "+frames_);
 
-//                System.out.println("Got Image");
-//                BinaryImage thresholdImage = image.thresholdRGB(60, 100, 90, 255, 20, 255);   // keep only red objects
                     BinaryImage thresholdImage = image.thresholdRGB(0, 78, 76, 179, 71, 133);   // keep only green objects
-//                BinaryImage thresholdImage = image.thresholdHSV(60, 100, 90, 255, 20, 255);   // keep only green objects
                     if(SAVE_IMAGE) thresholdImage.write("/2_threshold.bmp");
                     BinaryImage convexHullImage = thresholdImage.convexHull(false);          // fill in occluded rectangles
                     if(SAVE_IMAGE) convexHullImage.write("/3_convexHull.bmp");
@@ -264,7 +274,7 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                             }
                     
                             if (goalSeen != GOAL__NONE) { 
-//                                System.out.println("Particle "+i+" is a goal.");
+ //                               System.out.println("Particle "+i+" is a goal.");
                                 if ( Math.abs(report.center_mass_x_normalized) < lowestDist) { 
 //                                    System.out.println("  particle "+i+" is closer than "+closestTargetIdx+" @ "+lowestDist);
 //                                    System.out.println("Replacing "+lowestDist+" with "+Math.abs(report.center_mass_x_normalized));
@@ -273,40 +283,31 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                                     lowestDist = Math.abs(report.center_mass_x_normalized); 
 //                                    System.out.println("  new lowest is "+lowestDist);
                                 }  
-                                
-                                // get target normalized within image
-                                                      
                             }
-                            
                         }
                         
                         if (goalSeen != GOAL__NONE)
                         {
                             ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(closestTargetIdx);
 //                            System.out.println("                                                               ** "+closestTargetIdx+" of "+scores.length+"**");
-                            //System.out.println("particle: " + closestTargetIdx + " is the  === PICKED === Strength: " + scores[closestTargetIdx].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+//                            System.out.println("particle: " + closestTargetIdx + " is the  === PICKED === Strength: " + scores[closestTargetIdx].highGoalAspectRatio + " centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                             xDeltaNorm_ = report.center_mass_x_normalized;
                             yDeltaNorm_ = -report.center_mass_y_normalized;
-                            xDeltaDeg_ = (double)(xDeltaNorm_ + 1) / 2.0 * (xMaxDeg_ - xMinDeg_) + xMinDeg_;
-                            yDeltaDeg_ = (double)(yDeltaNorm_ + 1) / 2.0 * (yMaxDeg_ - yMinDeg_) + yMinDeg_;
+                            xDeltaDeg_ = (double)(xDeltaNorm_ + 1) / 2.0 * (RobotMap.VisionXMaxDeg - RobotMap.VisionXMinDeg) + RobotMap.VisionXMinDeg;
+                            yDeltaDeg_ = (double)(yDeltaNorm_ + 1) / 2.0 * (RobotMap.VisionYMaxDeg - RobotMap.VisionYMinDeg) + RobotMap.VisionYMinDeg;
                             
-                            lastGoalSeen_ = closestGoalType; 
-                            tally_hit();
+                            tally_hit(closestGoalType);
                         }
                         else
                         {
-//                            goalFound_ = GOAL__NONE;
                             tally_miss();
                         }
                     }
                     else
                     {
-//                        goalFound_ = GOAL__NONE; 
                         tally_miss();
                     }
 
-
-                
                     /**
                      * all images in Java must be freed after they are used since they are allocated out
                      * of C data structures. Not calling free() will cause the memory to accumulate over
@@ -324,19 +325,20 @@ public class VisionSubsystem extends Subsystem implements Runnable {
             }
             else
             {
-//                System.out.println("Camera Disabled");
                 Timer.delay(0.5);
             }
         }
     }
     
-    void tally_hit()
+    void tally_hit(int closestGoalType)
     {
+        lastGoalSeen_ = closestGoalType; 
         if(quality_ < RobotMap.VisionQualityMax)
         {
             quality_++;
         }
     }
+
     void tally_miss()
     {
         if(quality_ > 0)
@@ -373,11 +375,12 @@ public class VisionSubsystem extends Subsystem implements Runnable {
         int right = report.boundingRectLeft + report.boundingRectWidth;
         int top = report.boundingRectTop;
         int bottom = report.boundingRectTop  + report.boundingRectHeight;
+        int border = RobotMap.VisionBorderTolerance;
                 
-        if ((left < BORDER_TOL) ||
-            (right > (X_IMAGE_RES - BORDER_TOL)) ||
-            (top < BORDER_TOL ) ||
-            (bottom > (Y_IMAGE_RES - BORDER_TOL)))
+        if ((left < border) ||
+            (right > (X_IMAGE_RES - border)) ||
+            (top < border ) ||
+            (bottom > (Y_IMAGE_RES - border)))
         {
             return true;
         }
