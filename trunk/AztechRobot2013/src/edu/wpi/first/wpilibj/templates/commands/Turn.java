@@ -16,6 +16,9 @@ public class Turn extends CommandBase {
     double degrees = 0;
     double startTime;
     double duration = 0;
+    boolean isFinished = false;
+    double direction = 1;  // -1 or 1
+    double rate = 0;
     
     public Turn(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
@@ -26,27 +29,38 @@ public class Turn extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        CommandBase.drive.setCoastMode(false);
-        CommandBase.drive.mecanumDrive_Cartesian(0, 0, degrees);
-
-        duration = .75;
+        if (degrees < 0)
+        {
+            direction = -1;
+        }
+        if (degrees >= 0) 
+        {
+            direction = 1;
+        }
+        rate = 50 * direction;
+                
+        duration = Math.abs(degrees) * 0.01;
+        
         startTime = Timer.getFPGATimestamp();
+        System.out.println("Turn @ " + startTime + " for " + duration);
+        isFinished = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (startTime >= (Timer.getFPGATimestamp() + duration)) {
+        if (Timer.getFPGATimestamp() > (startTime + duration)) {
             CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
+            CommandBase.drive.setCoastMode(false);
+            isFinished = true;
+        } else {
+            CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);
         }
+            
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (startTime >= (Timer.getFPGATimestamp() + duration + 0.2)) {
-            return true;
-        } else {
-            return false;
-        }
+        return isFinished;
     }
     // Called once after isFinished returns true
     protected void end() {

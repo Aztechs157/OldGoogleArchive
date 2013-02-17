@@ -114,7 +114,7 @@ public class Drive extends Subsystem {
                 jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
                 jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
                 jag.configEncoderCodesPerRev(360 * 3);
-                jag.setPID(.75, 0.05, 0);
+                jag.setPID(4, 0.15, 0);
                 jag.enableControl();
             } catch (CANTimeoutException ex) {
                 System.out.println("Exception while configuring speed");
