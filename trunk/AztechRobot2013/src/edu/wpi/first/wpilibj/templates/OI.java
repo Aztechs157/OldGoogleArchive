@@ -134,10 +134,10 @@ public class OI {
         m_OperatorButton_12 = new JoystickButton(m_OperatorJoystick, 12);
 
         m_OperatorButton_Trigger.whenPressed(new LaunchDisk());
-        m_OperatorButton_Side.whenPressed(new PrintMessage("Operator Button <side>"));
-        m_OperatorButton_3.whenPressed(new PrintMessage("Operator Button <3>"));
+        m_OperatorButton_Side.whenPressed(new SetElevation(Shooter.loadingAngle));
+        m_OperatorButton_3.whenPressed(new SetElevation(Shooter.climbAngle));
         m_OperatorButton_4.whenPressed(new AdjustElevation(-5.0));
-        m_OperatorButton_5.whenPressed(new PrintMessage("Operator Button <5>"));
+        m_OperatorButton_5.whenPressed(new SetElevation(Shooter.basicShotAngle));
         m_OperatorButton_6.whenPressed(new AdjustElevation(5.0));
         m_OperatorButton_8.whenPressed(new PrintMessage("Operator Button <8>"));
 

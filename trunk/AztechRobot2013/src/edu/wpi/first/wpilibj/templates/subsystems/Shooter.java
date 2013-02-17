@@ -19,16 +19,34 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    public static final double loadingAngle = 25;
+    public static final double climbAngle = 0;
+    public static final double basicShotAngle = 45;
+    
     //             Sensor   Angle
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
-    
     // Sensor values per degree .004 
     public static final double zeroSensorReading = 0.482;
     public static final double maxSensorReading = 0.697;
     public static final double zeroElevationAngle = 0.9;
-    public static final double maxElevationAngle =  51.2;
-    public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading)/(maxElevationAngle - zeroElevationAngle));
+    public static final double maxElevationAngle = 51.2;
+    public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
+
+    // Up PID Constants
+    public static final double upPhi = -5000.0;
+    public static final double upPlo = -1000.0; 
+    public static final double upI = -3.0;
+    public static final double upD = 5.0;
+
+    // Down PID Constants
+    public static final double dnPhi = -1400.0;
+    public static final double dnPlo = -800.0;
+    public static final double dnI = -1.0;
+    public static final double dnD = 0;
+    
+    // PID Constant Domain Boundary
+    public static final double domainBound = 40.0; //degrees
 
     public static CANJaguar shooterElevation;
     public static Talon shooterFirstStage;   // PWM
@@ -43,7 +61,6 @@ public class Shooter extends Subsystem {
     Relay blueRelay;
     Relay greenRelay;
 
-        
     public static class Color {
 
         public final int value;
@@ -62,11 +79,10 @@ public class Shooter extends Subsystem {
         }
     }
 
-    public Shooter()
-    {
+    public Shooter() {
         init();
     }
-    
+
     public final void init() {
         System.out.println("== Initializing Shooter ==");
         compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
@@ -81,8 +97,8 @@ public class Shooter extends Subsystem {
         shooterRetract.set(false);
         shooterRetract.set(false);
         shooterExtend.set(false);
- 
-        
+
+
         redRelay = new Relay(RobotMap.RedLightPort);
         greenRelay = new Relay(RobotMap.WhiteLightPort);
         blueRelay = new Relay(RobotMap.BlueLightPort);
@@ -92,7 +108,7 @@ public class Shooter extends Subsystem {
             shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
             shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
             shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            shooterElevation.setPID(-2500, -.1, 0);  //TODO: Set PID Constants for elevation conrol
+            shooterElevation.setPID(upPlo, upI, upD);
             shooterElevation.enableControl();
         } catch (CANTimeoutException ex) {
             System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
@@ -158,12 +174,59 @@ public class Shooter extends Subsystem {
         }
     }
 
+    public void enableElevation(boolean enable) {
+        try {
+            if (enable) {
+                shooterElevation.enableControl();
+            } else {
+                shooterElevation.disableControl();
+            }
+        } catch (CANTimeoutException ex) {
+            System.out.println("FAIL - " + (enable ? "Enabling" : "Disabling") + " Shoter Elevation Control " + RobotMap.ShooterElevationMotorID);
+            ex.printStackTrace();
+        }
+    }
+
+    private void setPIDConstants(double targetElevation) {
+        double currentElevation = getShooterElevation();
+        try {
+            shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
+            shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+            shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            if((targetElevation - currentElevation) > 0)
+            {
+                if(targetElevation > domainBound)
+                {
+                    System.out.println("Up Constants for " + targetElevation + " P= " + upPhi);
+                    shooterElevation.setPID(upPhi, upI, upD);
+                } else {
+                    System.out.println("Up Constants for " + targetElevation + " P= " + upPlo);
+                    shooterElevation.setPID(upPlo, upI, upD);                    
+                }
+            } else
+            {
+                if(targetElevation > domainBound)
+                {
+                    shooterElevation.setPID(dnPhi, dnI, dnD);
+                } else {
+                    shooterElevation.setPID(dnPlo, dnI, dnD);
+                }
+            }
+            shooterElevation.enableControl();
+        } catch (CANTimeoutException ex) {
+            System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
+            ex.printStackTrace();
+        }
+
+    }
+
     public void adjustShooterElevation(double delta) {
         System.out.println("Adjusting " + delta + " degrees");
         setShooterElevation(getShooterElevation() + delta);
     }
 
     public void setShooterElevation(double elevationDegrees) {
+        setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         System.out.println("Setting " + elevationDegrees + " degrees which is " + elevation + "sensor ref");
         if (null != shooterElevation) {
@@ -181,7 +244,7 @@ public class Shooter extends Subsystem {
         double result = lastValidResult;
         if (null != shooterElevation) {
             try {
-                result = (shooterElevation.getPosition() - zeroSensorReading)/ sensorPerDegree;
+                result = (shooterElevation.getPosition() - zeroSensorReading) / sensorPerDegree;
             } catch (edu.wpi.first.wpilibj.can.CANTimeoutException e) {
                 System.out.println("CAN Timeout reading shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
             }
