@@ -80,7 +80,7 @@ public class LaunchDisk extends CommandBase {
                 break;
             case LaunchState.m_kLoading:
                 // wait for extension (~0.5s)
-                if (Timer.getFPGATimestamp() > (startTime + 0.5)) {
+                if (Timer.getFPGATimestamp() > (startTime + 1.5)) {
                     System.out.println("Shooter m_kLoading complete " + Timer.getFPGATimestamp());
                     state = LaunchState.SpinUp;
                 }
@@ -94,7 +94,7 @@ public class LaunchDisk extends CommandBase {
                 break;
             case LaunchState.m_kSpinningUp:
                 // wait for extnsion (~0.5s)
-                if (Timer.getFPGATimestamp() > (startTime + 0.5)) {
+                if (Timer.getFPGATimestamp() > (startTime + 1.5)) {
                     System.out.println("Shooter m_kSpinningUp complete " + Timer.getFPGATimestamp());
                     state = LaunchState.Shoot;
                 }
@@ -106,9 +106,10 @@ public class LaunchDisk extends CommandBase {
                 startTime = Timer.getFPGATimestamp();
                 break;
             case LaunchState.m_kFinish:
-                if (Timer.getFPGATimestamp() > (startTime + 0.5)) {
+                if (Timer.getFPGATimestamp() > (startTime + 1.5)) {
                     System.out.println("Shooter m_kFinish complete " + Timer.getFPGATimestamp());
                     CommandBase.shooter.retractShooter();
+                    CommandBase.shooter.spinLaunchWheels(0);
                     isFinished = true;
                 }
                 break;
