@@ -163,13 +163,11 @@ public class Shooter extends Subsystem {
             if ((loaderRetract != null) && (loaderExtend != null)) {
                 loaderExtend.set(true);
                 loaderRetract.set(false);
-                System.out.println("L-Extend");
             }
         } else {
             if ((loaderRetract != null) && (loaderExtend != null)) {
                 loaderRetract.set(true);
                 loaderExtend.set(false);
-                System.out.println("L-Retract");
             }
         }
     }
@@ -197,10 +195,8 @@ public class Shooter extends Subsystem {
             {
                 if(targetElevation > domainBound)
                 {
-                    System.out.println("Up Constants for " + targetElevation + " P= " + upPhi);
                     shooterElevation.setPID(upPhi, upI, upD);
                 } else {
-                    System.out.println("Up Constants for " + targetElevation + " P= " + upPlo);
                     shooterElevation.setPID(upPlo, upI, upD);                    
                 }
             } else
@@ -214,24 +210,21 @@ public class Shooter extends Subsystem {
             }
             shooterElevation.enableControl();
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
-            ex.printStackTrace();
+            System.out.println("Timeout - Setting Elevation Constants on JAG " + RobotMap.ShooterElevationMotorID);
+//            ex.printStackTrace();
         }
 
     }
 
     public void adjustShooterElevation(double delta) {
-        System.out.println("Adjusting " + delta + " degrees");
         setShooterElevation(getShooterElevation() + delta);
     }
 
     public void setShooterElevation(double elevationDegrees) {
         setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
-        System.out.println("Setting " + elevationDegrees + " degrees which is " + elevation + "sensor ref");
         if (null != shooterElevation) {
             try {
-                System.out.println("setting " + elevation);
                 shooterElevation.setX(elevation);
             } catch (edu.wpi.first.wpilibj.can.CANTimeoutException e) {
                 System.out.println("CAN Timeout setting shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
@@ -249,7 +242,7 @@ public class Shooter extends Subsystem {
                 System.out.println("CAN Timeout reading shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
             }
         }
-        System.out.println("Read Elevation at " + result + "degrees");
+//        System.out.println("Read Elevation at " + result + " degrees");
         return result;
     }
 
@@ -258,13 +251,11 @@ public class Shooter extends Subsystem {
             if ((shooterRetract != null) && (shooterExtend != null)) {
                 shooterExtend.set(true);
                 shooterRetract.set(false);
-                System.out.println("S-Extend");
             }
         } else {
             if ((shooterRetract != null) && (shooterExtend != null)) {
                 shooterRetract.set(true);
                 shooterExtend.set(false);
-                System.out.println("S-Retract");
             }
         }
     }
