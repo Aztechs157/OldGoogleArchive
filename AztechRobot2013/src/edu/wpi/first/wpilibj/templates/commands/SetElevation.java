@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.templates.AztechRobot;
  *
  * @author MattKahn
  */
-public class AdjustElevation extends CommandBase {
+public class SetElevation extends CommandBase {
     
     private static final double allowedMotorTime = 1.0; //seconds
     private double degrees;
     private static double startTime;
     private boolean isFinished;
     
-    public AdjustElevation(double inDegrees) {
+    public SetElevation(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         degrees = inDegrees;
@@ -28,7 +28,7 @@ public class AdjustElevation extends CommandBase {
     protected void initialize() {
         isFinished = false;
         CommandBase.shooter.enableElevation(true);
-        CommandBase.shooter.adjustShooterElevation(degrees);
+        CommandBase.shooter.setShooterElevation(degrees);
         startTime = Timer.getFPGATimestamp();
     }
 
