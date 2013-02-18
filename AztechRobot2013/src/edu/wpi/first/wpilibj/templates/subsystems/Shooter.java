@@ -22,7 +22,6 @@ public class Shooter extends Subsystem {
     public static final double loadingAngle = 25;
     public static final double climbAngle = 0;
     public static final double basicShotAngle = 45;
-    
     //             Sensor   Angle
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
@@ -32,22 +31,18 @@ public class Shooter extends Subsystem {
     public static final double zeroElevationAngle = 0.9;
     public static final double maxElevationAngle = 51.2;
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
-
     // Up PID Constants
     public static final double upPhi = -5000.0;
-    public static final double upPlo = -1000.0; 
+    public static final double upPlo = -1000.0;
     public static final double upI = -3.0;
     public static final double upD = 5.0;
-
     // Down PID Constants
     public static final double dnPhi = -1400.0;
     public static final double dnPlo = -800.0;
     public static final double dnI = -1.0;
     public static final double dnD = 0;
-    
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
-
     public static CANJaguar shooterElevation;
     public static Talon shooterFirstStage;   // PWM
     public static Talon shooterSecondStage;
@@ -103,17 +98,22 @@ public class Shooter extends Subsystem {
         greenRelay = new Relay(RobotMap.WhiteLightPort);
         blueRelay = new Relay(RobotMap.BlueLightPort);
 
-        try {
-            shooterElevation = new CANJaguar(RobotMap.ShooterElevationMotorID);
-            shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
-            shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            shooterElevation.setPID(upPlo, upI, upD);
-            shooterElevation.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
-            ex.printStackTrace();
-        }
+        int tries = 0;
+        boolean failed = false;
+        do {
+            try {
+                shooterElevation = new CANJaguar(RobotMap.ShooterElevationMotorID);
+                shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
+                shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+                shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                shooterElevation.setPID(upPlo, upI, upD);
+                shooterElevation.enableControl();
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
         shooterFirstStage = new Talon(RobotMap.ShooterFirstStageDrivePWMPort);
         shooterSecondStage = new Talon(RobotMap.ShooterSecondStageDrivePWMPort);
@@ -128,18 +128,22 @@ public class Shooter extends Subsystem {
     }
 
     public void spinLaunchWheels(double power) {
+        if(power == 0)
+        {
+            compressor.start();
+        }
+        else
+        {
+            compressor.stop();
+        }
         shooterFirstStage.set(power);
         shooterSecondStage.set(power);
-    }
-
-    public void stopLaunchWheels() {
-        spinLaunchWheels(0);
     }
 
     protected void reset() {
         retractLoader();
         retractShooter();
-        stopLaunchWheels();
+        spinLaunchWheels(0);
     }
 
     public void extendLoader() {
@@ -187,32 +191,34 @@ public class Shooter extends Subsystem {
 
     private void setPIDConstants(double targetElevation) {
         double currentElevation = getShooterElevation();
-        try {
-            shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
-            shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            if((targetElevation - currentElevation) > 0)
-            {
-                if(targetElevation > domainBound)
-                {
-                    shooterElevation.setPID(upPhi, upI, upD);
+        int tries = 0;
+        boolean failed = false;
+        do {
+            try {
+                shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
+                shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+                shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                if ((targetElevation - currentElevation) > 0) {
+                    if (targetElevation > domainBound) {
+                        shooterElevation.setPID(upPhi, upI, upD);
+                    } else {
+                        shooterElevation.setPID(upPlo, upI, upD);
+                    }
                 } else {
-                    shooterElevation.setPID(upPlo, upI, upD);                    
+                    if (targetElevation > domainBound) {
+                        shooterElevation.setPID(dnPhi, dnI, dnD);
+                    } else {
+                        shooterElevation.setPID(dnPlo, dnI, dnD);
+                    }
                 }
-            } else
-            {
-                if(targetElevation > domainBound)
-                {
-                    shooterElevation.setPID(dnPhi, dnI, dnD);
-                } else {
-                    shooterElevation.setPID(dnPlo, dnI, dnD);
-                }
-            }
-            shooterElevation.enableControl();
-        } catch (CANTimeoutException ex) {
-            System.out.println("Timeout - Setting Elevation Constants on JAG " + RobotMap.ShooterElevationMotorID);
+                shooterElevation.enableControl();
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("Timeout " + tries + " - Setting Elevation Constants on JAG " + RobotMap.ShooterElevationMotorID);
 //            ex.printStackTrace();
-        }
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
 
     }
 
@@ -224,12 +230,19 @@ public class Shooter extends Subsystem {
         setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         if (null != shooterElevation) {
-            try {
-                shooterElevation.setX(elevation);
-            } catch (edu.wpi.first.wpilibj.can.CANTimeoutException e) {
-                System.out.println("CAN Timeout setting shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
-            }
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    shooterElevation.setX(elevation);
+                } catch (edu.wpi.first.wpilibj.can.CANTimeoutException e) {
+                    failed = true;
+                    System.out.println("CAN Timeout " + tries + " setting shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
         }
+
     }
     private static double lastValidResult = 0;
 
