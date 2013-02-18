@@ -28,6 +28,8 @@ public class Drive extends Subsystem {
     public static ScaledCANJaguar driveRL;
     public static ScaledCANJaguar driveRR;
     public static RobotDrive mechanumDrive;
+    
+    public static Gyro gyro;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -106,6 +108,8 @@ public class Drive extends Subsystem {
                 ex.printStackTrace();
             }
         }
+
+        gyro = new Gyro(RobotMap.GyroChannel);
     }
 
     private static void setupJagForSpeedControl(CANJaguar jag) {
@@ -163,5 +167,15 @@ public class Drive extends Subsystem {
         if (mechanumDrive != null) {
             mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
         }
+    }
+    
+    public void resetGyro()
+    {
+        gyro.reset();
+    }
+    
+    public double getAngle()
+    {
+        return gyro.getAngle();
     }
 }

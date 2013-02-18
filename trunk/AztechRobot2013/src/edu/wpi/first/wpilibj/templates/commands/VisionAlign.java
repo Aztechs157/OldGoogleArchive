@@ -30,7 +30,7 @@ public class VisionAlign extends CommandBase {
     protected void execute() {
         if(vision.goalFound() != VisionSubsystem.GOAL__NONE) {
             System.out.println("Aligning... x="+vision.getXErrorDeg()+",  y="+vision.getYErrorDeg()+",   quality="+vision.getQuality()+"");
-            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.8);
+            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
         }
         else
         {
@@ -74,5 +74,6 @@ public class VisionAlign extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }    
 }

@@ -4,66 +4,43 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.templates.AztechRobot;
-
 /**
  *
  * @author MattKahn
  */
 public class Turn extends CommandBase {
-    
+
+    double tolerance = 1.0;
     double degrees = 0;
-    double startTime;
-    double duration = 0;
-    boolean isFinished = false;
-    double direction = 1;  // -1 or 1
-    double rate = 0;
     
     public Turn(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        
         degrees = inDegrees;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if (degrees < 0)
-        {
-            direction = -1;
-        }
-        if (degrees >= 0) 
-        {
-            direction = 1;
-        }
-        rate = 50 * direction;
-                
-        duration = Math.abs(degrees) * 0.01;
-        
-        startTime = Timer.getFPGATimestamp();
-        System.out.println("Turn @ " + startTime + " for " + duration);
-        isFinished = false;
+        drive.setCoastMode(false);
+        drive.resetGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (Timer.getFPGATimestamp() > (startTime + duration)) {
-            CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
-            CommandBase.drive.setCoastMode(false);
-            isFinished = true;
-        } else {
-            CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);
-        }
-            
+        
+        // compute turn rate.  
+        double rate = -1.0 * (drive.getAngle() - degrees) / 180.0; 
+//        System.out.println("gyro="+drive.getAngle()+",rate="+rate);
+        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isFinished;
+       return Math.abs(degrees - drive.getAngle()) < tolerance;
     }
     // Called once after isFinished returns true
     protected void end() {
+        CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
         CommandBase.drive.setCoastMode(true);
     }
 
