@@ -32,20 +32,39 @@ public class LiftSubsystem extends Subsystem {
     {
         init();
     }
-    public final void init()
-    {
-        liftMotorL = new Victor(RobotMap.LiftLeftPWMPort);
-        liftMotorR = new Victor(RobotMap.LiftRightPWMPort);
-        liftLimitRetractL = new DigitalInput(RobotMap.LiftLeftLimitRetractGPIOPort);
-        liftLimitRetractR = new DigitalInput(RobotMap.LiftRightLimitRetractGPIOPort);
-        liftLimitExtendL = new DigitalInput(RobotMap.LiftLeftLimitExtendGPIOPort);
-        liftLimitExtendR = new DigitalInput(RobotMap.LiftRightLimitExtendGPIOPort);
-        liftAssemblyL = new MotorControlAssembly(liftMotorL, null, liftLimitRetractL, liftLimitExtendL);
-        liftAssemblyR = new MotorControlAssembly(liftMotorR, null, liftLimitRetractR, liftLimitExtendR);
-        liftAssemblyL.setInvertedMotor(RobotMap.LiftLeftMotorInverted);
-        liftAssemblyR.setInvertedMotor(RobotMap.LiftRightMotorInverted);
+    public final void init() {
+        if (liftMotorL == null) {
+            liftMotorL = new Victor(RobotMap.LiftLeftPWMPort);
+        }
+        if (liftMotorR == null) {
+            liftMotorR = new Victor(RobotMap.LiftRightPWMPort);
+        }
+        if (liftLimitRetractL == null) {
+            liftLimitRetractL = new DigitalInput(RobotMap.LiftLeftLimitRetractGPIOPort);
+        }
+        if (liftLimitRetractR == null) {
+            liftLimitRetractR = new DigitalInput(RobotMap.LiftRightLimitRetractGPIOPort);
+        }
+        if (liftLimitExtendL == null) {
+            liftLimitExtendL = new DigitalInput(RobotMap.LiftLeftLimitExtendGPIOPort);
+        }
+        if (liftLimitExtendR == null) {
+            liftLimitExtendR = new DigitalInput(RobotMap.LiftRightLimitExtendGPIOPort);
+        }
+        if (liftAssemblyL == null) {
+            liftAssemblyL = new MotorControlAssembly(liftMotorL, null, liftLimitRetractL, liftLimitExtendL);
+        }
+        if (liftAssemblyR == null) {
+            liftAssemblyR = new MotorControlAssembly(liftMotorR, null, liftLimitRetractR, liftLimitExtendR);
+        }
+        if (liftAssemblyL == null) {
+            liftAssemblyL.setInvertedMotor(RobotMap.LiftLeftMotorInverted);
+        }
+        if (liftAssemblyR == null) {
+            liftAssemblyR.setInvertedMotor(RobotMap.LiftRightMotorInverted);
+        }
     }
-    
+
         // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void initDefaultCommand() {

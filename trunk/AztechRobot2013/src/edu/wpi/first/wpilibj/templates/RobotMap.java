@@ -36,7 +36,7 @@ public class RobotMap {
     public static final int FrontLeftMotorID = 7;   // CAN
     public static final int FrontRightMotorID = 6;  // CAN
     public static final int RearLeftMotorID = 4;    // CAN
-    public static final int RearRightMotorID = 5;   // CAN
+    public static final int RearRightMotorID = 2;   // CAN
     
     public static final int GyroChannel = 1;        // Analog
 

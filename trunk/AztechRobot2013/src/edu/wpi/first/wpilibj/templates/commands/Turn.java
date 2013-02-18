@@ -4,6 +4,8 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
  * @author MattKahn
@@ -12,6 +14,8 @@ public class Turn extends CommandBase {
 
     double tolerance = 1.0;
     double degrees = 0;
+    boolean timedOut;
+    double startTime;
     
     public Turn(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
@@ -23,6 +27,8 @@ public class Turn extends CommandBase {
     protected void initialize() {
         drive.setCoastMode(false);
         drive.resetGyro();
+        startTime = Timer.getFPGATimestamp();
+        timedOut = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,11 +38,15 @@ public class Turn extends CommandBase {
         double rate = -1.0 * (drive.getAngle() - degrees) / 180.0; 
 //        System.out.println("gyro="+drive.getAngle()+",rate="+rate);
         CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
+        if(Timer.getFPGATimestamp() > (startTime + 2))
+        {
+            timedOut = true;
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       return Math.abs(degrees - drive.getAngle()) < tolerance;
+       return (timedOut || (Math.abs(degrees - drive.getAngle()) < tolerance));
     }
     // Called once after isFinished returns true
     protected void end() {

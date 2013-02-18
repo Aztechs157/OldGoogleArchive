@@ -59,6 +59,10 @@ public class AztechRobot extends IterativeRobot {
         // this line or comment it out.
         // Recenter all the axis (assumes they are being left alone at start of teleop...)
         
+        CommandBase.drive.init();
+        CommandBase.shooter.init();
+        CommandBase.lift.init();
+        
         autonomousCommand.cancel();
     }
 

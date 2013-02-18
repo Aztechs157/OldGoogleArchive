@@ -131,7 +131,9 @@ public class Drive extends Subsystem {
             }
         }
 
-        gyro = new Gyro(RobotMap.GyroChannel);
+        if (gyro == null) {
+            gyro = new Gyro(RobotMap.GyroChannel);
+        }
     }
 
     private static void setupJagForSpeedControl(CANJaguar jag) {
@@ -140,6 +142,7 @@ public class Drive extends Subsystem {
             boolean failed = false;
             do {
                 try {
+                    jag.setVoltageRampRate(0.02);
                     jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
                     jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
                     jag.configEncoderCodesPerRev(360 * 3);
@@ -160,6 +163,7 @@ public class Drive extends Subsystem {
             boolean failed = false;
             do {
                 try {
+                    jag.setVoltageRampRate(0.02);
                     jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                     jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
                     jag.configEncoderCodesPerRev(360);
@@ -196,14 +200,57 @@ public class Drive extends Subsystem {
         }
     }
 
+    public void checkControl(CANJaguar theJag) {
+        try {
+            CANJaguar.ControlMode ctlMode = theJag.getControlMode();
+
+        } catch (CANTimeoutException ex) {
+            System.out.println("Timeout checking control states");
+        }
+    }
+
     public void setCoastMode(boolean coast) {
         setupJagCoastMode(driveFL, coast);
         setupJagCoastMode(driveRL, coast);
         setupJagCoastMode(driveFR, coast);
         setupJagCoastMode(driveRR, coast);
     }
+    int iterationCount = 0;
+
+    private void checkAndFixMotors() {
+        iterationCount++;
+        if (iterationCount % 100 == 0) {
+            checkAndFixMotor(driveFL);
+            checkAndFixMotor(driveRL);
+            checkAndFixMotor(driveFR);
+            checkAndFixMotor(driveRR);
+        }
+    }
+
+    private void checkAndFixMotor(ScaledCANJaguar theJag) {
+
+        boolean failed = false;
+        int tries = 0;
+        if (!theJag.isInCommandedControlMode()) {
+            System.out.println("*** Fixing Settings for " + theJag.getDescription());
+            if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kPosition) {
+                setupJagForPositionControl(theJag);
+            } else if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kSpeed) {
+                setupJagForSpeedControl(theJag);
+            } else {
+                do {
+                    try {
+                        theJag.changeControlMode(theJag.getCommandedControlMode());
+                    } catch (CANTimeoutException ex) {
+                        failed = true;
+                    }
+                } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+            }
+        }
+    }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation) {
+        checkAndFixMotors();
         if (mechanumDrive != null) {
             mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
         }

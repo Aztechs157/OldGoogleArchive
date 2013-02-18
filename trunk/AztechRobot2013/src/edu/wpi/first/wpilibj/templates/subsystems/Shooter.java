@@ -80,24 +80,38 @@ public class Shooter extends Subsystem {
 
     public final void init() {
         System.out.println("== Initializing Shooter ==");
-        compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
+        if (compressor == null) {
+            compressor = new Compressor(RobotMap.PressureSwitchGPIOPort, RobotMap.CompressorRelayChannel);
+        }
         compressor.start();
 
-        loaderRetract = new Solenoid(RobotMap.LoaderRetractPort);
-        loaderExtend = new Solenoid(RobotMap.LoaderExtendPort);
-        shooterRetract = new Solenoid(RobotMap.ShooterRetractPort);
-        shooterExtend = new Solenoid(RobotMap.ShooterExtendPort);
-
+        if (loaderRetract == null) {
+            loaderRetract = new Solenoid(RobotMap.LoaderRetractPort);
+        }
+        if (loaderExtend == null) {
+            loaderExtend = new Solenoid(RobotMap.LoaderExtendPort);
+        }
+        if (shooterRetract == null) {
+            shooterRetract = new Solenoid(RobotMap.ShooterRetractPort);
+        }
+        if (shooterExtend == null) {
+            shooterExtend = new Solenoid(RobotMap.ShooterExtendPort);
+        }
         shooterExtend.set(false);
         shooterRetract.set(false);
         shooterRetract.set(false);
         shooterExtend.set(false);
 
 
-        redRelay = new Relay(RobotMap.RedLightPort);
-        greenRelay = new Relay(RobotMap.WhiteLightPort);
-        blueRelay = new Relay(RobotMap.BlueLightPort);
-
+        if (redRelay == null) {
+            redRelay = new Relay(RobotMap.RedLightPort);
+        }
+        if (greenRelay == null) {
+            greenRelay = new Relay(RobotMap.WhiteLightPort);
+        }
+        if (blueRelay == null) {
+            blueRelay = new Relay(RobotMap.BlueLightPort);
+        }
         int tries = 0;
         boolean failed = false;
         do {
@@ -106,8 +120,9 @@ public class Shooter extends Subsystem {
                 shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
                 shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
                 shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                shooterElevation.setVoltageRampRate(0.02);
                 shooterElevation.setPID(upPlo, upI, upD);
-                shooterElevation.enableControl();
+//                shooterElevation.enableControl();
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
@@ -115,9 +130,12 @@ public class Shooter extends Subsystem {
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
-        shooterFirstStage = new Talon(RobotMap.ShooterFirstStageDrivePWMPort);
-        shooterSecondStage = new Talon(RobotMap.ShooterSecondStageDrivePWMPort);
-
+        if (shooterFirstStage == null) {
+            shooterFirstStage = new Talon(RobotMap.ShooterFirstStageDrivePWMPort);
+        }
+        if (shooterSecondStage == null) {
+            shooterSecondStage = new Talon(RobotMap.ShooterSecondStageDrivePWMPort);
+        }
         // set the shooter to a known state
         reset();
     }
@@ -128,12 +146,9 @@ public class Shooter extends Subsystem {
     }
 
     public void spinLaunchWheels(double power) {
-        if(power == 0)
-        {
+        if (power == 0) {
             compressor.start();
-        }
-        else
-        {
+        } else {
             compressor.stop();
         }
         shooterFirstStage.set(power);
@@ -227,6 +242,7 @@ public class Shooter extends Subsystem {
     }
 
     public void setShooterElevation(double elevationDegrees) {
+        System.out.println("setShooterElevation(" + elevationDegrees + ")");
         setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         if (null != shooterElevation) {
@@ -240,9 +256,7 @@ public class Shooter extends Subsystem {
                     System.out.println("CAN Timeout " + tries + " setting shooter elevation (motor " + RobotMap.ShooterElevationMotorID + ")");
                 }
             } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-
         }
-
     }
     private static double lastValidResult = 0;
 
