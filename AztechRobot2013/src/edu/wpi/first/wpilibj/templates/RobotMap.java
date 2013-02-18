@@ -1,9 +1,5 @@
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.templates.subsystems.Drive;
-import edu.wpi.first.wpilibj.templates.subsystems.LiftSubsystem;
-import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
-import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -35,6 +31,8 @@ public class RobotMap {
     public static final int FrontRightMotorID = 6;  // CAN
     public static final int RearLeftMotorID = 4;    // CAN
     public static final int RearRightMotorID = 5;   // CAN
+    
+    public static final int GyroChannel = 1;        // Analog
 
     //=====================================================================
     // Shooter System Constants
@@ -63,13 +61,13 @@ public class RobotMap {
     //=====================================================================
     // Lift System Constants
     //=====================================================================
-    public static final int LiftLeftPWMPort = 1;
-    public static final int LiftRightPWMPort = 2;
+    public static final int LiftLeftPWMPort = 1;               // PWM
+    public static final int LiftRightPWMPort = 2;              // PWM
     
-    public static final int LiftLeftLimitRetractGPIOPort = 1;
-    public static final int LiftRightLimitRetractGPIOPort = 2;
-    public static final int LiftLeftLimitExtendGPIOPort = 3;
-    public static final int LiftRightLimitExtendGPIOPort = 4;
+    public static final int LiftLeftLimitRetractGPIOPort = 1;  // Digital
+    public static final int LiftRightLimitRetractGPIOPort = 2; // Digital
+    public static final int LiftLeftLimitExtendGPIOPort = 3;   // Digital
+    public static final int LiftRightLimitExtendGPIOPort = 4;  // Digital
     
     public static final double LiftLeftExtendSpeed = 0.6;
     public static final double LiftLeftRetractSpeed = 0.6;
@@ -91,6 +89,11 @@ public class RobotMap {
     
     public static final int VisionQualityRequired = 4;
     public static final int VisionQualityMax = 10;
+    
+    //=====================================================================
+    // Autonomous Command Constants
+    //=====================================================================
+    public static final int AutoSelectChannel = 7;      // Analog
     
     //=====================================================================
     // Vision Align Command Constants

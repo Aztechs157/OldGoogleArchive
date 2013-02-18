@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.templates.LogitechController;
 import edu.wpi.first.wpilibj.templates.LogitechControllerButton;
 import edu.wpi.first.wpilibj.templates.commands.*;
+import edu.wpi.first.wpilibj.templates.subsystems.Drive;
 import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
 
 /**
@@ -148,7 +149,10 @@ public class OI {
 
 //        m_OperatorButton_10.whenPressed(new ReadJag(Shooter.shooterElevation, true));
         m_OperatorButton_10.whenPressed(new Turn(-45));
-        m_OperatorButton_12.whenPressed(new ReadJag(Shooter.shooterElevation, false));
+        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveFL, false));
+        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveFR, false));
+        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveRL, false));
+        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveRR, false));
     }
 
     public LogitechController getDriverController() {

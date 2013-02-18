@@ -1,7 +1,9 @@
 
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 
 /**
@@ -10,6 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousCommand extends CommandGroup {
 
+    AnalogChannel autoSelectSwitch;
+    
     public AutonomousCommand() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -27,6 +31,10 @@ public class AutonomousCommand extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+        
+        autoSelectSwitch = new AnalogChannel(RobotMap.AutoSelectChannel);
+        int autoMode = autoSelectSwitch.getValue() / 6;
+        //System.out.println("Autonomous Mode: "+autoMode);
         
         addSequential(new VisionAlign());
     }
