@@ -28,7 +28,6 @@ public class Drive extends Subsystem {
     public static ScaledCANJaguar driveRL;
     public static ScaledCANJaguar driveRR;
     public static RobotDrive mechanumDrive;
-    
     public static Gyro gyro;
 
     // Put methods for controlling this subsystem
@@ -42,42 +41,64 @@ public class Drive extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
-    public Drive()
-    {
+    public Drive() {
         init();
     }
+
     public final void init() {
-        try {
-            driveFL = new ScaledCANJaguar(RobotMap.FrontLeftMotorID);
-            driveFL.setScalingFactor(RobotMap.SpeedScale);
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating FL JAG " + RobotMap.FrontLeftMotorID);
-            ex.printStackTrace();
-        }
 
-        try {
-            driveFR = new ScaledCANJaguar(RobotMap.FrontRightMotorID);
-            driveFR.setScalingFactor(RobotMap.SpeedScale);
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating FR JAG " + RobotMap.FrontRightMotorID);
-            ex.printStackTrace();
-        }
+        int tries = 0;
+        boolean failed = false;
+        do {
+            try {
+                driveFL = new ScaledCANJaguar(RobotMap.FrontLeftMotorID);
+                driveFL.setScalingFactor(RobotMap.SpeedScale);
+                failed = false;
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Instantiating FL JAG " + RobotMap.FrontLeftMotorID);
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
-        try {
-            driveRL = new ScaledCANJaguar(RobotMap.RearLeftMotorID);
-            driveRL.setScalingFactor(RobotMap.SpeedScale);
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating RL JAG " + RobotMap.RearLeftMotorID);
-            ex.printStackTrace();
-        }
+        tries = 0;
+        failed = false;
+        do {
+            try {
+                driveFR = new ScaledCANJaguar(RobotMap.FrontRightMotorID);
+                driveFR.setScalingFactor(RobotMap.SpeedScale);
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Instantiating FR JAG " + RobotMap.FrontRightMotorID);
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
-        try {
-            driveRR = new ScaledCANJaguar(RobotMap.RearRightMotorID);
-            driveRR.setScalingFactor(RobotMap.SpeedScale);
-        } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - Instantiating RR JAG " + RobotMap.RearRightMotorID);
-            ex.printStackTrace();
-        }
+        tries = 0;
+        failed = false;
+        do {
+            try {
+                driveRL = new ScaledCANJaguar(RobotMap.RearLeftMotorID);
+                driveRL.setScalingFactor(RobotMap.SpeedScale);
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Instantiating RL JAG " + RobotMap.RearLeftMotorID);
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
+        tries = 0;
+        failed = false;
+        do {
+            try {
+                driveRR = new ScaledCANJaguar(RobotMap.RearRightMotorID);
+                driveRR.setScalingFactor(RobotMap.SpeedScale);
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Instantiating RR JAG " + RobotMap.RearRightMotorID);
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
         setupJagForSpeedControl(driveFL);
         setupJagForSpeedControl(driveRL);
@@ -87,6 +108,7 @@ public class Drive extends Subsystem {
         try {
             mechanumDrive = new RobotDrive(driveFL, driveRL, driveFR, driveRR);
         } catch (Exception ex) {
+            failed = true;
             System.out.println("Can't get mech drive going...  FAIL");
             ex.printStackTrace();
         }
@@ -114,45 +136,63 @@ public class Drive extends Subsystem {
 
     private static void setupJagForSpeedControl(CANJaguar jag) {
         if (jag != null) {
-            try {
-                jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
-                jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-                jag.configEncoderCodesPerRev(360 * 3);
-                jag.setPID(4, 0.15, 0);
-                jag.enableControl();
-            } catch (CANTimeoutException ex) {
-                System.out.println("Exception while configuring speed");
-            }
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
+                    jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+                    jag.configEncoderCodesPerRev(360 * 3);
+                    jag.setPID(4, 0.15, 0);
+                    jag.enableControl();
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while configuring speed");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
         }
     }
 
     private static void setupJagForPositionControl(CANJaguar jag) {
         if (jag != null) {
-            try {
-                jag.changeControlMode(CANJaguar.ControlMode.kPosition);
-                jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
-                jag.configEncoderCodesPerRev(360);
-                jag.setPID(15, 0.08, 25);
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    jag.changeControlMode(CANJaguar.ControlMode.kPosition);
+                    jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
+                    jag.configEncoderCodesPerRev(360);
+                    jag.setPID(15, 0.08, 25);
 //                encJagRRMotorDrive.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-                jag.enableControl();
-            } catch (CANTimeoutException ex) {
-                System.out.println("Exception while configuring position");
-            }
+                    jag.enableControl();
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while configuring position");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
         }
     }
 
     private static void setupJagCoastMode(CANJaguar jag, boolean coast) {
         if (jag != null) {
-            try {
-                if (!coast) {
-                    jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-                } else {
-                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    if (!coast) {
+                        jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                    } else {
+                        jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+                    }
+                    jag.enableControl();
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while coast mode");
                 }
-                jag.enableControl();
-            } catch (CANTimeoutException ex) {
-                System.out.println("Exception while coast mode");
-            }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
         }
     }
 
@@ -168,14 +208,12 @@ public class Drive extends Subsystem {
             mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
         }
     }
-    
-    public void resetGyro()
-    {
+
+    public void resetGyro() {
         gyro.reset();
     }
-    
-    public double getAngle()
-    {
+
+    public double getAngle() {
         return gyro.getAngle();
     }
 }

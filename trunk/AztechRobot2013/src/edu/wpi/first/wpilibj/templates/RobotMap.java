@@ -18,6 +18,12 @@ public class RobotMap {
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
     
+    
+    //=====================================================================
+    // CAN System constants
+    //=====================================================================
+    public static int m_kMaxCANRetries = 3;
+    
     //=====================================================================
     // Drive System Constants
     //=====================================================================
