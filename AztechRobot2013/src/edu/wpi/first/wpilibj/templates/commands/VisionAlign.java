@@ -4,6 +4,7 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
 
@@ -30,11 +31,16 @@ public class VisionAlign extends CommandBase {
     protected void execute() {
         if(vision.goalFound() != VisionSubsystem.GOAL__NONE) {
             System.out.println("Aligning... x="+vision.getXErrorDeg()+",  y="+vision.getYErrorDeg()+",   quality="+vision.getQuality()+"");
-//            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
-        }
-        else
-        {
-//            drive.mecanumDrive_Cartesian(0, 0, 0);
+
+            InternalButton doTurn = new InternalButton();
+            doTurn.whenPressed(new Turn(-vision.getXErrorDeg()));
+            doTurn.setPressed(true);
+            
+            InternalButton doElevation = new InternalButton();
+            doElevation.whenPressed(new AdjustElevation(vision.getYErrorDeg()));
+            doElevation.setPressed(true);
+            
+            //            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
         }
         
     }    

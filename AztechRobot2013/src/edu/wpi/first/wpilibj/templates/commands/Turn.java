@@ -27,6 +27,7 @@ public class Turn extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("Turning " + degrees + " deg");
         drive.resetGyro();
         startTime = Timer.getFPGATimestamp();
         timedOut = false;
