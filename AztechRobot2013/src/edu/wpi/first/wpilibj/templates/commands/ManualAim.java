@@ -18,7 +18,7 @@ public class ManualAim extends CommandBase {
     
     public ManualAim() {
         // Use requires() here to declare subsystem dependencies
-        requires(CommandBase.shooter);
+//        requires(CommandBase.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -28,16 +28,16 @@ public class ManualAim extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double elevationStick = oi.getOperatorJoystick().getY();        
-        if((elevationStick * elevationStick) < 0.025) elevationStick = 0;
- 
-        double elevationDelta = elevationStick * 0.5;
-
-        if(Math.abs(elevationDelta) > 0.01)
-        {
-            System.out.println("AIM Elevation = " + elevationDelta);
-            CommandBase.shooter.adjustShooterElevation(elevationDelta);
-        }
+//        double elevationStick = oi.getOperatorJoystick().getY();        
+//        if((elevationStick * elevationStick) < 0.025) elevationStick = 0;
+// 
+//        double elevationDelta = elevationStick * 0.5;
+//
+//        if(Math.abs(elevationDelta) > 0.01)
+//        {
+//            System.out.println("AIM Elevation = " + elevationDelta);
+////            CommandBase.shooter.adjustShooterElevation(elevationDelta);
+//        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

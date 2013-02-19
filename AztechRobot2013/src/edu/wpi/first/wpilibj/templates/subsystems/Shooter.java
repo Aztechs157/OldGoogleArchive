@@ -148,7 +148,7 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ManualAim());
+//        setDefaultCommand(new ManualAim());
     }
 
     public void spinLaunchWheels(double power) {
@@ -214,10 +214,10 @@ public class Shooter extends Subsystem {
     public void enableElevation(boolean enable) {
         try {
             if (enable) {
-                System.out.println("enable control");
+//                System.out.println("enable control");
                 shooterElevation.enableControl();
             } else {
-                System.out.println("disable control");
+//                System.out.println("disable control");
                 shooterElevation.disableControl();
             }
         } catch (CANTimeoutException ex) {
@@ -260,7 +260,7 @@ public class Shooter extends Subsystem {
     }
 
     public void updateShooterElevation(double elevationDegrees) {
-        System.out.println("updateShooterElevation(" + elevationDegrees + ")");
+//        System.out.println("updateShooterElevation(" + elevationDegrees + ")");
         setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         if (null != shooterElevation) {
@@ -362,7 +362,7 @@ public class Shooter extends Subsystem {
         private static boolean enable = false;
         
         public void setElevation(double elevation) {
-            System.out.println("thread-setElevation(" + elevation + ")");
+//            System.out.println("thread-setElevation(" + elevation + ")");
             commandElevation = elevation;
             if (commandElevation < CommandBase.shooter.lowLimitAngle)
             {
@@ -387,7 +387,7 @@ public class Shooter extends Subsystem {
             while (true) {
                 if (commandUpdated) {
                     commandUpdated = false; // reset until next command
-                    System.out.println("thread-updateElevation(" + commandElevation + ")");                   
+//                    System.out.println("thread-updateElevation(" + commandElevation + ")");                   
                     CommandBase.shooter.updateShooterElevation(commandElevation);
                 }
                 if (enable && (Timer.getFPGATimestamp() > (lastCommandTime + elevationEnableTime))){

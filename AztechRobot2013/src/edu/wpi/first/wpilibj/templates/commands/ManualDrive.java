@@ -33,11 +33,13 @@ public class ManualDrive extends Command {
         double x = -CommandBase.oi.getDriverController().getLeftX();
         double y = -CommandBase.oi.getDriverController().getLeftY();
         double rotation = -CommandBase.oi.getDriverController().getRightX();
-        double speed = Math.abs(CommandBase.oi.getDriverController().getTriggers());
+        double speedLimit = Math.abs(CommandBase.oi.getDriverController().getTriggers());
         
-        double minSpeed = 0.25;
+        double minSpeedLimit = 0.5;
+        speedLimit = minSpeedLimit + speedLimit;
         
-        speed = minSpeed + (speed * (1-minSpeed));
+        if (speedLimit > 1.0) speedLimit = 1.0;
+        
                 
         if(x*x < 0.01)
         {
@@ -52,17 +54,23 @@ public class ManualDrive extends Command {
             rotation = 0;
         }
         
-        x = x * x * (x<0 ? -1.0 : 1.0);
-        y = y * y * (y<0 ? -1.0 : 1.0);
-        rotation = rotation * rotation * (rotation<0 ? -1.0 : 1.0);
+        x = speedLimit * (x * x * (x<0 ? -1.0 : 1.0));
+        y = speedLimit * (y * y * (y<0 ? -1.0 : 1.0));
+        rotation = speedLimit * (rotation * rotation * (rotation<0 ? -1.0 : 1.0));
 
         // Operator Control
-        double operatorSpeed = 0.1;
+        double operatorSpeed = 0.2;
         double operatorRotation = CommandBase.oi.getOperatorJoystick().getX();
+        double operatorForeAft = CommandBase.oi.getOperatorJoystick().getY();
+        
         if((operatorRotation * operatorRotation) < 0.025) operatorRotation = 0;
         double operatorRotationSpeed =  operatorSpeed * operatorRotation;
+
+        if((operatorForeAft * operatorForeAft) < 0.025) operatorForeAft = 0;
+        double operatorForeAftSpeed = operatorSpeed * operatorForeAft;
         
-        CommandBase.drive.mecanumDrive_Cartesian(x, y, rotation + operatorRotationSpeed);
+        
+        CommandBase.drive.mecanumDrive_Cartesian(x, y + operatorForeAftSpeed, rotation + operatorRotationSpeed);
 
 //        System.out.println("x="+x+",    y="+y+",    r="+rotation+",    or="+operatorRotationSpeed);
 //                try {

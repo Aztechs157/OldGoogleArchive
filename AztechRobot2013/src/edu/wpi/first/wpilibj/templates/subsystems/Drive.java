@@ -45,8 +45,10 @@ public class Drive extends Subsystem {
         init();
     }
 
+
     public final void init() {
 
+        
         int tries = 0;
         boolean failed = false;
         do {
@@ -237,7 +239,7 @@ public class Drive extends Subsystem {
 
     private void checkAndFixMotors() {
         iterationCount++;
-        if (iterationCount % 10 == 0) {
+        if (iterationCount % 1 == 0) {
             checkAndFixMotor(driveFL);
             checkAndFixMotor(driveRL);
             checkAndFixMotor(driveFR);
@@ -284,8 +286,8 @@ public class Drive extends Subsystem {
             double rotGo = scale * rotation;
 
 //        System.out.println("xGo:" + xGo + "  yGo:" + yGo + "  rotGo:" + rotGo);
-//        System.out.println("FL - " + ( -xGo + -rotGo +  yGo) + "      FR - " + ( -xGo + -rotGo + -yGo));
-//        System.out.println("RL - " + (  xGo + -rotGo +  yGo) + "      RR - " + (  xGo + -rotGo + -yGo));
+//        System.out.println("FL: " + ( -xGo + -rotGo +  yGo) + "      FR: " + ( -xGo + -rotGo + -yGo));
+//        System.out.println("RL: " + (  xGo + -rotGo +  yGo) + "      RR: " + (  xGo + -rotGo + -yGo));
 
             byte group = 22;
             try {
