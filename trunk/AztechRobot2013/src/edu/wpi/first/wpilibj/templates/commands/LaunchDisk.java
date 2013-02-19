@@ -54,7 +54,7 @@ public class LaunchDisk extends CommandBase {
     private LaunchState state = LaunchState.Idle;
     
     public LaunchDisk() {
-            System.out.println("Instantiating LaunchDisk");
+//            System.out.println("Instantiating LaunchDisk");
         // Use requires() here to declare subsystem dependencies
 //        requires(AztechRobot.shooter);
     }
@@ -73,7 +73,7 @@ public class LaunchDisk extends CommandBase {
     protected void execute() {
         switch (state.value) {
             case LaunchState.m_kStart:
-                System.out.println("Shooter m_kStart " + Timer.getFPGATimestamp());
+//                System.out.println("Shooter m_kStart " + Timer.getFPGATimestamp());
                 CommandBase.shooter.extendLoader();
                 CommandBase.shooter.spinLaunchWheels(1);
                 state = LaunchState.Loading;
@@ -82,12 +82,12 @@ public class LaunchDisk extends CommandBase {
             case LaunchState.m_kLoading:
                 // wait for extension (~0.5s)
                 if (Timer.getFPGATimestamp() > (startTime + 0.4)) {
-                    System.out.println("Shooter m_kLoading complete " + Timer.getFPGATimestamp());
+//                    System.out.println("Shooter m_kLoading complete " + Timer.getFPGATimestamp());
                     state = LaunchState.SpinUp;
                 }
                 break;
             case LaunchState.m_kSpinUp:
-                System.out.println("Shooter m_kSpinUp " + Timer.getFPGATimestamp());
+//                System.out.println("Shooter m_kSpinUp " + Timer.getFPGATimestamp());
                 CommandBase.shooter.retractLoader();
                 state = LaunchState.SpinningUp;
                 startTime = Timer.getFPGATimestamp();
@@ -95,19 +95,19 @@ public class LaunchDisk extends CommandBase {
             case LaunchState.m_kSpinningUp:
                 // wait for extnsion (~0.5s)
                 if (Timer.getFPGATimestamp() > (startTime + 0.5)) {
-                    System.out.println("Shooter m_kSpinningUp complete " + Timer.getFPGATimestamp());
+//                    System.out.println("Shooter m_kSpinningUp complete " + Timer.getFPGATimestamp());
                     state = LaunchState.Shoot;
                 }
                 break;
             case LaunchState.m_kShoot:
-                System.out.println("Shooter m_kShoot " + Timer.getFPGATimestamp());
+//                System.out.println("Shooter m_kShoot " + Timer.getFPGATimestamp());
                 CommandBase.shooter.extendShooter();
                 state = LaunchState.Finish;
                 startTime = Timer.getFPGATimestamp();
                 break;
             case LaunchState.m_kFinish:
                 if (Timer.getFPGATimestamp() > (startTime + 0.3)) {
-                    System.out.println("Shooter m_kFinish complete " + Timer.getFPGATimestamp());
+//                    System.out.println("Shooter m_kFinish complete " + Timer.getFPGATimestamp());
                     CommandBase.shooter.retractShooter();
                     CommandBase.shooter.spinLaunchWheels(0);
                     isFinished = true;

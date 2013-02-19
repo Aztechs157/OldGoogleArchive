@@ -20,6 +20,8 @@ public class Turn extends CommandBase {
     public Turn(double inDegrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+                requires(CommandBase.drive);
+
         degrees = inDegrees;
     }
 
@@ -36,8 +38,8 @@ public class Turn extends CommandBase {
         // compute turn rate.  
         double rate = -1.0 * (drive.getAngle() - degrees) / 180.0; 
 //        System.out.println("gyro="+drive.getAngle()+",rate="+rate);
-//        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
-        if(Timer.getFPGATimestamp() > (startTime + 2))
+        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
+        if(Timer.getFPGATimestamp() > (startTime + 2))  // two seconds to get there
         {
             timedOut = true;
         }
