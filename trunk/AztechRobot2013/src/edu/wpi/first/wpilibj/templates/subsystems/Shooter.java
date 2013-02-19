@@ -26,6 +26,7 @@ public class Shooter extends Subsystem {
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
     // Sensor values per degree .004 
+        
     public static final double zeroSensorReading = 0.482;
     public static final double maxSensorReading = 0.697;
     public static final double zeroElevationAngle = 0.9;
@@ -125,8 +126,8 @@ public class Shooter extends Subsystem {
 //                shooterElevation.enableControl();
             } catch (CANTimeoutException ex) {
                 failed = true;
-                System.out.println("FAIL " + tries + " - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
-                ex.printStackTrace();
+                System.out.println("Timeout " + tries + " - Instantiating Shoter Elevation JAG " + RobotMap.ShooterElevationMotorID);
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -199,8 +200,8 @@ public class Shooter extends Subsystem {
                 shooterElevation.disableControl();
             }
         } catch (CANTimeoutException ex) {
-            System.out.println("FAIL - " + (enable ? "Enabling" : "Disabling") + " Shoter Elevation Control " + RobotMap.ShooterElevationMotorID);
-            ex.printStackTrace();
+            System.out.println("TIMEOUT - " + (enable ? "Enabling" : "Disabling") + " Shoter Elevation Control " + RobotMap.ShooterElevationMotorID);
+//            ex.printStackTrace();
         }
     }
 

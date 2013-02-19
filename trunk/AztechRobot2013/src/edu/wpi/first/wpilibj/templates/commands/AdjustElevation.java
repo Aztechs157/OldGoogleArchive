@@ -26,9 +26,11 @@ public class AdjustElevation extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+            System.out.println("Shooter El Adjust start");
         isFinished = false;
         CommandBase.shooter.enableElevation(true);
         CommandBase.shooter.adjustShooterElevation(degrees);
+//        ManualAim.setManualElevation(degrees);
         startTime = Timer.getFPGATimestamp();
     }
 
@@ -36,6 +38,7 @@ public class AdjustElevation extends CommandBase {
     protected void execute() {
         if(Timer.getFPGATimestamp() > (startTime + allowedMotorTime))
         {
+            System.out.println("Shooter El Period done");
             isFinished = true;
         }
     }
@@ -48,11 +51,13 @@ public class AdjustElevation extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         CommandBase.shooter.enableElevation(false);
+        System.out.println("Shooter El Adjust End");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        System.out.println("Shooter El Adjust interrupted");
         end();
     }
 }

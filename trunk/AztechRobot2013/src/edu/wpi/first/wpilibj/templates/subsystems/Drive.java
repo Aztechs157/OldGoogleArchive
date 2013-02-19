@@ -105,6 +105,27 @@ public class Drive extends Subsystem {
         setupJagForSpeedControl(driveFR);
         setupJagForSpeedControl(driveRR);
 
+        tries = 0;
+        failed = false;
+        do {
+            try {
+                driveFL.setX(0);
+                driveRL.setX(0);
+                driveFR.setX(0);
+                driveRR.setX(0);
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Setting Jags to stop ");
+                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+
+
+//        setupJagForVoltageControl(driveFL);
+//        setupJagForVoltageControl(driveRL);
+//        setupJagForVoltageControl(driveFR);
+//        setupJagForVoltageControl(driveRR);
+
         try {
             mechanumDrive = new RobotDrive(driveFL, driveRL, driveFR, driveRR);
         } catch (Exception ex) {
@@ -142,11 +163,12 @@ public class Drive extends Subsystem {
             boolean failed = false;
             do {
                 try {
-                    jag.setVoltageRampRate(0.02);
+                    jag.setVoltageRampRate(0.1);
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
                     jag.changeControlMode(CANJaguar.ControlMode.kSpeed);
                     jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
                     jag.configEncoderCodesPerRev(360 * 3);
-                    jag.setPID(4, 0.15, 0);
+                    jag.setPID(.6, .2, 0);
                     jag.enableControl();
                 } catch (CANTimeoutException ex) {
                     failed = true;
@@ -157,6 +179,28 @@ public class Drive extends Subsystem {
         }
     }
 
+    
+      private static void setupJagForVoltageControl(ScaledCANJaguar jag) {
+        if (jag != null) {
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    jag.setVoltageRampRate(0.02);
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+                    jag.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
+                    jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+                    jag.configEncoderCodesPerRev(360 * 3);
+                    jag.setPID(2, 0, 0);
+                    jag.enableControl();
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while configuring speed");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+            jag.setScalingFactor(100);
+        }
+    }
     private static void setupJagForPositionControl(CANJaguar jag) {
         if (jag != null) {
             int tries = 0;
@@ -164,6 +208,7 @@ public class Drive extends Subsystem {
             do {
                 try {
                     jag.setVoltageRampRate(0.02);
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
                     jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                     jag.setPositionReference(CANJaguar.PositionReference.kQuadEncoder);
                     jag.configEncoderCodesPerRev(360);
@@ -179,47 +224,20 @@ public class Drive extends Subsystem {
         }
     }
 
-    private static void setupJagCoastMode(CANJaguar jag, boolean coast) {
-        if (jag != null) {
-            int tries = 0;
-            boolean failed = false;
-            do {
-                try {
-                    if (!coast) {
-                        jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-                    } else {
-                        jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-                    }
-                    jag.enableControl();
-                } catch (CANTimeoutException ex) {
-                    failed = true;
-                    System.out.println("Exception " + tries + " while coast mode");
-                }
-            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-
-        }
-    }
-
-    public void checkControl(CANJaguar theJag) {
-        try {
-            CANJaguar.ControlMode ctlMode = theJag.getControlMode();
-
-        } catch (CANTimeoutException ex) {
-            System.out.println("Timeout checking control states");
-        }
-    }
-
-    public void setCoastMode(boolean coast) {
-        setupJagCoastMode(driveFL, coast);
-        setupJagCoastMode(driveRL, coast);
-        setupJagCoastMode(driveFR, coast);
-        setupJagCoastMode(driveRR, coast);
-    }
+//    public void checkControl(CANJaguar theJag) {
+//        try {
+//            CANJaguar.ControlMode ctlMode = theJag.getControlMode();
+//
+//        } catch (CANTimeoutException ex) {
+//            System.out.println("Timeout checking control states");
+//        }
+//    }
+//
     int iterationCount = 0;
 
     private void checkAndFixMotors() {
         iterationCount++;
-        if (iterationCount % 100 == 0) {
+        if (iterationCount % 10 == 0) {
             checkAndFixMotor(driveFL);
             checkAndFixMotor(driveRL);
             checkAndFixMotor(driveFR);
@@ -251,8 +269,34 @@ public class Drive extends Subsystem {
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation) {
         checkAndFixMotors();
-        if (mechanumDrive != null) {
-            mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
+
+//        if (!  (   (Math.abs(x) < 0.1)
+//                && (Math.abs(y) < 0.1)
+//                && (Math.abs(rotation) < 0.1))) 
+        {
+            //        if (mechanumDrive != null) {
+//            mechanumDrive.mecanumDrive_Cartesian(x, y, rotation, 0);
+//        }
+
+            double scale = 100;
+            double xGo = scale * x;
+            double yGo = scale * y;
+            double rotGo = scale * rotation;
+
+//        System.out.println("xGo:" + xGo + "  yGo:" + yGo + "  rotGo:" + rotGo);
+//        System.out.println("FL - " + ( -xGo + -rotGo +  yGo) + "      FR - " + ( -xGo + -rotGo + -yGo));
+//        System.out.println("RL - " + (  xGo + -rotGo +  yGo) + "      RR - " + (  xGo + -rotGo + -yGo));
+
+            byte group = 22;
+            try {
+                driveFL.setX(-xGo + -rotGo + yGo, group);
+                driveFR.setX(-xGo + -rotGo + -yGo, group);
+                driveRL.setX(xGo + -rotGo + yGo, group);
+                driveRR.setX(xGo + -rotGo + -yGo, group);
+                CANJaguar.updateSyncGroup(group);
+            } catch (CANTimeoutException ex) {
+//            System.out.println("oops");
+            }
         }
     }
 

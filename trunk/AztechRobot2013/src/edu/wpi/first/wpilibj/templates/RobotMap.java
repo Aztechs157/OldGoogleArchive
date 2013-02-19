@@ -43,7 +43,7 @@ public class RobotMap {
     //=====================================================================
     // Shooter System Constants
     //=====================================================================
-    public static int ShooterElevationMotorID = 3;         // CAN
+    public static int ShooterElevationMotorID = 5;         // CAN
     public static int ShooterFirstStageDrivePWMPort = 3;   // PWM
     public static int ShooterSecondStageDrivePWMPort = 4;  // PWM
     // Compressor Info
