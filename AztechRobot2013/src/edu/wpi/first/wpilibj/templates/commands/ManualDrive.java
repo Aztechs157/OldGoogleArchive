@@ -26,17 +26,19 @@ public class ManualDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-// old        double x = -CommandBase.oi.getDriverController().getTriggers();
+
+        // Driver Control    
+        // old        double x = -CommandBase.oi.getDriverController().getTriggers();
+// old        double rotation = -CommandBase.oi.getDriverController().getLeftY();
         double x = -CommandBase.oi.getDriverController().getLeftX();
         double y = -CommandBase.oi.getDriverController().getLeftY();
-// old        double rotation = -CommandBase.oi.getDriverController().getLeftY();
         double rotation = -CommandBase.oi.getDriverController().getRightX();
-
+        double speed = Math.abs(CommandBase.oi.getDriverController().getTriggers());
         
-        double operatorRotation = CommandBase.oi.getOperatorJoystick().getX();
-        if((operatorRotation * operatorRotation) < 0.025) operatorRotation = 0;
-        double operatorRotationSpeed =  0.2 * operatorRotation;
+        double minSpeed = 0.25;
         
+        speed = minSpeed + (speed * (1-minSpeed));
+                
         if(x*x < 0.01)
         {
             x = 0;
@@ -54,9 +56,15 @@ public class ManualDrive extends Command {
         y = y * y * (y<0 ? -1.0 : 1.0);
         rotation = rotation * rotation * (rotation<0 ? -1.0 : 1.0);
 
+        // Operator Control
+        double operatorSpeed = 0.1;
+        double operatorRotation = CommandBase.oi.getOperatorJoystick().getX();
+        if((operatorRotation * operatorRotation) < 0.025) operatorRotation = 0;
+        double operatorRotationSpeed =  operatorSpeed * operatorRotation;
+        
         CommandBase.drive.mecanumDrive_Cartesian(x, y, rotation + operatorRotationSpeed);
 
-        //        System.out.println("x="+x+",    y="+y+",    r="+rotation);
+//        System.out.println("x="+x+",    y="+y+",    r="+rotation+",    or="+operatorRotationSpeed);
 //                try {
 //            System.out.print("FR.getX()=" + RobotMap.driveDriveFR.getX());
 //            System.out.print(" FL.getX()=" + RobotMap.driveDriveFL.getX());
