@@ -30,21 +30,16 @@ public class ManualAim extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double rotationStick = oi.getOperatorJoystick().getX();
         double elevationStick = oi.getOperatorJoystick().getY();
         
-        if((rotationStick * rotationStick) < 0.025) rotationStick = 0;
         if((elevationStick * elevationStick) < 0.025) elevationStick = 0;
  
-        double elevationDelta = elevationStick * 0.1;
+        double elevationDelta = elevationStick * 0.05;
         commandElevation -= elevationDelta;
-
-        double rotationSpeed =  0.2 * rotationStick;
 
 //        System.out.println("ManualAim - elDelta=" + elevationDelta + "   comEl=" + commandElevation + "   rotSPeed=" + rotationSpeed);
         
 //        CommandBase.shooter.setShooterElevation(commandElevation);
-        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rotationSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -59,5 +54,10 @@ public class ManualAim extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    }
+    
+    public static void setManualElevation(double elevation)  //degrees
+    {
+        commandElevation = elevation;
     }
 }

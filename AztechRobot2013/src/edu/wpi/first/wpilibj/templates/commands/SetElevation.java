@@ -29,6 +29,7 @@ public class SetElevation extends CommandBase {
         isFinished = false;
         CommandBase.shooter.enableElevation(true);
         CommandBase.shooter.setShooterElevation(degrees);
+//        ManualAim.setManualElevation(degrees);
         startTime = Timer.getFPGATimestamp();
     }
 

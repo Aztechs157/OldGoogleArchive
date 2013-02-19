@@ -38,6 +38,13 @@ public class AztechRobot extends IterativeRobot {
                        
         // Initialize all subsystems
         CommandBase.init();
+
+        System.out.println("-------------------------------------------");
+        System.out.println("-------------------------------------------");
+        System.out.println("--           READY TO ROCK               --");
+        System.out.println("-------------------------------------------");
+        System.out.println("-------------------------------------------");
+
     }
 
     public void autonomousInit() {

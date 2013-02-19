@@ -25,7 +25,6 @@ public class Turn extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        drive.setCoastMode(false);
         drive.resetGyro();
         startTime = Timer.getFPGATimestamp();
         timedOut = false;
@@ -37,7 +36,7 @@ public class Turn extends CommandBase {
         // compute turn rate.  
         double rate = -1.0 * (drive.getAngle() - degrees) / 180.0; 
 //        System.out.println("gyro="+drive.getAngle()+",rate="+rate);
-        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
+//        CommandBase.drive.mecanumDrive_Cartesian(0, 0, rate);        
         if(Timer.getFPGATimestamp() > (startTime + 2))
         {
             timedOut = true;
@@ -50,8 +49,7 @@ public class Turn extends CommandBase {
     }
     // Called once after isFinished returns true
     protected void end() {
-        CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
-        CommandBase.drive.setCoastMode(true);
+//        CommandBase.drive.mecanumDrive_Cartesian(0, 0, 0);
     }
 
     // Called when another command which requires one or more of the same

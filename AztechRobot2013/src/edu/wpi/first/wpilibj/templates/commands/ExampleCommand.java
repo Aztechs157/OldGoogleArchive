@@ -1,6 +1,8 @@
 
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.templates.AztechRobot;
+
 /**
  *
  * @author bradmiller
@@ -14,6 +16,7 @@ public class ExampleCommand extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+//        CommandBase.drive.mecanumDrive_Cartesian(1,0,0);
     }
 
     // Called repeatedly when this Command is scheduled to run

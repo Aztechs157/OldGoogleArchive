@@ -30,11 +30,11 @@ public class VisionAlign extends CommandBase {
     protected void execute() {
         if(vision.goalFound() != VisionSubsystem.GOAL__NONE) {
             System.out.println("Aligning... x="+vision.getXErrorDeg()+",  y="+vision.getYErrorDeg()+",   quality="+vision.getQuality()+"");
-            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
+//            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
         }
         else
         {
-            drive.mecanumDrive_Cartesian(0, 0, 0);
+//            drive.mecanumDrive_Cartesian(0, 0, 0);
         }
         
     }    
@@ -68,7 +68,7 @@ public class VisionAlign extends CommandBase {
                 System.out.println("Found No Goal: Quality = "+vision.getQuality());
         }
         vision.disable();
-        drive.mecanumDrive_Cartesian(0, 0, 0);
+//        drive.mecanumDrive_Cartesian(0, 0, 0);
     }
 
     // Called when another command which requires one or more of the same
