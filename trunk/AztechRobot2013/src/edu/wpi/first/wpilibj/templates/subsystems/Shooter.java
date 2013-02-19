@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.ManualAim;
 
 /**
@@ -19,6 +20,8 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    public static final double lowLimitAngle = 0;
+    public static final double highLimitAngle = 50;
     public static final double loadingAngle = 25;
     public static final double climbAngle = 0;
     public static final double basicShotAngle = 45;
@@ -26,7 +29,6 @@ public class Shooter extends Subsystem {
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
     // Sensor values per degree .004 
-        
     public static final double zeroSensorReading = 0.482;
     public static final double maxSensorReading = 0.697;
     public static final double zeroElevationAngle = 0.9;
@@ -131,6 +133,9 @@ public class Shooter extends Subsystem {
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
+        ElevationControl.getInstance().startThread();
+
+
         if (shooterFirstStage == null) {
             shooterFirstStage = new Talon(RobotMap.ShooterFirstStageDrivePWMPort);
         }
@@ -192,11 +197,27 @@ public class Shooter extends Subsystem {
         }
     }
 
+    private void setShooterExtended(boolean extend) {
+        if (extend) {
+            if ((shooterRetract != null) && (shooterExtend != null)) {
+                shooterExtend.set(true);
+                shooterRetract.set(false);
+            }
+        } else {
+            if ((shooterRetract != null) && (shooterExtend != null)) {
+                shooterRetract.set(true);
+                shooterExtend.set(false);
+            }
+        }
+    }
+
     public void enableElevation(boolean enable) {
         try {
             if (enable) {
+                System.out.println("enable control");
                 shooterElevation.enableControl();
             } else {
+                System.out.println("disable control");
                 shooterElevation.disableControl();
             }
         } catch (CANTimeoutException ex) {
@@ -238,12 +259,8 @@ public class Shooter extends Subsystem {
 
     }
 
-    public void adjustShooterElevation(double delta) {
-        setShooterElevation(getShooterElevation() + delta);
-    }
-
-    public void setShooterElevation(double elevationDegrees) {
-        System.out.println("setShooterElevation(" + elevationDegrees + ")");
+    public void updateShooterElevation(double elevationDegrees) {
+        System.out.println("updateShooterElevation(" + elevationDegrees + ")");
         setPIDConstants(elevationDegrees);
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         if (null != shooterElevation) {
@@ -274,18 +291,16 @@ public class Shooter extends Subsystem {
         return result;
     }
 
-    private void setShooterExtended(boolean extend) {
-        if (extend) {
-            if ((shooterRetract != null) && (shooterExtend != null)) {
-                shooterExtend.set(true);
-                shooterRetract.set(false);
-            }
-        } else {
-            if ((shooterRetract != null) && (shooterExtend != null)) {
-                shooterRetract.set(true);
-                shooterExtend.set(false);
-            }
-        }
+    public void setShooterElevation(double elevation) {
+        ElevationControl.getInstance().setElevation(elevation);
+    }
+
+    public void adjustShooterElevation(double delta) {
+        ElevationControl.getInstance().setElevation(ElevationControl.getInstance().getCmdElevation() + delta);
+    }
+
+    public double getShooterCommandedElevation() {
+        return ElevationControl.getInstance().getCmdElevation();
     }
 
     public void setColor(Color color) {
@@ -316,4 +331,70 @@ public class Shooter extends Subsystem {
                 break;
         }
     }
+
 }
+
+    class ElevationControl implements Runnable {
+
+        // Singleton Stuff
+        private final static ElevationControl controlSingleton = new ElevationControl();
+
+        public static ElevationControl getInstance() {
+            return controlSingleton;
+        }
+        // ==============================
+        // thread stuff
+        private static boolean started = false;
+
+        public void startThread() {
+            if (!started) {
+                started = true;
+                (new Thread(new ElevationControl())).start();
+                System.out.println("ElevationControl - Started");
+            }
+        }
+        // ==============================
+        private static double commandElevation = 25;
+        private static boolean commandUpdated = false;
+        private static double lastCommandTime = 0;
+        private static double elevationEnableTime = 1; //second
+        private static double loopDelay = 0.05;        //seconds
+        private static boolean enable = false;
+        
+        public void setElevation(double elevation) {
+            System.out.println("thread-setElevation(" + elevation + ")");
+            commandElevation = elevation;
+            if (commandElevation < CommandBase.shooter.lowLimitAngle)
+            {
+                commandElevation = CommandBase.shooter.lowLimitAngle;
+            }
+            if (commandElevation > CommandBase.shooter.highLimitAngle)
+            {
+                commandElevation = CommandBase.shooter.highLimitAngle;
+            }
+            lastCommandTime = Timer.getFPGATimestamp();
+            enable = true;
+            CommandBase.shooter.enableElevation(enable);
+            commandUpdated = true;
+        }
+
+        public double getCmdElevation() {
+            return commandElevation;
+        }
+
+        public void run() {
+            System.out.println("Elevation Control Thread - RUNNING");
+            while (true) {
+                if (commandUpdated) {
+                    commandUpdated = false; // reset until next command
+                    System.out.println("thread-updateElevation(" + commandElevation + ")");                   
+                    CommandBase.shooter.updateShooterElevation(commandElevation);
+                }
+                if (enable && (Timer.getFPGATimestamp() > (lastCommandTime + elevationEnableTime))){
+                    enable = false;
+                    CommandBase.shooter.enableElevation(enable);
+                }
+                Timer.delay(loopDelay);
+            }
+        }
+    }

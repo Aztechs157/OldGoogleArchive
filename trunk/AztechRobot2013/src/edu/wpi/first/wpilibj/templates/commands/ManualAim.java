@@ -24,22 +24,20 @@ public class ManualAim extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         System.out.println("MANUAL AIM ===================================================");
-        commandElevation = CommandBase.shooter.getShooterElevation();
-        CommandBase.shooter.enableElevation(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double elevationStick = oi.getOperatorJoystick().getY();
-        
+        double elevationStick = oi.getOperatorJoystick().getY();        
         if((elevationStick * elevationStick) < 0.025) elevationStick = 0;
  
-        double elevationDelta = elevationStick * 0.05;
-        commandElevation -= elevationDelta;
+        double elevationDelta = elevationStick * 0.5;
 
-//        System.out.println("ManualAim - elDelta=" + elevationDelta + "   comEl=" + commandElevation + "   rotSPeed=" + rotationSpeed);
-        
-//        CommandBase.shooter.setShooterElevation(commandElevation);
+        if(Math.abs(elevationDelta) > 0.01)
+        {
+            System.out.println("AIM Elevation = " + elevationDelta);
+            CommandBase.shooter.adjustShooterElevation(elevationDelta);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -13,51 +13,34 @@ import edu.wpi.first.wpilibj.templates.AztechRobot;
  */
 public class AdjustElevation extends CommandBase {
     
-    private static final double allowedMotorTime = 1.0; //seconds
     private double degrees;
-    private static double startTime;
-    private boolean isFinished;
     
     public AdjustElevation(double inDegrees) {
-        // Use requires() here to declare subsystem dependencies
-//        requires(CommandBase.shooter);
         degrees = inDegrees;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-            System.out.println("Shooter El Adjust start");
-        isFinished = false;
-        CommandBase.shooter.enableElevation(true);
+        System.out.println("adjustElevation(" + degrees + ")");
         CommandBase.shooter.adjustShooterElevation(degrees);
-//        ManualAim.setManualElevation(degrees);
-        startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(Timer.getFPGATimestamp() > (startTime + allowedMotorTime))
-        {
-            System.out.println("Shooter El Period done");
-            isFinished = true;
-        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isFinished;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        CommandBase.shooter.enableElevation(false);
-        System.out.println("Shooter El Adjust End");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        System.out.println("Shooter El Adjust interrupted");
         end();
     }
 }
