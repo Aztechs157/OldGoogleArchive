@@ -21,7 +21,7 @@ public class AdjustElevation extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        System.out.println("adjustElevation(" + degrees + ")");
+//        System.out.println("adjustElevation(" + degrees + ")");
         CommandBase.shooter.adjustShooterElevation(degrees);
     }
 
