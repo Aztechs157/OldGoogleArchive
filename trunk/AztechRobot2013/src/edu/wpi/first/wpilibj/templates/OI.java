@@ -89,18 +89,18 @@ public class OI {
         m_setFirst_RightStickButton = new LogitechControllerButton(m_FirstGamePad, LogitechController.ButtonType.kButtonRightTop.value);
 
         // Associate the Buttons with Commands
-        m_setFirst_LeftShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_LeftShoulderButton> pressed\n"));
-        m_setFirst_LeftTrigger.whenPressed(new PrintMessage("Button <m_setFirst_LeftTrigger> pressed\n"));
-        m_setFirst_RightShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_RightShoulderButton> pressed\n"));
-        m_setFirst_RightTrigger.whenPressed(new PrintMessage("Button <m_setFirst_RightTrigger> pressed\n"));
+//        m_setFirst_LeftShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_LeftShoulderButton> pressed\n"));
+//        m_setFirst_LeftTrigger.whenPressed(new PrintMessage("Button <m_setFirst_LeftTrigger> pressed\n"));
+//        m_setFirst_RightShoulderButton.whenPressed(new PrintMessage("Button <m_setFirst_RightShoulderButton> pressed\n"));
+//        m_setFirst_RightTrigger.whenPressed(new PrintMessage("Button <m_setFirst_RightTrigger> pressed\n"));
         // Gamepad
-        m_setFirst_GamepadLeft.whenPressed(new PrintMessage("Button <m_setFirst_GamepadLeft> pressed\n"));
-        m_setFirst_GamepadRight.whenPressed(new PrintMessage("Button <m_setFirst_GamepadRight> pressed\n"));
-        m_setFirst_GamepadUp.whenPressed(new PrintMessage("Button <m_setFirst_GamepadUp> pressed\n"));
-        m_setFirst_GamepadDown.whenPressed(new PrintMessage("Button <m_setFirst_GamepadDown> pressed\n"));
+//        m_setFirst_GamepadLeft.whenPressed(new PrintMessage("Button <m_setFirst_GamepadLeft> pressed\n"));
+//        m_setFirst_GamepadRight.whenPressed(new PrintMessage("Button <m_setFirst_GamepadRight> pressed\n"));
+//        m_setFirst_GamepadUp.whenPressed(new PrintMessage("Button <m_setFirst_GamepadUp> pressed\n"));
+//        m_setFirst_GamepadDown.whenPressed(new PrintMessage("Button <m_setFirst_GamepadDown> pressed\n"));
         // X,Y,A,B Buttons
-        m_setFirst_X.whenPressed(new PrintMessage("Button <m_setFirst_X> pressed\n"));
-        m_setFirst_Y.whenPressed(new VisionAlign());
+        m_setFirst_X.whenPressed(new SetElevation(Shooter.climbAngle));
+        m_setFirst_Y.whenPressed(new SetElevation(Shooter.loadingAngle));
 //        m_setFirst_Y.whenPressed(new PrintMessage("Button <m_setFirst_Y> pressed\n"));
 //        m_setFirst_A.whenPressed(new PrintMessage("Button <m_setFirst_A> pressed\n"));//Lift Retract
 //        m_setFirst_B.whenPressed(new PrintMessage("Button <m_setFirst_B> pressed\n"));// Lift Extend
@@ -138,9 +138,9 @@ public class OI {
         m_OperatorButton_Trigger.whenPressed(new LaunchDisk());
         m_OperatorButton_Side.whenPressed(new VisionAlign());
         m_OperatorButton_3.whenPressed(new SetElevation(Shooter.climbAngle));
-        m_OperatorButton_4.whenPressed(new AdjustElevation(-5.0));
+        m_OperatorButton_4.whenPressed(new AdjustElevation(-2.0));
         m_OperatorButton_5.whenPressed(new SetElevation(Shooter.loadingAngle));
-        m_OperatorButton_6.whenPressed(new AdjustElevation(5.0));
+        m_OperatorButton_6.whenPressed(new AdjustElevation(2.0));
         m_OperatorButton_8.whenPressed(new Turn(45));
 
         m_OperatorButton_7.whenPressed(new SetColor(Shooter.Color.Red));

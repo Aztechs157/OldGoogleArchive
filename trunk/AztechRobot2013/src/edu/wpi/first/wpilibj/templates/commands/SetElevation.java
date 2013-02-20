@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.templates.AztechRobot;
 public class SetElevation extends CommandBase {
     
     private double degrees;
+    double commandTime;
     
     public SetElevation(double inDegrees) {
         degrees = inDegrees;
@@ -21,12 +22,20 @@ public class SetElevation extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        System.out.println("setElevation(" + degrees + ")");
+//        System.out.println("setElevation(" + degrees + ")");
         CommandBase.shooter.setShooterElevation(degrees);
+        commandTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        if(Timer.getFPGATimestamp() > (commandTime + 1.1))
+        {
+            if(Math.abs(CommandBase.shooter.getShooterElevation() - degrees) > 3)
+            {
+                CommandBase.shooter.setShooterElevation(degrees);
+            }
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
