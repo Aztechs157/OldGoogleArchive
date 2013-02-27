@@ -55,8 +55,8 @@ public class RobotMap {
     public static final int LoaderExtendPort = 3;       // Relay
 
     // Shoot Piston
-    public static final int ShooterRetractPort = 7;     // Relay
-    public static final int ShooterExtendPort = 6;      // Relay
+    public static final int ShooterRetractPort = 4;     // Relay
+    public static final int ShooterExtendPort = 5;      // Relay
     
     // Request Light Panel
     public static final int RedLightPort = 6;            // Relay

@@ -136,23 +136,25 @@ public class OI {
         m_OperatorButton_12 = new JoystickButton(m_OperatorJoystick, 12);
 
         m_OperatorButton_Trigger.whenPressed(new LaunchDisk());
-        m_OperatorButton_Side.whenPressed(new VisionAlign());
+        m_OperatorButton_Side.whenPressed(new SetElevation(Shooter.basicShotAngle));
         m_OperatorButton_3.whenPressed(new SetElevation(Shooter.climbAngle));
         m_OperatorButton_4.whenPressed(new AdjustElevation(-2.0));
         m_OperatorButton_5.whenPressed(new SetElevation(Shooter.loadingAngle));
         m_OperatorButton_6.whenPressed(new AdjustElevation(2.0));
-        m_OperatorButton_8.whenPressed(new Turn(45));
+
+        m_OperatorButton_8.whenPressed(new ReadJag(Shooter.shooterElevation, false));
+        m_OperatorButton_8.whenPressed(new ReadJag(Drive.driveFL, false));
+        m_OperatorButton_8.whenPressed(new ReadJag(Drive.driveFR, false));
+        m_OperatorButton_8.whenPressed(new ReadJag(Drive.driveRL, false));
+        m_OperatorButton_8.whenPressed(new ReadJag(Drive.driveRR, false));
 
         m_OperatorButton_7.whenPressed(new SetColor(Shooter.Color.Red));
         m_OperatorButton_9.whenPressed(new SetColor(Shooter.Color.Blue));
         m_OperatorButton_11.whenPressed(new SetColor(Shooter.Color.White));
+  
+        m_OperatorButton_12.whenPressed(new VisionAlign());
 
-        m_OperatorButton_10.whenPressed(new Turn(-45));
-//        m_OperatorButton_12.whenPressed(new ReadJag(Shooter.shooterElevation, false));
-        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveFL, false));
-        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveFR, false));
-        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveRL, false));
-        m_OperatorButton_12.whenPressed(new ReadJag(Drive.driveRR, false));
+//        m_OperatorButton_10.whenPressed(new PrintMessage("Button <m_OperatorButton_10> pressed\n"));
     }
 
     public LogitechController getDriverController() {
