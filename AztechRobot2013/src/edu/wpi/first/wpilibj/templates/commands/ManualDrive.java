@@ -59,7 +59,7 @@ public class ManualDrive extends Command {
         rotation = speedLimit * (rotation * rotation * (rotation<0 ? -1.0 : 1.0));
 
         // Operator Control
-        double operatorSpeed = 0.2;
+        double operatorSpeed = 0.4;
         double operatorRotation = CommandBase.oi.getOperatorJoystick().getX();
         double operatorForeAft = CommandBase.oi.getOperatorJoystick().getY();
         
