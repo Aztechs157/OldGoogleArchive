@@ -4,6 +4,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.subsystems.Shooter;
 
 
 /**
@@ -34,14 +35,82 @@ public class AutonomousCommand extends CommandGroup {
         
         autoSelectSwitch = new AnalogChannel(RobotMap.AutoSelectChannel);
         int autoMode = autoSelectSwitch.getValue() / 6;
-        //System.out.println("Autonomous Mode: "+autoMode);
-        
-        addSequential(new Straight(10.0, 0.0));   // drive forward 10 feet
-//        addSequential(new Straight(0.0, 10.0));   // drive right 10 feet
-//        addSequential(new Straight(-10.0, 0.0));  // drive backward 10 feet
-//        addSequential(new Straight(0.0, -10.0));  // drive left 10 feet
-//        addSequential(new VisionAlign());         // vision align
-        addSequential(new LaunchDisk());            // launch disk
-        
+        System.out.println("Autonomous Mode: "+autoMode);
+
+//        switch(autoMode)
+//        {
+//        case 0:
+            // start from back left
+            addSequential(new SetElevation(Shooter.basicShotAngle));
+            addSequential(new Straight(8.0, 0.0));     // drive forward 8 feet
+
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//            
+//        case 1:
+//            // start from back left
+//            addSequential(new SetElevation(Shooter.basicShotAngle));
+//            addSequential(new Straight(8.0, .0));     // drive forward 8 feet
+//            addSequential(new Turn(30.0));              // turn right 30 degrees
+//            addSequential(new VisionAlign());           // vision align
+//            
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//            
+//        case 2:
+//            // start from front left
+//            addSequential(new SetElevation(Shooter.basicShotAngle));
+//            addSequential(new Straight(2.0, 0.0));      // drive forward 2 feet
+//            addSequential(new Turn(30.0));              // turn right 30 degrees
+//            addSequential(new VisionAlign());           // vision align
+//            
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//            
+//        case 3:
+//            // start from front left
+//            addSequential(new SetElevation(Shooter.basicShotAngle));
+//            addSequential(new Straight(2.0, 0.0));      // drive forward 2 feet
+//            addSequential(new Turn(30.0));              // turn right 30 degrees
+//            addSequential(new VisionAlign());           // vision align
+//            
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//            
+//        case 4:
+//            // start from front left
+//            addSequential(new SetElevation(Shooter.basicShotAngle));
+//            addSequential(new Straight(2.0, 0.0));      // drive forward 2 feet
+//            addSequential(new Turn(30.0));              // turn right 30 degrees
+//            addSequential(new VisionAlign());           // vision align
+//            
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//            
+//        case 5:
+//            // start from front left
+//            addSequential(new SetElevation(Shooter.basicShotAngle));
+//            addSequential(new Straight(2.0, 0.0));      // drive forward 2 feet
+//            addSequential(new Turn(30.0));              // turn right 30 degrees
+//            addSequential(new VisionAlign());           // vision align
+//            
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            addSequential(new LaunchDisk());            // launch disk
+//            break;
+//
+//        default:
+//            System.out.println("Auto Mode "+autoMode+" not supported!");
+//        }    
     }
 }
