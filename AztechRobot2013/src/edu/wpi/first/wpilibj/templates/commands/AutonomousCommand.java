@@ -36,6 +36,12 @@ public class AutonomousCommand extends CommandGroup {
         int autoMode = autoSelectSwitch.getValue() / 6;
         //System.out.println("Autonomous Mode: "+autoMode);
         
-        addSequential(new VisionAlign());
+        addSequential(new Straight(10.0, 0.0));   // drive forward 10 feet
+//        addSequential(new Straight(0.0, 10.0));   // drive right 10 feet
+//        addSequential(new Straight(-10.0, 0.0));  // drive backward 10 feet
+//        addSequential(new Straight(0.0, -10.0));  // drive left 10 feet
+//        addSequential(new VisionAlign());         // vision align
+        addSequential(new LaunchDisk());            // launch disk
+        
     }
 }
