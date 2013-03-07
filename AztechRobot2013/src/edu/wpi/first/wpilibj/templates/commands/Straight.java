@@ -28,26 +28,26 @@ public class Straight extends CommandBase {
         
         feetForward = inFeetForward;
         feetRight = inFeetRight;
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+
+        timeX = feetRight / feetPerSecond;
+        timeY = feetForward / feetPerSecond;
         
-        timeX = inFeetRight / feetPerSecond;
-        timeY = inFeetForward / feetPerSecond;
-        
-        if(inFeetRight < 0)
+        if(feetRight < 0)
         {
             timeX *= -1;
             speedX *= -1;
         }
         
-        if(inFeetForward < 0)
+        if(feetForward < 0)
         {
             timeY *= -1;
             speedY *= -1;
         }
-
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
+        
         stopTimeX = Timer.getFPGATimestamp() + timeX;
         stopTimeY = Timer.getFPGATimestamp() + timeY;
         System.out.println("Straight " + feetRight + " feet x, " + feetForward  + " feet y");
@@ -56,7 +56,6 @@ public class Straight extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        CommandBase.drive.mecanumDrive_Cartesian(speedX, speedY, 0);
         if(Timer.getFPGATimestamp() > stopTimeX)
         {
             speedX = 0;
@@ -65,6 +64,7 @@ public class Straight extends CommandBase {
         {
             speedY = 0;
         }
+        CommandBase.drive.mecanumDrive_Cartesian(speedX, speedY, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
