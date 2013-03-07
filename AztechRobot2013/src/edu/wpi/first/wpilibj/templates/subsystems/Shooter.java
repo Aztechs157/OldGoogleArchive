@@ -7,6 +7,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.AztechRobot;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
@@ -36,14 +37,14 @@ public class Shooter extends Subsystem {
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
     // Up PID Constants
     public static final double upPhi = -5000.0;
-    public static final double upPlo = -1000.0;
+    public static final double upPlo = -3000.0;
     public static final double upI = -3.0;
-    public static final double upD = 5.0;   // should use LARGE negative constants here
+    public static final double upD = -2500.0; 
     // Down PID Constants
     public static final double dnPhi = -1400.0;
-    public static final double dnPlo = -800.0;
+    public static final double dnPlo = -1400.0;
     public static final double dnI = -1.0;
-    public static final double dnD = 0;   // should use LARGE negative constants here (or 0)
+    public static final double dnD = -5000;
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
     public static CANJaguar shooterElevation;
@@ -144,6 +145,17 @@ public class Shooter extends Subsystem {
         }
         // set the shooter to a known state
         reset();
+        
+        SmartDashboard.putNumber("upPhi", upPhi);
+        SmartDashboard.putNumber("upPlo", upPhi);
+        SmartDashboard.putNumber("upI", upI);
+        SmartDashboard.putNumber("upD", upD);
+        
+        SmartDashboard.putNumber("dnPhi", dnPhi);
+        SmartDashboard.putNumber("dnPlo", dnPhi);
+        SmartDashboard.putNumber("dnI", dnI);
+        SmartDashboard.putNumber("dnD", dnD);
+
     }
 
     public void initDefaultCommand() {
@@ -230,6 +242,18 @@ public class Shooter extends Subsystem {
         double currentElevation = getShooterElevation();
         int tries = 0;
         boolean failed = false;
+        
+        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
+        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
+        double _upI = SmartDashboard.getNumber("upI", upI);
+        double _upD = SmartDashboard.getNumber("upD", upD);
+        
+        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
+        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
+        double _dnI = SmartDashboard.getNumber("dnI", dnI);
+        double _dnD = SmartDashboard.getNumber("dnD", dnD);
+
+        
         do {
             try {
                 shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
@@ -237,15 +261,15 @@ public class Shooter extends Subsystem {
                 shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 if ((targetElevation - currentElevation) > 0) {
                     if (targetElevation > domainBound) {
-                        shooterElevation.setPID(upPhi, upI, upD);
+                        shooterElevation.setPID(_upPhi, _upI, _upD);
                     } else {
-                        shooterElevation.setPID(upPlo, upI, upD);
+                        shooterElevation.setPID(_upPlo, _upI, _upD);
                     }
                 } else {
                     if (targetElevation > domainBound) {
-                        shooterElevation.setPID(dnPhi, dnI, dnD);
+                        shooterElevation.setPID(_dnPhi, _dnI, _dnD);
                     } else {
-                        shooterElevation.setPID(dnPlo, dnI, dnD);
+                        shooterElevation.setPID(_dnPlo, _dnI, _dnD);
                     }
                 }
                 shooterElevation.enableControl();
