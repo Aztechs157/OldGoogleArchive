@@ -63,7 +63,23 @@ public class MotorControlAssembly {
         motorDirection_ = 1;
         speed_ = 1;
     }
-        
+       
+    public boolean atHighLimitSw() {
+        boolean atLimit = false;
+        if ((limitHigh_ != null) && (limitHigh_.get() == false)) {
+            atLimit = true;
+        }
+        return atLimit;
+    }
+    
+    public boolean atLowLimitSw() {
+        boolean atLimit = false;
+        if ((limitLow_!= null) && (limitLow_.get() == false)) {
+            atLimit = true;
+        }
+        return atLimit;
+    }
+
     public SpeedController getMotor()
     {
         return motor_;

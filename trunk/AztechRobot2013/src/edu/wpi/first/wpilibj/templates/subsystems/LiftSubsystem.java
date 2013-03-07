@@ -94,5 +94,16 @@ public class LiftSubsystem extends Subsystem {
         liftAssemblyL.runFromInput(0);
         liftAssemblyR.runFromInput(0);        
     }
+    
+    public boolean isFullUp()
+    {
+        return (liftAssemblyL.atHighLimitSw() && liftAssemblyR.atHighLimitSw());
+    }
+    public boolean isFullDown()
+    {
+        return (liftAssemblyL.atLowLimitSw() && liftAssemblyR.atLowLimitSw());        
+    }
 }
+
+
 

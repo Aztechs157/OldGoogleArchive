@@ -25,7 +25,7 @@ public class Shooter extends Subsystem {
     public static final double highLimitAngle = 50;
     public static final double loadingAngle = 25;
     public static final double climbAngle = 0;
-    public static final double basicShotAngle = 45;
+    public static final double basicShotAngle = 40;
     //             Sensor   Angle
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
@@ -39,7 +39,7 @@ public class Shooter extends Subsystem {
     public static final double upPhi = -5000.0;
     public static final double upPlo = -3000.0;
     public static final double upI = -3.0;
-    public static final double upD = -2500.0; 
+    public static final double upD = -3500.0; 
     // Down PID Constants
     public static final double dnPhi = -1400.0;
     public static final double dnPlo = -1400.0;
@@ -243,16 +243,25 @@ public class Shooter extends Subsystem {
         int tries = 0;
         boolean failed = false;
         
-        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
-        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
-        double _upI = SmartDashboard.getNumber("upI", upI);
-        double _upD = SmartDashboard.getNumber("upD", upD);
-        
-        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
-        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
-        double _dnI = SmartDashboard.getNumber("dnI", dnI);
-        double _dnD = SmartDashboard.getNumber("dnD", dnD);
+//        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
+//        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
+//        double _upI = SmartDashboard.getNumber("upI", upI);
+//        double _upD = SmartDashboard.getNumber("upD", upD);
+//        
+//        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
+//        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
+//        double _dnI = SmartDashboard.getNumber("dnI", dnI);
+//        double _dnD = SmartDashboard.getNumber("dnD", dnD);
 
+        double _upPhi = upPhi;
+        double _upPlo = upPhi;
+        double _upI = upI;
+        double _upD = upD;
+        
+        double _dnPhi = dnPhi;
+        double _dnPlo = dnPhi;
+        double _dnI = dnI;
+        double _dnD = dnD;
         
         do {
             try {
