@@ -38,12 +38,12 @@ public class Shooter extends Subsystem {
     public static final double upPhi = -5000.0;
     public static final double upPlo = -1000.0;
     public static final double upI = -3.0;
-    public static final double upD = 5.0;
+    public static final double upD = 5.0;   // should use LARGE negative constants here
     // Down PID Constants
     public static final double dnPhi = -1400.0;
     public static final double dnPlo = -800.0;
     public static final double dnI = -1.0;
-    public static final double dnD = 0;
+    public static final double dnD = 0;   // should use LARGE negative constants here (or 0)
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
     public static CANJaguar shooterElevation;
@@ -364,13 +364,13 @@ public class Shooter extends Subsystem {
         public void setElevation(double elevation) {
 //            System.out.println("thread-setElevation(" + elevation + ")");
             commandElevation = elevation;
-            if (commandElevation < CommandBase.shooter.lowLimitAngle)
+            if (commandElevation < Shooter.lowLimitAngle)
             {
-                commandElevation = CommandBase.shooter.lowLimitAngle;
+                commandElevation = Shooter.lowLimitAngle;
             }
-            if (commandElevation > CommandBase.shooter.highLimitAngle)
+            if (commandElevation > Shooter.highLimitAngle)
             {
-                commandElevation = CommandBase.shooter.highLimitAngle;
+                commandElevation = Shooter.highLimitAngle;
             }
             lastCommandTime = Timer.getFPGATimestamp();
             enable = true;
@@ -392,6 +392,10 @@ public class Shooter extends Subsystem {
                 }
                 if (enable && (Timer.getFPGATimestamp() > (lastCommandTime + elevationEnableTime))){
                     enable = false;
+                    // when we stop, set the command to where the shooter is
+                    //  that way the next command behaves as expected
+                    commandElevation = CommandBase.shooter.getShooterElevation();
+                    // --
                     CommandBase.shooter.enableElevation(enable);
                 }
                 Timer.delay(loopDelay);
