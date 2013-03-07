@@ -4,6 +4,7 @@
  */
 package edu.wpi.first.wpilibj.templates.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
@@ -13,6 +14,8 @@ import edu.wpi.first.wpilibj.templates.subsystems.VisionSubsystem;
  * @author aztechs
  */
 public class VisionAlign extends CommandBase {
+
+    double timeoutTime;
     
     public VisionAlign() {
         // Use requires() here to declare subsystem dependencies
@@ -25,6 +28,7 @@ public class VisionAlign extends CommandBase {
     protected void initialize() {
         System.out.println("VisionAlign commanded.");
         vision.enable();
+        timeoutTime = Timer.getFPGATimestamp() + 2.0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -50,7 +54,8 @@ public class VisionAlign extends CommandBase {
         // quit if ...
         //    a. cycled for min frames and still have no target, or
         //    b. have the target and are within the required alignment tolerance
-        return ((vision.reachedMinFrames() && 
+        return (Timer.getFPGATimestamp() > timeoutTime) ||
+               ((vision.reachedMinFrames() && 
                 (vision.goalFound() == VisionSubsystem.GOAL__NONE))) ||
                ((vision.goalFound() != VisionSubsystem.GOAL__NONE) && 
                 (vision.getXErrorDeg() < RobotMap.AlignToleranceXDeg) &&
