@@ -15,8 +15,8 @@ public class Straight extends CommandBase {
     double feetPerSecond = 3.0;
     double feetForward = 0;
     double feetRight = 0;
-    double speedX = -0.5;
-    double speedY = 0.5;
+    double speedX = 0;
+    double speedY = 0;
     double timeX = 0;
     double timeY = 0;
     double stopTimeX, stopTimeY;
@@ -33,6 +33,9 @@ public class Straight extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
 
+        speedX = -0.5;
+        speedY = 0.5;
+        
         timeX = feetRight / feetPerSecond;
         timeY = feetForward / feetPerSecond;
         
