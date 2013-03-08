@@ -397,9 +397,15 @@ public class Shooter extends Subsystem {
         private static double commandElevation = 25;
         private static boolean commandUpdated = false;
         private static double lastCommandTime = 0;
-        private static double elevationEnableTime = 1; //second
+        private static double elevationEnableTime = 3; //second
         private static double loopDelay = 0.05;        //seconds
         private static boolean enable = false;
+        
+        
+        public void setEnableTime(double inEnableTime)
+        {
+            elevationEnableTime = inEnableTime;
+        }
         
         public void setElevation(double elevation) {
 //            System.out.println("thread-setElevation(" + elevation + ")");

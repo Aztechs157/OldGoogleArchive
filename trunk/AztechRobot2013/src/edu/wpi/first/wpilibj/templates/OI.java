@@ -153,7 +153,7 @@ public class OI {
         m_OperatorButton_9.whenPressed(new SetColor(Shooter.Color.Blue));
         m_OperatorButton_11.whenPressed(new SetColor(Shooter.Color.White));
   
-        m_OperatorButton_12.whenPressed(new VisionAlign());
+        m_OperatorButton_12.whenPressed(new VisionAlign(5.0));
 
 //        m_OperatorButton_10.whenPressed(new PrintMessage("Button <m_OperatorButton_10> pressed\n"));
     }
