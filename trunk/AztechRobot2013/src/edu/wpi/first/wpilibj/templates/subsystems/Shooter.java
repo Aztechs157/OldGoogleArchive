@@ -23,7 +23,7 @@ public class Shooter extends Subsystem {
 
     public static final double lowLimitAngle = 0;
     public static final double highLimitAngle = 50;
-    public static final double loadingAngle = 25;
+    public static final double loadingAngle = 20;
     public static final double climbAngle = 0;
     public static final double basicShotAngle = 40;
     //             Sensor   Angle
