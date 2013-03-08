@@ -35,7 +35,7 @@ public class ManualDrive extends Command {
         double rotation = -CommandBase.oi.getDriverController().getRightX();
         double speedLimit = Math.abs(CommandBase.oi.getDriverController().getTriggers());
         
-        double minSpeedLimit = 0.5;
+        double minSpeedLimit = 0.75;//0.5;
         speedLimit = minSpeedLimit + speedLimit;
         
         if (speedLimit > 1.0) speedLimit = 1.0;

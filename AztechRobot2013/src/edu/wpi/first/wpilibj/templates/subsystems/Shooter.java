@@ -246,25 +246,25 @@ public class Shooter extends Subsystem {
         int tries = 0;
         boolean failed = false;
         
-//        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
-//        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
-//        double _upI = SmartDashboard.getNumber("upI", upI);
-//        double _upD = SmartDashboard.getNumber("upD", upD);
-//        
-//        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
-//        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
-//        double _dnI = SmartDashboard.getNumber("dnI", dnI);
-//        double _dnD = SmartDashboard.getNumber("dnD", dnD);
-
-        double _upPhi = upPhi;
-        double _upPlo = upPhi;
-        double _upI = upI;
-        double _upD = upD;
+        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
+        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
+        double _upI = SmartDashboard.getNumber("upI", upI);
+        double _upD = SmartDashboard.getNumber("upD", upD);
         
-        double _dnPhi = dnPhi;
-        double _dnPlo = dnPhi;
-        double _dnI = dnI;
-        double _dnD = dnD;
+        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
+        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
+        double _dnI = SmartDashboard.getNumber("dnI", dnI);
+        double _dnD = SmartDashboard.getNumber("dnD", dnD);
+
+//        double _upPhi = upPhi;
+//        double _upPlo = upPhi;
+//        double _upI = upI;
+//        double _upD = upD;
+//        
+//        double _dnPhi = dnPhi;
+//        double _dnPlo = dnPhi;
+//        double _dnI = dnI;
+//        double _dnD = dnD;
         
         do {
             try {
