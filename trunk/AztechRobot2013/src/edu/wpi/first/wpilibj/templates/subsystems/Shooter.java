@@ -39,12 +39,12 @@ public class Shooter extends Subsystem {
     public static final double upPhi = -2500.0;
     public static final double upPlo = -2500.0;
     public static final double upI = -7.0;
-    public static final double upD = -45000.0; 
+    public static final double upD = -475000.0; 
     // Down PID Constants
     public static final double dnPhi = -1000.0;
     public static final double dnPlo = -1000.0;
-    public static final double dnI = -7.0;
-    public static final double dnD = -55000;
+    public static final double dnI = -5.0;
+    public static final double dnD = -80000;
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
     public static CANJaguar shooterElevation;
@@ -366,6 +366,10 @@ public class Shooter extends Subsystem {
                 blueRelay.set(true);
                 break;
         }
+       
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "EleStop @ " + CommandBase.shooter.getShooterElevation());
+        DriverStationLCD.getInstance().updateLCD();
+
     }
 
 }
@@ -433,6 +437,9 @@ public class Shooter extends Subsystem {
                     commandElevation = CommandBase.shooter.getShooterElevation();
                     // --
                     CommandBase.shooter.enableElevation(enable);
+                    // show where we stopped to the driver
+                    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "EleStop @ " + commandElevation);
+                    DriverStationLCD.getInstance().updateLCD();
                 }
                 Timer.delay(loopDelay);
             }
