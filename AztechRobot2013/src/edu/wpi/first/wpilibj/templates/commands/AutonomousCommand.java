@@ -88,6 +88,34 @@ public class AutonomousCommand extends CommandGroup {
             addSequential(new LaunchDisk());            // launch disk
             break;
 
+        case 3:
+ //           lcd.println(DriverStationLCD.Line.kUser1, autoModeString.length()+1, "Place at back left");
+            // start from back left, move forward and auto aim
+            addSequential(new SetElevation(27));
+            addSequential(new Straight(5.0, -1.0));     // drive forward 5 feet, 1 feet left
+            addSequential(new VisionAlign(8));
+            addSequential(new SleepCommand(3));
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new SleepCommand(0.250));
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new SleepCommand(0.250));
+            addSequential(new LaunchDisk());            // launch disk
+            break;
+        case 4:
+ //           lcd.println(DriverStationLCD.Line.kUser1, autoModeString.length()+1, "Place at back right");
+            // start from back left, move forward and auto aim
+            addSequential(new SetElevation(27));
+            addSequential(new Straight(5.0, 1.0));     // drive forward 5 feet, 1 feet right
+            addSequential(new VisionAlign(8));
+            addSequential(new SleepCommand(3));
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new SleepCommand(0.250));
+            addSequential(new LaunchDisk());            // launch disk
+            addSequential(new SleepCommand(0.250));
+            addSequential(new LaunchDisk());            // launch disk
+            break;
+            
+            
         default:
             System.out.println("Auto Mode "+autoMode+" not supported!");
         }    
