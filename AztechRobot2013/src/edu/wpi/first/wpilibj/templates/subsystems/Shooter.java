@@ -30,21 +30,21 @@ public class Shooter extends Subsystem {
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
     // Sensor values per degree .004 
-    public static final double zeroSensorReading = 0.482;
-    public static final double maxSensorReading = 0.697;
-    public static final double zeroElevationAngle = 0.9;
-    public static final double maxElevationAngle = 51.2;
+    public static final double zeroSensorReading = 0.490;
+    public static final double maxSensorReading = 0.720;
+    public static final double zeroElevationAngle = 0.3;
+    public static final double maxElevationAngle = 56.8;
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
     // Up PID Constants
-    public static final double upPhi = -5000.0;
-    public static final double upPlo = -3000.0;
-    public static final double upI = -3.0;
-    public static final double upD = -3500.0; 
+    public static final double upPhi = -2500.0;
+    public static final double upPlo = -2500.0;
+    public static final double upI = -7.0;
+    public static final double upD = -45000.0; 
     // Down PID Constants
-    public static final double dnPhi = -1400.0;
-    public static final double dnPlo = -1400.0;
-    public static final double dnI = -1.0;
-    public static final double dnD = -5000;
+    public static final double dnPhi = -1000.0;
+    public static final double dnPlo = -1000.0;
+    public static final double dnI = -7.0;
+    public static final double dnD = -55000;
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
     public static CANJaguar shooterElevation;
@@ -56,9 +56,9 @@ public class Shooter extends Subsystem {
     Solenoid loaderExtend;
     Solenoid shooterRetract;
     Solenoid shooterExtend;
-    Relay redRelay;
-    Relay blueRelay;
-    Relay greenRelay;
+    Solenoid redRelay = null;
+    Solenoid blueRelay = null;
+    Solenoid greenRelay = null;
 
     public static class Color {
 
@@ -108,13 +108,16 @@ public class Shooter extends Subsystem {
 
 
         if (redRelay == null) {
-            redRelay = new Relay(RobotMap.RedLightPort);
+            System.out.println("Create red relay");
+            redRelay = new Solenoid(RobotMap.RedLightPort);
         }
         if (greenRelay == null) {
-            greenRelay = new Relay(RobotMap.WhiteLightPort);
+            System.out.println("Create green relay");
+            greenRelay = new Solenoid(RobotMap.WhiteLightPort);
         }
         if (blueRelay == null) {
-            blueRelay = new Relay(RobotMap.BlueLightPort);
+            System.out.println("Create blue relay");
+            blueRelay = new Solenoid(RobotMap.BlueLightPort);
         }
         int tries = 0;
         boolean failed = false;
@@ -340,27 +343,27 @@ public class Shooter extends Subsystem {
         switch (color.value) {
             case Color.m_kBlack:
                 System.out.println("No Lighs");
-                redRelay.set(Relay.Value.kOff);
-                greenRelay.set(Relay.Value.kOff);
-                blueRelay.set(Relay.Value.kOff);
+                redRelay.set(false);
+                greenRelay.set(false);
+                blueRelay.set(false);
                 break;
             case Color.m_kRed:
                 System.out.println("Red Lights");
-                redRelay.set(Relay.Value.kOn);
-                greenRelay.set(Relay.Value.kOff);
-                blueRelay.set(Relay.Value.kOff);
+                redRelay.set(true);
+                greenRelay.set(false);
+                blueRelay.set(false);
                 break;
             case Color.m_kWhite:
                 System.out.println("White Lights");
-                redRelay.set(Relay.Value.kOff);
-                greenRelay.set(Relay.Value.kOn);
-                blueRelay.set(Relay.Value.kOff);
+                redRelay.set(false);
+                greenRelay.set(true);
+                blueRelay.set(false);
                 break;
             case Color.m_kBlue:
                 System.out.println("Blue Lights");
-                redRelay.set(Relay.Value.kOff);
-                greenRelay.set(Relay.Value.kOff);
-                blueRelay.set(Relay.Value.kOn);
+                redRelay.set(false);
+                greenRelay.set(false);
+                blueRelay.set(true);
                 break;
         }
     }

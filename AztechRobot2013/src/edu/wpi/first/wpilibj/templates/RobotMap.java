@@ -36,7 +36,7 @@ public class RobotMap {
     public static final int FrontLeftMotorID = 7;   // CAN
     public static final int FrontRightMotorID = 6;  // CAN
     public static final int RearLeftMotorID = 4;    // CAN
-    public static final int RearRightMotorID = 1;   // CAN
+    public static final int RearRightMotorID = 2;   // CAN
     
     public static final int GyroChannel = 1;        // Analog
 
@@ -55,8 +55,8 @@ public class RobotMap {
     public static final int LoaderExtendPort = 3;       // Relay
 
     // Shoot Piston
-    public static final int ShooterRetractPort = 7;     // Relay
-    public static final int ShooterExtendPort = 6;      // Relay
+    public static final int ShooterRetractPort = 5;     // Relay
+    public static final int ShooterExtendPort = 4;      // Relay
     
     // Request Light Panel
     public static final int RedLightPort = 6;            // Relay

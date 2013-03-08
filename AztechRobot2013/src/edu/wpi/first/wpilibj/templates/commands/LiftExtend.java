@@ -21,6 +21,7 @@ public class LiftExtend extends CommandBase {
     public LiftExtend(boolean inRaise) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        raise = inRaise;
         finished = true;
     }
 
