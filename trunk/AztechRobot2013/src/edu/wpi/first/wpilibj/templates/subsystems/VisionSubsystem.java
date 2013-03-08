@@ -202,6 +202,8 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     
     public void run()
     {
+        double initRevisitRate = 1.0;
+        int    initRevisitCount = 0;
         while(true)
         {
             try
@@ -214,7 +216,11 @@ public class VisionSubsystem extends Subsystem implements Runnable {
                 ex.printStackTrace();
             } catch(AxisCameraException ex) {
                 System.out.println("Camera Initializing..."); 
-                Timer.delay(1.0);
+                Timer.delay(initRevisitRate);
+                if(++initRevisitCount > 10)
+                {
+                    initRevisitRate = 20.0;
+                }
             }
         }
 
