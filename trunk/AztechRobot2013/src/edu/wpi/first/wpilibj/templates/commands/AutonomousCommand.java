@@ -101,6 +101,8 @@ public class AutonomousCommand extends CommandGroup {
             addSequential(new LaunchDisk());            // launch disk
             addSequential(new SleepCommand(0.250));
             addSequential(new LaunchDisk());            // launch disk
+            addSequential(new Turn(15));
+            addSequential(new Straight(-15.0, 0.0));
             break;
         case 4:
  //           lcd.println(DriverStationLCD.Line.kUser1, autoModeString.length()+1, "Place at back right");
@@ -115,6 +117,8 @@ public class AutonomousCommand extends CommandGroup {
             addSequential(new LaunchDisk());            // launch disk
             addSequential(new SleepCommand(0.250));
             addSequential(new LaunchDisk());            // launch disk
+            addSequential(new Turn(-15));
+            addSequential(new Straight(-15.0, 0.0));
             break;
             
             
