@@ -18,6 +18,9 @@ public class VisionAlign extends CommandBase {
 
     double timeoutDuration;
     double timeoutTime;
+    static final double azAimOffset = 1;    // + is CCW
+    static final double elAimOffset = -4.0; // + is down
+    boolean move;
 
     public VisionAlign(double maxSearchDuration) {
         // Use requires() here to declare subsystem dependencies
@@ -33,21 +36,36 @@ public class VisionAlign extends CommandBase {
         DriverStationLCD.getInstance().updateLCD();
         System.out.println("VisionAlign commanded.");
         vision.enable();
-        timeoutTime = Timer.getFPGATimestamp() + 2.0;
+        timeoutTime = Timer.getFPGATimestamp() + timeoutDuration;
+        move = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (vision.goalFound() != VisionSubsystem.GOAL__NONE) {
 
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found " + vision.goalFound());
-            DriverStationLCD.getInstance().updateLCD();
+            if (move) {
+                move = false;  // so this only gets done once...
+                
+                double azAdjust = vision.getXErrorDeg() - azAimOffset;
+                double elAdjust = vision.getYErrorDeg() - elAimOffset;
 
-            System.out.println("Aligning... x=" + vision.getXErrorDeg() + ",  y=" + vision.getYErrorDeg() + ",   quality=" + vision.getQuality() + "");
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -adjust az:" + azAdjust + " el:" + elAdjust);
+                DriverStationLCD.getInstance().updateLCD();
 
-            //            drive.mecanumDrive_Cartesian(0, 0, -vision.getXErrorNorm()*0.2);
+                InternalButton doTurn = new InternalButton();
+                doTurn.whenPressed(new Turn(-azAdjust));  // to get turn direction sense correct
+                doTurn.setPressed(true);
+
+                InternalButton doElevation = new InternalButton();
+                doElevation.whenPressed(new AdjustElevation(elAdjust));
+                doElevation.setPressed(true);
+
+                // make sure we give commands at least 2 seconds to complete
+                timeoutTime = Timer.getFPGATimestamp() + 2.0;
+
+            }
         }
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -67,34 +85,22 @@ public class VisionAlign extends CommandBase {
     protected void end() {
         switch (vision.goalFound()) {
             case VisionSubsystem.GOAL__HIGH:
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found High");
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found High       ");
                 System.out.println("Found High Goal: Quality = " + vision.getQuality());
                 break;
             case VisionSubsystem.GOAL__MIDDLE:
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Mid");
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Mid        ");
                 System.out.println("Found Middle Goal: Quality = " + vision.getQuality());
                 break;
             case VisionSubsystem.GOAL__LOW:
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Low");
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Low        ");
                 System.out.println("Found Low Goal: Quality = " + vision.getQuality());
                 break;
             default:
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Nothing");
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Vision -found Nothing    ");
                 System.out.println("Found No Goal: Quality = " + vision.getQuality());
         }
         DriverStationLCD.getInstance().updateLCD();
-        vision.disable();
-
-        if(vision.goalFound() != VisionSubsystem.GOAL__NONE)
-        {
-            InternalButton doTurn = new InternalButton();
-            doTurn.whenPressed(new Turn(-vision.getXErrorDeg() + 1));
-            doTurn.setPressed(true);
-
-            InternalButton doElevation = new InternalButton();
-            doElevation.whenPressed(new AdjustElevation(vision.getYErrorDeg() - 4.0));
-            doElevation.setPressed(true);
-        }
     }
 
     // Called when another command which requires one or more of the same

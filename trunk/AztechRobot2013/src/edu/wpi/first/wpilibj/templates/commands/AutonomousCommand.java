@@ -90,11 +90,12 @@ public class AutonomousCommand extends CommandGroup {
 
         case 3:
  //           lcd.println(DriverStationLCD.Line.kUser1, autoModeString.length()+1, "Place at back left");
-            // start from back left, move forward and auto aim
-            addSequential(new SetElevation(27));
-            addSequential(new Straight(5.0, -1.0));     // drive forward 5 feet, 1 feet left
-            addSequential(new VisionAlign(8));
-            addSequential(new SleepCommand(3));
+            // start from back left, move off, auto aim, move forward, reaim and shoot
+            addSequential(new SetElevation(45));
+            addSequential(new Straight(0.0, -3.0));    // drive 3 feet left
+            addSequential(new VisionAlign(2));         // align to target
+            addSequential(new Straight(5.0, 0.0));     // drive forward 5 feet
+            addSequential(new VisionAlign(4));         // align to target            
             addSequential(new LaunchDisk());            // launch disk
             addSequential(new SleepCommand(0.250));
             addSequential(new LaunchDisk());            // launch disk
@@ -103,11 +104,12 @@ public class AutonomousCommand extends CommandGroup {
             break;
         case 4:
  //           lcd.println(DriverStationLCD.Line.kUser1, autoModeString.length()+1, "Place at back right");
-            // start from back left, move forward and auto aim
-            addSequential(new SetElevation(27));
-            addSequential(new Straight(5.0, 1.0));     // drive forward 5 feet, 1 feet right
-            addSequential(new VisionAlign(8));
-            addSequential(new SleepCommand(3));
+            // start from back right, move off, auto aim, move forward, reaim and shoot
+            addSequential(new SetElevation(45));
+            addSequential(new Straight(0.0, 3.0));     // drive 3 feet right
+            addSequential(new VisionAlign(2));         // align to target
+            addSequential(new Straight(5.0, 0.0));     // drive forward 5 feet
+            addSequential(new VisionAlign(4));         // align to target            
             addSequential(new LaunchDisk());            // launch disk
             addSequential(new SleepCommand(0.250));
             addSequential(new LaunchDisk());            // launch disk
