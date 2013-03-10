@@ -397,7 +397,7 @@ public class Shooter extends Subsystem {
         private static double commandElevation = 25;
         private static boolean commandUpdated = false;
         private static double lastCommandTime = 0;
-        private static double elevationEnableTime = 3; //second
+        private static double elevationEnableTime = 2; //second
         private static double loopDelay = 0.05;        //seconds
         private static boolean enable = false;
         

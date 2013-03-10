@@ -33,10 +33,10 @@ public class ManualDrive extends Command {
         double x = -CommandBase.oi.getDriverController().getLeftX();
         double y = -CommandBase.oi.getDriverController().getLeftY();
         double rotation = -CommandBase.oi.getDriverController().getRightX();
-        double speedLimit = Math.abs(CommandBase.oi.getDriverController().getTriggers());
+        double strafe = CommandBase.oi.getDriverController().getTriggers();
         
         double minSpeedLimit = 0.75;//0.5;
-        speedLimit = minSpeedLimit + speedLimit;
+        double speedLimit = minSpeedLimit + 0;
         
         if (speedLimit > 1.0) speedLimit = 1.0;
         
@@ -49,12 +49,16 @@ public class ManualDrive extends Command {
         {
             y = 0;
         }
+        if(strafe*strafe < 0.1)
+        {
+            strafe = 0;
+        }
         if(rotation*rotation < 0.01)
         {
             rotation = 0;
         }
         
-        x = speedLimit * (x * x * (x<0 ? -1.0 : 1.0));
+        x = strafe + speedLimit * (x * x * (x<0 ? -1.0 : 1.0));
         y = speedLimit * (y * y * (y<0 ? -1.0 : 1.0));
         rotation = speedLimit * (rotation * rotation * (rotation<0 ? -1.0 : 1.0));
 
