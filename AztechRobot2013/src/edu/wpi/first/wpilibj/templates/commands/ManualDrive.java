@@ -28,8 +28,6 @@ public class ManualDrive extends Command {
     protected void execute() {
 
         // Driver Control    
-        // old        double x = -CommandBase.oi.getDriverController().getTriggers();
-// old        double rotation = -CommandBase.oi.getDriverController().getLeftY();
         double x = -CommandBase.oi.getDriverController().getLeftX();
         double y = -CommandBase.oi.getDriverController().getLeftY();
         double rotation = -CommandBase.oi.getDriverController().getRightX();
@@ -37,9 +35,17 @@ public class ManualDrive extends Command {
         
         double minSpeedLimit = 0.75;//0.5;
         double speedLimit = minSpeedLimit + 0;
+
+        // if the left stick is pressed down
+        if (CommandBase.oi.getDriverController().getButtonLeftTop())
+        {
+            speedLimit = 1.0;           // set top speed
+            y = 0.5 * y;                // reduce the strafeing rate
+            rotation = 0.5 * rotation;  // reduce the turning rate
+                                        // but leave button strafe alone
+        }
         
-        if (speedLimit > 1.0) speedLimit = 1.0;
-        
+        if (speedLimit > 1.0) speedLimit = 1.0;        
                 
         if(x*x < 0.01)
         {
