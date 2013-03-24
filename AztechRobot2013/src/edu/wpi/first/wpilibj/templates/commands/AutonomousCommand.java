@@ -47,7 +47,7 @@ public class AutonomousCommand extends CommandGroup {
         lcd.println(DriverStationLCD.Line.kUser1, 1, autoModeString);
         lcd.updateLCD();
         System.out.println("Autonomous Mode: "+autoMode+", orig = "+autoSelectSwitch.getValue());
-
+        
         switch(autoMode)
         {
         case 0:

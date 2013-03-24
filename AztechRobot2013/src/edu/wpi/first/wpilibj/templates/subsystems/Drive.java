@@ -45,10 +45,8 @@ public class Drive extends Subsystem {
         init();
     }
 
-
     public final void init() {
 
-        
         int tries = 0;
         boolean failed = false;
         do {
@@ -59,7 +57,7 @@ public class Drive extends Subsystem {
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating FL JAG " + RobotMap.FrontLeftMotorID);
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -72,7 +70,7 @@ public class Drive extends Subsystem {
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating FR JAG " + RobotMap.FrontRightMotorID);
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -85,7 +83,7 @@ public class Drive extends Subsystem {
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating RL JAG " + RobotMap.RearLeftMotorID);
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -98,7 +96,7 @@ public class Drive extends Subsystem {
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating RR JAG " + RobotMap.RearRightMotorID);
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -111,14 +109,22 @@ public class Drive extends Subsystem {
         failed = false;
         do {
             try {
-                driveFL.setX(0);
-                driveRL.setX(0);
-                driveFR.setX(0);
-                driveRR.setX(0);
+                if (null != driveFL) {
+                    driveFL.setX(0);
+                }
+                if (null != driveRL) {
+                    driveRL.setX(0);
+                }
+                if (null != driveFR) {
+                    driveFR.setX(0);
+                }
+                if (null != driveRR) {
+                    driveRR.setX(0);
+                }
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Setting Jags to stop ");
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
@@ -133,7 +139,7 @@ public class Drive extends Subsystem {
         } catch (Exception ex) {
             failed = true;
             System.out.println("Can't get mech drive going...  FAIL");
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
 
         if (mechanumDrive == null) {
@@ -150,7 +156,7 @@ public class Drive extends Subsystem {
                 mechanumDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, RobotMap.FrontRightMotorInverted);
             } catch (Exception ex) {
                 System.out.println("Can't configure mech drive ...  FAIL");
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         }
 
@@ -181,8 +187,7 @@ public class Drive extends Subsystem {
         }
     }
 
-    
-      private static void setupJagForVoltageControl(ScaledCANJaguar jag) {
+    private static void setupJagForVoltageControl(ScaledCANJaguar jag) {
         if (jag != null) {
             int tries = 0;
             boolean failed = false;
@@ -203,6 +208,7 @@ public class Drive extends Subsystem {
             jag.setScalingFactor(100);
         }
     }
+
     private static void setupJagForPositionControl(CANJaguar jag) {
         if (jag != null) {
             int tries = 0;
@@ -225,7 +231,6 @@ public class Drive extends Subsystem {
 
         }
     }
-
 //    public void checkControl(CANJaguar theJag) {
 //        try {
 //            CANJaguar.ControlMode ctlMode = theJag.getControlMode();
@@ -251,20 +256,22 @@ public class Drive extends Subsystem {
 
         boolean failed = false;
         int tries = 0;
-        if (!theJag.isInCommandedControlMode()) {
-            System.out.println("*** Fixing Settings for " + theJag.getDescription());
-            if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kPosition) {
-                setupJagForPositionControl(theJag);
-            } else if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kSpeed) {
-                setupJagForSpeedControl(theJag);
-            } else {
-                do {
-                    try {
-                        theJag.changeControlMode(theJag.getCommandedControlMode());
-                    } catch (CANTimeoutException ex) {
-                        failed = true;
-                    }
-                } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+        if (null != theJag) {
+            if (!theJag.isInCommandedControlMode()) {
+                System.out.println("*** Fixing Settings for " + theJag.getDescription());
+                if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kPosition) {
+                    setupJagForPositionControl(theJag);
+                } else if (theJag.getCommandedControlMode() == CANJaguar.ControlMode.kSpeed) {
+                    setupJagForSpeedControl(theJag);
+                } else {
+                    do {
+                        try {
+                            theJag.changeControlMode(theJag.getCommandedControlMode());
+                        } catch (CANTimeoutException ex) {
+                            failed = true;
+                        }
+                    } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+                }
             }
         }
     }
@@ -291,10 +298,10 @@ public class Drive extends Subsystem {
 
             byte group = 22;
             try {
-                driveFL.setX(-xGo + -rotGo + yGo, group);
-                driveFR.setX(-xGo + -rotGo + -yGo, group);
-                driveRL.setX(xGo + -rotGo + yGo, group);
-                driveRR.setX(xGo + -rotGo + -yGo, group);
+                if(null!= driveFL) driveFL.setX(-xGo + -rotGo + yGo, group);
+                if(null!= driveFR) driveFR.setX(-xGo + -rotGo + -yGo, group);
+                if(null!= driveRL) driveRL.setX(xGo + -rotGo + yGo, group);
+                if(null!= driveRR) driveRR.setX(xGo + -rotGo + -yGo, group);
                 CANJaguar.updateSyncGroup(group);
             } catch (CANTimeoutException ex) {
 //            System.out.println("oops");
