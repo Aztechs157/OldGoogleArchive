@@ -21,9 +21,9 @@ public class ReadJag extends Command {
     public ReadJag(CANJaguar inJag, boolean inContinuous) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        System.out.println("Setting up ReadJag for - " + inJag.getDescription());
+        if(null != inJag) System.out.println("Setting up ReadJag for - " + inJag.getDescription());
         theJag = inJag;
-        System.out.println("Setting up ReadJag for = " + theJag.getDescription());
+        if(null != theJag) System.out.println("Setting up ReadJag for = " + theJag.getDescription());
         
         continuous = inContinuous;
     }

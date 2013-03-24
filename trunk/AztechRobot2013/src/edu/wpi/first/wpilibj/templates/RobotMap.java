@@ -33,35 +33,36 @@ public class RobotMap {
     public static final boolean FrontRightMotorInverted = false;
     public static final boolean RearRightMotorInverted = false;
     
-    public static final int FrontLeftMotorID = 7;   // CAN
-    public static final int FrontRightMotorID = 6;  // CAN
-    public static final int RearLeftMotorID = 4;    // CAN
-    public static final int RearRightMotorID = 2;   // CAN
+    public static final int FrontLeftMotorID = 7;   // CAN ID
+    public static final int FrontRightMotorID = 6;  // CAN ID
+    public static final int RearLeftMotorID = 4;    // CAN ID
+    public static final int RearRightMotorID = 2;   // CAN ID
     
     public static final int GyroChannel = 1;        // Analog
 
     //=====================================================================
     // Shooter System Constants
     //=====================================================================
-    public static int ShooterElevationMotorID = 5;         // CAN
-    public static int ShooterFirstStageDrivePWMPort = 3;   // PWM
-    public static int ShooterSecondStageDrivePWMPort = 4;  // PWM
+    public static int ShooterElevationMotorID = 5;        // CAN ID
+    
+    public static int ShooterFirstStageDrivePWMPort = 3;  // PWM
+    public static int ShooterSecondStageDrivePWMPort = 4; // PWM
     // Compressor Info
-    public static final int PressureSwitchGPIOPort = 12;  // GPIO 
-    public static final int CompressorRelayChannel = 4;  // Analog 
+    public static final int PressureSwitchGPIOPort = 12;  // Digital IO 
+    public static final int CompressorRelayChannel = 4;   // Relay 
     
     // Loader Piston
-    public static final int LoaderRetractPort = 2;      // Relay
-    public static final int LoaderExtendPort = 3;       // Relay
+    public static final int LoaderRetractPort = 2;        // Solenoid Bumper
+    public static final int LoaderExtendPort = 3;         // Solenoid Bumper
 
     // Shoot Piston
-    public static final int ShooterRetractPort = 5;     // Relay
-    public static final int ShooterExtendPort = 4;      // Relay
+    public static final int ShooterRetractPort = 5;       // Solenoid Bumper
+    public static final int ShooterExtendPort = 4;        // Solenoid Bumper
     
     // Request Light Panel
-    public static final int RedLightPort = 6;            // Relay
-    public static final int WhiteLightPort = 7;          // Relay
-    public static final int BlueLightPort = 8;           // Relay
+    public static final int RedLightPort = 6;             // Solenoid Bumper
+    public static final int WhiteLightPort = 7;           // Solenoid Bumper
+    public static final int BlueLightPort = 8;            // Solenoid Bumper
     
          
     //=====================================================================
@@ -70,10 +71,10 @@ public class RobotMap {
     public static final int LiftLeftPWMPort = 1;               // PWM
     public static final int LiftRightPWMPort = 2;              // PWM
     
-    public static final int LiftLeftLimitRetractGPIOPort = 1;  // Digital
-    public static final int LiftRightLimitRetractGPIOPort = 2; // Digital
-    public static final int LiftLeftLimitExtendGPIOPort = 3;   // Digital
-    public static final int LiftRightLimitExtendGPIOPort = 4;  // Digital
+    public static final int LiftLeftLimitRetractGPIOPort = 1;  // Digital IO
+    public static final int LiftRightLimitRetractGPIOPort = 2; // Digital IO
+    public static final int LiftLeftLimitExtendGPIOPort = 3;   // Digital IO
+    public static final int LiftRightLimitExtendGPIOPort = 4;  // Digital IO
     
     public static final double LiftLeftExtendSpeed = 0.6;
     public static final double LiftLeftRetractSpeed = 0.6;

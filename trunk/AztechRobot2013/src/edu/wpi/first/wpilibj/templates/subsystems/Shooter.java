@@ -21,6 +21,7 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    public static double commandedElevation = 0;
     public static final double lowLimitAngle = 0;
     public static final double highLimitAngle = 50;
     public static final double loadingAngle = 20;
@@ -36,15 +37,13 @@ public class Shooter extends Subsystem {
     public static final double maxElevationAngle = 56.8;
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
     // Up PID Constants
-    public static final double upPhi = -2500.0;
-    public static final double upPlo = -2500.0;
-    public static final double upI = -7.0;
-    public static final double upD = -475000.0; 
+    public static final double upP = 500.0;
+    public static final double upI = 0.01;
+    public static final double upD = 0;
     // Down PID Constants
-    public static final double dnPhi = -1000.0;
-    public static final double dnPlo = -1000.0;
-    public static final double dnI = -5.0;
-    public static final double dnD = -80000;
+    public static final double dnP = 500;
+    public static final double dnI = 0.01;
+    public static final double dnD = 0;
     // PID Constant Domain Boundary
     public static final double domainBound = 40.0; //degrees
     public static CANJaguar shooterElevation;
@@ -128,7 +127,7 @@ public class Shooter extends Subsystem {
                 shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
                 shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 shooterElevation.setVoltageRampRate(0.02);
-                shooterElevation.setPID(upPlo, upI, upD);
+                shooterElevation.setPID(upP, upI, upD);
 //                shooterElevation.enableControl();
             } catch (CANTimeoutException ex) {
                 failed = true;
@@ -136,9 +135,6 @@ public class Shooter extends Subsystem {
 //                ex.printStackTrace();
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-
-        ElevationControl.getInstance().startThread();
-
 
         if (shooterFirstStage == null) {
             shooterFirstStage = new Talon(RobotMap.ShooterFirstStageDrivePWMPort);
@@ -148,14 +144,12 @@ public class Shooter extends Subsystem {
         }
         // set the shooter to a known state
         reset();
-        
-        SmartDashboard.putNumber("upPhi", upPhi);
-        SmartDashboard.putNumber("upPlo", upPhi);
+
+        SmartDashboard.putNumber("upP", upP);
         SmartDashboard.putNumber("upI", upI);
         SmartDashboard.putNumber("upD", upD);
-        
-        SmartDashboard.putNumber("dnPhi", dnPhi);
-        SmartDashboard.putNumber("dnPlo", dnPhi);
+
+        SmartDashboard.putNumber("dnP", dnP);
         SmartDashboard.putNumber("dnI", dnI);
         SmartDashboard.putNumber("dnD", dnD);
 
@@ -226,33 +220,16 @@ public class Shooter extends Subsystem {
         }
     }
 
-    public void enableElevation(boolean enable) {
-        try {
-            if (enable) {
-//                System.out.println("enable control");
-                shooterElevation.enableControl();
-            } else {
-//                System.out.println("disable control");
-                shooterElevation.disableControl();
-            }
-        } catch (CANTimeoutException ex) {
-            System.out.println("TIMEOUT - " + (enable ? "Enabling" : "Disabling") + " Shoter Elevation Control " + RobotMap.ShooterElevationMotorID);
-//            ex.printStackTrace();
-        }
-    }
-
     private void setPIDConstants(double targetElevation) {
         double currentElevation = getShooterElevation();
         int tries = 0;
         boolean failed = false;
-        
-        double _upPhi = SmartDashboard.getNumber("upPhi", upPhi);
-        double _upPlo = SmartDashboard.getNumber("upPlo", upPhi);
+
+        double _upP = SmartDashboard.getNumber("upP", upP);
         double _upI = SmartDashboard.getNumber("upI", upI);
         double _upD = SmartDashboard.getNumber("upD", upD);
-        
-        double _dnPhi = SmartDashboard.getNumber("dnPhi", dnPhi);
-        double _dnPlo = SmartDashboard.getNumber("dnPlo", dnPhi);
+
+        double _dnP = SmartDashboard.getNumber("dnP", dnP);
         double _dnI = SmartDashboard.getNumber("dnI", dnI);
         double _dnD = SmartDashboard.getNumber("dnD", dnD);
 
@@ -265,24 +242,16 @@ public class Shooter extends Subsystem {
 //        double _dnPlo = dnPhi;
 //        double _dnI = dnI;
 //        double _dnD = dnD;
-        
+
         do {
             try {
                 shooterElevation.changeControlMode(CANJaguar.ControlMode.kPosition);
                 shooterElevation.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
                 shooterElevation.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 if ((targetElevation - currentElevation) > 0) {
-                    if (targetElevation > domainBound) {
-                        shooterElevation.setPID(_upPhi, _upI, _upD);
-                    } else {
-                        shooterElevation.setPID(_upPlo, _upI, _upD);
-                    }
+                    shooterElevation.setPID(_upP, _upI, _upD);
                 } else {
-                    if (targetElevation > domainBound) {
-                        shooterElevation.setPID(_dnPhi, _dnI, _dnD);
-                    } else {
-                        shooterElevation.setPID(_dnPlo, _dnI, _dnD);
-                    }
+                    shooterElevation.setPID(_dnP, _dnI, _dnD);
                 }
                 shooterElevation.enableControl();
             } catch (CANTimeoutException ex) {
@@ -297,7 +266,18 @@ public class Shooter extends Subsystem {
 
     public void updateShooterElevation(double elevationDegrees) {
 //        System.out.println("updateShooterElevation(" + elevationDegrees + ")");
+
+        //fix command range
+        if (elevationDegrees < Shooter.lowLimitAngle) {
+            elevationDegrees = Shooter.lowLimitAngle;
+        }
+        if (elevationDegrees > Shooter.highLimitAngle) {
+            elevationDegrees = Shooter.highLimitAngle;
+        }
+
+        // set the PID constants
         setPIDConstants(elevationDegrees);
+
         double elevation = (elevationDegrees * sensorPerDegree) + zeroSensorReading;
         if (null != shooterElevation) {
             int tries = 0;
@@ -328,15 +308,33 @@ public class Shooter extends Subsystem {
     }
 
     public void setShooterElevation(double elevation) {
-        ElevationControl.getInstance().setElevation(elevation);
+        commandedElevation = elevation;
+        //fix command range
+        if (commandedElevation < Shooter.lowLimitAngle) {
+            commandedElevation = Shooter.lowLimitAngle;
+        }
+        if (commandedElevation > Shooter.highLimitAngle) {
+            commandedElevation = Shooter.highLimitAngle;
+        }
+
+        updateShooterElevation(commandedElevation);
     }
 
     public void adjustShooterElevation(double delta) {
-        ElevationControl.getInstance().setElevation(ElevationControl.getInstance().getCmdElevation() + delta);
+        commandedElevation += delta;
+        //fix command range
+        if (commandedElevation < Shooter.lowLimitAngle) {
+            commandedElevation = Shooter.lowLimitAngle;
+        }
+        if (commandedElevation > Shooter.highLimitAngle) {
+            commandedElevation = Shooter.highLimitAngle;
+        }
+
+        updateShooterElevation(commandedElevation);
     }
 
     public double getShooterCommandedElevation() {
-        return ElevationControl.getInstance().getCmdElevation();
+        return commandedElevation;
     }
 
     public void setColor(Color color) {
@@ -366,88 +364,9 @@ public class Shooter extends Subsystem {
                 blueRelay.set(true);
                 break;
         }
-       
+
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "EleStop @ " + CommandBase.shooter.getShooterElevation());
         DriverStationLCD.getInstance().updateLCD();
 
     }
-
 }
-
-    class ElevationControl implements Runnable {
-
-        // Singleton Stuff
-        private final static ElevationControl controlSingleton = new ElevationControl();
-
-        public static ElevationControl getInstance() {
-            return controlSingleton;
-        }
-        // ==============================
-        // thread stuff
-        private static boolean started = false;
-
-        public void startThread() {
-            if (!started) {
-                started = true;
-                (new Thread(new ElevationControl())).start();
-                System.out.println("ElevationControl - Started");
-            }
-        }
-        // ==============================
-        private static double commandElevation = 25;
-        private static boolean commandUpdated = false;
-        private static double lastCommandTime = 0;
-        private static double elevationEnableTime = 2; //second
-        private static double loopDelay = 0.05;        //seconds
-        private static boolean enable = false;
-        
-        
-        public void setEnableTime(double inEnableTime)
-        {
-            elevationEnableTime = inEnableTime;
-        }
-        
-        public void setElevation(double elevation) {
-//            System.out.println("thread-setElevation(" + elevation + ")");
-            commandElevation = elevation;
-            if (commandElevation < Shooter.lowLimitAngle)
-            {
-                commandElevation = Shooter.lowLimitAngle;
-            }
-            if (commandElevation > Shooter.highLimitAngle)
-            {
-                commandElevation = Shooter.highLimitAngle;
-            }
-            lastCommandTime = Timer.getFPGATimestamp();
-            enable = true;
-            CommandBase.shooter.enableElevation(enable);
-            commandUpdated = true;
-        }
-
-        public double getCmdElevation() {
-            return commandElevation;
-        }
-
-        public void run() {
-            System.out.println("Elevation Control Thread - RUNNING");
-            while (true) {
-                if (commandUpdated) {
-                    commandUpdated = false; // reset until next command
-//                    System.out.println("thread-updateElevation(" + commandElevation + ")");                   
-                    CommandBase.shooter.updateShooterElevation(commandElevation);
-                }
-                if (enable && (Timer.getFPGATimestamp() > (lastCommandTime + elevationEnableTime))){
-                    enable = false;
-                    // when we stop, set the command to where the shooter is
-                    //  that way the next command behaves as expected
-                    commandElevation = CommandBase.shooter.getShooterElevation();
-                    // --
-                    CommandBase.shooter.enableElevation(enable);
-                    // show where we stopped to the driver
-                    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "EleStop @ " + commandElevation);
-                    DriverStationLCD.getInstance().updateLCD();
-                }
-                Timer.delay(loopDelay);
-            }
-        }
-    }
