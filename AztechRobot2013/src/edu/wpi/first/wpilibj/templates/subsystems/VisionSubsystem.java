@@ -105,8 +105,8 @@ public class VisionSubsystem extends Subsystem implements Runnable {
     {
         init();
     }
-    
-    public void initDefaultCommand() {
+
+     public void initDefaultCommand() {
 //        Thread t = new Thread(this);
 //        t.start();
     }
