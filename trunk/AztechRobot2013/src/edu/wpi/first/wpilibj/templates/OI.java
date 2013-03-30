@@ -62,6 +62,12 @@ public class OI {
     private JoystickButton m_OperatorButton_11;
     private JoystickButton m_OperatorButton_12;
 
+    private JoystickAxisButton mOperatorButton_HatUp;
+    private JoystickAxisButton mOperatorButton_HatDn;
+    private JoystickAxisButton mOperatorButton_HatLf;
+    private JoystickAxisButton mOperatorButton_HatRt;
+
+
     public OI() {
 
         // Create the Controller
@@ -136,12 +142,19 @@ public class OI {
         m_OperatorButton_11 = new JoystickButton(m_OperatorJoystick, 11);
         m_OperatorButton_12 = new JoystickButton(m_OperatorJoystick, 12);
 
+        mOperatorButton_HatUp = new JoystickAxisButton(m_OperatorJoystick, 6, false);
+        mOperatorButton_HatDn = new JoystickAxisButton(m_OperatorJoystick, 6, true);
+        mOperatorButton_HatLf = new JoystickAxisButton(m_OperatorJoystick, 5, false);
+        mOperatorButton_HatRt = new JoystickAxisButton(m_OperatorJoystick, 5, true);
+
+
+        
         m_OperatorButton_Trigger.whenPressed(new LaunchDisk());
         m_OperatorButton_Side.whenPressed(new SetElevation(Shooter.basicShotAngle));
         m_OperatorButton_3.whenPressed(new SetElevation(Shooter.climbAngle));
-        m_OperatorButton_4.whenPressed(new AdjustElevation(-2.0));
+        m_OperatorButton_4.whenPressed(new AdjustElevation(-1.5, true));
         m_OperatorButton_5.whenPressed(new SetElevation(Shooter.loadingAngle));
-        m_OperatorButton_6.whenPressed(new AdjustElevation(2.0));
+        m_OperatorButton_6.whenPressed(new AdjustElevation(1.5, true));
 
         m_OperatorButton_8.whenPressed(new ReadJag(Shooter.shooterElevation, false));
         m_OperatorButton_8.whenPressed(new ReadJag(Drive.driveFL, false));
@@ -156,6 +169,12 @@ public class OI {
         m_OperatorButton_12.whenPressed(new VisionAlign(5.0));
 
 //        m_OperatorButton_10.whenPressed(new PrintMessage("Button <m_OperatorButton_10> pressed\n"));
+
+        mOperatorButton_HatUp.whileHeld(new AdjustElevation(0.1, false));
+        mOperatorButton_HatDn.whileHeld(new AdjustElevation(-0.1, false));
+        mOperatorButton_HatLf.whenPressed(new PrintMessage("Hat LEFT"));
+        mOperatorButton_HatRt.whenPressed(new PrintMessage("Hat RIGHT"));
+
     }
 
     public LogitechController getDriverController() {

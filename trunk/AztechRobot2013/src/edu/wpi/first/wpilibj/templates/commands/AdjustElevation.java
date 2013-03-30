@@ -14,19 +14,33 @@ import edu.wpi.first.wpilibj.templates.AztechRobot;
 public class AdjustElevation extends CommandBase {
     
     private double degrees;
+    private boolean modeIsSlew;
     
+    public AdjustElevation(double inDegrees, boolean slewMode) {
+        degrees = inDegrees;
+        modeIsSlew = slewMode;
+    }
+
     public AdjustElevation(double inDegrees) {
         degrees = inDegrees;
+        modeIsSlew = false;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
 //        System.out.println("adjustElevation(" + degrees + ")");
-        CommandBase.shooter.adjustShooterElevation(degrees);
+        if(!modeIsSlew)
+        {
+            CommandBase.shooter.adjustShooterElevation(degrees);
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        if(modeIsSlew)
+        {
+            CommandBase.shooter.adjustShooterElevation(degrees);            
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
