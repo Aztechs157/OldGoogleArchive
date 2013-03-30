@@ -20,7 +20,7 @@ public abstract class CommandBase extends Command {
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     public static Drive drive = new Drive();
     public static LiftSubsystem lift = new LiftSubsystem();
-    public static VisionSubsystem vision = new VisionSubsystem(true/*do nothing*/);
+    public static VisionSubsystem vision = new VisionSubsystem();
     public static Shooter shooter = new Shooter();
 
     public static void init() {
