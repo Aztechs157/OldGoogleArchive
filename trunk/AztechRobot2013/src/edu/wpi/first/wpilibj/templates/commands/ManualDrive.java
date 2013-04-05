@@ -40,7 +40,7 @@ public class ManualDrive extends Command {
         if (CommandBase.oi.getDriverController().getButtonLeftTop())
         {
             speedLimit = 1.0;           // set top speed
-            y = 0.5 * y;                // reduce the strafeing rate
+            x = 0.5 * x;                // reduce the strafeing rate
             rotation = 0.5 * rotation;  // reduce the turning rate
                                         // but leave button strafe alone
         }
