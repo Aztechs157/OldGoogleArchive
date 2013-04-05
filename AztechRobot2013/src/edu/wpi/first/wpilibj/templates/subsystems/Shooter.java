@@ -144,6 +144,7 @@ public class Shooter extends Subsystem {
         }
         // set the shooter to a known state
         reset();
+        setShooterElevation(getShooterElevation());
 
         SmartDashboard.putNumber("upP", upP);
         SmartDashboard.putNumber("upI", upI);
