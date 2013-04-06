@@ -33,7 +33,7 @@ public class ManualDrive extends Command {
         double rotation = -CommandBase.oi.getDriverController().getRightX();
         double strafe = CommandBase.oi.getDriverController().getTriggers();
         
-        double minSpeedLimit = 0.75;//0.5;
+        double minSpeedLimit = 1.0;//0.75;//0.5;
         double speedLimit = minSpeedLimit + 0;
 
         // if the left stick is pressed down
