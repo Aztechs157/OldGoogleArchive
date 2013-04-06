@@ -26,15 +26,16 @@ public class Shooter extends Subsystem {
     public static final double highLimitAngle = 50;
     public static final double loadingAngle = 20;
     public static final double climbAngle = 0;
-    public static final double basicShotAngle = 42;
+//    public static final double basicShotAngle = 38.8;  // two orange wheels
+    public static final double basicShotAngle = 39.2;    // grean 1st stage, orange second stage
     //             Sensor   Angle
     // Bottom Stop 0.856    0.00
     // Top Stop    0.652    50.9
     // Sensor values per degree .004 
-    public static final double zeroSensorReading = .065;
-    public static final double maxSensorReading =  .276;
-    public static final double zeroElevationAngle = 0;
-    public static final double maxElevationAngle = 50;
+    public static final double zeroSensorReading = .124;  //065;
+    public static final double maxSensorReading =  .337; //276;
+    public static final double zeroElevationAngle = 0;  //1.5
+    public static final double maxElevationAngle = 50;   //51.
     public static final double sensorPerDegree = ((maxSensorReading - zeroSensorReading) / (maxElevationAngle - zeroElevationAngle));
     // Up PID Constants
     public static final double upP = 5000.0;
