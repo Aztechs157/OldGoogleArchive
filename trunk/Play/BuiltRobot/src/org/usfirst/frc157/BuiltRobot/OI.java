@@ -22,7 +22,7 @@ public class OI {
     //// CREATING BUTTONS
     public static final int kLogitechFirstPort = 1;
     public static final int kPotPort = 2;
-    
+    // Create Gamepad
     private LogitechController m_FirstGamePad;
     // Trigger Buttons (at index fingers)
     private LogitechControllerButton m_setFirst_LeftShoulderButton;
