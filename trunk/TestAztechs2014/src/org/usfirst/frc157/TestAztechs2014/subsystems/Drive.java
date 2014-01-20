@@ -90,10 +90,10 @@ public class Drive extends Subsystem {
 
             byte group = 22;
             try {
-                if(null!= frontLeft) frontLeft.setX(left, group);
-                if(null!= frontRight) frontRight.setX(right, group);
-                if(null!= backLeft) backLeft.setX(left, group);
-                if(null!= backRight) backRight.setX(right, group);
+                if(null!= frontLeft) frontLeft.setX(left*20, group);
+                if(null!= frontRight) frontRight.setX(right*20, group);
+                if(null!= backLeft) backLeft.setX(left*20, group);
+                if(null!= backRight) backRight.setX(right*20, group);
                 CANJaguar.updateSyncGroup(group);
             } catch (CANTimeoutException ex) {
             System.out.println("oops");

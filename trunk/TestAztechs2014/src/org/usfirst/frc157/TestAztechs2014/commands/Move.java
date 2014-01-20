@@ -21,6 +21,8 @@ import org.usfirst.frc157.TestAztechs2014.RobotMap;
  */
 public class Move extends Command {
 
+    public boolean first = true;
+    
     public Move() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -32,19 +34,23 @@ public class Move extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.drive.setupJagForSpeedControl(RobotMap.driveBackLeftSpeedController);
-        Robot.drive.setupJagForSpeedControl(RobotMap.driveBackRightSpeedController);
-        Robot.drive.setupJagForSpeedControl(RobotMap.driveFrontLeftSpeedController);
-        Robot.drive.setupJagForSpeedControl(RobotMap.driveFrontRightSpeedController);
+        Robot.drive.setupJagForVoltageControl(RobotMap.driveBackLeftSpeedController);
+        Robot.drive.setupJagForVoltageControl(RobotMap.driveBackRightSpeedController);
+        Robot.drive.setupJagForVoltageControl(RobotMap.driveFrontLeftSpeedController);
+        Robot.drive.setupJagForVoltageControl(RobotMap.driveFrontRightSpeedController);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         LogitechController logitech = Robot.oi.getController();
-        double leftSpeed = logitech.getLeftY();
+        
+        //System.out.println("Left: " + logitech.getButtonLeftTrigger());
+        //System.out.println("Right: " + logitech.getButtonRightTrigger());
+               
+        double leftSpeed = -logitech.getLeftY();
         double rightSpeed = logitech.getRightY();
         Robot.drive.drive(leftSpeed, rightSpeed);
-      System.out.println("leftSpeed: " + leftSpeed + ", rightSpeed: " + rightSpeed);
+     System.out.println("leftSpeed: " + leftSpeed + ", rightSpeed: " + rightSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
