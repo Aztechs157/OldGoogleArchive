@@ -12,6 +12,7 @@
 package org.usfirst.frc157.TestAztechs2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.TestAztechs2014.LogitechController;
 import org.usfirst.frc157.TestAztechs2014.Robot;
 import org.usfirst.frc157.TestAztechs2014.RobotMap;
@@ -50,6 +51,8 @@ public class Move extends Command {
         double leftSpeed = -logitech.getLeftY();
         double rightSpeed = logitech.getRightY();
         Robot.drive.drive(leftSpeed, rightSpeed);
+        SmartDashboard.putNumber("Left Speed", leftSpeed);
+        SmartDashboard.putNumber("Right Speed", rightSpeed);
      System.out.println("leftSpeed: " + leftSpeed + ", rightSpeed: " + rightSpeed);
     }
 
