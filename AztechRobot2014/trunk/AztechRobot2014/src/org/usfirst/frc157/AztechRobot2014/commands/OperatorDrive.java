@@ -11,6 +11,7 @@
 
 package org.usfirst.frc157.AztechRobot2014.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.AztechRobot2014.Robot;
@@ -41,6 +42,9 @@ public class  OperatorDrive extends Command {
 
         double left = Robot.oi.getDriver().getLeftY();
         double right = Robot.oi.getDriver().getRightY();
+        
+        left += Robot.oi.getDriverLeft().getAxis(Joystick.AxisType.kY);
+        right += Robot.oi.getDriverRight().getAxis(Joystick.AxisType.kY);
 
         Robot.drive.tankDrive(left, right);
     }
