@@ -40,10 +40,18 @@ public class RobotMap {
     public static final double SpeedScale = 130;
 
     // Jaguar IDs
-    public static int JAGID_FrontLeft = 2;
-    public static int JAGID_FrontRight = 3;
+    public static int JAGID_FrontLeft = 7;
+    public static int JAGID_FrontRight = 6;
     public static int JAGID_RearLeft = 4;
-    public static int JAGID_RearRight = 5;
+    public static int JAGID_RearRight = 2;
+
+    //=====================================================================
+    // Launcher Constants
+    //=====================================================================
+    // Jaguar IDs
+    public static int JAGID_Launcher = 5;
+    public static int DIGITAL_PORT_ReleaseSwitch = 1;
+    
 
     //=====================================================================
     // Sensor System Constants
@@ -60,10 +68,8 @@ public class RobotMap {
     public static int CONTROLLERNUM_Driver = 3;
     public static int CONTROLLERNUM_CoDriver = 4;
 
+    
     public static void init() {
-
-        launcherLimitSwitch1 = new DigitalInput(1, 1);
-        LiveWindow.addSensor("Launcher", "Limit Switch 1", launcherLimitSwitch1);
 
     }
 }
