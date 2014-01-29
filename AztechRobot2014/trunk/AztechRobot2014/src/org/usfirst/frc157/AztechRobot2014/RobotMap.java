@@ -37,7 +37,7 @@ public class RobotMap {
     //=====================================================================
     // Drive System Constants
     //=====================================================================
-    public static final double SpeedScale = 130;
+    public static final double SpeedScale = 1;
 
     // Jaguar IDs
     public static int JAGID_FrontLeft = 7;

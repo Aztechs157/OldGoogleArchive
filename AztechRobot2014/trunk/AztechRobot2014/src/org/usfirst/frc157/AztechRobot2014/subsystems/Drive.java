@@ -51,7 +51,7 @@ public class Drive extends Subsystem {
         do {
             try {
                 driveFL = new ScaledCANJaguar(RobotMap.JAGID_FrontLeft);
-                driveFL.setScalingFactor(RobotMap.SpeedScale);
+                driveFL.setScalingFactor(-1 * RobotMap.SpeedScale);
                 failed = false;
             } catch (CANTimeoutException ex) {
                 failed = true;
@@ -78,7 +78,7 @@ public class Drive extends Subsystem {
         do {
             try {
                 driveRL = new ScaledCANJaguar(RobotMap.JAGID_RearLeft);
-                driveRL.setScalingFactor(RobotMap.SpeedScale);
+                driveRL.setScalingFactor(-1 * RobotMap.SpeedScale);
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating RL JAG " + RobotMap.JAGID_RearLeft);
@@ -107,7 +107,7 @@ public class Drive extends Subsystem {
         setupJagForVoltageControl(driveRL);
         setupJagForVoltageControl(driveFR);
         setupJagForVoltageControl(driveRR);
-
+                
         tries = 0;
         failed = false;
         do {
@@ -157,7 +157,7 @@ public class Drive extends Subsystem {
 //        }
     }
 
-    private static void setupJagForSpeedControl(CANJaguar jag) {
+    private static void setupJagForSpeedControl(ScaledCANJaguar jag) {
         if (jag != null) {
             int tries = 0;
             boolean failed = false;
@@ -197,11 +197,11 @@ public class Drive extends Subsystem {
                     System.out.println("Exception " + tries + " while configuring speed");
                 }
             } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-            jag.setScalingFactor(100);
+//            jag.setScalingFactor(100);
         }
     }
 
-    private static void setupJagForPositionControl(CANJaguar jag) {
+    private static void setupJagForPositionControl(ScaledCANJaguar jag) {
         if (jag != null) {
             int tries = 0;
             boolean failed = false;
@@ -285,7 +285,7 @@ public class Drive extends Subsystem {
             if (null != driveRR) {
                 driveRR.setX(right, group);
             }
-            CANJaguar.updateSyncGroup(group);
+            ScaledCANJaguar.updateSyncGroup(group);
         } catch (CANTimeoutException ex) {
 //            System.out.println("tank Drive Timeout");
 //            ex.printStackTrace();
@@ -326,7 +326,7 @@ public class Drive extends Subsystem {
                 if (null != driveRR) {
                     driveRR.setX(xGo + -rotGo + -yGo, group);
                 }
-                CANJaguar.updateSyncGroup(group);
+                ScaledCANJaguar.updateSyncGroup(group);
             } catch (CANTimeoutException ex) {
 //            System.out.println("oops");
             }

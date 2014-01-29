@@ -25,6 +25,7 @@ public class ScaledCANJaguar extends CANJaguar {
 
     public void setScalingFactor(double scale) {
         scalingFactor = scale;
+        System.out.println("Scaling factor: " + scale);
     }
 
     public void setX(double setPoint) throws CANTimeoutException {
@@ -40,6 +41,11 @@ public class ScaledCANJaguar extends CANJaguar {
     public void set(double setPoint, byte b) {
 //        System.out.println("S..");
         super.set(setPoint * scalingFactor, b);
+    }
+
+    public void setX(double setPoint, byte b) throws CANTimeoutException {
+//        System.out.println("SX." + scalingFactor);
+        super.setX(setPoint * scalingFactor, b);
     }
 
     public double get() {
