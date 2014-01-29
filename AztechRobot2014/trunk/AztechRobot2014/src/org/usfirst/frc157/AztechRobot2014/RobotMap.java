@@ -50,8 +50,17 @@ public class RobotMap {
     //=====================================================================
     // Jaguar IDs
     public static int JAGID_Launcher = 5;
+    
+    // Limit Switches
     public static int DIGITAL_PORT_ReleaseSwitch = 1;
     
+    // Compressor Info
+    public static final int DIGITAL_PORT_PressureSwitch = 12;
+    public static final int RELAY_PORT_Compressor = 4;
+    
+    // Loader Piston
+    public static final int SOLENOID_PORT_ReleaseExtend = 1;
+    public static final int SOLENOID_PORT_ReleaseRetract = 2;
 
     //=====================================================================
     // Sensor System Constants
@@ -59,6 +68,8 @@ public class RobotMap {
     // Analog Port IDs
     public static int ANALOG_PORT_ShortRangeIR = 1;
     public static int ANALOG_PORT_LongRangeIR_1 = 2;
+    public static int ANALOG_PORT_Ultrasonic_1 = 3;
+    
 
     //=====================================================================
     // Operator Interface Constants
