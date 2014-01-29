@@ -38,7 +38,7 @@ public class  OperatorDrive extends Command {
     protected void execute() {
         double range = Robot.sensor.getShortRangeIRDistance();
         SmartDashboard.putNumber("Range", range);
-        System.out.println(/*"v= " + Robot.sensor.getLongRangeIRSensor1().getVoltage() +*/ " Range = " + Robot.sensor.getLongRangeIRDistance1());
+//        System.out.println(/*"v= " + Robot.sensor.getLongRangeIRSensor1().getVoltage() +*/ " Range = " + Robot.sensor.getLongRangeIRDistance1());
 
         double left = Robot.oi.getDriver().getLeftY();
         double right = Robot.oi.getDriver().getRightY();
