@@ -42,9 +42,13 @@ public class  OperatorDrive extends Command {
 
         double left = Robot.oi.getDriver().getLeftY();
         double right = Robot.oi.getDriver().getRightY();
+        SmartDashboard.putNumber("Left Logitech Y", left);
+        SmartDashboard.putNumber("Right Logitech Y", right);
         
         left += Robot.oi.getDriverLeft().getAxis(Joystick.AxisType.kY);
         right += Robot.oi.getDriverRight().getAxis(Joystick.AxisType.kY);
+        SmartDashboard.putNumber("Left Joystick Y", Robot.oi.getDriverLeft().getAxis(Joystick.AxisType.kY));
+        SmartDashboard.putNumber("Right Joystick Y", Robot.oi.getDriverRight().getAxis(Joystick.AxisType.kY));
 
         Robot.drive.tankDrive(left, right);
     }

@@ -12,6 +12,7 @@ package org.usfirst.frc157.AztechRobot2014.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.AztechRobot2014.RobotMap;
 import org.usfirst.frc157.AztechRobot2014.ScaledCANJaguar;
 import org.usfirst.frc157.AztechRobot2014.commands.OperatorDrive;
@@ -289,6 +290,14 @@ public class Drive extends Subsystem {
         } catch (CANTimeoutException ex) {
 //            System.out.println("tank Drive Timeout");
 //            ex.printStackTrace();
+        }
+        try {
+            SmartDashboard.putNumber("Front Left", driveFL.getX());
+            SmartDashboard.putNumber("Front Right", driveFR.getX());
+            SmartDashboard.putNumber("Rear Left", driveRL.getX());
+            SmartDashboard.putNumber("Rear Right", driveRR.getX());
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
         }
 
     }
