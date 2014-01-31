@@ -100,10 +100,10 @@ public class Drive extends Subsystem {
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 
-        setupJagForSpeedControl(driveFL);
-        setupJagForSpeedControl(driveRL);
-        setupJagForSpeedControl(driveFR);
-        setupJagForSpeedControl(driveRR);
+        setupJagForVoltageControl(driveFL);
+        setupJagForVoltageControl(driveRL);
+        setupJagForVoltageControl(driveFR);
+        setupJagForVoltageControl(driveRR);
 
         tries = 0;
         failed = false;
@@ -309,6 +309,32 @@ public class Drive extends Subsystem {
         }
     }
 
+        public void tankDrive(double left, double right) {
+        checkAndFixMotors();
+//        System.out.println(left + " - " + right);
+        byte group = 22;
+        try {
+            if (null != driveFL) {
+                driveFL.setX(left, group);
+            }
+            if (null != driveFR) {
+                driveFR.setX(right, group);
+            }
+            if (null != driveRL) {
+                driveRL.setX(left, group);
+            }
+            if (null != driveRR) {
+                driveRR.setX(right, group);
+            }
+            ScaledCANJaguar.updateSyncGroup(group);
+        } catch (CANTimeoutException ex) {
+//            System.out.println("tank Drive Timeout");
+//            ex.printStackTrace();
+        }
+
+    }
+
+    
     public void resetGyro() {
         gyro.reset();
     }
