@@ -61,6 +61,12 @@ public class  OperatorDrive extends Command {
         left += cLeft;
         right += cRight;
         
+        double leftSign = (left < 0) ? -1 : 1;
+        double rightSign = (right < 0) ? -1 : 1;
+        
+        left = left * left * leftSign;
+        right = right * right * rightSign;
+        
         Robot.drive.tankDrive(left, right);
     }
 
