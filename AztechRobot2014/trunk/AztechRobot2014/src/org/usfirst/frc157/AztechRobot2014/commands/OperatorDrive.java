@@ -36,12 +36,21 @@ public class  OperatorDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double range = Robot.sensor.getUltrasonicDistance1();
-        double volts = Robot.sensor.getUltrasonicSensor1().getVoltage();
-        System.out.println("US R= " + volts/0.0098 +  " V= " + volts);
-        SmartDashboard.putNumber("Range", range);
-//        System.out.println(/*"v= " + Robot.sensor.getLongRangeIRSensor1().getVoltage() +*/ " Range = " + Robot.sensor.getLongRangeIRDistance1());
+        double range_us1 = Robot.sensor.getUltrasonicDistance1();
+        double volts_us1 = Robot.sensor.getUltrasonicSensor1().getVoltage();
+        double range_irl1 = Robot.sensor.getLongRangeIRDistance1();
+        double range_irl2 = Robot.sensor.getLongRangeIRDistance2();
+        double range_irs = Robot.sensor.getShortRangeIRDistance();
+        double volts_irs = Robot.sensor.getShortRangeIRSensor().getVoltage();
 
+//        System.out.print("US1= " + range_us1 + "(" + volts_us1 + ")");
+//        System.out.print(" LR1= " + range_irl1);
+//        System.out.print(" LR2= " + range_irl2);
+//        System.out.println(" SR = " + range_irs + "(" + volts_irs + ")");
+
+//        boolean cocked = Robot.launcher.isCocked();
+//        System.out.println("Launcher is " + (cocked ? "COCKED" : "not ready") + ".");
+        
         double left = Robot.oi.getDriver().getLeftY();
         double right = Robot.oi.getDriver().getRightY();
         SmartDashboard.putNumber("Left Logitech Y", left);
