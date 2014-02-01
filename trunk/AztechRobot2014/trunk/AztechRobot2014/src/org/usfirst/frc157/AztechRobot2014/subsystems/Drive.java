@@ -276,30 +276,26 @@ public class Drive extends Subsystem {
         try {
             if (null != driveFL) {
                 driveFL.setX(left, group);
+                SmartDashboard.putNumber("Front Left", driveFL.getX());
             }
             if (null != driveFR) {
                 driveFR.setX(right, group);
+                SmartDashboard.putNumber("Front Right", driveFR.getX());
             }
             if (null != driveRL) {
                 driveRL.setX(left, group);
+                SmartDashboard.putNumber("Rear Left", driveRL.getX());
             }
             if (null != driveRR) {
                 driveRR.setX(right, group);
+                SmartDashboard.putNumber("Rear Right", driveRR.getX());
             }
             ScaledCANJaguar.updateSyncGroup(group);
         } catch (CANTimeoutException ex) {
 //            System.out.println("tank Drive Timeout");
 //            ex.printStackTrace();
         }
-        try {
-            SmartDashboard.putNumber("Front Left", driveFL.getX());
-            SmartDashboard.putNumber("Front Right", driveFR.getX());
-            SmartDashboard.putNumber("Rear Left", driveRL.getX());
-            SmartDashboard.putNumber("Rear Right", driveRR.getX());
-        } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
-        }
-
+ 
     }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation) {
