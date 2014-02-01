@@ -36,7 +36,9 @@ public class  OperatorDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double range = Robot.sensor.getShortRangeIRDistance();
+        double range = Robot.sensor.getUltrasonicDistance1();
+        double volts = Robot.sensor.getUltrasonicSensor1().getVoltage();
+        System.out.println("US R= " + volts/0.0098 +  " V= " + volts);
         SmartDashboard.putNumber("Range", range);
 //        System.out.println(/*"v= " + Robot.sensor.getLongRangeIRSensor1().getVoltage() +*/ " Range = " + Robot.sensor.getLongRangeIRDistance1());
 
@@ -50,6 +52,15 @@ public class  OperatorDrive extends Command {
         SmartDashboard.putNumber("Left Joystick Y", Robot.oi.getDriverLeft().getAxis(Joystick.AxisType.kY));
         SmartDashboard.putNumber("Right Joystick Y", Robot.oi.getDriverRight().getAxis(Joystick.AxisType.kY));
 
+        double speed = Robot.oi.getCoDriver().getLeftY();
+        double turn = Robot.oi.getCoDriver().getLeftX();
+        
+        double cLeft = speed - (2 * turn);
+        double cRight = speed + (2 * turn);
+        
+        left += cLeft;
+        right += cRight;
+        
         Robot.drive.tankDrive(left, right);
     }
 
