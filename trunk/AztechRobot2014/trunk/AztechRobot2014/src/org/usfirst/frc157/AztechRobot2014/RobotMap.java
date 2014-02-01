@@ -72,7 +72,8 @@ public class RobotMap {
     // Analog Port IDs
     public static int ANALOG_PORT_ShortRangeIR = 1;
     public static int ANALOG_PORT_LongRangeIR_1 = 2;
-    public static int ANALOG_PORT_Ultrasonic_1 = 3;
+    public static int ANALOG_PORT_LongRangeIR_2 = 3;
+    public static int ANALOG_PORT_Ultrasonic_1 = 4;
     public static int ANALOG_PORT_BallRetrieverPot = 4;
 
     //=====================================================================

@@ -27,8 +27,8 @@ public class Launcher extends Subsystem {
 
     // Pneumatics
     public static Compressor compressor;
-    Solenoid releaseExtend;
-    Solenoid releaseRetract;
+    Solenoid clutchRelease;
+    Solenoid clutchEngage;
 
     public Launcher() {
 
@@ -38,16 +38,15 @@ public class Launcher extends Subsystem {
         }
         compressor.start();
 
-        if (releaseExtend == null) {
-            releaseExtend = new Solenoid(RobotMap.SOLENOID_PORT_ReleaseExtend);
+        if (clutchRelease == null) {
+            clutchRelease = new Solenoid(RobotMap.SOLENOID_PORT_ReleaseExtend);
         }
-        if (releaseRetract == null) {
-            releaseRetract = new Solenoid(RobotMap.SOLENOID_PORT_ReleaseRetract);
+        if (clutchEngage == null) {
+            clutchEngage = new Solenoid(RobotMap.SOLENOID_PORT_ReleaseRetract);
         }
-        releaseExtend.set(false);
-        releaseRetract.set(true);
-        
-        
+        clutchRelease.set(false);
+        clutchEngage.set(true);
+
         releaseSwitch = new DigitalInput(RobotMap.DIGITAL_PORT_ReleaseSwitch);
         LiveWindow.addSensor("Launcher", "Limit Switch 1", releaseSwitch);
 
@@ -67,7 +66,7 @@ public class Launcher extends Subsystem {
         if (launchMotor != null) {
             do {
                 try {
-                    launchMotor.setVoltageRampRate(0.001);
+                    launchMotor.setVoltageRampRate(2400); // -12 to +12 in 10ms
                     launchMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                     launchMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
                     launchMotor.setPID(2, 0, 0);
@@ -83,17 +82,53 @@ public class Launcher extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void launch() {
-
+    public void engageClutch() {
+        setClutchEngaged(true);
     }
 
-    public void reset() {
+    public void disengageClutch() {
+        setClutchEngaged(false);
+    }
+
+   private void setClutchEngaged(boolean extend) {
+        if (extend) {
+            if ((clutchEngage != null) && (clutchRelease != null)) {
+                clutchRelease.set(true);
+                clutchEngage.set(false);
+            }
+        } else {
+            if ((clutchEngage != null) && (clutchRelease != null)) {
+                clutchEngage.set(true);
+                clutchRelease.set(false);
+            }
+        }
+    }
+
+    
+    public void cock() {
         try {
             // drive launch motor back until limit switch hit
             launchMotor.setX(-1);
         } catch (CANTimeoutException ex) {
 //            ex.printStackTrace();
         }
+    }
+
+    public boolean isCocked() {
+        boolean result = false;
+        int tries = 0;
+        boolean failed;
+        do {
+            try {
+                result = launchMotor.getReverseLimitOK();
+                failed = false;
+            } catch (CANTimeoutException ex) {
+                failed = true;
+                System.out.println("FAIL " + tries + " - Reading launcher Cocked Switch " + RobotMap.JAGID_Launcher);
+//                ex.printStackTrace();
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+        return result;
     }
 
     public void initDefaultCommand() {
