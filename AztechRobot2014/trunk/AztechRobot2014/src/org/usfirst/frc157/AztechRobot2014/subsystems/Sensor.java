@@ -18,8 +18,8 @@ import org.usfirst.frc157.AztechRobot2014.UltrasonicRangeSensor;
 public class Sensor extends Subsystem {
 
     private InfraredRangeSensor shortIR;
-    private InfraredRangeSensor longIR1;
-    private InfraredRangeSensor longIR2;
+    private InfraredRangeSensor longIRLeft;
+    private InfraredRangeSensor longIRRight;
     private UltrasonicRangeSensor ultrasonic;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -41,7 +41,7 @@ public class Sensor extends Subsystem {
         longIRCalData.closeVoltage = 3;
         longIRCalData.farDistance = 355;
         longIRCalData.farVoltage = 1.45;
-        longIR1 = new InfraredRangeSensor(RobotMap.ANALOG_PORT_LongRangeIR_1, longIRCalData);
+        longIRLeft = new InfraredRangeSensor(RobotMap.ANALOG_PORT_LongRangeIR_Left, longIRCalData);
 
         System.out.println(" - Long Range IR #2");
         // uses same cal data as #1
@@ -49,7 +49,7 @@ public class Sensor extends Subsystem {
         longIRCalData.closeVoltage = 3;
         longIRCalData.farDistance = 355;
         longIRCalData.farVoltage = 1.45;
-        longIR2 = new InfraredRangeSensor(RobotMap.ANALOG_PORT_LongRangeIR_2, longIRCalData);
+        longIRRight = new InfraredRangeSensor(RobotMap.ANALOG_PORT_LongRangeIR_Right, longIRCalData);
 
         System.out.println(" - Ultrasonic #1");
         UltrasonicRangeSensor.CalibrationData ultrasonicCalData = new UltrasonicRangeSensor.CalibrationData();
@@ -73,18 +73,18 @@ public class Sensor extends Subsystem {
         return shortIR.getRange();
     }
 
-    public RangeSensor getLongRangeIRSensor1() {
-        return longIR1;
+    public RangeSensor getLongRangeIRSensorLeft() {
+        return longIRLeft;
     }
-    public RangeSensor getLongRangeIRSensor2() {
-        return longIR2;
+    public RangeSensor getLongRangeIRSensorRight() {
+        return longIRRight;
     }
 
-    public double getLongRangeIRDistance1() {
-        return longIR1.getRange();
+    public double getLongRangeIRDistanceLeft() {
+        return longIRLeft.getRange();
     }
-    public double getLongRangeIRDistance2() {
-        return longIR2.getRange();
+    public double getLongRangeIRDistanceRight() {
+        return longIRRight.getRange();
     }
 
    public RangeSensor getUltrasonicSensor1() {
