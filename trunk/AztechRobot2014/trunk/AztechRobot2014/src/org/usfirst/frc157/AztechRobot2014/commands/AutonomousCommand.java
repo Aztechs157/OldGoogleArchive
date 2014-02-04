@@ -33,6 +33,17 @@ public class  AutonomousCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        
+        //* 
+        //* If the launcher is not cocked, that is an oversight so we should
+        //*  cock the launcher and attempt to load a ball which we expect to
+        //*  be directly in front of the robot ready to be loaded
+        //* 
+        
+        // if launcher is not cocked
+        //        cock launcher
+        //        ingest ball
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()

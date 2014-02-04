@@ -38,8 +38,8 @@ public class  OperatorDrive extends Command {
     protected void execute() {
         double range_us1 = Robot.sensor.getUltrasonicDistance1();
         double volts_us1 = Robot.sensor.getUltrasonicSensor1().getVoltage();
-        double range_irl1 = Robot.sensor.getLongRangeIRDistance1();
-        double range_irl2 = Robot.sensor.getLongRangeIRDistance2();
+        double range_irl1 = Robot.sensor.getLongRangeIRDistanceLeft();
+        double range_irl2 = Robot.sensor.getLongRangeIRDistanceRight();
         double range_irs = Robot.sensor.getShortRangeIRDistance();
         double volts_irs = Robot.sensor.getShortRangeIRSensor().getVoltage();
 
