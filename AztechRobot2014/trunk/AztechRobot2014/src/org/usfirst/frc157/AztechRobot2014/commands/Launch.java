@@ -5,6 +5,7 @@
  */
 package org.usfirst.frc157.AztechRobot2014.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc157.AztechRobot2014.Robot;
 
@@ -13,9 +14,10 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
  * @author mattkahn
  */
 public class Launch extends Command {
-    
+
     boolean finished = false;
-    
+    private double launchTime = 0;
+
     public Launch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,8 +25,7 @@ public class Launch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if(Robot.launcher.isCocked() == false)
-        {
+        if (Robot.launcher.isCocked() == false) {
             finished = false;
             return;
         }
@@ -32,9 +33,19 @@ public class Launch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!finished)
-        {
+        if (!finished) {
             Robot.launcher.disengageClutch();
+            launchTime = Timer.getFPGATimestamp();
+
+            if ((Timer.getFPGATimestamp() - launchTime) > 0.5) {
+                if (Robot.launcher.isCocked() == false) {
+                    Robot.launcher.engageClutch();
+                    Robot.launcher.cock(true);
+                } else {
+                    Robot.launcher.cock(false);
+                    finished = true;
+                }
+            }
         }
     }
 
