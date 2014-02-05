@@ -75,7 +75,7 @@ public class OI {
 
         driverRight = new Joystick(RobotMap.CONTROLLERNUM_DriverRight);
         driverRightButton = new JoystickButton(driverRight, 1); // 1 is trigger on Attack 3 Stick
-        driverRightButton.whenPressed(new DebugPrint("DriverRight Trigger"));
+        driverRightButton.whenPressed(new Launch());
 
         driver = new LogitechController(RobotMap.CONTROLLERNUM_Driver);
         driverButton = new LogitechControllerButton(driver, LogitechController.ButtonType.kButtonA.value);

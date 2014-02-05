@@ -15,7 +15,8 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
  */
 public class Launch extends Command {
 
-    boolean finished = false;
+    boolean readyToLaunch = false;
+    boolean finshed = false;
     private double launchTime = 0;
 
     public Launch() {
@@ -26,14 +27,13 @@ public class Launch extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         if (Robot.launcher.isCocked() == false) {
-            finished = false;
-            return;
+            readyToLaunch = false;
         }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (!finished) {
+        if (readyToLaunch) {
             Robot.launcher.disengageClutch();
             launchTime = Timer.getFPGATimestamp();
 
@@ -43,15 +43,23 @@ public class Launch extends Command {
                     Robot.launcher.cock(true);
                 } else {
                     Robot.launcher.cock(false);
-                    finished = true;
+                    finshed = true;
                 }
+            }
+        } else {
+            if (Robot.launcher.isCocked() == false) {
+                Robot.launcher.engageClutch();
+                Robot.launcher.cock(true);
+            } else {
+                Robot.launcher.cock(false);
+                finshed = true;
             }
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return finished;
+        return readyToLaunch;
     }
 
     // Called once after isFinished returns true
