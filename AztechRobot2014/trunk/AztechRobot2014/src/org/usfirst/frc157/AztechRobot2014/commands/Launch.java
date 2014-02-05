@@ -6,12 +6,15 @@
 package org.usfirst.frc157.AztechRobot2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc157.AztechRobot2014.Robot;
 
 /**
  *
  * @author mattkahn
  */
 public class Launch extends Command {
+    
+    boolean finished = false;
     
     public Launch() {
         // Use requires() here to declare subsystem dependencies
@@ -20,15 +23,24 @@ public class Launch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        if(Robot.launcher.isCocked() == false)
+        {
+            finished = false;
+            return;
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        if(!finished)
+        {
+            Robot.launcher.disengageClutch();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return finished;
     }
 
     // Called once after isFinished returns true
