@@ -90,7 +90,7 @@ public class Launcher extends Subsystem {
         setClutchEngaged(false);
     }
 
-   private void setClutchEngaged(boolean extend) {
+    private void setClutchEngaged(boolean extend) {
         if (extend) {
             if ((clutchEngage != null) && (clutchRelease != null)) {
                 clutchRelease.set(true);
@@ -104,14 +104,24 @@ public class Launcher extends Subsystem {
         }
     }
 
-    
-    public void cock() {
-        try {
-            // drive launch motor back until limit switch hit
-            launchMotor.setX(-1);
-        } catch (CANTimeoutException ex) {
+    public void cock(boolean rewind) {
+
+        int tries = 0;
+        boolean failed = true;
+        do {
+            try {
+                // drive launch motor back until limit switch hit
+                if (rewind) {
+                    launchMotor.setX(-1);
+                } else {
+                    launchMotor.setX(-1);
+                }
+                failed = false;
+            } catch (CANTimeoutException ex) {
+                failed = true;
 //            ex.printStackTrace();
-        }
+            }
+        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
     }
 
     public boolean isCocked() {
