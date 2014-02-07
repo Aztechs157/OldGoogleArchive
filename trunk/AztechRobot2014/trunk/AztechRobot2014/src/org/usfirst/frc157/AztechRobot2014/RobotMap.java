@@ -51,21 +51,21 @@ public class RobotMap {
     // Jaguar IDs
     public static int JAGID_Launcher = 5;
     public static int JAGID_Retriever = 8;
-    
+
     // Limit Switches
     public static int DIGITAL_PORT_ReleaseSwitch = 1;
-    
+
     // Compressor Info
     public static final int DIGITAL_PORT_PressureSwitch = 12;
     public static final int RELAY_PORT_Compressor = 4;
-    
+
     // Loader Piston
     public static final int SOLENOID_PORT_ReleaseExtend = 1;
     public static final int SOLENOID_PORT_ReleaseRetract = 2;
 
     //PWM
     public static final int PWM_RetrieverTalon = 1;
-    
+
     //=====================================================================
     // Sensor System Constants
     //=====================================================================
@@ -74,7 +74,7 @@ public class RobotMap {
     public static int ANALOG_PORT_LongRangeIR_Left = 2;
     public static int ANALOG_PORT_LongRangeIR_Right = 3;
     public static int ANALOG_PORT_Ultrasonic_1 = 4;
-    public static int ANALOG_PORT_BallRetrieverPot = 4;
+    public static int ANALOG_PORT_BallRetrieverPot = 5;
 
     //=====================================================================
     // Operator Interface Constants
@@ -84,7 +84,11 @@ public class RobotMap {
     public static int CONTROLLERNUM_Driver = 3;
     public static int CONTROLLERNUM_CoDriver = 4;
 
-    
+    //=====================================================================
+    // Operator Interface Constants
+    //=====================================================================
+    public static int ANALOG_PORT_AutoModeSelect = 6;
+
     public static void init() {
 
     }

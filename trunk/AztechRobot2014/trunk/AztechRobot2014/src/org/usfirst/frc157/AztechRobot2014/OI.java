@@ -164,17 +164,17 @@ public class OI {
         driverRightButton10 = new JoystickButton(driverRight, 10);      // Button 10 - Base Right Close
         driverRightButton11 = new JoystickButton(driverRight, 11);      // Button 11 - Base RIght Away
 
-        driverLeftButtonTrigger.whenPressed(new DebugPrint("driverLeftButtonTrigger Pressed"));
-        driverLeftButton2.whenPressed(new DebugPrint("driverLeftButton2 Pressed"));
-        driverLeftButton3.whenPressed(new DebugPrint("driverLeftButton3 Pressed"));
-        driverLeftButton4.whenPressed(new DebugPrint("driverLeftButton4 Pressed"));
-        driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
-        driverLeftButton6.whenPressed(new DebugPrint("driverLeftButton6 Pressed"));
-        driverLeftButton7.whenPressed(new DebugPrint("driverLeftButton7 Pressed"));
-        driverLeftButton8.whenPressed(new DebugPrint("driverLeftButton8 Pressed"));
-        driverLeftButton9.whenPressed(new DebugPrint("driverLeftButton9 Pressed"));
-        driverLeftButton10.whenPressed(new DebugPrint("driverLeftButton10 Pressed"));
-        driverLeftButton11.whenPressed(new DebugPrint("driverLeftButton11 Pressed"));
+        driverRightButtonTrigger.whenPressed(new DebugPrint("driverRightButtonTrigger Pressed"));
+        driverRightButton2.whenPressed(new DebugPrint("driverRightButton2 Pressed"));
+        driverRightButton3.whenPressed(new DebugPrint("driverRightButton3 Pressed"));
+        driverRightButton4.whenPressed(new DebugPrint("driverRightButton4 Pressed"));
+        driverRightButton5.whenPressed(new DebugPrint("driverRightButton5 Pressed"));
+        driverRightButton6.whenPressed(new DebugPrint("driverRightButton6 Pressed"));
+        driverRightButton7.whenPressed(new DebugPrint("driverRightButton7 Pressed"));
+        driverRightButton8.whenPressed(new DebugPrint("driverRightButton8 Pressed"));
+        driverRightButton9.whenPressed(new DebugPrint("driverRightButton9 Pressed"));
+        driverRightButton10.whenPressed(new DebugPrint("driverRightButton10 Pressed"));
+        driverRightButton11.whenPressed(new DebugPrint("driverRightButton11 Pressed"));
 
         driverButtonLeftB = new LogitechControllerButton(driver, LogitechController.ButtonType.kButtonLeftB.value);               // Left Button (Above Trigger)
         driverButtonRightB = new LogitechControllerButton(driver, LogitechController.ButtonType.kButtonRightB.value);             // Right Button (Above Trigger)
