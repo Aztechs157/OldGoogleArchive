@@ -72,8 +72,6 @@ public class RobotMap {
     public static final int SOLENOID_PORT_ReleaseExtend = 1;
     public static final int SOLENOID_PORT_ReleaseRetract = 2;
 
-    // PWM
-
     //=====================================================================
     // Sensor System Constants
     //=====================================================================
