@@ -95,4 +95,9 @@ public class InfraredRangeSensor extends RangeSensor {
         
         return distance;
     }
+    
+       public double getMaxRange()
+    {
+        return cal.farDistance;
+    }
 }
