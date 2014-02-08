@@ -46,11 +46,20 @@ public class RobotMap {
     public static int JAGID_RearRight = 2;
 
     //=====================================================================
+    // Retriever Constants
+    //=====================================================================
+    
+    // Jaguar IDs
+    public static int JAGID_Retriever = 3;
+    
+    //PWM
+    public static final int PWM_RetrieverTalon = 1;
+    
+    //=====================================================================
     // Launcher Constants
     //=====================================================================
     // Jaguar IDs
     public static int JAGID_Launcher = 5;
-    public static int JAGID_Retriever = 8;
 
     // Limit Switches
     public static int DIGITAL_PORT_ReleaseSwitch = 1;
@@ -63,8 +72,7 @@ public class RobotMap {
     public static final int SOLENOID_PORT_ReleaseExtend = 1;
     public static final int SOLENOID_PORT_ReleaseRetract = 2;
 
-    //PWM
-    public static final int PWM_RetrieverTalon = 1;
+    // PWM
 
     //=====================================================================
     // Sensor System Constants
