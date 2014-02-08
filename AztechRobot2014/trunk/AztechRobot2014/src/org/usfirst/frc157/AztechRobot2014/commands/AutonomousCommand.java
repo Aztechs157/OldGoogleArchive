@@ -10,6 +10,7 @@
 package org.usfirst.frc157.AztechRobot2014.commands;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc157.AztechRobot2014.Robot;
@@ -23,24 +24,30 @@ public class AutonomousCommand extends CommandGroup {
     AnalogChannel autoSelectSwitch;
 
     public AutonomousCommand() {
-//        int switchNumPositions = 6;
-//        int switchMaxPosition = switchNumPositions - 1; // zero based index
-//        int switchStepSize = 1024 / switchNumPositions;
-//
-//        autoSelectSwitch = new AnalogChannel(RobotMap.ANALOG_PORT_AutoModeSelect);
-//        int autoMode = switchMaxPosition - (autoSelectSwitch.getValue() + switchStepSize / 2) / switchStepSize;
-//
-//        switch (autoMode) {
-//            case 0:
-//                addSequential(new SleepCommand(2.0));      // sleep for 2 seconds 
-//                addSequential(new Launch());            // launch ball
-//
-//                break;
-//            default:
-//                System.out.println("ERROR - Unexpected auto mode");
-//                addSequential(new SleepCommand(2.0));      // sleep for 2 seconds 
-//                addSequential(new Launch());            // launch ball (we don't want to keep it if there is an error)
-//               break;
-//        }
+
+        System.out.println("Creating  Up Autonomous Command Group");
+        int switchNumPositions = 6;
+        int switchMaxPosition = switchNumPositions - 1; // zero based index
+        int switchStepSize = 1024 / switchNumPositions;
+
+        autoSelectSwitch = new AnalogChannel(RobotMap.ANALOG_PORT_AutoModeSelect);
+        int autoMode = switchMaxPosition - (autoSelectSwitch.getValue() + switchStepSize / 2) / switchStepSize;
+
+        switch (autoMode) {
+            case 0:
+                // take a single shot
+                addSequential(new SleepCommand(2.0));      // sleep for 2 seconds 
+                addSequential(new Launch());            // launch ball
+
+                break;
+            case 1:
+                // Shoot, get another ball and shoot againg
+                break;
+            default:
+                System.out.println("ERROR - Unexpected auto mode");
+                addSequential(new SleepCommand(2.0));      // sleep for 2 seconds 
+                addSequential(new Launch());            // launch ball (we don't want to keep it if there is an error)
+                break;
+        }
     }
 }

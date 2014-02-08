@@ -93,7 +93,7 @@ public class RobotMap {
     //=====================================================================
     // Operator Interface Constants
     //=====================================================================
-    public static int ANALOG_PORT_AutoModeSelect = 6;
+    public static int ANALOG_PORT_AutoModeSelect = 7;
 
     public static void init() {
 
