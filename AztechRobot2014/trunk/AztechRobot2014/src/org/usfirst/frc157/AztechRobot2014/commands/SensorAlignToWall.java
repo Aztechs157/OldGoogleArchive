@@ -19,6 +19,7 @@ public class SensorAlignToWall extends Command {
 
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
+        requires(Robot.drive);
         // eg. requires(chassis);
     }
 

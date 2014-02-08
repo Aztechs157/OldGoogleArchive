@@ -28,4 +28,6 @@ public abstract class RangeSensor extends AnalogChannel implements PIDSource {
     public abstract double getRange();  // returns range in cm
 
     public abstract double getRange(int samples);  // returns range in cm
+    
+    public abstract double getMaxRange(); // return max range of sensor in cm
 }

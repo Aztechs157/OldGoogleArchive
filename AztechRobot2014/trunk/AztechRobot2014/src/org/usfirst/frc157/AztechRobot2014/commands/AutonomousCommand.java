@@ -36,9 +36,9 @@ public class AutonomousCommand extends CommandGroup {
         switch (autoMode) {
             case 0:
                 // take a single shot
-                addSequential(new SleepCommand(2.0));      // sleep for 2 seconds 
+                addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SleepCommand(1.0));      // sleep for 2 seconds 
                 addSequential(new Launch());            // launch ball
-
                 break;
             case 1:
                 // Shoot, get another ball and shoot againg

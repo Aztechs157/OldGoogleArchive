@@ -67,5 +67,8 @@ public class UltrasonicRangeSensor extends RangeSensor {
         return distance * 2.54;
     }
 
-
+    public double getMaxRange()
+    {
+        return cal.maxRangeInches * 2.54;
+    }
 }
