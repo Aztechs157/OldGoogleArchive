@@ -32,16 +32,32 @@ public class AutonomousCommand extends CommandGroup {
 
         autoSelectSwitch = new AnalogChannel(RobotMap.ANALOG_PORT_AutoModeSelect);
         int autoMode = switchMaxPosition - (autoSelectSwitch.getValue() + switchStepSize / 2) / switchStepSize;
-
+        
+        // Get the retriever out of the way just in case
+        addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  // set the ingester to load position
+ 
         switch (autoMode) {
             case 0:
                 // take a single shot
                 addSequential(new DriveToRange(300));  // move to 3m from the wall
-                addSequential(new SleepCommand(1.0));      // sleep for 2 seconds 
-                addSequential(new Launch());            // launch ball
+                addSequential(new SleepCommand(1.0));  // sleep for 2 seconds 
+                addSequential(new Launch());           // launch ball
                 break;
             case 1:
                 // Shoot, get another ball and shoot againg
+                addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SleepCommand(1.0));  // sleep for 1 seconds 
+                addSequential(new Launch());           // launch ball
+                addSequential(new SleepCommand(0.5));  // sleep for 1/2 second
+                addSequential(new SpinRoller(SpinRoller.ROLLER_IN)); // start the ingesters
+                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));  // set the ingester to load position
+                addSequential(new DriveSpeedForTime(-1, -1, 3));  // drive back to where the second ball was
+                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  // set the ingester to idle position
+                addSequential(new SpinRoller(SpinRoller.ROLLER_STOP)); // stop the ingesters
+                addSequential(new DriveSpeedForTime(1, 1, 3));  // drive back to the wall       
+                addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SleepCommand(1.0));  // sleep for 2 seconds 
+                addSequential(new Launch());           // launch ball
                 break;
             default:
                 System.out.println("ERROR - Unexpected auto mode");
