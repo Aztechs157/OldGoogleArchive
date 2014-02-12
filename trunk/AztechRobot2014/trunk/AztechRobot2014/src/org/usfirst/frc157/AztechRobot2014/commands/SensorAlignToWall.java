@@ -5,6 +5,7 @@
  */
 package org.usfirst.frc157.AztechRobot2014.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc157.AztechRobot2014.Robot;
 
@@ -17,6 +18,9 @@ public class SensorAlignToWall extends Command {
     private final static double RobotWidth = 60;
     private final static double MinTurnNeeded = 0.1;
 
+    private double stopTime;
+    private final double maxAlignmentTime = 2.0;
+
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -25,7 +29,7 @@ public class SensorAlignToWall extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
+        stopTime = Timer.getFPGATimestamp() + maxAlignmentTime;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,14 +37,14 @@ public class SensorAlignToWall extends Command {
         double turnNeeded = getTurnNeeded();
         double drive = turnNeeded / 2;
         Robot.drive.tankDrive(drive, -drive);
-        
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         double turnNeeded = getTurnNeeded();
         turnNeeded = Math.abs(turnNeeded);
-        return (turnNeeded < MinTurnNeeded);
+        return ((turnNeeded < MinTurnNeeded) || (Timer.getFPGATimestamp() > stopTime));
     }
 
     // Called once after isFinished returns true
@@ -67,7 +71,7 @@ public class SensorAlignToWall extends Command {
             rightRange = Robot.sensor.getLongRangeIRDistanceRight();
             deltaRange = leftRange - rightRange;
         }
-        
+
         return deltaRange / RobotWidth;
     }
 }

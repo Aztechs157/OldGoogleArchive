@@ -40,12 +40,14 @@ public class AutonomousCommand extends CommandGroup {
             case 0:
                 // take a single shot
                 addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SensorAlignToWall());
                 addSequential(new SleepCommand(1.0));  // sleep for 2 seconds 
                 addSequential(new Launch());           // launch ball
                 break;
             case 1:
                 // Shoot, get another ball and shoot againg
                 addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SensorAlignToWall());
                 addSequential(new SleepCommand(1.0));  // sleep for 1 seconds 
                 addSequential(new Launch());           // launch ball
                 addSequential(new SleepCommand(0.5));  // sleep for 1/2 second
@@ -56,6 +58,7 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new SpinRoller(SpinRoller.ROLLER_STOP)); // stop the ingesters
                 addSequential(new DriveSpeedForTime(1, 1, 3));  // drive back to the wall       
                 addSequential(new DriveToRange(300));  // move to 3m from the wall
+                addSequential(new SensorAlignToWall());
                 addSequential(new SleepCommand(1.0));  // sleep for 2 seconds 
                 addSequential(new Launch());           // launch ball
                 break;
