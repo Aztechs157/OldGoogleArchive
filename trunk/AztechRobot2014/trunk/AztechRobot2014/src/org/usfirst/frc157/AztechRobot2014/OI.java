@@ -128,8 +128,8 @@ public class OI {
         driver = new LogitechController(RobotMap.CONTROLLERNUM_Driver);
         coDriver = new LogitechController(RobotMap.CONTROLLERNUM_CoDriver);
 
-        driverRightButtonTrigger = new JoystickButton(driverLeft, 1);  // Button 1 -  Trigger
-        driverRightButton2 = new JoystickButton(driverLeft, 2);        // Button 2 -  Stick down
+        driverLeftButtonTrigger = new JoystickButton(driverLeft, 1);  // Button 1 -  Trigger
+        driverLeftButton2 = new JoystickButton(driverLeft, 2);        // Button 2 -  Stick down
         driverLeftButton3 = new JoystickButton(driverLeft, 3);        // Button 3 -  Stick center
         driverLeftButton4 = new JoystickButton(driverLeft, 4);        // Button 4 -  Stick left
         driverLeftButton5 = new JoystickButton(driverLeft, 5);        // Button 5 -  Stick right
@@ -140,8 +140,8 @@ public class OI {
         driverLeftButton10 = new JoystickButton(driverLeft, 10);      // Button 10 - Base Right Close
         driverLeftButton11 = new JoystickButton(driverLeft, 11);      // Button 11 - Base RIght Away
 
-        driverRightButtonTrigger.whenPressed(new DebugPrint("driverRightButtonTrigger Pressed"));
-        driverRightButton2.whenPressed(new DebugPrint("driverRightButton2 Pressed"));
+        driverLeftButtonTrigger.whenPressed(new DebugPrint("driverLeftButtonTrigger Pressed"));
+        driverLeftButton2.whenPressed(new DebugPrint("driverLeftButton2 Pressed"));
         driverLeftButton3.whenPressed(new DebugPrint("driverLeftButton3 Pressed"));
         driverLeftButton4.whenPressed(new DebugPrint("driverLeftButton4 Pressed"));
         driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
@@ -240,7 +240,7 @@ public class OI {
         coDriverButtonLeftTrigger.whenPressed(new DebugPrint("coDriverButtonLeftTrigger Pressed"));
         coDriverButtonRightTrigger.whenPressed(new Launch());
         coDriverButtonGameUp.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
-        coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed"));
+        coDriverButtonGameDown.whenPressed(new DisplaySensors());
         coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_UP));
         coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));
 
