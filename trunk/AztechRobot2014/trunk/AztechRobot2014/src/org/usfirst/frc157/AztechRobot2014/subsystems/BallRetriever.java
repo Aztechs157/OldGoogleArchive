@@ -34,34 +34,35 @@ public class BallRetriever extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    //private Potentiometer pot;
     private CANJaguar jag;
     private Talon talon;
     
-    private static double X1 = 45;
-    private static double X2 = 135;
-    private static double Y1 = -.2;
-    private static double Y2 = .6;
+    //Potentiometer angle / voltage constants
+    private static double X1 = 45;     //Angle Down - TODO
+    private static double X2 = 135;    //Angle Up - TODO
+    private static double Y1 = 0.1;      //Voltage Down - TODO
+    private static double Y2 = 0.9;      //Voltage Up - TODO
     private static double slope;
     
-    public static double PID_P = 1;
-    public static double PID_I = 0;
-    public static double PID_D = 0;
+    //Jag PID
+    public static double PID_P = 1;   //TODO
+    public static double PID_I = 0;     //TODO
+    public static double PID_D = 0;     //TODO
     
     public BallRetriever()
     {             
         slope = (Y2 - Y1)/(X2 - X1);
-        //pot = new Potentiometer(RobotMap.ANALOG_PORT_BallRetrieverPot, -1, 1, 45, 135);
+        //pot = new Potentiometer(Ro+botMap.ANALOG_PORT_BallRetrieverPot, -1, 1, 45, 135);
         boolean failed = true;
         int tries = 0;
         do{
             try {
                 jag = new CANJaguar(RobotMap.JAGID_Retriever);
-                jag.setVoltageRampRate(0.1);
+                //jag.setVoltageRampRate(0.1);
                 jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                 jag.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-                jag.configPotentiometerTurns(1);    //TODO
+                //jag.configPotentiometerTurns(1);    //TODO
                 jag.setPID(PID_P, PID_I, PID_D);    //TODO
                 jag.enableControl();
                 failed = false;
@@ -74,21 +75,21 @@ public class BallRetriever extends Subsystem {
     
     public void updatePID()
     {
-       PID_P = SmartDashboard.getNumber("Ball Retriever Arm PID P", PID_P);
-       PID_I = SmartDashboard.getNumber("Ball Retriever Arm PID I", PID_I);
-       PID_D = SmartDashboard.getNumber("Ball Retriever Arm PID D", PID_D);
+       SmartDashboard.putNumber("Ball Retriever Arm PID P", PID_P);
+       SmartDashboard.putNumber("Ball Retriever Arm PID I", PID_I);
+       SmartDashboard.putNumber("Ball Retriever Arm PID D", PID_D);
+       System.out.println("Updated PID: " + PID_P + " " + PID_I + " " + PID_D);
        boolean failed = true;
        int tries = 0;
-       do
-       {   
-            try {
-                if (null != jag) {
+       do{
+           if (null != jag){
+                try {
                     jag.setPID(PID_P, PID_I, PID_D);
+                    failed = false;
+                } catch (CANTimeoutException ex) {
+                      System.out.println("FAIL " + tries + " - Failed to update PID constants");
                 }
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                  System.out.println("FAIL " + tries + " - Failed to update PID constants");
-            }
+           }
        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
     }
     
@@ -105,15 +106,16 @@ public class BallRetriever extends Subsystem {
        boolean failed = true;
        int tries = 0;
         do{
-            try {
-                double voltageToSet = convertAngleToVoltage(angle);
-                if (null != jag) {
+            if (null != jag)
+            {
+                try {
+                    double voltageToSet = convertAngleToVoltage(angle);
                     jag.setX(voltageToSet);
-                    SmartDashboard.putNumber("Desired Angle", convertVoltageToAngle(jag.getPosition()));
+                    SmartDashboard.putNumber("Desired Angle", angle);
+                    failed = false;
+                } catch (CANTimeoutException ex) {
+                    System.out.println("FAIL " + tries + " - Failed to set angle from potentiometer");
                 }
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                System.out.println("FAIL " + tries + " - Failed to set angle from potentiometer");
             }
        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
     }
@@ -124,14 +126,16 @@ public class BallRetriever extends Subsystem {
         boolean failed = true;
         int tries = 0;
         do{
-            try {
-                if (null != jag) {
-                    SmartDashboard.putNumber("Current Angle", convertVoltageToAngle(jag.getPosition()));
+            if (null != jag){
+                try {
+                    SmartDashboard.putNumber("Current Pot Angle", convertVoltageToAngle(jag.getPosition()));
+                    SmartDashboard.putNumber("Current Pot Voltage", jag.getPosition());
+                    SmartDashboard.putNumber("Current Jag Voltage", jag.getX());
                     varToReturn = convertVoltageToAngle(jag.getPosition());
+                    failed = false;
+                } catch (CANTimeoutException ex) {
+                    System.out.println("FAIL " + tries + " - Failed to get angle from Potentiometer");
                 }
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                System.out.println("FAIL " + tries + " - Failed to get angle from Potentiometer");
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
        return varToReturn;
@@ -149,7 +153,7 @@ public class BallRetriever extends Subsystem {
     }
     
     public static double convertVoltageToAngle(double voltage)
-    {
+    {   
         return (voltage - Y1 + slope*X1) / slope;
     }
 }

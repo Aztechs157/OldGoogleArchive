@@ -231,16 +231,18 @@ public class OI {
         coDriverButtonRightB.whenPressed(new SensorAlignToWall());
         coDriverButtonLeftTop.whenPressed(new DebugPrint("coDriverButtonLeftTop Pressed"));
         coDriverButtonRightTop.whenPressed(new DebugPrint("coDriverButtonRightTop Pressed"));
-        coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
+        coDriverButtonA.whenPressed(new DisplaySensors());      //Works as expected
+        //coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
         coDriverButtonB.whenPressed(new SpinRoller(SpinRoller.ROLLER_OUT));
         coDriverButtonX.whenPressed(new SpinRoller(SpinRoller.ROLLER_IN));
         coDriverButtonY.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));
-        coDriverButtonStart.whenPressed(new DebugPrint("coDriverButtonStart Pressed"));
+        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
         coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
         coDriverButtonLeftTrigger.whenPressed(new DebugPrint("coDriverButtonLeftTrigger Pressed"));
         coDriverButtonRightTrigger.whenPressed(new Launch());
-        coDriverButtonGameUp.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
-        coDriverButtonGameDown.whenPressed(new DisplaySensors());
+        //coDriverButtonGameUp.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  //Not Working
+        coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed"));
+        //coDriverButtonGameDown.whenPressed(new DisplaySensors());     //DOESN'T WORK, moving left joystick up triggers this instead
         coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_UP));
         coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));
 
