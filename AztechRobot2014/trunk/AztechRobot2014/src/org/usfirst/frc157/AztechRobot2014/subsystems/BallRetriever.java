@@ -45,7 +45,7 @@ public class BallRetriever extends Subsystem {
     private static double slope;
     
     //Jag PID
-    public static double PID_P = 1;   //TODO
+    public static double PID_P = 10;   //TODO
     public static double PID_I = 0;     //TODO
     public static double PID_D = 0;     //TODO
     
@@ -58,11 +58,10 @@ public class BallRetriever extends Subsystem {
         do{
             try {
                 jag = new CANJaguar(RobotMap.JAGID_Retriever);
-                //jag.setVoltageRampRate(0.1);
+                jag.setVoltageRampRate(0.2);
                 jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
                 jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                 jag.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-                //jag.configPotentiometerTurns(1);    //TODO
                 jag.setPID(PID_P, PID_I, PID_D);    //TODO
                 jag.enableControl();
                 failed = false;
@@ -71,9 +70,11 @@ public class BallRetriever extends Subsystem {
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
        talon = new Talon(RobotMap.PWM_RetrieverTalon);
+       
+       updatePID();
     }
     
-    public void updatePID()
+    public final void updatePID()
     {
        SmartDashboard.putNumber("Ball Retriever Arm PID P", PID_P);
        SmartDashboard.putNumber("Ball Retriever Arm PID I", PID_I);
@@ -103,6 +104,7 @@ public class BallRetriever extends Subsystem {
     
     public void setAngle(double angle)
     {
+       System.out.println("Want Angle Set to " + angle);
        boolean failed = true;
        int tries = 0;
         do{
@@ -112,6 +114,7 @@ public class BallRetriever extends Subsystem {
                     double voltageToSet = convertAngleToVoltage(angle);
                     jag.setX(voltageToSet);
                     SmartDashboard.putNumber("Desired Angle", angle);
+                    System.out.println("Angle Set to " + angle);
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Failed to set angle from potentiometer");
