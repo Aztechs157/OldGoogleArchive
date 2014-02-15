@@ -39,25 +39,22 @@ public class MoveBallRetriever extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.ballRetriever);
+        System.out.println("Created MoveBallRetriever @ " + m_desiredAngle);
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-       Robot.ballRetriever.updatePID();
+    protected void initialize() {    
+        System.out.println("MoveBallRetriever.initialize @ "+ m_desiredAngle);
+        Robot.ballRetriever.setAngle(m_desiredAngle);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ballRetriever.setAngle(m_desiredAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Math.abs(Robot.ballRetriever.getAngle() - m_desiredAngle) < 5)
-        {
-            return true;
-        }
-        return false;
+             return true;
     }
 
     // Called once after isFinished returns true
