@@ -41,7 +41,7 @@ public class RobotMap {
 
     // Jaguar IDs
     public static int JAGID_FrontLeft = 7;
-    public static int JAGID_FrontRight = 6;
+    public static int JAGID_FrontRight = 3;
     public static int JAGID_RearLeft = 4;
     public static int JAGID_RearRight = 2;
 
@@ -50,7 +50,7 @@ public class RobotMap {
     //=====================================================================
     
     // Jaguar IDs
-    public static int JAGID_Retriever = 3;
+    public static int JAGID_Retriever = 6;
     
     //PWM
     public static final int PWM_RetrieverTalon = 1;

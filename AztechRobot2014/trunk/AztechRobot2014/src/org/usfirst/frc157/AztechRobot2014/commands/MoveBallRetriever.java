@@ -53,7 +53,7 @@ public class MoveBallRetriever extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.ballRetriever.getAngle() == m_desiredAngle)
+        if(Math.abs(Robot.ballRetriever.getAngle() - m_desiredAngle) < 5)
         {
             return true;
         }
