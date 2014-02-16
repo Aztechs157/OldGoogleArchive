@@ -231,8 +231,7 @@ public class OI {
         coDriverButtonRightB.whenPressed(new SensorAlignToWall());
         coDriverButtonLeftTop.whenPressed(new DebugPrint("coDriverButtonLeftTop Pressed"));
         coDriverButtonRightTop.whenPressed(new DebugPrint("coDriverButtonRightTop Pressed"));
-        coDriverButtonA.whenPressed(new DisplaySensors());      //Works as expected
-        //coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
+        coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
         coDriverButtonB.whenPressed(new SpinRoller(SpinRoller.ROLLER_OUT));
         coDriverButtonX.whenPressed(new SpinRoller(SpinRoller.ROLLER_IN));
         coDriverButtonY.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));

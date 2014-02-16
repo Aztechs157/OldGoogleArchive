@@ -38,13 +38,14 @@ public class MoveBallRetriever extends Command {
         }
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.ballRetriever);
+        //requires(Robot.ballRetriever);
         System.out.println("Created MoveBallRetriever @ " + m_desiredAngle);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {    
         System.out.println("MoveBallRetriever.initialize @ "+ m_desiredAngle);
+        Robot.ballRetriever.updatePID();
         Robot.ballRetriever.setAngle(m_desiredAngle);
     }
 
