@@ -41,7 +41,7 @@ public class RobotMap {
 
     // Jaguar IDs
     public static int JAGID_FrontLeft = 7;
-    public static int JAGID_FrontRight = 3;
+    public static int JAGID_FrontRight = 6;
     public static int JAGID_RearLeft = 4;
     public static int JAGID_RearRight = 2;
 
@@ -50,10 +50,10 @@ public class RobotMap {
     //=====================================================================
     
     // Jaguar IDs
-    public static int JAGID_Retriever = 6;
+    public static int JAGID_Retriever = 3;
     
     //PWM
-    public static final int PWM_RetrieverTalon = 1;
+    public static final int PWM_RetrieverTalon = 10;
     
     //=====================================================================
     // Launcher Constants
@@ -80,8 +80,7 @@ public class RobotMap {
     public static int ANALOG_PORT_LongRangeIR_Left = 2;
     public static int ANALOG_PORT_LongRangeIR_Right = 3;
     public static int ANALOG_PORT_Ultrasonic_1 = 4;
-    public static int ANALOG_PORT_BallRetrieverPot = 5;
-
+    public static int ANALOG_PORT_BallRetrieverPot = 8;
     //=====================================================================
     // Operator Interface Constants
     //=====================================================================
