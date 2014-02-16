@@ -13,6 +13,7 @@ import org.usfirst.frc157.AztechRobot2014.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.*;
+import org.usfirst.frc157.AztechRobot2014.subsystems.BallRetriever;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -235,15 +236,18 @@ public class OI {
         coDriverButtonB.whenPressed(new SpinRoller(SpinRoller.ROLLER_OUT));
         coDriverButtonX.whenPressed(new SpinRoller(SpinRoller.ROLLER_IN));
         coDriverButtonY.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));
-        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
+//        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
         coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
         coDriverButtonLeftTrigger.whenPressed(new DebugPrint("coDriverButtonLeftTrigger Pressed"));
         coDriverButtonRightTrigger.whenPressed(new Launch());
         //coDriverButtonGameUp.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  //Not Working
         coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed"));
         //coDriverButtonGameDown.whenPressed(new DisplaySensors());     //DOESN'T WORK, moving left joystick up triggers this instead
-        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_UP));
-        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));
+//        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_UP));
+//        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));
+        coDriverButtonStart.whenPressed(new MoveBallRetriever(BallRetriever.Neutral));
+        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(BallRetriever.Load));
+        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(BallRetriever.Eject));
 
 
         // SmartDashboard Buttons
