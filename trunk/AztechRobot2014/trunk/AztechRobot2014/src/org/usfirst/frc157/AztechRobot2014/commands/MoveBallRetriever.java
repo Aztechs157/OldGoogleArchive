@@ -26,7 +26,16 @@ public class MoveBallRetriever extends Command {
     public static final int RETRIEVER_MIDDLE = 1;
     public static final int RETRIEVER_DOWN = 2;
     
-    private double m_desiredAngle;
+    private boolean isAngleMode = true;
+    private double m_desiredAngle = 0;
+    private double m_desiredVoltage = 0;
+    
+    public MoveBallRetriever(double _target_voltage)
+    {
+           System.out.println("Created MoveBallRetriever (Voltage Style) @ " + _target_voltage);
+           m_desiredVoltage = _target_voltage;
+           isAngleMode = false;
+    }
     
     public MoveBallRetriever(int position) {
         try{
@@ -40,13 +49,21 @@ public class MoveBallRetriever extends Command {
         // eg. requires(chassis);
         //requires(Robot.ballRetriever);
         System.out.println("Created MoveBallRetriever @ " + m_desiredAngle);
+        isAngleMode = true;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {    
         System.out.println("MoveBallRetriever.initialize @ "+ m_desiredAngle);
         Robot.ballRetriever.updatePID();
-        Robot.ballRetriever.setAngle(m_desiredAngle);
+        if(isAngleMode)
+        {
+            Robot.ballRetriever.setAngle(m_desiredAngle);
+        }
+        else
+        {
+            Robot.ballRetriever.setVoltageSetpoint(m_desiredVoltage);
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
