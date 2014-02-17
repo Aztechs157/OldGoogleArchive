@@ -228,27 +228,28 @@ public class OI {
         coDriverButtonGameLeft = new LogitechControllerButton(coDriver, LogitechController.ButtonType.kButtonGameLeft.value);         // Game Pad Left
         coDriverButtonGameRight = new LogitechControllerButton(coDriver, LogitechController.ButtonType.kButtonGameRight.value);       // Game Pad Right
 
-        coDriverButtonLeftB.whenPressed(new DebugPrint("coDriverButtonLeftB Pressed"));
-        coDriverButtonRightB.whenPressed(new SensorAlignToWall());
-        coDriverButtonLeftTop.whenPressed(new DebugPrint("coDriverButtonLeftTop Pressed"));
-        coDriverButtonRightTop.whenPressed(new DebugPrint("coDriverButtonRightTop Pressed"));
-        coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
+        coDriverButtonLeftB.whenPressed(new SensorAlignToWall());
+        coDriverButtonLeftTrigger.whileHeld(new DriveToRange(3.0));
+        coDriverButtonRightTrigger.whenPressed(new Launch());
+
+        coDriverButtonA.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));
         coDriverButtonB.whenPressed(new EjectBall());
         coDriverButtonX.whenPressed(new PickupBall());
         coDriverButtonY.whenPressed(new LoaderNeutral());
-        coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
-        
-        coDriverButtonLeftTrigger.whileHeld(new SpinRoller(Robot.ballRetriever.getSpinRollerDirection()));
-        coDriverButtonLeftTrigger.whileHeld(new DebugPrint("coDriverLeftTrigger Pressed"));
-        coDriverButtonLeftTrigger.whenReleased(new SpinRoller(SpinRoller.ROLLER_STOP));
-        coDriverButtonRightTrigger.whenPressed(new Launch());
-        
-        coDriverButtonGameUp.whenPressed(new DebugPrint("coDriverButtonGameUp Pressed"));  //Not Working
-        coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed"));
-        //Check these 2 -- Right + Left
         coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));
         coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_IN));
-        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
+
+        
+        coDriverButtonRightB.whenPressed(new DebugPrint("coDriverButtonRightB Pressed"));
+        coDriverButtonLeftTop.whenPressed(new DebugPrint("coDriverButtonLeftTop Pressed"));
+        coDriverButtonRightTop.whenPressed(new DebugPrint("coDriverButtonRightTop Pressed"));
+        
+        coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
+        coDriverButtonStart.whenPressed(new DebugPrint("coDriverButtonStart Pressed"));
+        coDriverButtonGameUp.whenPressed(new DebugPrint("coDriverButtonGameUp Pressed"));  //Not Working
+        coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed")); // Likely not working
+        //Check these 2 -- Right + Left
+
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", Robot.getAutonomousCommand());
 
