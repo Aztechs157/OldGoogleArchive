@@ -41,9 +41,9 @@ public class BallRetriever extends Subsystem {
     private static double slope;
 
     //Jag PID
-    public static double PID_P = 300;   //TODO
-    public static double PID_I = 0.3;     //TODO
-    public static double PID_D = 0;     //TODO
+    public static double PID_P = 280;   //TODO
+    public static double PID_I = 0.2;     //TODO
+    public static double PID_D = 10;     //TODO
 
     // positional setpoint voltages
     public final static double Load = 0.75;
