@@ -35,7 +35,7 @@ public class DisplaySensors extends Command {
             
             initTime = Timer.getFPGATimestamp();
         }*/
-        Robot.ballRetriever.getAngle();     //Outputs data to the SmartDashboard
+//        Robot.ballRetriever.getAngle();     //Outputs data to the SmartDashboard
     }
 
     // Make this return true when this Command no longer needs to run execute()
