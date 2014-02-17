@@ -236,19 +236,19 @@ public class OI {
         coDriverButtonB.whenPressed(new EjectBall());
         coDriverButtonX.whenPressed(new PickupBall());
         coDriverButtonY.whenPressed(new LoaderNeutral());
-//        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
         coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
-        coDriverButtonLeftTrigger.whenPressed(new DebugPrint("coDriverButtonLeftTrigger Pressed"));
+        
+        coDriverButtonLeftTrigger.whileHeld(new SpinRoller(Robot.ballRetriever.getSpinRollerDirection()));
+        coDriverButtonLeftTrigger.whileHeld(new DebugPrint("coDriverLeftTrigger Pressed"));
+        coDriverButtonLeftTrigger.whenReleased(new SpinRoller(SpinRoller.ROLLER_STOP));
         coDriverButtonRightTrigger.whenPressed(new Launch());
-        //coDriverButtonGameUp.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  //Not Working
+        
+        coDriverButtonGameUp.whenPressed(new DebugPrint("coDriverButtonGameUp Pressed"));  //Not Working
         coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed"));
-        //coDriverButtonGameDown.whenPressed(new DisplaySensors());     //DOESN'T WORK, moving left joystick up triggers this instead
-//        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_UP));
-//        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));
-        coDriverButtonStart.whenPressed(new MoveBallRetriever(BallRetriever.Neutral));
-        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(BallRetriever.Load));
-        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(BallRetriever.Eject));
-
+        //Check these 2 -- Right + Left
+        coDriverButtonGameRight.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));
+        coDriverButtonGameLeft.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_IN));
+        coDriverButtonStart.whenPressed(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", Robot.getAutonomousCommand());
 

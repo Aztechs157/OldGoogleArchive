@@ -22,6 +22,7 @@ public class SpinRoller extends Command {
     private double m_desiredSpeed;
     
     public SpinRoller(int direction) {
+        System.out.println(direction);
         try{
             m_desiredSpeed = SPEEDS[direction];
         }
@@ -35,8 +36,7 @@ public class SpinRoller extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        SPEEDS[ROLLER_IN] = SmartDashboard.getNumber("Roller Speed IN", -1);
-        SPEEDS[ROLLER_OUT] = SmartDashboard.getNumber("Roller Speed OUT", 1);
+     
     }
 
     // Called repeatedly when this Command is scheduled to run

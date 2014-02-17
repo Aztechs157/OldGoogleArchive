@@ -17,7 +17,7 @@ public class PickupBall extends CommandGroup {
     public PickupBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        addSequential(new MoveBallRetriever(BallRetriever.Load));  // move to 3m from the wall
-        addSequential(new SpinRoller(SpinRoller.ROLLER_IN));
+        addParallel(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // move to 3m from the wall
+        addParallel(new SpinRoller(SpinRoller.ROLLER_IN));
     }
 }

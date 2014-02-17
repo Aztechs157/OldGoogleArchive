@@ -17,25 +17,22 @@ public class DisplaySensors extends Command {
     double initTime;
     
     public DisplaySensors() {
-        // Use requires(                                        ) here to declare subsystem dependencies
         requires(Robot.ballRetriever);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         initTime = Timer.getFPGATimestamp();
-        System.out.println("DisplaySensors Command INITIALIZE");
+        //System.out.println("DisplaySensors Command INITIALIZE");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        /*if(Timer.getFPGATimestamp() - initTime >= 1)
+        if(Timer.getFPGATimestamp() - initTime >= 0.1)  //Only runs every 0.1 secs
         {
-            System.out.println("DisplaySensors RUN");
-            
+            Robot.ballRetriever.getAngle();     //Outputs data to the SmartDashboard
             initTime = Timer.getFPGATimestamp();
-        }*/
-//        Robot.ballRetriever.getAngle();     //Outputs data to the SmartDashboard
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

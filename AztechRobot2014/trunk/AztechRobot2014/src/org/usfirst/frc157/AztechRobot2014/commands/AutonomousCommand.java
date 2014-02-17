@@ -52,7 +52,7 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new Launch());           // launch ball
                 addSequential(new SleepCommand(0.5));  // sleep for 1/2 second
                 addSequential(new SpinRoller(SpinRoller.ROLLER_IN)); // start the ingesters
-                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_DOWN));  // set the ingester to load position
+                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // set the ingester to load position
                 addSequential(new DriveSpeedForTime(-1, -1, 3));  // drive back to where the second ball was
                 addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  // set the ingester to idle position
                 addSequential(new SpinRoller(SpinRoller.ROLLER_STOP)); // stop the ingesters
