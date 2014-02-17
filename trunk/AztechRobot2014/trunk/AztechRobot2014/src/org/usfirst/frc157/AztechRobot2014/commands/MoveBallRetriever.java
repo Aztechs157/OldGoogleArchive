@@ -21,10 +21,10 @@ public class MoveBallRetriever extends Command {
         RETRIEVER_UP, RETRIEVER_MIDDLE, RETRIEVER_DOWN
     }*/
     
-    public static double[] ANGLES = {135, 90, 45};
-    public static final int RETRIEVER_UP = 0;
+    public static double[] ANGLES = {105, 90, 45};
+    public static final int RETRIEVER_IN = 0;
     public static final int RETRIEVER_MIDDLE = 1;
-    public static final int RETRIEVER_DOWN = 2;
+    public static final int RETRIEVER_OUT = 2;
     
     private boolean isAngleMode = true;
     private double m_desiredAngle = 0;

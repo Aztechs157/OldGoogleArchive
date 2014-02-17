@@ -17,7 +17,7 @@ public class LoaderNeutral extends CommandGroup {
     public LoaderNeutral() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        addSequential(new MoveBallRetriever(BallRetriever.Neutral));  // move to 3m from the wall
-        addSequential(new SpinRoller(SpinRoller.ROLLER_STOP));
+        addParallel(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  // move to 3m from the wall
+        addParallel(new SpinRoller(SpinRoller.ROLLER_STOP));
     }
 }

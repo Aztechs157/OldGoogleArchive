@@ -17,7 +17,7 @@ public class EjectBall extends CommandGroup {
     public EjectBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        addSequential(new MoveBallRetriever(BallRetriever.Eject));  // move to 3m from the wall
-        addSequential(new SpinRoller(SpinRoller.ROLLER_OUT));
+        addParallel(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_IN)); 
+        addParallel(new SpinRoller(SpinRoller.ROLLER_OUT));
     } 
 }

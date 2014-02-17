@@ -52,7 +52,7 @@ public class Drive extends Subsystem {
         do {
             try {
                 driveFL = new ScaledCANJaguar(RobotMap.JAGID_FrontLeft);
-                driveFL.setScalingFactor(-1 * RobotMap.SpeedScale);
+                driveFL.setScalingFactor(-1 * RobotMap.SpeedScale * -1);
                 failed = false;
             } catch (CANTimeoutException ex) {
                 failed = true;
@@ -66,7 +66,7 @@ public class Drive extends Subsystem {
         do {
             try {
                 driveFR = new ScaledCANJaguar(RobotMap.JAGID_FrontRight);
-                driveFR.setScalingFactor(RobotMap.SpeedScale);
+                driveFR.setScalingFactor(RobotMap.SpeedScale * -1);
             } catch (CANTimeoutException ex) {
                 failed = true;
                 System.out.println("FAIL " + tries + " - Instantiating FR JAG " + RobotMap.JAGID_FrontRight);
