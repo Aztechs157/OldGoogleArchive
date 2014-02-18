@@ -232,7 +232,9 @@ public class OI {
         coDriverButtonLeftTrigger.whenPressed(new DriveToRange(3.0));
         coDriverButtonRightTrigger.whenPressed(new Launch());
 
-        coDriverButtonA.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));
+        //coDriverButtonA.whileHeld(new MoveBallRetriever(Robot.ballRetriever.getSpinRollerDirection()));
+        //coDriverButtonA.whenReleased(new MoveBallRetriever(SpinRoller.ROLLER_STOP));
+        coDriverButtonA.whenPressed(new DebugPrint("coDriverButtonA Pressed"));
         coDriverButtonB.whenPressed(new EjectBall());
         coDriverButtonX.whenPressed(new PickupBall());
         coDriverButtonY.whenPressed(new LoaderNeutral());
