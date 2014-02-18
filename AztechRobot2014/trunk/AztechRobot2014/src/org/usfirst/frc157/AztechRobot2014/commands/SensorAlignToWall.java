@@ -7,6 +7,7 @@ package org.usfirst.frc157.AztechRobot2014.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.AztechRobot2014.Robot;
 
 /**
@@ -66,6 +67,10 @@ public class SensorAlignToWall extends Command {
         double rightRange = Robot.sensor.getLongRangeIRDistanceRight();
         double deltaRange = leftRange - rightRange;
 
+        SmartDashboard.putNumber("Left",  leftRange);
+        SmartDashboard.putNumber("Right", rightRange);
+        SmartDashboard.putNumber("Delta", deltaRange);
+        
         while (deltaRange > RobotWidth) {
             leftRange = Robot.sensor.getLongRangeIRDistanceLeft();
             rightRange = Robot.sensor.getLongRangeIRDistanceRight();
