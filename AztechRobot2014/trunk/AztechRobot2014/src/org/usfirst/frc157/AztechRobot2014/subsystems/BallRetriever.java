@@ -50,7 +50,7 @@ public class BallRetriever extends Subsystem {
     public final static double Eject = 0.45;
     public final static double Neutral = 0.50;
     
-    public double lastSetVoltage = 90;
+    public double lastSetAngle = 90;
 
     public BallRetriever() {
         System.out.println("BallRetriever");
@@ -167,7 +167,7 @@ public class BallRetriever extends Subsystem {
                     jag.setX(voltage);
                     SmartDashboard.putNumber("Desired Pot Voltage", voltage);
                     System.out.println("Desired Pot Voltage Set to " + voltage);
-                    lastSetVoltage = voltage;
+                    lastSetAngle = convertVoltageToAngle(voltage);
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Failed to set setpoint voltage");
@@ -202,7 +202,7 @@ public class BallRetriever extends Subsystem {
                     SmartDashboard.putNumber("Desired Angle", angle);
                     SmartDashboard.putNumber("Desired Voltage", voltageToSet);
                     System.out.println("Angle Set to " + angle);
-                    lastSetVoltage = convertAngleToVoltage(angle);
+                    lastSetAngle = angle;
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Failed to set angle from potentiometer");
@@ -267,11 +267,11 @@ public class BallRetriever extends Subsystem {
     public int getSpinRollerDirection()
     {
         int rollerDirection;
-        if(lastSetVoltage == Load)
+        if(lastSetAngle == MoveBallRetriever.RETRIEVER_OUT)
         {
             rollerDirection = SpinRoller.ROLLER_IN;
         }
-        else if(lastSetVoltage == Eject)
+        else if(lastSetAngle == MoveBallRetriever.RETRIEVER_IN)
         {
             rollerDirection = SpinRoller.ROLLER_OUT;
         }
