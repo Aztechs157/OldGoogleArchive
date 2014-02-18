@@ -41,7 +41,7 @@ public class BallRetriever extends Subsystem {
     private static double slope;
 
     //Jag PID
-    public static double PID_P = 280;   //TODO
+    public static double PID_P = 300;   //TODO
     public static double PID_I = 0.2;     //TODO
     public static double PID_D = 10;     //TODO
 
@@ -156,6 +156,7 @@ public class BallRetriever extends Subsystem {
 
     public void setVoltageSetpoint(double voltage) {
          System.out.println("setVoltageSetpoint(double voltage)");
+         updatePID();
 //        setUpJag();
         System.out.println("Want setpoint voltage " + voltage);
         boolean failed = true;
@@ -188,6 +189,7 @@ public class BallRetriever extends Subsystem {
 
     public void setAngle(double angle) {
          System.out.println("setAngle (double angle)");
+         updatePID();
 //        setUpJag();
         System.out.println("Want Angle Set to " + angle);
         boolean failed = true;
