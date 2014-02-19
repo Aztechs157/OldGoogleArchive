@@ -21,13 +21,13 @@ public class Launch extends Command {
 
     public Launch() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.launcher);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if (Robot.launcher.isCocked()) {
-            readyToLaunch = true;
+        if (Robot.launcher.isCocked() == false) {
+            readyToLaunch = false;
         }
     }
 
@@ -37,20 +37,17 @@ public class Launch extends Command {
             Robot.launcher.disengageClutch();
             launchTime = Timer.getFPGATimestamp();
 
-            while ((Timer.getFPGATimestamp() - launchTime) < 0.5) //waits 0.5 seconds
-            {
-                //do nothing
-            }
-
-            if (!Robot.launcher.isCocked()) {
-                Robot.launcher.engageClutch();
-                Robot.launcher.cock(true);
-            } else {
-                Robot.launcher.cock(false);
-                finshed = true;
+            if ((Timer.getFPGATimestamp() - launchTime) > 0.5) {
+                if (Robot.launcher.isCocked() == false) {
+                    Robot.launcher.engageClutch();
+                    Robot.launcher.cock(true);
+                } else {
+                    Robot.launcher.cock(false);
+                    finshed = true;
+                }
             }
         } else {
-            if (!Robot.launcher.isCocked()) {   //Check this
+            if (Robot.launcher.isCocked() == false) {
                 Robot.launcher.engageClutch();
                 Robot.launcher.cock(true);
             } else {
