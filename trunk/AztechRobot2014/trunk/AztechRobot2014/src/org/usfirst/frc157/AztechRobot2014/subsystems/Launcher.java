@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Launcher extends Subsystem {
 
-    public static CANJaguar launchMotor;
+    public static Talon launchMotor;
     public static DigitalInput releaseSwitch;
 
     // Pneumatics
@@ -50,34 +50,7 @@ public class Launcher extends Subsystem {
         releaseSwitch = new DigitalInput(RobotMap.DIGITAL_PORT_ReleaseSwitch);
         LiveWindow.addSensor("Launcher", "Limit Switch 1", releaseSwitch);
 
-        int tries = 0;
-        boolean failed;
-        do {
-            try {
-                launchMotor = new CANJaguar(RobotMap.JAGID_Launcher);
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                failed = true;
-                System.out.println("FAIL " + tries + " - Instantiating Launcher JAG " + RobotMap.JAGID_Launcher);
-//                ex.printStackTrace();
-            }
-        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-
-        if (launchMotor != null) {
-            do {
-                try {
-                    launchMotor.setVoltageRampRate(2400); // -12 to +12 in 10ms
-                    launchMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-                    launchMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-                    launchMotor.setPID(2, 0, 0);
-                    launchMotor.enableControl();
-                    failed = false;
-                } catch (CANTimeoutException ex) {
-                    failed = true;
-                    System.out.println("Exception " + tries + " while configuring voltage mode");
-                }
-            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-        }
+        launchMotor = new Talon(RobotMap.PWN_Launcher);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -106,39 +79,16 @@ public class Launcher extends Subsystem {
 
     public void cock(boolean rewind) {
 
-        int tries = 0;
-        boolean failed = true;
-        do {
-            try {
-                // drive launch motor back until limit switch hit
-                if (rewind) {
-                    launchMotor.setX(-1);
-                } else {
-                    launchMotor.setX(-1);
-                }
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                failed = true;
-//            ex.printStackTrace();
-            }
-        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+        if (rewind) {
+            launchMotor.set(1);
+        } else {
+            launchMotor.set(0);
+        }
+
     }
 
     public boolean isCocked() {
-        boolean result = false;
-        int tries = 0;
-        boolean failed;
-        do {
-            try {
-                result = launchMotor.getReverseLimitOK();
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                failed = true;
-                System.out.println("FAIL " + tries + " - Reading launcher Cocked Switch " + RobotMap.JAGID_Launcher);
-//                ex.printStackTrace();
-            }
-        } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
-        return result;
+        return releaseSwitch.get();        
     }
 
     public void initDefaultCommand() {
