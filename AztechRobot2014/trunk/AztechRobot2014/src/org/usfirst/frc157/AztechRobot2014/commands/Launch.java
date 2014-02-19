@@ -26,27 +26,34 @@ public class Launch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("LAUNCH Init");
         if (Robot.launcher.isCocked() == false) {
             readyToLaunch = false;
+        } else {
+            readyToLaunch = true;
         }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (readyToLaunch) {
+            System.out.println("LAUNCH Ready To Launch");
             Robot.launcher.disengageClutch();
             launchTime = Timer.getFPGATimestamp();
 
             if ((Timer.getFPGATimestamp() - launchTime) > 0.5) {
                 if (Robot.launcher.isCocked() == false) {
+                    System.out.println(" - Cock");
                     Robot.launcher.engageClutch();
                     Robot.launcher.cock(true);
                 } else {
                     Robot.launcher.cock(false);
+                    System.out.println(" - LOCKED");
                     finshed = true;
                 }
             }
         } else {
+            System.out.println("LAUNCH Recocking");
             if (Robot.launcher.isCocked() == false) {
                 Robot.launcher.engageClutch();
                 Robot.launcher.cock(true);
