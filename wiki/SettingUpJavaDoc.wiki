@@ -1,10 +1,9 @@
-#summary One-sentence summary of this page.
+#summary How to set up netbeans to display the javadoc for the wpi libraries.
 #labels Phase-Support
 
 = Introduction =
 
-How to set up netbeans to display the javadoc for the wpi libraries.
-
+Explains how to set up netbeans to display javadoc.
 
 = Details =
 
