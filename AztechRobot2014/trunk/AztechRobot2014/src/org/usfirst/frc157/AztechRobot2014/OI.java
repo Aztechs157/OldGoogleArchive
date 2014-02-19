@@ -235,7 +235,7 @@ public class OI {
 
         //coDriverButtonA.whileHeld(new MoveBallRetriever(Robot.ballRetriever.getSpinRollerDirection()));
         //coDriverButtonA.whenReleased(new MoveBallRetriever(SpinRoller.ROLLER_STOP));
-        coDriverButtonA.whenPressed(new SpinRoller(SpinRoller.ROLLER_OUT));
+        coDriverButtonA.whenPressed(new SpinRoller(SpinRoller.ROLLER_STOP));
         coDriverButtonB.whenPressed(new EjectBall());
         coDriverButtonX.whenPressed(new PickupBall());
         coDriverButtonY.whenPressed(new LoaderNeutral());
