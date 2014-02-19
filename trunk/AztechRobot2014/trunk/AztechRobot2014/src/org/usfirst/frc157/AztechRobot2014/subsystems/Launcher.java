@@ -30,6 +30,11 @@ public class Launcher extends Subsystem {
     Solenoid clutchRelease;
     Solenoid clutchEngage;
 
+    public Talon getCockingMotor()
+    {
+        return launchMotor;
+    }
+    
     public Launcher() {
 
         System.out.println("== Initializing Shooter ==");
@@ -51,6 +56,7 @@ public class Launcher extends Subsystem {
         LiveWindow.addSensor("Launcher", "Limit Switch 1", releaseSwitch);
 
         launchMotor = new Talon(RobotMap.PWN_Launcher);
+        launchMotor.stopMotor();
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -80,15 +86,15 @@ public class Launcher extends Subsystem {
     public void cock(boolean rewind) {
 
         if (rewind) {
-            launchMotor.set(1);
+            launchMotor.set(-0.5);
         } else {
-            launchMotor.set(0);
+            launchMotor.stopMotor();
         }
 
     }
 
     public boolean isCocked() {
-        return releaseSwitch.get();        
+        return !releaseSwitch.get();
     }
 
     public void initDefaultCommand() {
