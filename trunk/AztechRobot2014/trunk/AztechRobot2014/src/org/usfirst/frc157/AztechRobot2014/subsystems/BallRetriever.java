@@ -33,20 +33,19 @@ public class BallRetriever extends Subsystem {
     private CANJaguar jag;
     private Talon talon;
     //Potentiometer angle / voltage constants
-    private static double X1 = 45;     //Angle Down - TODO
-    private static double X2 = 90;    //Angle Up - TODO
-    private static double Y1 = 0.75;      //Voltage Down - TODO
-    private static double Y2 = 0.5;      //Voltage Up - TODO
+    private static double X1 = 45;     //Angle Down
+    private static double X2 = 90;    //Angle Up
+    private static double Y1 = 0.75;      //Voltage Down
+    private static double Y2 = 0.5;      //Voltage Up
     private static double slope;
     //Jag PID
-    public static double PID_P = 300;   //TODO
-    public static double PID_I = 0.2;     //TODO
-    public static double PID_D = 10;     //TODO
+    public static double PID_P = 300;   
+    public static double PID_I = 0.2;     
+    public static double PID_D = 10;     
     // positional setpoint voltages
-    public final static double Load = 0.75;
-    public final static double Neutral = 0.50;
-    public final static double Eject = 0.41;
-    public double lastSetAngle = 90;
+    public final static double Load = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_OUT);
+    public final static double Neutral = 0.50;      //CHANGE THIS
+    public final static double Eject = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_IN);
 
     public BallRetriever() {
         System.out.println("BallRetriever");
@@ -80,7 +79,7 @@ public class BallRetriever extends Subsystem {
             double position = jag.getPosition();
             System.out.println("Jaguar thinks position is " + position);
             double voltage = jag.getOutputVoltage();
-            System.out.println("Jaguar toutput voltage is " + voltage);
+            System.out.println("Jaguar output voltage is " + voltage);
             double pid_P = jag.getP();
             double pid_I = jag.getI();
             double pid_D = jag.getD();
@@ -163,7 +162,6 @@ public class BallRetriever extends Subsystem {
                     jag.setX(voltage);
                     SmartDashboard.putNumber("Desired Pot Voltage", voltage);
                     System.out.println("Desired Pot Voltage Set to " + voltage);
-                    lastSetAngle = convertVoltageToAngle(voltage);
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Failed to set setpoint voltage");
@@ -198,7 +196,6 @@ public class BallRetriever extends Subsystem {
                     SmartDashboard.putNumber("Desired Angle", angle);
                     SmartDashboard.putNumber("Desired Voltage", voltageToSet);
                     System.out.println("Angle Set to " + angle);
-                    lastSetAngle = angle;
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Failed to set angle from potentiometer");
@@ -262,9 +259,9 @@ public class BallRetriever extends Subsystem {
 /*
     public int getSpinRollerDirection() {
         int rollerDirection;
-        if (lastSetAngle == MoveBallRetriever.RETRIEVER_OUT) {
+        if (jag.getX() == MoveBallRetriever.RETRIEVER_OUT) {
             rollerDirection = SpinRoller.ROLLER_IN;
-        } else if (lastSetAngle == MoveBallRetriever.RETRIEVER_IN) {
+        } else if (jag.getX() == MoveBallRetriever.RETRIEVER_IN) {
             rollerDirection = SpinRoller.ROLLER_OUT;
         } else {
             rollerDirection = SpinRoller.ROLLER_STOP;
