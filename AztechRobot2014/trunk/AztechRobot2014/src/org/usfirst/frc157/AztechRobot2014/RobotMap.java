@@ -52,14 +52,14 @@ public class RobotMap {
     // Jaguar IDs
     public static int JAGID_Retriever = 5;
     
-    //PWM
+    //PWM Motor Port
     public static final int PWM_RetrieverTalon = 10;
     
     //=====================================================================
     // Launcher Constants
     //=====================================================================
-    // Jaguar IDs
-    public static int JAGID_Launcher = 3;
+    // PWM Motor Port
+    public static int PWN_Launcher = 3;
 
     // Limit Switches
     public static int DIGITAL_PORT_ReleaseSwitch = 1;
