@@ -229,7 +229,7 @@ public class OI {
         coDriverButtonGameRight = new LogitechControllerButton(coDriver, LogitechController.ButtonType.kButtonGameRight.value);       // Game Pad Right
 
         coDriverButtonLeftB.whenPressed(new SensorAlignToWall());
-//        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(3.0));
+        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(1.0));
         coDriverButtonLeftTrigger.whenPressed(new TwiddleLaunchMotor());
         coDriverButtonRightTrigger.whenPressed(new Launch());
 
