@@ -27,7 +27,9 @@ public class DriveToRange extends Command {
         requires(Robot.drive);
         // eg. requires(chassis);
 
-        desiredRange = _desiredRange;
+        desiredRange = 100 * _desiredRange;
+        
+        // set motors to brake mode
     }
 
     // Called just before this Command runs the first time
@@ -38,10 +40,11 @@ public class DriveToRange extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         double range = getRangeToWall();
-        double drive = (1.1 * range) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
+        double rangeDelta = desiredRange - range;
+        double drive = (10 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
         Robot.drive.tankDrive(drive, drive);
 
-        System.out.println("R= " + range + "  d= " + drive);
+        System.out.println("T= " + desiredRange + "R= " + range + "  d= " + drive);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -58,11 +61,14 @@ public class DriveToRange extends Command {
 // Called once after isFinished returns true
     protected void end() {
         Robot.drive.tankDrive(0, 0);
+        
+        // set motors to coast mode
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        // set motors to coast mode
     }
 
     public double getRangeToWall() {
