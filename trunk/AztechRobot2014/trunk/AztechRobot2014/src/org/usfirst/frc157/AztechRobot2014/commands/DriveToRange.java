@@ -39,8 +39,9 @@ public class DriveToRange extends Command {
     protected void execute() {
         double range = getRangeToWall();
         double drive = (1.1 * range) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
-        Robot.drive.tankDrive(range, range);
+        Robot.drive.tankDrive(drive, drive);
 
+        System.out.println("R= " + range + "  d= " + drive);
     }
 
     // Make this return true when this Command no longer needs to run execute()

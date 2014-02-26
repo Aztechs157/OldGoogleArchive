@@ -39,9 +39,9 @@ public class BallRetriever extends Subsystem {
     private static double Y2 = 0.5;      //Voltage Up
     private static double slope;
     //Jag PID
-    public static double PID_P = 300;   
-    public static double PID_I = 0.2;     
-    public static double PID_D = 10;     
+    public static double PID_P = 300;
+    public static double PID_I = 0.2;
+    public static double PID_D = 10;
     // positional setpoint voltages
     public final static double Load = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_OUT);
     public final static double Neutral = 0.50;      //CHANGE THIS
@@ -107,16 +107,18 @@ public class BallRetriever extends Subsystem {
         boolean failed = true;
         int tries = 0;
         do {
-            try {
-                jag.setVoltageRampRate(0.2);
+            if (null != jag) {
+                try {
+                    jag.setVoltageRampRate(0.2);
 //                jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-                jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-                jag.changeControlMode(CANJaguar.ControlMode.kPosition);
-                jag.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-                jag.enableControl();
-                failed = false;
-            } catch (CANTimeoutException ex) {
-                System.out.println("FAIL " + tries + " - Instantiating BallRetriever JAG ");
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+                    jag.changeControlMode(CANJaguar.ControlMode.kPosition);
+                    jag.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+                    jag.enableControl();
+                    failed = false;
+                } catch (CANTimeoutException ex) {
+                    System.out.println("FAIL " + tries + " - Instantiating BallRetriever JAG ");
+                }
             }
         } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
     }
@@ -256,17 +258,17 @@ public class BallRetriever extends Subsystem {
     public static double convertVoltageToAngle(double voltage) {
         return (voltage - Y1 + slope * X1) / slope;
     }
-/*
-    public int getSpinRollerDirection() {
-        int rollerDirection;
-        if (jag.getX() == MoveBallRetriever.RETRIEVER_OUT) {
-            rollerDirection = SpinRoller.ROLLER_IN;
-        } else if (jag.getX() == MoveBallRetriever.RETRIEVER_IN) {
-            rollerDirection = SpinRoller.ROLLER_OUT;
-        } else {
-            rollerDirection = SpinRoller.ROLLER_STOP;
-        }
-        System.out.println(rollerDirection);
-        return rollerDirection;
-    }*/
+    /*
+     public int getSpinRollerDirection() {
+     int rollerDirection;
+     if (jag.getX() == MoveBallRetriever.RETRIEVER_OUT) {
+     rollerDirection = SpinRoller.ROLLER_IN;
+     } else if (jag.getX() == MoveBallRetriever.RETRIEVER_IN) {
+     rollerDirection = SpinRoller.ROLLER_OUT;
+     } else {
+     rollerDirection = SpinRoller.ROLLER_STOP;
+     }
+     System.out.println(rollerDirection);
+     return rollerDirection;
+     }*/
 }

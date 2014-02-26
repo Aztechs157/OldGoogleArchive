@@ -36,8 +36,8 @@ public class SensorAlignToWall extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         double turnNeeded = getTurnNeeded();
-        double drive = turnNeeded / 2;
-        Robot.drive.tankDrive(drive, -drive);
+        double drive = turnNeeded * 2;
+        Robot.drive.tankDrive(-drive, drive);
 
     }
 
