@@ -23,7 +23,7 @@ public class SensorAlignToWall extends Command {
     private final double maxAlignmentTime = 20.0;
 
     private double error = 0;
-    
+
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -34,6 +34,7 @@ public class SensorAlignToWall extends Command {
     protected void initialize() {
         stopTime = Timer.getFPGATimestamp() + maxAlignmentTime;
         error = 0;
+        Robot.drive.setTerminateAutoCommands(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -51,9 +52,17 @@ public class SensorAlignToWall extends Command {
     protected boolean isFinished() {
         double turnNeeded = getTurnNeeded();
         turnNeeded = Math.abs(turnNeeded);
-        return ((turnNeeded < MinTurnNeeded) || (Timer.getFPGATimestamp() > stopTime));
+        if (turnNeeded < MinTurnNeeded) {
+            return true;
+        } else if (Timer.getFPGATimestamp() > stopTime) {
+            return true;
+        } else if (Robot.drive.terminateAutoCommands() == true) {
+            return true;
+        } else {
+            return false;
+        }
+            
     }
-
     // Called once after isFinished returns true
     protected void end() {
         Robot.drive.tankDrive(0, 0); // stop the robot
