@@ -108,7 +108,7 @@ public class Drive extends Subsystem {
         setupJagForVoltageControl(driveRL);
         setupJagForVoltageControl(driveFR);
         setupJagForVoltageControl(driveRR);
-                
+
         tries = 0;
         failed = false;
         do {
@@ -196,6 +196,54 @@ public class Drive extends Subsystem {
                 } catch (CANTimeoutException ex) {
                     failed = true;
                     System.out.println("Exception " + tries + " while configuring speed");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+//            jag.setScalingFactor(100);
+        }
+    }
+
+    public static void setBrakeMode() {
+        setupJagForBrake(driveFL);
+        setupJagForBrake(driveRL);
+        setupJagForBrake(driveFR);
+        setupJagForBrake(driveRR);
+    }
+
+       public static void setCoastMode() {
+        setupJagForCoast(driveFL);
+        setupJagForCoast(driveRL);
+        setupJagForCoast(driveFR);
+        setupJagForCoast(driveRR);
+    }
+
+    private static void setupJagForCoast(ScaledCANJaguar jag) {
+        if (jag != null) {
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    jag.setVoltageRampRate(0.02);
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while configuring coast");
+                }
+            } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
+//            jag.setScalingFactor(100);
+        }
+    }
+
+    private static void setupJagForBrake(ScaledCANJaguar jag) {
+        if (jag != null) {
+            int tries = 0;
+            boolean failed = false;
+            do {
+                try {
+                    jag.setVoltageRampRate(0.02);
+                    jag.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+                } catch (CANTimeoutException ex) {
+                    failed = true;
+                    System.out.println("Exception " + tries + " while configuring coast");
                 }
             } while (failed && (tries++ < RobotMap.m_kMaxCANRetries));
 //            jag.setScalingFactor(100);
@@ -295,7 +343,7 @@ public class Drive extends Subsystem {
 //            System.out.println("tank Drive Timeout");
 //            ex.printStackTrace();
         }
- 
+
     }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation) {
