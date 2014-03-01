@@ -20,12 +20,11 @@ public class SensorAlignToWall extends Command {
     private final static double MinTurnNeeded = 0.1;
 
     private double stopTime;
-    private final double maxAlignmentTime = 2.0;
+    private final double maxAlignmentTime = 20.0;
 
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
