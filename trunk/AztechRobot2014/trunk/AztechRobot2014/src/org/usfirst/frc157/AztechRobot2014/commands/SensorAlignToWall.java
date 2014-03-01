@@ -22,6 +22,8 @@ public class SensorAlignToWall extends Command {
     private double stopTime;
     private final double maxAlignmentTime = 20.0;
 
+    private double error = 0;
+
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -30,12 +32,16 @@ public class SensorAlignToWall extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         stopTime = Timer.getFPGATimestamp() + maxAlignmentTime;
+        error = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         double turnNeeded = getTurnNeeded();
-        double drive = turnNeeded * 2;
+
+        error = 0.1 * turnNeeded + error;
+
+        double drive = turnNeeded * 2 + error;
         Robot.drive.tankDrive(-drive, drive);
 
     }
@@ -66,10 +72,10 @@ public class SensorAlignToWall extends Command {
         double rightRange = Robot.sensor.getLongRangeIRDistanceRight();
         double deltaRange = leftRange - rightRange;
 
-        SmartDashboard.putNumber("Left",  leftRange);
+        SmartDashboard.putNumber("Left", leftRange);
         SmartDashboard.putNumber("Right", rightRange);
         SmartDashboard.putNumber("Delta", deltaRange);
-        
+
         while (deltaRange > RobotWidth) {
             leftRange = Robot.sensor.getLongRangeIRDistanceLeft();
             rightRange = Robot.sensor.getLongRangeIRDistanceRight();
