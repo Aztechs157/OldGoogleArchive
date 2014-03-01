@@ -6,8 +6,10 @@
 package org.usfirst.frc157.AztechRobot2014.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.AztechRobot2014.InfraredRangeSensor;
 import org.usfirst.frc157.AztechRobot2014.RangeSensor;
+import org.usfirst.frc157.AztechRobot2014.Robot;
 import org.usfirst.frc157.AztechRobot2014.RobotMap;
 import org.usfirst.frc157.AztechRobot2014.UltrasonicRangeSensor;
 
@@ -76,6 +78,7 @@ public class Sensor extends Subsystem {
     public RangeSensor getLongRangeIRSensorLeft() {
         return longIRLeft;
     }
+
     public RangeSensor getLongRangeIRSensorRight() {
         return longIRRight;
     }
@@ -83,14 +86,28 @@ public class Sensor extends Subsystem {
     public double getLongRangeIRDistanceLeft() {
         return longIRLeft.getRange();
     }
+
     public double getLongRangeIRDistanceRight() {
         return longIRRight.getRange();
     }
 
-   public RangeSensor getUltrasonicSensor1() {
-       return ultrasonic;
-   }
+    public RangeSensor getUltrasonicSensor1() {
+        return ultrasonic;
+    }
+
     public double getUltrasonicDistance1() {
         return ultrasonic.getRange();
+    }
+
+    public void sensorRangesToSmartDashboard() {
+        double range = Robot.sensor.getUltrasonicDistance1();
+        SmartDashboard.putNumber("Ultrasonic Range", range);
+        double leftRange = Robot.sensor.getLongRangeIRDistanceLeft();
+        double rightRange = Robot.sensor.getLongRangeIRDistanceRight();
+        double deltaRange = leftRange - rightRange;
+        SmartDashboard.putNumber("Left", leftRange);
+        SmartDashboard.putNumber("Right", rightRange);
+        SmartDashboard.putNumber("Delta", deltaRange);
+
     }
 }
