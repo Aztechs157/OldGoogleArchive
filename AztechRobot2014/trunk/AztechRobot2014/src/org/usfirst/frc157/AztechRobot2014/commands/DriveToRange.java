@@ -22,6 +22,8 @@ public class DriveToRange extends Command {
     private double stopTime;
     private final double maxAlignmentTime = 20.0;
 
+    private double error = 0;
+    
     public DriveToRange(double _desiredRange) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -37,13 +39,16 @@ public class DriveToRange extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         stopTime = Timer.getFPGATimestamp() + maxAlignmentTime;
+        error = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         double range = getRangeToWall();
         double rangeDelta = desiredRange - range;
-        double drive = (5 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
+        error = 0.1 * rangeDelta + error;
+        
+        double drive = error + (5 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
         Robot.drive.tankDrive(drive, drive);
 
         System.out.println("T= " + desiredRange + "R= " + range + "  d= " + drive);
