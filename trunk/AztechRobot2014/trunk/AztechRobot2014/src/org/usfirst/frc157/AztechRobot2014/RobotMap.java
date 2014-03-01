@@ -84,10 +84,10 @@ public class RobotMap {
     //=====================================================================
     // Operator Interface Constants
     //=====================================================================
-    public static int CONTROLLERNUM_DriverLeft = 1;
-    public static int CONTROLLERNUM_DriverRight = 2;
-    public static int CONTROLLERNUM_Driver = 3;
-    public static int CONTROLLERNUM_CoDriver = 4;
+    public static int CONTROLLERNUM_CoDriver = 1;
+    public static int CONTROLLERNUM_DriverLeft = 2;
+    public static int CONTROLLERNUM_DriverRight = 3;
+    public static int CONTROLLERNUM_Driver = 4;
 
     //=====================================================================
     // Operator Interface Constants

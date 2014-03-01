@@ -148,7 +148,7 @@ public class OI {
         driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
         driverLeftButton6.whenPressed(new DebugPrint("driverLeftButton6 Pressed"));
         driverLeftButton7.whenPressed(new DebugPrint("driverLeftButton7 Pressed"));
-        driverLeftButton8.whenPressed(new DebugPrint("driverLeftButton8 Pressed"));
+        driverLeftButton8.whenPressed(new TerminateAutoDriveCommands());
         driverLeftButton9.whenPressed(new DebugPrint("driverLeftButton9 Pressed"));
         driverLeftButton10.whenPressed(new DebugPrint("driverLeftButton10 Pressed"));
         driverLeftButton11.whenPressed(new DebugPrint("driverLeftButton11 Pressed"));
@@ -165,7 +165,7 @@ public class OI {
         driverRightButton10 = new JoystickButton(driverRight, 10);      // Button 10 - Base Right Close
         driverRightButton11 = new JoystickButton(driverRight, 11);      // Button 11 - Base RIght Away
 
-        driverRightButtonTrigger.whenPressed(new DriveToRange(1.0));
+        driverRightButtonTrigger.whenPressed(new DriveToRange(2.0));
         driverRightButton2.whenPressed(new DebugPrint("driverRightButton2 Pressed"));
         driverRightButton3.whenPressed(new DebugPrint("driverRightButton3 Pressed"));
         driverRightButton4.whenPressed(new DebugPrint("driverRightButton4 Pressed"));
@@ -203,7 +203,7 @@ public class OI {
         driverButtonX.whenPressed(new DebugPrint("driverButtonX Pressed"));
         driverButtonY.whenPressed(new DebugPrint("driverButtonY Pressed"));
         driverButtonStart.whenPressed(new DebugPrint("driverButtonStart Pressed"));
-        driverButtonBack.whenPressed(new DebugPrint("driverButtonBack Pressed"));
+        driverButtonBack.whenPressed(new TerminateAutoDriveCommands());
         driverButtonLeftTrigger.whenPressed(new DebugPrint("driverButtonLeftTrigger Pressed"));
         driverButtonRightTrigger.whenPressed(new DebugPrint("driverButtonRightTrigger Pressed"));
         driverButtonGameUp.whenPressed(new DebugPrint("driverButtonGameUp Pressed"));
@@ -246,7 +246,7 @@ public class OI {
         coDriverButtonRightB.whenPressed(new DebugPrint("coDriverButtonRightB Pressed"));
         coDriverButtonLeftTop.whenPressed(new DebugPrint("coDriverButtonLeftTop Pressed"));
         coDriverButtonRightTop.whenPressed(new DebugPrint("coDriverButtonRightTop Pressed"));
-        coDriverButtonBack.whenPressed(new DebugPrint("coDriverButtonBack Pressed"));
+        coDriverButtonBack.whenPressed(new TerminateAutoDriveCommands());
         
         coDriverButtonGameUp.whenPressed(new DebugPrint("coDriverButtonGameUp Pressed"));  //Not Working
         coDriverButtonGameDown.whenPressed(new DebugPrint("coDriverButtonGameDown Pressed")); // Likely not working
