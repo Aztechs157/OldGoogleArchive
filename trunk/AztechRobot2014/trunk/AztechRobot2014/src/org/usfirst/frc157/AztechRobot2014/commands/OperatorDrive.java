@@ -74,14 +74,7 @@ public class OperatorDrive extends Command {
 
         Robot.drive.tankDrive(left, right);
 
-        double range = Robot.sensor.getUltrasonicDistance1();
-        SmartDashboard.putNumber("Ultrasonic Range", range);
-        double leftRange = Robot.sensor.getLongRangeIRDistanceLeft();
-        double rightRange = Robot.sensor.getLongRangeIRDistanceRight();
-        double deltaRange = leftRange - rightRange;
-        SmartDashboard.putNumber("Left",  leftRange);
-        SmartDashboard.putNumber("Right", rightRange);
-        SmartDashboard.putNumber("Delta", deltaRange);
+        Robot.sensor.sensorRangesToSmartDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()

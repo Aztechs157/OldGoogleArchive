@@ -17,16 +17,17 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
 public class SensorAlignToWall extends Command {
 
     private final static double RobotWidth = 60;
-    private final static double MinTurnNeeded = 0.1;
+    private final static double MinTurnNeeded = 0.03;
 
     private double stopTime;
     private final double maxAlignmentTime = 20.0;
 
     private double error = 0;
-
+    
     public SensorAlignToWall() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
+        setInterruptible(true);
     }
 
     // Called just before this Command runs the first time
@@ -39,11 +40,11 @@ public class SensorAlignToWall extends Command {
     protected void execute() {
         double turnNeeded = getTurnNeeded();
 
-        error = 0.1 * turnNeeded + error;
+        error = 0.2 * turnNeeded + error;
 
         double drive = turnNeeded * 2 + error;
         Robot.drive.tankDrive(-drive, drive);
-
+        Robot.sensor.sensorRangesToSmartDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()
