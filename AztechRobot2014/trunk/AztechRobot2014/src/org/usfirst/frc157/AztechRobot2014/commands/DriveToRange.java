@@ -49,6 +49,7 @@ public class DriveToRange extends Command {
         error = 0;
         controlFinishTime = 0;
         index = 0;
+        Robot.drive.setTerminateAutoCommands(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -97,6 +98,8 @@ public class DriveToRange extends Command {
         if ((controlFinishTime != 0) && (Timer.getFPGATimestamp() > (controlFinishTime + BrakeTime))) {
             return true;
         } else if (Timer.getFPGATimestamp() > stopTime) {
+            return true;
+        } else if (Robot.drive.terminateAutoCommands() == true) {
             return true;
         } else {
             return false;
