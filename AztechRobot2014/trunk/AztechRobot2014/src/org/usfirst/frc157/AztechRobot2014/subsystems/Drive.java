@@ -204,14 +204,14 @@ public class Drive extends Subsystem {
         }
     }
 
-    public static void setBrakeMode() {
+    public void setBrakeMode() {
         setupJagForBrake(driveFL);
         setupJagForBrake(driveRL);
         setupJagForBrake(driveFR);
         setupJagForBrake(driveRR);
     }
 
-    public static void setCoastMode() {
+    public void setCoastMode() {
         setupJagForCoast(driveFL);
         setupJagForCoast(driveRL);
         setupJagForCoast(driveFR);
