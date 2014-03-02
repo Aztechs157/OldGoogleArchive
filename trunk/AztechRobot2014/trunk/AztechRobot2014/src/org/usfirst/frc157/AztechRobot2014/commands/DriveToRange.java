@@ -68,11 +68,11 @@ public class DriveToRange extends Command {
             if (drive > 0.6) {
                 drive = 0.6;
                 error = 0;
-            };
+            }
             if (drive < -0.6) {
                 drive = -0.6;
                 error = 0;
-            };
+            }
 
             Robot.drive.tankDrive(drive, drive);
 
