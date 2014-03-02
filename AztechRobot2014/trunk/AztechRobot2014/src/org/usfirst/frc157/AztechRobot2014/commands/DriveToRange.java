@@ -7,6 +7,7 @@ package org.usfirst.frc157.AztechRobot2014.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc157.AztechRobot2014.Robot;
 
 /**
@@ -50,6 +51,7 @@ public class DriveToRange extends Command {
         controlFinishTime = 0;
         index = 0;
         Robot.drive.setTerminateAutoCommands(false);
+        SmartDashboard.putBoolean("At Optimum Range", false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -81,11 +83,12 @@ public class DriveToRange extends Command {
             for (int idx = 0; idx < NumSamples; idx++) {
                 dRS_sum += dR_squared[idx];
             }
-            System.out.println(controlFinishTime + " dRSs= " + dRS_sum + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
+//            System.out.println(controlFinishTime + " dRSs= " + dRS_sum + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
             if (dRS_sum < 20) {
                 // done with control
+                SmartDashboard.putBoolean("At Optimum Range", true);
                 System.out.println("Range to Wall - Close Enough @ " + (Math.abs(getRangeToWall() - desiredRange)));
-                System.out.println("loop done at " + Timer.getFPGATimestamp());
+//                System.out.println("loop done at " + Timer.getFPGATimestamp());
                 controlFinishTime = Timer.getFPGATimestamp();
                 Robot.drive.tankDrive(0, 0);
             }
@@ -111,7 +114,7 @@ public class DriveToRange extends Command {
         Robot.drive.tankDrive(0, 0);
         // set motors to coast mode
         Robot.drive.setCoastMode();
-        System.out.println("ending at " + Timer.getFPGATimestamp());
+//        System.out.println("ending at " + Timer.getFPGATimestamp());
     }
 
     // Called when another command which requires one or more of the same
@@ -119,7 +122,7 @@ public class DriveToRange extends Command {
     protected void interrupted() {
         // set motors to coast mode
         Robot.drive.setCoastMode();
-        System.out.println("interrupting at " + Timer.getFPGATimestamp());
+//        System.out.println("interrupting at " + Timer.getFPGATimestamp());
     }
 
     public double getRangeToWall() {

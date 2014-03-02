@@ -165,7 +165,7 @@ public class OI {
         driverRightButton10 = new JoystickButton(driverRight, 10);      // Button 10 - Base Right Close
         driverRightButton11 = new JoystickButton(driverRight, 11);      // Button 11 - Base RIght Away
 
-        driverRightButtonTrigger.whenPressed(new DriveToRange(2.0));
+        driverRightButtonTrigger.whenPressed(new DriveToRange(RobotMap.Optimum_Shot_Range));
         driverRightButton2.whenPressed(new DebugPrint("driverRightButton2 Pressed"));
         driverRightButton3.whenPressed(new DebugPrint("driverRightButton3 Pressed"));
         driverRightButton4.whenPressed(new DebugPrint("driverRightButton4 Pressed"));
@@ -195,7 +195,7 @@ public class OI {
         driverButtonGameRight = new LogitechControllerButton(driver, LogitechController.ButtonType.kButtonGameRight.value);       // Game Pad Right
 
         driverButtonLeftB.whenPressed(new SensorAlignToWall());
-        driverButtonRightB.whenPressed(new DriveToRange(1.0));
+        driverButtonRightB.whenPressed(new DriveToRange(RobotMap.Optimum_Shot_Range));
         driverButtonLeftTop.whenPressed(new DebugPrint("driverButtonLeftTop Pressed"));
         driverButtonRightTop.whenPressed(new DebugPrint("driverButtonRightTop Pressed"));
         driverButtonA.whenPressed(new DebugPrint("driverButtonA Pressed"));
@@ -229,7 +229,7 @@ public class OI {
         coDriverButtonGameRight = new LogitechControllerButton(coDriver, LogitechController.ButtonType.kButtonGameRight.value);       // Game Pad Right
 
         coDriverButtonLeftB.whenPressed(new SensorAlignToWall());
-        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(1.0));
+        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(RobotMap.Optimum_Shot_Range));
 //        coDriverButtonLeftTrigger.whenPressed(new TwiddleLaunchMotor());
         coDriverButtonRightTrigger.whenPressed(new Launch());
 

@@ -35,6 +35,8 @@ public class SensorAlignToWall extends Command {
         stopTime = Timer.getFPGATimestamp() + maxAlignmentTime;
         error = 0;
         Robot.drive.setTerminateAutoCommands(false);
+        SmartDashboard.putBoolean("Aligned To Wall", false);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -53,6 +55,7 @@ public class SensorAlignToWall extends Command {
         double turnNeeded = getTurnNeeded();
         turnNeeded = Math.abs(turnNeeded);
         if (turnNeeded < MinTurnNeeded) {
+            SmartDashboard.putBoolean("Aligned To Wall", true);
             return true;
         } else if (Timer.getFPGATimestamp() > stopTime) {
             return true;
@@ -61,8 +64,9 @@ public class SensorAlignToWall extends Command {
         } else {
             return false;
         }
-            
+
     }
+
     // Called once after isFinished returns true
     protected void end() {
         Robot.drive.tankDrive(0, 0); // stop the robot
