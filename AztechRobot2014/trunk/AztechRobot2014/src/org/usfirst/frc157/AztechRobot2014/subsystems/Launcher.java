@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -94,7 +95,9 @@ public class Launcher extends Subsystem {
     }
 
     public boolean isCocked() {
-        return !releaseSwitch.get();
+        boolean cocked = !releaseSwitch.get();
+        SmartDashboard.putBoolean("Launcher Ready", cocked);
+        return cocked;
     }
 
     public void initDefaultCommand() {
