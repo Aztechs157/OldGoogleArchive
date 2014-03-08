@@ -39,6 +39,9 @@ public class  DebugPrint extends Command {
         System.out.println(printString);
 //        Robot.ballRetriever.pokeAtJaguar();
         System.out.println("Switch is " + (Robot.launcher.isCocked() ? "pressed" : "released"));
+        System.out.print("S ");
+        Robot.sensor.sensorRangesToSmartDashboard();
+        System.out.println("R v" + Robot.ballRetriever.getVoltage() + " a" + Robot.ballRetriever.getAngle());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -21,7 +21,7 @@ public class Launch extends Command {
 
     public Launch() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.launcher);
     }
 
     // Called just before this Command runs the first time
@@ -37,7 +37,7 @@ public class Launch extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (readyToLaunch) {
-            System.out.println("LAUNCH Ready To Launch");
+//            System.out.println("LAUNCH Ready To Launch");
             Robot.launcher.disengageClutch();
             launchTime = Timer.getFPGATimestamp();
 
@@ -59,6 +59,7 @@ public class Launch extends Command {
                 Robot.launcher.cock(true);
             } else {
                 Robot.launcher.cock(false);
+                System.out.println(" - COCKED");
                 finshed = true;
             }
         }
@@ -71,6 +72,7 @@ public class Launch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        System.out.println("Launch Complete");
     }
 
     // Called when another command which requires one or more of the same

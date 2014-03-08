@@ -108,6 +108,6 @@ public class Sensor extends Subsystem {
         SmartDashboard.putNumber("Left", leftRange);
         SmartDashboard.putNumber("Right", rightRange);
         SmartDashboard.putNumber("Delta", deltaRange);
-
+//        System.out.println("u" + range + " l" + leftRange + " r" + rightRange);
     }
 }
