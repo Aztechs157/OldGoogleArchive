@@ -20,7 +20,7 @@ public class TwiddleLaunchMotor extends Command {
 
     public TwiddleLaunchMotor() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.launcher);
     }
 
     // Called just before this Command runs the first time
@@ -55,6 +55,7 @@ public class TwiddleLaunchMotor extends Command {
     // Called once after isFinished returns true
     protected void end() {
         Robot.launcher.getCockingMotor().stopMotor();
+        System.out.println("Twiddling Complete");
     }
 
     // Called when another command which requires one or more of the same

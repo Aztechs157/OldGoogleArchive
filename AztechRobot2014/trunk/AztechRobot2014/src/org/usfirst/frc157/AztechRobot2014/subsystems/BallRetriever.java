@@ -33,15 +33,15 @@ public class BallRetriever extends Subsystem {
     private CANJaguar jag;
     private Talon talon;
     //Potentiometer angle / voltage constants
-    private static double X1 = 45;     //Angle Down
-    private static double X2 = 90;    //Angle Up
-    private static double Y1 = 0.75;      //Voltage Down
-    private static double Y2 = 0.5;      //Voltage Up
+    private static double X1 = 0;     //Angle Down
+    private static double X2 = 104;    //Angle Up
+    private static double Y1 = 0.14;      //Voltage Down
+    private static double Y2 = 0.81;      //Voltage Up
     private static double slope;
     //Jag PID
-    public static double PID_P = 300;
-    public static double PID_I = 0.2;
-    public static double PID_D = 10;
+    public static double PID_P = -300;
+    public static double PID_I = -0.2;
+    public static double PID_D = -10;
     // positional setpoint voltages
     public final static double Load = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_OUT);
     public final static double Neutral = 0.50;      //CHANGE THIS
