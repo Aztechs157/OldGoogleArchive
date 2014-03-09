@@ -183,6 +183,16 @@ public class BallRetriever extends Subsystem {
          */
     }
 
+    public void jogSetpointVoltage(double vOffset)
+    {
+        
+        double currentVoltage = getVoltage();
+        double newVoltageSetpoint = currentVoltage + vOffset;        
+        setVoltageSetpoint(newVoltageSetpoint);
+        
+        System.out.println("JOG - from " + currentVoltage + " to " + newVoltageSetpoint);
+    }
+    
     public void setAngle(double angle) {
         System.out.println("setAngle (double angle)");
         updatePID();
