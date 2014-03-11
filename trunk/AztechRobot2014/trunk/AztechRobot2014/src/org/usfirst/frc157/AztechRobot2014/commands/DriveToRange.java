@@ -18,7 +18,7 @@ public class DriveToRange extends Command {
 
     private double desiredRange;
 
-    private static final double RangeTolerance = 5; //cm
+    private static final double RangeTolerance = 250; 
 
     private double stopTime;
     private final double maxAlignmentTime = 20.0;
@@ -65,7 +65,7 @@ public class DriveToRange extends Command {
 
             error = 0.005 * rangeDelta + error;
 
-            double drive = 0.05 * error + (4 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
+            double drive = 0.002 * error + (4 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
 
             if (drive > 0.6) {
                 drive = 0.6;
@@ -76,15 +76,15 @@ public class DriveToRange extends Command {
                 error = 0;
             }
 
-            Robot.drive.tankDrive(drive, drive);
+            Robot.drive.tankDrive(-drive, -drive);
 
 //            System.out.println(controlFinishTime + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
             double dRS_sum = 0;
             for (int idx = 0; idx < NumSamples; idx++) {
                 dRS_sum += dR_squared[idx];
             }
-//            System.out.println(controlFinishTime + " dRSs= " + dRS_sum + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
-            if (dRS_sum < 20) {
+            System.out.println(controlFinishTime + " dRSs= " + dRS_sum + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
+            if (dRS_sum < RangeTolerance) {
                 // done with control
                 SmartDashboard.putBoolean("At Optimum Range", true);
                 System.out.println("Range to Wall - Close Enough @ " + (Math.abs(getRangeToWall() - desiredRange)));

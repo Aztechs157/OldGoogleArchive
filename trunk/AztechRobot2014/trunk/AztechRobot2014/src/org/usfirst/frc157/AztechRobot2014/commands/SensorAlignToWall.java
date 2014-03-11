@@ -43,9 +43,9 @@ public class SensorAlignToWall extends Command {
     protected void execute() {
         double turnNeeded = getTurnNeeded();
 
-        error = 0.2 * turnNeeded + error;
+        error = 0.6 * turnNeeded + error;
 
-        double drive = turnNeeded * 2 + error;
+        double drive = turnNeeded * 4 + error;
         Robot.drive.tankDrive(-drive, drive);
         Robot.sensor.sensorRangesToSmartDashboard();
     }
