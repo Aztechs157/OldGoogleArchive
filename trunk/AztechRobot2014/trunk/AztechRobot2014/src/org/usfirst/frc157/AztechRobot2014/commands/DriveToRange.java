@@ -65,7 +65,7 @@ public class DriveToRange extends Command {
 
             error = 0.005 * rangeDelta + error;
 
-            double drive = 0.05 * error + (8 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
+            double drive = 0.05 * error + (4 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
 
             if (drive > 0.6) {
                 drive = 0.6;
