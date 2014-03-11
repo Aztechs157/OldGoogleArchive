@@ -229,8 +229,8 @@ public class OI {
         coDriverButtonGameRight = new LogitechControllerButton(coDriver, LogitechController.ButtonType.kButtonGameRight.value);       // Game Pad Right
 
         coDriverButtonLeftB.whenPressed(new SensorAlignToWall());
-//        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(RobotMap.Optimum_Shot_Range));
-        coDriverButtonLeftTrigger.whenPressed(new TwiddleLaunchMotor());
+        coDriverButtonLeftTrigger.whenPressed(new DriveToRange(RobotMap.Optimum_Shot_Range));
+        coDriverButtonRightB.whenPressed(new TwiddleLaunchMotor());
         coDriverButtonRightTrigger.whenPressed(new Launch());
 
         //coDriverButtonA.whileHeld(new MoveBallRetriever(Robot.ballRetriever.getSpinRollerDirection()));

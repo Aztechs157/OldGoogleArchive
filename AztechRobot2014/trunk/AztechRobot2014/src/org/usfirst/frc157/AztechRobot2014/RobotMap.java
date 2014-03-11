@@ -40,10 +40,10 @@ public class RobotMap {
     public static final double SpeedScale = 1;
 
     // Jaguar IDs
-    public static int JAGID_FrontLeft = 7;
-    public static int JAGID_FrontRight = 6;
-    public static int JAGID_RearLeft = 4;
-    public static int JAGID_RearRight = 2;
+    public static int JAGID_FrontLeft = 2;
+    public static int JAGID_FrontRight = 4;
+    public static int JAGID_RearLeft = 6;
+    public static int JAGID_RearRight = 7;
 
     //=====================================================================
     // Retriever Constants
