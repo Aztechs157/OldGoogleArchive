@@ -18,6 +18,7 @@ public class Launch extends Command {
     boolean readyToLaunch = false;
     boolean finshed = false;
     private double launchTime = 0;
+    private double commandStartTime = 0;
 
     public Launch() {
         // Use requires() here to declare subsystem dependencies
@@ -28,36 +29,28 @@ public class Launch extends Command {
     protected void initialize() {
         System.out.println("LAUNCH Init");
         if (Robot.launcher.isCocked() == false) {
+            System.out.println("Recock");
             readyToLaunch = false;
+            // need to cock so do so
+            Robot.launcher.engageClutch();
+            Robot.launcher.cock(true);
+            finshed = false;
         } else {
+            System.out.println("FIRE");
             readyToLaunch = true;
+            // ready to launch, so do so
+            Robot.launcher.disengageClutch();
+            finshed = true;
         }
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (readyToLaunch) {
-//            System.out.println("LAUNCH Ready To Launch");
-            Robot.launcher.disengageClutch();
-            launchTime = Timer.getFPGATimestamp();
-
-            if ((Timer.getFPGATimestamp() - launchTime) > 0.5) {
-                if (Robot.launcher.isCocked() == false) {
-                    System.out.println(" - Cock");
-                    Robot.launcher.engageClutch();
-                    Robot.launcher.cock(true);
-                } else {
-                    Robot.launcher.cock(false);
-                    System.out.println(" - LOCKED");
-                    finshed = true;
-                }
-            }
+            System.out.println("Launched");
         } else {
             System.out.println("LAUNCH Recocking");
-            if (Robot.launcher.isCocked() == false) {
-                Robot.launcher.engageClutch();
-                Robot.launcher.cock(true);
-            } else {
+            if (Robot.launcher.isCocked() == true) {
                 Robot.launcher.cock(false);
                 System.out.println(" - COCKED");
                 finshed = true;
@@ -67,12 +60,20 @@ public class Launch extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return finshed;
+//        System.out.println("cst" + commandStartTime + " n" + Timer.getFPGATimestamp());
+//        if((commandStartTime + 15) >  Timer.getFPGATimestamp())
+//        {
+//            System.out.println("Shot Timeout");
+//            return true;
+//        }
+        return (finshed);
     }
 
     // Called once after isFinished returns true
     protected void end() {
         System.out.println("Launch Complete");
+//        Robot.launcher.cock(false);
+
     }
 
     // Called when another command which requires one or more of the same
