@@ -13,7 +13,7 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
  * @author mattkahn
  */
 public class TerminateAutoDriveCommands extends Command {
-    
+
     public TerminateAutoDriveCommands() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,6 +22,8 @@ public class TerminateAutoDriveCommands extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.drive.setTerminateAutoCommands(true);
+        Launch.terminateCommand();  // also stop the launcher
+
     }
 
     // Called repeatedly when this Command is scheduled to run

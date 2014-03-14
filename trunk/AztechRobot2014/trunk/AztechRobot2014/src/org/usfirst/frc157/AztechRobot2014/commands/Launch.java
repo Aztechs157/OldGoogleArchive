@@ -15,6 +15,8 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
  */
 public class Launch extends Command {
 
+    private static boolean terminateCommand = false;
+
     boolean readyToLaunch = false;
     boolean finshed = false;
     private double launchTime = 0;
@@ -25,8 +27,13 @@ public class Launch extends Command {
         requires(Robot.launcher);
     }
 
+    public static void terminateCommand() {
+        terminateCommand = true;
+    }
+
     // Called just before this Command runs the first time
     protected void initialize() {
+        terminateCommand = false;
         System.out.println("LAUNCH Init");
         if (Robot.launcher.isCocked() == false) {
             System.out.println("Recock");
@@ -66,14 +73,15 @@ public class Launch extends Command {
 //            System.out.println("Shot Timeout");
 //            return true;
 //        }
-        return (finshed);
+        return (finshed || terminateCommand);
     }
 
     // Called once after isFinished returns true
     protected void end() {
         System.out.println("Launch Complete");
-//        Robot.launcher.cock(false);
-
+        if (terminateCommand) {
+            Robot.launcher.cock(false);
+        }
     }
 
     // Called when another command which requires one or more of the same

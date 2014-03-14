@@ -15,7 +15,7 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
  */
 public class TwiddleLaunchMotor extends Command {
 
-    private double commandTime;
+    private int iterations = 0;
     private boolean finished = false;
 
     public TwiddleLaunchMotor() {
@@ -25,25 +25,27 @@ public class TwiddleLaunchMotor extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        commandTime = Timer.getFPGATimestamp();
+        iterations = 0;
+        Launch.terminateCommand();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double now = Timer.getFPGATimestamp() - commandTime;
 
-        int msNow = (int) (500.0 * now);
+        iterations++;
 
-        if (msNow % 2 == 0) {
-            System.out.println("FW - @" + now);
-            Robot.launcher.getCockingMotor().set(0.5);
-        } else {
-            System.out.println("Rv - @" + now);
-            Robot.launcher.getCockingMotor().set(-0.5);
+        if ((iterations % 10) == 0) {
+            if ((int) ((double) iterations / 10.0) % 2 == 0) {
+                System.out.println("FW - @" + iterations);
+                Robot.launcher.getCockingMotor().set(0.5);
+            } else {
+                System.out.println("Rv - @" + iterations);
+                Robot.launcher.getCockingMotor().set(-0.5);
+            }
         }
-
-        if (now > 3) {
+        if (iterations > 500) {
             finished = true;
+            Robot.launcher.getCockingMotor().set(0.0);
         }
     }
 

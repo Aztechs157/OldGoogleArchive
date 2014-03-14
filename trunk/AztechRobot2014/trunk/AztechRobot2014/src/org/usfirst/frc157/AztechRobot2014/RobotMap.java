@@ -73,7 +73,7 @@ public class RobotMap {
     public static final int SOLENOID_PORT_ReleaseRetract = 2;
 
     // Optimum Shot Range
-    public static final double Optimum_Shot_Range = 2.0; // meters
+    public static final double Optimum_Shot_Range = 1.5; // meters
     
     //=====================================================================
     // Sensor System Constants
