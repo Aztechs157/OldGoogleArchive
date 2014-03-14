@@ -31,17 +31,20 @@ public class AutonomousCommand extends CommandGroup {
         int switchStepSize = 1024 / switchNumPositions;
 
         autoSelectSwitch = new AnalogChannel(RobotMap.ANALOG_PORT_AutoModeSelect);
-        int autoMode = switchMaxPosition - (autoSelectSwitch.getValue() + switchStepSize / 2) / switchStepSize;
-        
+//        int autoMode = switchMaxPosition - (autoSelectSwitch.getValue() + switchStepSize / 2) / switchStepSize;
+        int autoMode = 0;
         // Get the retriever out of the way just in case
         addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_MIDDLE));  // set the ingester to load position
  
+        
         switch (autoMode) {
             case 0:
                 // take a single shot
-                addSequential(new DriveToRange(300));  // move to 3m from the wall
-                addSequential(new SensorAlignToWall());
-                addSequential(new SleepCommand(1.0));  // sleep for 2 seconds 
+                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // set the ingester to load position
+                addSequential(new DriveToRange(RobotMap.Optimum_Shot_Range));  // move to optimum range from the wall
+                
+//                addSequential(new SensorAlignToWall());
+                addSequential(new SleepCommand(0.25));  // sleep for 2 seconds 
                 addSequential(new Launch());           // launch ball
                 break;
             case 1:

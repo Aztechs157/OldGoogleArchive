@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc157.AztechRobot2014.Robot;
 
 /**
  *
@@ -50,8 +51,8 @@ public class Launcher extends Subsystem {
         if (clutchEngage == null) {
             clutchEngage = new Solenoid(RobotMap.SOLENOID_PORT_ReleaseRetract);
         }
-        clutchRelease.set(false);
-        clutchEngage.set(true);
+        clutchRelease.set(true);
+        clutchEngage.set(false);
 
         releaseSwitch = new DigitalInput(RobotMap.DIGITAL_PORT_ReleaseSwitch);
         LiveWindow.addSensor("Launcher", "Limit Switch 1", releaseSwitch);
@@ -95,8 +96,18 @@ public class Launcher extends Subsystem {
     }
 
     public boolean isCocked() {
+        // test
+//        isCocked2();
+        // end test
         boolean cocked = !releaseSwitch.get();
         SmartDashboard.putBoolean("Launcher Ready", cocked);
+        return cocked;
+    }
+
+    public boolean isCocked2() {
+        double shortRange = Robot.sensor.getShortRangeIRDistance();
+        boolean cocked = !(shortRange > 6);
+        SmartDashboard.putBoolean("Launcher Ready IR", cocked);
         return cocked;
     }
 
