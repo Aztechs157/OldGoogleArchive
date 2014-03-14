@@ -44,8 +44,11 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new DriveToRange(RobotMap.Optimum_Shot_Range));  // move to optimum range from the wall
                 
 //                addSequential(new SensorAlignToWall());
-                addSequential(new SleepCommand(0.25));  // sleep for 2 seconds 
+                addSequential(new SleepCommand(0.25));  // sleep for 1/4 seconds 
                 addSequential(new Launch());           // launch ball
+                addSequential(new SleepCommand(1));  // sleep for 1 second
+                addSequential(new Launch());
+                
                 break;
             case 1:
                 // Shoot, get another ball and shoot againg
