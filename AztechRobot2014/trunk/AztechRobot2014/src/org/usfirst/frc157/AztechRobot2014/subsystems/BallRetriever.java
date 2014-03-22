@@ -39,15 +39,15 @@ public class BallRetriever extends Subsystem {
     private static double Y2 = 0.27;      //Voltage Up
     private static double slope;
     //Jag PID
-    public static double PID_P = 500;
-    public static double PID_I = 0.05;
+    public static double PID_P = 425;   //500
+    public static double PID_I = 0.45; //0.05
     public static double PID_D = 0;
 //    public static double PID_P = 300;
 //    public static double PID_I = 0.2;
 //    public static double PID_D = 10;
     // positional setpoint voltages
     public final static double Load = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_OUT);
-    public final static double Neutral = 0.50;      //CHANGE THIS
+    public final static double Neutral = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_MIDDLE);
     public final static double Eject = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_IN);
 
     //Load Voltage  0.90 tentative  Arm 11.3 Base 0.5 -> 10.8 -> 10.8
