@@ -39,12 +39,9 @@ public class BallRetriever extends Subsystem {
     private static double Y2 = 0.27;      //Voltage Up
     private static double slope;
     //Jag PID
-    public static double PID_P = 425;   //500
-    public static double PID_I = 0.45; //0.05
-    public static double PID_D = 0;
-//    public static double PID_P = 300;
-//    public static double PID_I = 0.2;
-//    public static double PID_D = 10;
+    public static double PID_P = 900;
+    public static double PID_I = 0.12;
+    public static double PID_D = 20000;
     // positional setpoint voltages
     public final static double Load = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_OUT);
     public final static double Neutral = convertAngleToVoltage(MoveBallRetriever.RETRIEVER_MIDDLE);
@@ -121,6 +118,7 @@ public class BallRetriever extends Subsystem {
                     jag.changeControlMode(CANJaguar.ControlMode.kPosition);
                     jag.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
                     jag.enableControl();
+                    jag.configMaxOutputVoltage(12);
                     failed = false;
                 } catch (CANTimeoutException ex) {
                     System.out.println("FAIL " + tries + " - Instantiating BallRetriever JAG ");
