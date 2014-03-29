@@ -40,14 +40,14 @@ public class AutonomousCommand extends CommandGroup {
         switch (autoMode) {
             case 0:
                 // take a single shot
-                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // set the ingester to load position
                 addSequential(new DriveToRange(RobotMap.Optimum_Shot_Range));  // move to optimum range from the wall
-                
+                addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // set the ingester to load position
 //                addSequential(new SensorAlignToWall());
-                addSequential(new SleepCommand(0.25));  // sleep for 1/4 seconds 
+                addSequential(new SleepCommand(0.5));  // sleep for 1/2 seconds 
                 addSequential(new Launch());           // launch ball
                 addSequential(new SleepCommand(1));  // sleep for 1 second
                 addSequential(new Launch());
+                
                 
                 break;
             case 1:
