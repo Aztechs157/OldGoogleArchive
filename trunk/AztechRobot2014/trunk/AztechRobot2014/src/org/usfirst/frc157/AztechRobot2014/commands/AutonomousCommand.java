@@ -41,7 +41,7 @@ public class AutonomousCommand extends CommandGroup {
             case 0:
                 // take a single shot
                 //addSequential(new DriveSpeedForTime(1, 1, 3)); // move forward for 3 s
-                //addSequential(new DriveToRange(RobotMap.Optimum_Shot_Range));  // move to optimum range from the wall
+                addSequential(new DriveToRange(RobotMap.Optimum_Shot_Range));  // move to optimum range from the wall
                 addSequential(new MoveBallRetriever(MoveBallRetriever.RETRIEVER_OUT));  // set the ingester to load position
 //                addSequential(new SensorAlignToWall());
                 
