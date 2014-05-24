@@ -32,6 +32,10 @@ public class DriveToRange extends Command {
     private int index = 0;
     private double[] dR_squared = new double[NumSamples];
 
+    // santiy check motion stuff
+    private double initialRange;  
+    private int badRangeCount = 0;
+    
     public DriveToRange(double _desiredRange) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -50,8 +54,10 @@ public class DriveToRange extends Command {
         error = 0;
         controlFinishTime = 0;
         index = 0;
+        badRangeCount = 0;
         Robot.drive.setTerminateAutoCommands(false);
         SmartDashboard.putBoolean("At Optimum Range", false);
+        initialRange = getRangeToWall();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -60,9 +66,28 @@ public class DriveToRange extends Command {
             double range = getRangeToWall();
             double rangeDelta = desiredRange - range;
 
+            // sanity check range
+            // if range is exactly the same the sensor is probably unhappy
+            if(range == initialRange)
+            {
+                badRangeCount++;
+            }
+            else
+            {
+                badRangeCount = 0;
+            }
+            // if there are too many identicals in a row, stop the bot and exit the command
+            if(badRangeCount > 5)
+            {
+                System.out.println("============================ DriveToRange --- SENSOR ERROR ---");
+//                controlFinishTime = Timer.getFPGATimestamp();
+//                Robot.drive.tankDrive(0, 0);
+            }
+            //-----
+            
             dR_squared[index % NumSamples] = rangeDelta * rangeDelta;
             index++;
-
+            
             error = 0.005 * rangeDelta + error;
 
             double drive = 0.002 * error + (4 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
