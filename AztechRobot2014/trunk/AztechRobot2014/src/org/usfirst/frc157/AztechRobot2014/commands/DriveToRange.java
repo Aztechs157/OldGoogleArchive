@@ -18,10 +18,10 @@ public class DriveToRange extends Command {
 
     private double desiredRange;
 
-    private static final double RangeTolerance = 250; 
+    private static final double RangeTolerance = 250;
 
     private double stopTime;
-    private final double maxAlignmentTime = 20.0;
+    private final double maxAlignmentTime = 10.0;
 
     private double error = 0;
 
@@ -32,10 +32,10 @@ public class DriveToRange extends Command {
     private int index = 0;
     private double[] dR_squared = new double[NumSamples];
 
-    // santiy check motion stuff
-    private double initialRange;  
-    private int badRangeCount = 0;
-    
+    // stuff to sort out if range sensor is wonky and behave reasonably
+    private double startRange;
+    private boolean badRangeSensor;
+
     public DriveToRange(double _desiredRange) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -54,10 +54,18 @@ public class DriveToRange extends Command {
         error = 0;
         controlFinishTime = 0;
         index = 0;
-        badRangeCount = 0;
         Robot.drive.setTerminateAutoCommands(false);
         SmartDashboard.putBoolean("At Optimum Range", false);
-        initialRange = getRangeToWall();
+
+        startRange = getRangeToWall();
+        if (startRange < 0.5) {
+            System.out.println("Range Sensor is Wonky EEEK");
+            badRangeSensor = true;
+        } else {
+            System.out.println("Range Sensor is Happy!");
+            badRangeSensor = false;
+        }
+        SmartDashboard.putBoolean("BAD RANGE SENSOR", badRangeSensor);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -66,28 +74,9 @@ public class DriveToRange extends Command {
             double range = getRangeToWall();
             double rangeDelta = desiredRange - range;
 
-            // sanity check range
-            // if range is exactly the same the sensor is probably unhappy
-            if(range == initialRange)
-            {
-                badRangeCount++;
-            }
-            else
-            {
-                badRangeCount = 0;
-            }
-            // if there are too many identicals in a row, stop the bot and exit the command
-            if(badRangeCount > 5)
-            {
-                System.out.println("============================ DriveToRange --- SENSOR ERROR ---");
-//                controlFinishTime = Timer.getFPGATimestamp();
-//                Robot.drive.tankDrive(0, 0);
-            }
-            //-----
-            
             dR_squared[index % NumSamples] = rangeDelta * rangeDelta;
             index++;
-            
+
             error = 0.005 * rangeDelta + error;
 
             double drive = 0.002 * error + (4 * rangeDelta) / Robot.sensor.getUltrasonicSensor1().getMaxRange();
@@ -101,8 +90,15 @@ public class DriveToRange extends Command {
                 error = 0;
             }
 
-            Robot.drive.tankDrive(-drive, -drive);
-
+            if(badRangeSensor == false)
+            {
+                Robot.drive.tankDrive(-drive, -drive);
+            }
+            else
+            {
+                Robot.drive.tankDrive(0.25, 0.25);
+            }
+            
 //            System.out.println(controlFinishTime + " T= " + desiredRange + " E= " + error + " R= " + range + "  d= " + drive);
             double dRS_sum = 0;
             for (int idx = 0; idx < NumSamples; idx++) {
