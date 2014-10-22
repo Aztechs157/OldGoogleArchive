@@ -8,10 +8,9 @@ Useful Links for the 2015 season
 
 = 2015 Control System (roboRIO) =
 
-  * Team 358's Beta summary of roboRIO<br> http://www.team358.org/files/programming/ControlSystem2015-2019/
+  * Team 358's Beta summary of roboRIO <br>http://www.team358.org/files/programming/ControlSystem2015-2019/
 
-  * Intro to Electronics Slides (2015-2015) (John's Google Docs)<br>
-https://docs.google.com/presentation/d/1X2fpmsWsW0b68SuFX9lKt1Ui-BnW1hne2BM1f2J1Fz0/edit?usp=sharing
+  * Intro to Electronics Slides (2015-2015) (John's Google Docs)<br>https://docs.google.com/presentation/d/1X2fpmsWsW0b68SuFX9lKt1Ui-BnW1hne2BM1f2J1Fz0/edit?usp=sharing
  
   * 2015 Control System (roboRIO) (John's Google Docs)<br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_nT0lqN1oyMHA1cUk&usp=sharing  
 
