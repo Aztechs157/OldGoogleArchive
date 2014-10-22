@@ -8,7 +8,7 @@ Useful Links for the 2015 season
 
 = 2015 Control System (roboRIO) =
 
-  * [Team 358's Beta summary of roboRIO] http://www.team358.org/files/programming/ControlSystem2015-2019/
-  * [John's Documentation Folder] https://drive.google.com/folderview?id=0B3oE1gSOFJ_nZGxsX1pha1U5SVU&usp=sharing
+  * [Team 358's Beta summary of roboRIO]http://www.team358.org/files/programming/ControlSystem2015-2019/
+  * [John's Documentation Folder]https://drive.google.com/folderview?id=0B3oE1gSOFJ_nZGxsX1pha1U5SVU&usp=sharing
 
 = 2015 Technical Resources =
