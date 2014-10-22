@@ -10,8 +10,9 @@ Useful Links for the 2015 season
 
   * Team 358's Beta summary of roboRIO<br> http://www.team358.org/files/programming/ControlSystem2015-2019/
 
-  * [https://drive.google.com/folderview?id=0B3oE1gSOFJ_nT0lqN1oyMHA1cUk&usp=sharing 2015 Control System (roboRIO)] (John's Google Docs) 
-  * [https://drive.google.com/folderview?id=0B3oE1gSOFJ_ncWhWRFgxUFFrMzQ&usp=sharing FRC Electronics Documentation Folder] (John's Google Docs)
+  * 2015 Control System (roboRIO)] (John's Google Docs)<br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_nT0lqN1oyMHA1cUk&usp=sharing  
+
+  * FRC Electronics Documentation Folder (John's Google Docs)<br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_ncWhWRFgxUFFrMzQ&usp=sharing 
 
 = 2015 Technical Resources =
 
