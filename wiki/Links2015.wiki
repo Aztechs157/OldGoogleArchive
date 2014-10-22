@@ -15,4 +15,4 @@ Useful Links for the 2015 season
 
 = 2015 Technical Resources =
 
-  * http://www.usfirst.org/roboticsprograms/frc/technical-resources
+  
