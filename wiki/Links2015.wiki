@@ -18,7 +18,7 @@ Useful Links for the 2015 season
  
   * 2015 Control System (roboRIO) (John's Google Docs)<br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_nT0lqN1oyMHA1cUk&usp=sharing  
 
-= OtherTechnical Resources =
+= Other Technical Resources =
 
   * FRC Electronics Documentation Folder (John's Google Docs)<br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_ncWhWRFgxUFFrMzQ&usp=sharing 
 
