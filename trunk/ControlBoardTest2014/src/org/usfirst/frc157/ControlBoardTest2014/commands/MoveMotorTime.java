@@ -14,6 +14,7 @@ package org.usfirst.frc157.ControlBoardTest2014.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc157.ControlBoardTest2014.Robot;
+import org.usfirst.frc157.ControlBoardTest2014.RobotMap;
 
 /**
  *
@@ -40,7 +41,10 @@ public class  MoveMotorTime extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.motorSubsystem.setJagVoltage(voltage);
+        if(RobotMap.useCAN)
+            Robot.motorSubsystem.setCANJagVoltage(voltage);
+        else
+            Robot.motorSubsystem.setPWMJagSpeed(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -50,7 +54,11 @@ public class  MoveMotorTime extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.motorSubsystem.setJagVoltage(0);
+        System.out.println("DONE");
+        if(RobotMap.useCAN)
+            Robot.motorSubsystem.setCANJagVoltage(0);
+        else
+            Robot.motorSubsystem.setPWMJagSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

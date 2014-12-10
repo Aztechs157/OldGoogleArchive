@@ -86,7 +86,7 @@ public class OI {
         driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
         driverLeftButton6.whenPressed(new DebugPrint("driverLeftButton6 Pressed"));
         driverLeftButton7.whenPressed(new DebugPrint("driverLeftButton7 Pressed"));
-        driverLeftButton8.whenPressed(new DebugPrint("driverLeftButton8 Pressed"));
+        driverLeftButton8.whenPressed(new ChangeMotorControl());
         driverLeftButton9.whenPressed(new DebugPrint("driverLeftButton9 Pressed"));
         driverLeftButton10.whenPressed(new DebugPrint("driverLeftButton10 Pressed"));
         driverLeftButton11.whenPressed(new DebugPrint("driverLeftButton11 Pressed"));
