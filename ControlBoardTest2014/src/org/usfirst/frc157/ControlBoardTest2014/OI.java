@@ -9,6 +9,8 @@
 // it from being updated in the future.
 package org.usfirst.frc157.ControlBoardTest2014;
 
+import org.usfirst.frc157.ControlBoardTest2014.commands.ExtendPiston;
+import org.usfirst.frc157.ControlBoardTest2014.commands.RetractPiston;
 import org.usfirst.frc157.ControlBoardTest2014.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
@@ -81,12 +83,16 @@ public class OI {
         driverLeftButtonTrigger.whenPressed(new MoveMotorTime());
         //driverLeftButtonTrigger.whenPressed(new DebugPrint("driverLeftButtonTrigger Pressed"));
         driverLeftButton2.whenPressed(new DebugPrint("driverLeftButton2 Pressed"));
-        driverLeftButton3.whenPressed(new DebugPrint("driverLeftButton3 Pressed"));
-        driverLeftButton4.whenPressed(new DebugPrint("driverLeftButton4 Pressed"));
-        driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
-        driverLeftButton6.whenPressed(new DebugPrint("driverLeftButton6 Pressed"));
+        driverLeftButton3.whenPressed(new ExtendPiston());
+        //driverLeftButton3.whenPressed(new DebugPrint("driverLeftButton3 Pressed"));
+        driverLeftButton4.whenPressed(new RetractPiston());
+        //driverLeftButton4.whenPressed(new DebugPrint("driverLeftButton4 Pressed"));
+        driverLeftButton5.whenPressed(new ChangeMotorControl());
+        //driverLeftButton5.whenPressed(new DebugPrint("driverLeftButton5 Pressed"));
+        driverLeftButton6.whenPressed(new GetLimitSwitchPos());
+        //driverLeftButton6.whenPressed(new DebugPrint("driverLeftButton6 Pressed"));
         driverLeftButton7.whenPressed(new DebugPrint("driverLeftButton7 Pressed"));
-        driverLeftButton8.whenPressed(new ChangeMotorControl());
+        driverLeftButton8.whenPressed(new DebugPrint("driverLeftButton8 Pressed"));
         driverLeftButton9.whenPressed(new DebugPrint("driverLeftButton9 Pressed"));
         driverLeftButton10.whenPressed(new DebugPrint("driverLeftButton10 Pressed"));
         driverLeftButton11.whenPressed(new DebugPrint("driverLeftButton11 Pressed"));
