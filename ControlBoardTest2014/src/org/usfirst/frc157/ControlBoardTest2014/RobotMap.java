@@ -28,6 +28,7 @@ public class RobotMap {
     public static int motorSubsystemCANJaguar1ID;
     public static int motorSubsystemPWMJaguar1ID;
     public static int DIGITAL_PORT_LimSwitch;
+    public static int ANALOG_PORT_Pot;
     
     //Pnematic Subsystem
     public static int DIGITAL_PORT_PressureSwitch;
@@ -42,6 +43,7 @@ public class RobotMap {
         motorSubsystemCANJaguar1ID = 5;
         motorSubsystemPWMJaguar1ID = 5;
         DIGITAL_PORT_LimSwitch = 14;
+        ANALOG_PORT_Pot = 1;
         
         DIGITAL_PORT_PressureSwitch = 1;
         RELAY_PORT_Compressor = 1;

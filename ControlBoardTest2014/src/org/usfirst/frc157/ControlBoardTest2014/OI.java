@@ -82,7 +82,8 @@ public class OI {
         
         driverLeftButtonTrigger.whenPressed(new MoveMotorTime());
         //driverLeftButtonTrigger.whenPressed(new DebugPrint("driverLeftButtonTrigger Pressed"));
-        driverLeftButton2.whenPressed(new DebugPrint("driverLeftButton2 Pressed"));
+        driverLeftButton2.whenPressed(new GetPotVoltage());
+        //driverLeftButton2.whenPressed(new DebugPrint("driverLeftButton2 Pressed"));
         driverLeftButton3.whenPressed(new ExtendPiston());
         //driverLeftButton3.whenPressed(new DebugPrint("driverLeftButton3 Pressed"));
         driverLeftButton4.whenPressed(new RetractPiston());
