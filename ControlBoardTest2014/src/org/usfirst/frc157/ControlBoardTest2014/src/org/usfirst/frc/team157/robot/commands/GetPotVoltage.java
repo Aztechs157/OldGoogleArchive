@@ -3,19 +3,19 @@
  * and open the template in the editor.
  */
 
-package org.usfirst.frc157.ControlBoardTest2014.commands;
+package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc157.ControlBoardTest2014.Robot;
 
 /**
  *
  * @author Teju
  */
-public class GetLimitSwitchPos extends Command
+public class GetPotVoltage extends Command
 {
 	
-	public GetLimitSwitchPos()
+	public GetPotVoltage()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -24,12 +24,12 @@ public class GetLimitSwitchPos extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		System.out.println(Robot.motorSubsystem.getLimSwitchPos());
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
+		System.out.println(Robot.motorSubsystem.getPotVoltage());
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

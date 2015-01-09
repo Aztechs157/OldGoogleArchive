@@ -8,14 +8,19 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc157.ControlBoardTest2014;
+package org.usfirst.frc.team157.robot;
 
-import org.usfirst.frc157.ControlBoardTest2014.commands.ExtendPiston;
-import org.usfirst.frc157.ControlBoardTest2014.commands.RetractPiston;
-import org.usfirst.frc157.ControlBoardTest2014.commands.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.*;
+import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team157.robot.commands.ChangeMotorControl;
+import org.usfirst.frc.team157.robot.commands.DebugPrint;
+import org.usfirst.frc.team157.robot.commands.ExtendPiston;
+import org.usfirst.frc.team157.robot.commands.GetLimitSwitchPos;
+import org.usfirst.frc.team157.robot.commands.GetPotVoltage;
+import org.usfirst.frc.team157.robot.commands.MoveMotorTime;
+import org.usfirst.frc.team157.robot.commands.RetractPiston;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator

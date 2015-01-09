@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package org.usfirst.frc157.ControlBoardTest2014.subsystems;
+package org.usfirst.frc.team157.robot.subsystems;
 
+import org.usfirst.frc.team157.robot.RobotMap;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc157.ControlBoardTest2014.RobotMap;
 
 /**
  *
@@ -29,7 +29,7 @@ public class PneumaticSubsystem extends Subsystem
 		// setDefaultCommand(new MySpecialCommand());
 		if (compressor == null)
 		{
-			compressor = new Compressor(RobotMap.DIGITAL_PORT_PressureSwitch, RobotMap.RELAY_PORT_Compressor);
+			compressor = new Compressor(RobotMap.DIGITAL_PORT_PressureSwitch);
 		}
 		if (pistonOut == null)
 		{

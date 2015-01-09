@@ -8,7 +8,7 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc157.ControlBoardTest2014.commands;
+package org.usfirst.frc.team157.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
