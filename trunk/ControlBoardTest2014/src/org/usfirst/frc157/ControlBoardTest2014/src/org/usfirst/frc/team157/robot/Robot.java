@@ -8,16 +8,16 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc157.ControlBoardTest2014;
+package org.usfirst.frc.team157.robot;
 
+import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team157.robot.subsystems.MotorSubsystem;
+import org.usfirst.frc.team157.robot.subsystems.PneumaticSubsystem;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc157.ControlBoardTest2014.commands.*;
-import org.usfirst.frc157.ControlBoardTest2014.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -110,21 +110,22 @@ public class Robot extends IterativeRobot
 			boolean failed = false;
 			do
 			{
-				try
-				{
-					jag.setVoltageRampRate(0.02);
-					jag.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-					jag.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-					jag.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-					jag.configEncoderCodesPerRev(360 * 3);
-					jag.setPID(2, 0, 0);
-					jag.enableControl();
-				}
-				catch (CANTimeoutException ex)
-				{
-					failed = true;
-					System.out.println("Exception " + tries + " while configuring speed");
-				}
+				// try
+				// {
+				jag.setVoltageRampRate(0.02);
+				jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
+				jag.setVoltageMode();
+				jag.setVoltageMode(CANJaguar.kQuadEncoder, 360 * 3);
+				jag.setPID(2, 0, 0);
+				jag.enableControl();
+				// }
+				/*
+				 * catch (CANTimeoutException ex)
+				 * {
+				 * failed = true;
+				 * System.out.println("Exception " + tries + " while configuring speed");
+				 * }
+				 */
 			}
 			while (failed && (tries++ < 3));
 			// jag.setScalingFactor(100);

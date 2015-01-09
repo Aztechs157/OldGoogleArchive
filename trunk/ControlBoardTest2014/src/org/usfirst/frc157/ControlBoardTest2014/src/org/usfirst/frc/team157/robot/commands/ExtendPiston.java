@@ -3,19 +3,19 @@
  * and open the template in the editor.
  */
 
-package org.usfirst.frc157.ControlBoardTest2014.commands;
+package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc157.ControlBoardTest2014.Robot;
 
 /**
  *
  * @author Teju
  */
-public class RetractPiston extends Command
+public class ExtendPiston extends Command
 {
 	
-	public RetractPiston()
+	public ExtendPiston()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -24,7 +24,7 @@ public class RetractPiston extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		Robot.pneumaticSubsystem.retractPiston();
+		Robot.pneumaticSubsystem.extendPiston();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run

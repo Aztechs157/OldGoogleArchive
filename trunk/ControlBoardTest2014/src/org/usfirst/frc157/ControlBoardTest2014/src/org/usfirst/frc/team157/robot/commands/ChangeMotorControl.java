@@ -3,11 +3,10 @@
  * and open the template in the editor.
  */
 
-package org.usfirst.frc157.ControlBoardTest2014.commands;
+package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc157.ControlBoardTest2014.Robot;
-import org.usfirst.frc157.ControlBoardTest2014.RobotMap;
 
 /**
  *
