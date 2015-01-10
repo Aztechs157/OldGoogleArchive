@@ -13,7 +13,7 @@ import java.lang.*;
 
 /**
  *
- * @author Jarrod Risley
+ * @author Someone
  */
 public class LogitechController extends GenericHID implements IInputOutput {
 
