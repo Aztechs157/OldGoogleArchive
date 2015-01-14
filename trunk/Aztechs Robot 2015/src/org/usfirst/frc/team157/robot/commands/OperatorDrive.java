@@ -50,7 +50,7 @@ public class OperatorDrive extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return false;
+		return true;
 	}
 	
 	// Called once after isFinished returns true
