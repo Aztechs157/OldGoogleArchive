@@ -11,8 +11,10 @@
 package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team157.robot.commands.HomeFork;
 import org.usfirst.frc.team157.robot.commands.OperatorDrive;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -21,6 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI
 {
+	
+	public JoystickButton driverLeftButtonTrigger; // Button 1 - Trigger
 	// // CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a joystick.
 	// You create one by telling it which joystick it's on and which button
@@ -66,6 +70,9 @@ public class OI
 		rightJoystick = new Joystick(1);
 		
 		leftJoystick = new Joystick(2);
+		
+		driverLeftButtonTrigger = new JoystickButton(leftJoystick, 1); // Button 1 - Trigger
+		driverLeftButtonTrigger.whenPressed(new HomeFork());
 		
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
