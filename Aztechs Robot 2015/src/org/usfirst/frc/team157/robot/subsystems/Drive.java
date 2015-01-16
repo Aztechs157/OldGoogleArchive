@@ -49,29 +49,32 @@ public class Drive extends Subsystem
 		// System.out.println(left + " - " + right);
 		byte group = 22;
 		
-		if (leftJag1 != null)
-			leftJag1.set(left, group);
-		else
-			System.out.println("Drive Left Jag 1 is null!");
-		
-		if (leftJag2 != null)
-			leftJag2.set(left, group);
-		else
-			System.out.println("Drive Left Jag 2 is null!");
-		
-		if (rightJag1 != null)
-			rightJag1.set(right, group);
-		else
-			System.out.println("Drive Right Jag 1 is null!");
-		
-		if (rightJag2 != null)
-			rightJag2.set(right, group);
-		else
+		if (!RobotMap.TEST_MODE)
 		{
-			// System.out.println("Drive Right Jag 2 is null!");
+			if (leftJag1 != null)
+				leftJag1.set(left, group);
+			else
+				System.out.println("Drive Left Jag 1 is null!");
+			
+			if (leftJag2 != null)
+				leftJag2.set(left, group);
+			else
+				System.out.println("Drive Left Jag 2 is null!");
+			
+			if (rightJag1 != null)
+				rightJag1.set(right, group);
+			else
+				System.out.println("Drive Right Jag 1 is null!");
+			
+			if (rightJag2 != null)
+				rightJag2.set(right, group);
+			else
+			{
+				// System.out.println("Drive Right Jag 2 is null!");
+			}
+			
+			// System.out.println("LEFT = " + left + ", RIGHT = " + right);
+			ScaledCANJaguar.updateSyncGroup(group);
 		}
-		
-		// System.out.println("LEFT = " + left + ", RIGHT = " + right);
-		ScaledCANJaguar.updateSyncGroup(group);
 	}
 }
