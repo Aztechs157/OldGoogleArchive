@@ -42,21 +42,21 @@ public class RobotMap
 		driveLeftJag1 = new ScaledCANJaguar(2);
 		driveLeftJag2 = new ScaledCANJaguar(4);
 		driveRightJag1 = new ScaledCANJaguar(6);
-		// driveRightJag2 = new ScaledCANJaguar(7);
-		forksJag = new ScaledCANJaguar(7); // Change ID
+		driveRightJag2 = new ScaledCANJaguar(7);
+		// forksJag = new ScaledCANJaguar(7); // Change ID
 		// elevatorJag = new ScaledCANJaguar(9); // Change ID
 		
-		driveLeftJag1.setScalingFactor(1);
-		driveLeftJag2.setScalingFactor(1);
+		driveLeftJag1.setScalingFactor(-1);
+		driveLeftJag2.setScalingFactor(-1);
 		driveRightJag1.setScalingFactor(1);
-		// driveRightJag2.setScalingFactor(1);
-		forksJag.setScalingFactor(1);
+		driveRightJag2.setScalingFactor(1);
+		// forksJag.setScalingFactor(1);
 		// elevatorJag.setScalingFactor(1);
 		
-		Robot.setupJagForVoltageControl(driveLeftJag1);
-		Robot.setupJagForVoltageControl(driveLeftJag2);
-		Robot.setupJagForVoltageControl(driveRightJag1);
-		Robot.setupJagForVoltageControl(driveRightJag2);
+		Robot.setupJagForPercentControl(driveLeftJag1);
+		Robot.setupJagForPercentControl(driveLeftJag2);
+		Robot.setupJagForPercentControl(driveRightJag1);
+		Robot.setupJagForPercentControl(driveRightJag2);
 		Robot.setupJagForVoltageControl(forksJag);
 		Robot.setupJagForVoltageControl(elevatorJag);
 		

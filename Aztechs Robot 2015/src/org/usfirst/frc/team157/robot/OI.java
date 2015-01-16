@@ -69,7 +69,7 @@ public class OI
 		
 		rightJoystick = new Joystick(1);
 		
-		leftJoystick = new Joystick(2);
+		leftJoystick = new Joystick(0);
 		
 		driverLeftButtonTrigger = new JoystickButton(leftJoystick, 1); // Button 1 - Trigger
 		driverLeftButtonTrigger.whenPressed(new HomeFork());

@@ -70,6 +70,8 @@ public class Drive extends Subsystem
 		{
 			// System.out.println("Drive Right Jag 2 is null!");
 		}
+		
+		// System.out.println("LEFT = " + left + ", RIGHT = " + right);
 		ScaledCANJaguar.updateSyncGroup(group);
 	}
 }

@@ -113,13 +113,24 @@ public class Robot extends IterativeRobot
 	{
 		if (jag != null)
 		{
-			jag.setVoltageRampRate(0.02);
-			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
 			jag.setVoltageMode();
+			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
+			jag.enableControl();
+			// jag.setVoltageRampRate(0.02);
 			// jag.setVoltageMode(CANJaguar.kQuadEncoder, 360 * 3);
 			// jag.setPID(2, 0, 0);
-			jag.enableControl();
 			// jag.setScalingFactor(100);
+		}
+	}
+	
+	public static void setupJagForPercentControl(CANJaguar jag)
+	{
+		if (jag != null)
+		{
+			jag.setPercentMode();
+			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
+			jag.enableControl();
+			// jag.setVoltageRampRate(0.02);
 		}
 	}
 }
