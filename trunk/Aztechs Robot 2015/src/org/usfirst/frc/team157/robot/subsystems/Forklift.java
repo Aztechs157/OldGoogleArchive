@@ -31,6 +31,9 @@ public class Forklift extends Subsystem
 	
 	public void setForkVoltage(double voltage)
 	{
-		forksJag.set(voltage);
+		if (forksJag != null)
+			forksJag.set(voltage);
+		else
+			System.out.println("Forklift Forks Jag is null!");
 	}
 }
