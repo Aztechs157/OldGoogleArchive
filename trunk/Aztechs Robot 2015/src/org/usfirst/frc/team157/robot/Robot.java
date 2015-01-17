@@ -28,9 +28,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot
 {
-	
-	Command autonomousCommand;
-	
+	// Create variables
+	public static Command autonomousCommand;
 	public static OI oi;
 	public static Drive drive;
 	public static Forklift forklift;
@@ -108,7 +107,7 @@ public class Robot extends IterativeRobot
 			jag.setVoltageMode();
 			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
 			jag.enableControl();
-			// jag.setVoltageRampRate(0.02);
+			jag.setVoltageRampRate(0.02);
 			// jag.setVoltageMode(CANJaguar.kQuadEncoder, 360 * 3);
 			// jag.setPID(2, 0, 0);
 			// jag.setScalingFactor(100);
@@ -122,7 +121,7 @@ public class Robot extends IterativeRobot
 			jag.setPercentMode();
 			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
 			jag.enableControl();
-			// jag.setVoltageRampRate(0.02);
+			jag.setVoltageRampRate(0.02);
 		}
 	}
 }
