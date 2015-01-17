@@ -1,15 +1,15 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.DigitalSwitch;
 import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class HomeFork extends Command
 {
-	private DigitalInput aSwitch;
-	private DigitalInput bSwitch;
+	private DigitalSwitch aSwitch;
+	private DigitalSwitch bSwitch;
 	private ScaledCANJaguar jag;
 	
 	private boolean lastA;
@@ -40,11 +40,11 @@ public class HomeFork extends Command
 		// TODO Auto-generated method stub
 		if (bSwitch.get())
 		{
-			jag.set(1);
+			jag.set(6);
 		}
 		else
 		{
-			jag.set(-1);
+			jag.set(-6);
 		}
 		
 		if ((lastA != aSwitch.get()) || (lastB != bSwitch.get()))
