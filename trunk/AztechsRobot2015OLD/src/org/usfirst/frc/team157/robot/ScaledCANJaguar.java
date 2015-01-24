@@ -13,42 +13,42 @@ import edu.wpi.first.wpilibj.CANJaguar;
  */
 public class ScaledCANJaguar extends CANJaguar
 {
-	
+
 	private double scalingFactor = 1;
-	
+
 	public ScaledCANJaguar(int deviceNumber)
 	{
 		super(deviceNumber);
 	}
-	
-	public void setScalingFactor(double scale)
+
+	@Override
+	public double get()
 	{
-		scalingFactor = scale;
-		System.out.println("Scaling factor: " + scale);
+		return super.get() / scalingFactor;
 	}
-	
+
 	public double getScalingFactor()
 	{
 		return scalingFactor;
 	}
-	
+
 	@Override
 	public void set(double setPoint)
 	{
 		// System.out.println("S");
 		super.set(setPoint * scalingFactor);
 	}
-	
+
 	@Override
 	public void set(double setPoint, byte b)
 	{
 		// System.out.println("S..");
 		super.set(setPoint * scalingFactor, b);
 	}
-	
-	@Override
-	public double get()
+
+	public void setScalingFactor(double scale)
 	{
-		return (super.get() / scalingFactor);
+		scalingFactor = scale;
+		System.out.println("Scaling factor: " + scale);
 	}
 }
