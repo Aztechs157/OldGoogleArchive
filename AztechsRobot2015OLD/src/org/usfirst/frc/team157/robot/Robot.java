@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ *
+ * @author Teju Nareddy
  */
 public class Robot extends IterativeRobot
 {
@@ -33,7 +35,26 @@ public class Robot extends IterativeRobot
 	public static OI oi;
 	public static Drive drive;
 	public static Forklift forklift;
-	
+
+	@Override
+	public void autonomousInit()
+	{
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null)
+		{
+			autonomousCommand.start();
+		}
+	}
+
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	@Override
+	public void autonomousPeriodic()
+	{
+		Scheduler.getInstance().run();
+	}
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -43,34 +64,17 @@ public class Robot extends IterativeRobot
 	{
 		// Instantiate all hardware components
 		RobotMap.init();
-		
+
 		// Instantiate subsystems
 		drive = new Drive();
 		forklift = new Forklift();
 		// OI must be at the end of the list!!!
 		oi = new OI();
-		
+
 		// Instantiate the command used for the autonomous period
 		autonomousCommand = new AutonomousCommand();
 	}
-	
-	@Override
-	public void autonomousInit()
-	{
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
-	}
-	
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	@Override
-	public void autonomousPeriodic()
-	{
-		Scheduler.getInstance().run();
-	}
-	
+
 	@Override
 	public void teleopInit()
 	{
@@ -79,9 +83,11 @@ public class Robot extends IterativeRobot
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		if (autonomousCommand != null)
+		{
 			autonomousCommand.cancel();
+		}
 	}
-	
+
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -90,7 +96,7 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 	}
-	
+
 	/**
 	 * This function called periodically during test mode
 	 */
@@ -99,7 +105,18 @@ public class Robot extends IterativeRobot
 	{
 		LiveWindow.run();
 	}
-	
+
+	public static void setupJagForPercentControl(CANJaguar jag)
+	{
+		if (jag != null)
+		{
+			jag.setPercentMode();
+			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
+			jag.enableControl();
+			jag.setVoltageRampRate(0.02);
+		}
+	}
+
 	public static void setupJagForVoltageControl(CANJaguar jag)
 	{
 		if (jag != null)
@@ -111,17 +128,6 @@ public class Robot extends IterativeRobot
 			// jag.setVoltageMode(CANJaguar.kQuadEncoder, 360 * 3);
 			// jag.setPID(2, 0, 0);
 			// jag.setScalingFactor(100);
-		}
-	}
-	
-	public static void setupJagForPercentControl(CANJaguar jag)
-	{
-		if (jag != null)
-		{
-			jag.setPercentMode();
-			jag.configNeutralMode(CANJaguar.NeutralMode.Coast);
-			jag.enableControl();
-			jag.setVoltageRampRate(0.02);
 		}
 	}
 }
