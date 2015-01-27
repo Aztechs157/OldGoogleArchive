@@ -10,6 +10,7 @@
 
 package org.usfirst.frc.team157.robot.subsystems;
 
+import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.RobotMap;
 import org.usfirst.frc.team157.robot.commands.OperatorDrive;
 import edu.wpi.first.wpilibj.CANJaguar;
@@ -81,7 +82,7 @@ public class Drive extends Subsystem
 	protected void initDefaultCommand()
 	{
 		// Set the subsystem's default command here: Will call this command repeatedly
-		if (!RobotMap.TEST_MODE)
+		if (!Robot.TEST_MODE)
 		{
 			setDefaultCommand(new OperatorDrive());
 		}

@@ -30,6 +30,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot
 {
+	// Used for debug purposes --> true: debug mode -- false: Normal Robot Operation
+	public static final boolean TEST_MODE = true;
+	
+	// -----------------------------------------//
+	// -----------------------------------------//
+	
 	// Create variables
 	public static Command autonomousCommand;
 	public static OI oi;
