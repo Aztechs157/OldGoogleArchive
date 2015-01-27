@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class DigitalLimitSwitch extends DigitalInput
 {
 	private boolean isReversed;
-
+	
 	public DigitalLimitSwitch(int channel, boolean reversed)
 	{
 		super(channel);
 		isReversed = reversed;
 	}
-
+	
 	@Override
 	public boolean get()
 	{
@@ -31,12 +31,12 @@ public class DigitalLimitSwitch extends DigitalInput
 		}
 		return super.get();
 	}
-
+	
 	public boolean getReversed()
 	{
 		return isReversed;
 	}
-
+	
 	public void setReversed(boolean reversed)
 	{
 		isReversed = reversed;

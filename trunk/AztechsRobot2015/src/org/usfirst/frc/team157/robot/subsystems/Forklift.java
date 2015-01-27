@@ -2,8 +2,10 @@
 package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.HomeSensor;
+import org.usfirst.frc.team157.robot.HomeSensor.Zone;
 import org.usfirst.frc.team157.robot.RobotMap;
-import org.usfirst.frc.team157.robot.ScaledCANJaguar;
+import org.usfirst.frc.team157.robot.commands.HomeRobotPart.RobotPart;
+import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,39 +17,82 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Forklift extends Subsystem
 {
-	public ScaledCANJaguar elevtorJag = RobotMap.elevatorJag;
-	public ScaledCANJaguar forksJag = RobotMap.forksJag;
+	/*
+	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
+	 * ScaledCANJaguar in this class. We only use the scaling factor when we instantiate the jaguar, which takes place in RobotMap
+	 */
+	public CANJaguar elevatorJag = RobotMap.elevatorJag;
+	public CANJaguar forksJag = RobotMap.forksJag;
+	
+	// Create and Instantiate HomeSensors for the forks and elevator
 	public HomeSensor forksHome = new HomeSensor(RobotMap.forkHomeMid, RobotMap.forkHomeEnd);
 	public HomeSensor elevatorHome = new HomeSensor(RobotMap.elevatorHomeMid, RobotMap.elevatorHomeEnd);
-
-	public void setForkVoltage(double voltage)
+	
+	public Zone getElevatorZone()
 	{
-		if (RobotMap.TEST_MODE)
+		return elevatorHome.getZone();
+	}
+	
+	public Zone getAppropriateZone(RobotPart part)
+	{
+		if (part.equals(RobotPart.Elevator))
 		{
-			if (forksJag != null)
-			{
-				forksJag.set(voltage);
-			}
-			else
-			{
-				System.out.println("Forklift Forks Jag is null!");
-			}
+			return getElevatorZone();
+		}
+		else if (part.equals(RobotPart.Forks))
+		{
+			return getForksZone();
+		}
+		System.out.println("Something has gone wrong! getAppropriateZone() in Forklift is returning null...");
+		return null;
+	}
+	
+	public void setAppropriateVoltage(double voltage, RobotPart part)
+	{
+		if (part.equals(RobotPart.Elevator))
+		{
+			setElevatorVoltage(voltage);
+		}
+		else if (part.equals(RobotPart.Forks))
+		{
+			setForksVoltage(voltage);
+		}
+		System.out.println("Something has gone wrong! setAppropriateVoltage() in Forklift did not set a voltage...");
+	}
+	
+	public Zone getForksZone()
+	{
+		return forksHome.getZone();
+	}
+	
+	public void setElevatorVoltage(double voltage)
+	{
+		if (elevatorJag != null)
+		{
+			elevatorJag.set(voltage);
+		}
+		else
+		{
+			System.out.println("Forklift Elevator Jag is null!");
 		}
 	}
-
-	/*
-	 * public String GetLimitSwitchStates()
-	 * {
-	 * String toReturn = "";
-	 * toReturn += "Switch 1: " + forkHomeA.get() + ", ";
-	 * toReturn += "Switch 2: " + forkHomeB.get();
-	 * return toReturn;
-	 * }
-	 */
-
+	
+	public void setForksVoltage(double voltage)
+	{
+		if (forksJag != null)
+		{
+			forksJag.set(voltage);
+		}
+		else
+		{
+			System.out.println("Forklift Forks Jag is null!");
+		}
+	}
+	
 	@Override
 	protected void initDefaultCommand()
 	{
+		// Set the subsystem's default command here
 		// setDefaultCommand(new GetSwitchStates());
 	}
 }

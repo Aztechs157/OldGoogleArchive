@@ -16,31 +16,30 @@ public class HomeSensor
 	}
 	
 	private DigitalLimitSwitch mid;
-
 	private DigitalLimitSwitch end;
-
+	
 	public HomeSensor(DigitalLimitSwitch mid, DigitalLimitSwitch end)
 	{
 		this.mid = mid;
 		this.end = end;
 	}
-
+	
 	public DigitalLimitSwitch getEndLimitSwitch()
 	{
 		return end;
 	}
-
+	
 	public DigitalLimitSwitch getMidLimitSwitch()
 	{
 		return mid;
 	}
-
+	
 	public Zone getZone()
 	{
 		Zone toReturn;
 		boolean midSwitch = mid.get();
 		boolean endSwitch = end.get();
-
+		
 		if (endSwitch && !midSwitch)
 		{
 			toReturn = Zone.ZONE_A;
@@ -62,10 +61,10 @@ public class HomeSensor
 			System.out.println("This is impossible");
 			toReturn = Zone.ZONE_B;
 		}
-
+		
 		return toReturn;
 	}
-
+	
 	public static int zoneToNumber(Zone z)
 	{
 		int toReturn = -1;
