@@ -28,11 +28,6 @@ public class Forklift extends Subsystem
 	public HomeSensor forksHome = new HomeSensor(RobotMap.forkHomeMid, RobotMap.forkHomeEnd);
 	public HomeSensor elevatorHome = new HomeSensor(RobotMap.elevatorHomeMid, RobotMap.elevatorHomeEnd);
 	
-	public Zone getElevatorZone()
-	{
-		return elevatorHome.getZone();
-	}
-	
 	public Zone getAppropriateZone(RobotPart part)
 	{
 		if (part.equals(RobotPart.Elevator))
@@ -47,6 +42,16 @@ public class Forklift extends Subsystem
 		return null;
 	}
 	
+	public Zone getElevatorZone()
+	{
+		return elevatorHome.getZone();
+	}
+	
+	public Zone getForksZone()
+	{
+		return forksHome.getZone();
+	}
+	
 	public void setAppropriateVoltage(double voltage, RobotPart part)
 	{
 		if (part.equals(RobotPart.Elevator))
@@ -58,11 +63,6 @@ public class Forklift extends Subsystem
 			setForksVoltage(voltage);
 		}
 		System.out.println("Something has gone wrong! setAppropriateVoltage() in Forklift did not set a voltage...");
-	}
-	
-	public Zone getForksZone()
-	{
-		return forksHome.getZone();
 	}
 	
 	public void setElevatorVoltage(double voltage)

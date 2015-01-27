@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.OI;
 import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,12 +30,30 @@ public class OperatorDrive extends Command
 	@Override
 	protected void execute()
 	{
-		double rightSpeed = Robot.oi.rightJoystick.getY();
-		double leftSpeed = Robot.oi.leftJoystick.getY();
+		double rightSpeed = 0;
+		double leftSpeed = 0;
 		
+		// Determine the main controller for driving -- See OI.java
+		if (Robot.oi.getDriverType().equals(OI.DriverType.LogitechController))
+		{
+			rightSpeed = Robot.oi.logitechDriver.getRightY();
+			leftSpeed = Robot.oi.logitechDriver.getLeftY();
+		}
+		else if (Robot.oi.getDriverType().equals(OI.DriverType.LogitechController))
+		{
+			rightSpeed = Robot.oi.driverRight.getY();
+			leftSpeed = Robot.oi.driverLeft.getY();
+		}
+		else
+		{
+			System.out.println("OperatorType in RobotMap is not defined properly! Don't know "
+					+ "what to use in OperatorDrive to determine the wheel speeds...");
+		}
+		
+		// If speeds are close enough, then both speeds are set equal. Allows the robot to drive straight
 		if (Math.abs(rightSpeed - leftSpeed) <= 0.05)
 		{
-			leftSpeed = rightSpeed;
+			leftSpeed = rightSpeed; // RightSpeed is dominant
 		}
 		
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
