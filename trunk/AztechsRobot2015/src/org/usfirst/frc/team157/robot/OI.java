@@ -1,13 +1,13 @@
 
 package org.usfirst.frc.team157.robot;
 
-import org.usfirst.frc.team157.robot.HomeSensor.Zone;
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.HomeRobotPart;
-import org.usfirst.frc.team157.robot.commands.HomeRobotPart.RobotPart;
+import org.usfirst.frc.team157.robot.commands.DriveSpeedForTime;
+import org.usfirst.frc.team157.robot.commands.HomeAPart;
 import org.usfirst.frc.team157.robot.commands.PrintData;
 import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
+import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -188,14 +188,15 @@ public class OI
 		// -----------------------------------------//
 		
 		// Actual commands that we want each button to have
-		// FIXME
-		if (Robot.TEST_MODE)
-		{
-			driverLeftButton3.whenPressed(new HomeRobotPart(Zone.ZONE_B, RobotPart.Elevator));
-			driverLeftButton4.whenPressed(new HomeRobotPart(Zone.ZONE_B, RobotPart.Forks));
-		}
+		// FIXME TEST_MODE variable, Zone Selection
 		driverLeftButtonTrigger.whenPressed(new PrintData());
 		driverLeftButton2.whenPressed(new SwitchDriverType());
+		if (Robot.TEST_MODE)
+		{
+			driverLeftButton3.whenPressed(new HomeAPart(HomeSensor.Zone.ZONE_B, Forklift.ForkliftPart.ELEVATOR));
+			driverLeftButton4.whenPressed(new HomeAPart(HomeSensor.Zone.ZONE_B, Forklift.ForkliftPart.FORKS));
+		}
+		driverLeftButton5.whenPressed(new DriveSpeedForTime(1, 1, 5));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
@@ -204,6 +205,7 @@ public class OI
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 		SmartDashboard.putData("Test Command", new PrintData());
+		SmartDashboard.putData("Drive: Full Speed 5 Secs", new DriveSpeedForTime(1, 1, 5));
 	}
 	
 	public DriverType getDriverType()

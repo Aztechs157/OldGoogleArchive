@@ -10,6 +10,11 @@ package org.usfirst.frc.team157.robot;
 
 public class HomeSensor
 {
+	public enum Boundry
+	{
+		BOUNDRY_AB, BOUNDRY_BC, BOUNDRY_CD, UNKNOWN
+	}
+	
 	public enum Zone
 	{
 		ZONE_A, ZONE_B, ZONE_C, ZONE_D
@@ -17,11 +22,17 @@ public class HomeSensor
 	
 	private DigitalLimitSwitch mid;
 	private DigitalLimitSwitch end;
+	private HomeSensor.Boundry currentBoundry = HomeSensor.Boundry.UNKNOWN;
 	
 	public HomeSensor(DigitalLimitSwitch mid, DigitalLimitSwitch end)
 	{
 		this.mid = mid;
 		this.end = end;
+	}
+	
+	public HomeSensor.Boundry getCurrentBoundry()
+	{
+		return currentBoundry;
 	}
 	
 	public DigitalLimitSwitch getEndLimitSwitch()
@@ -34,53 +45,58 @@ public class HomeSensor
 		return mid;
 	}
 	
-	public Zone getZone()
+	public HomeSensor.Zone getZone()
 	{
-		Zone toReturn;
+		HomeSensor.Zone toReturn;
 		boolean midSwitch = mid.get();
 		boolean endSwitch = end.get();
 		
 		if (endSwitch && !midSwitch)
 		{
-			toReturn = Zone.ZONE_A;
+			toReturn = HomeSensor.Zone.ZONE_A;
 		}
 		else if (endSwitch && midSwitch)
 		{
-			toReturn = Zone.ZONE_B;
+			toReturn = HomeSensor.Zone.ZONE_B;
 		}
 		else if (!endSwitch && midSwitch)
 		{
-			toReturn = Zone.ZONE_C;
+			toReturn = HomeSensor.Zone.ZONE_C;
 		}
 		else if (!endSwitch && !midSwitch)
 		{
-			toReturn = Zone.ZONE_D;
+			toReturn = HomeSensor.Zone.ZONE_D;
 		}
 		else
 		{
 			System.out.println("This is impossible");
-			toReturn = Zone.ZONE_B;
+			toReturn = HomeSensor.Zone.ZONE_B;
 		}
 		
 		return toReturn;
 	}
 	
-	public static int zoneToNumber(Zone z)
+	public void setCurrentBoundry(HomeSensor.Boundry currentBoundry)
+	{
+		this.currentBoundry = currentBoundry;
+	}
+	
+	public static int zoneToNumber(HomeSensor.Zone z)
 	{
 		int toReturn = -1;
-		if (z.equals(Zone.ZONE_A))
+		if (z.equals(HomeSensor.Zone.ZONE_A))
 		{
 			toReturn = 1;
 		}
-		else if (z.equals(Zone.ZONE_B))
+		else if (z.equals(HomeSensor.Zone.ZONE_B))
 		{
 			toReturn = 2;
 		}
-		else if (z.equals(Zone.ZONE_C))
+		else if (z.equals(HomeSensor.Zone.ZONE_C))
 		{
 			toReturn = 3;
 		}
-		else if (z.equals(Zone.ZONE_D))
+		else if (z.equals(HomeSensor.Zone.ZONE_D))
 		{
 			toReturn = 4;
 		}

@@ -5,12 +5,12 @@ package org.usfirst.frc.team157.robot;
  * TODO
  * 
  * Add AbsoluteEncoder
- * Make the elevator work with the HomeSensor
  * Update Test_MODE based on the hardware on the robot
- * "Robots Don't Quit" --> Detect missing CAN devices on construction
+ * "Robots Don't Quit" --> Allow robot to operate even if hardware components disconnect during match
  * Add Javadoc and Comments for next year's programmers
  * Check and Fix Motors ???
- * Drive Forward for time -- Can also use this to check if the robot is driving staight
+ * Drive Forward for time -- Can also use this to check if the robot is driving straight
+ * For enumerations: Choose between imports or specific references
  */
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
@@ -134,12 +134,10 @@ public class Robot extends IterativeRobot
 	{
 		if (jag != null)
 		{
-			jag.setVoltageMode();
+			jag.setVoltageMode(CANJaguar.kQuadEncoder, 1);
 			jag.configNeutralMode(mode);
 			jag.enableControl();
 			jag.setVoltageRampRate(0.02);
-			// jag.setVoltageMode(CANJaguar.kQuadEncoder, 360 * 3);
-			// jag.setPID(2, 0, 0);
 		}
 	}
 }
