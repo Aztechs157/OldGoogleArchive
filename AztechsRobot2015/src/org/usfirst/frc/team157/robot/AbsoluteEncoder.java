@@ -15,11 +15,11 @@ public class AbsoluteEncoder
 	private double offset = 0;
 	private double initialPosition;
 	
-	public AbsoluteEncoder(HomeSensor.Boundry boundry, Forklift.ForkliftPart part)
+	public AbsoluteEncoder(HomeSensor.Boundary boundary, Forklift.ForkliftPart part)
 	{
 		this.part = part;
 		
-		offset = Forklift.getAppropriateOffset(boundry, part);
+		offset = Forklift.getAppropriateOffset(boundary, part);
 		initialPosition = Robot.forklift.getAppropriatePosition(part) + offset;
 	}
 	

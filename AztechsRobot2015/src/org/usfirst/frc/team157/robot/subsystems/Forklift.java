@@ -7,11 +7,19 @@ import org.usfirst.frc.team157.robot.RobotMap;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/*
+ * TODO
+ * Flow of this class should be:
+ * HomeSensor is constructed
+ * HomeAPart Command is run for both the Elevator and Forks. This determines a boundary the parts lie in.
+ * Absolute Potentiometer is constructed with the current boundary. Absolute location is determined with this.
+ * Operator commands are then given as normal.
+ */
+
 /**
  * Forklift subsystem of the robot.
  *
  * @author Teju Nareddy
- *
  */
 
 public class Forklift extends Subsystem
@@ -23,13 +31,13 @@ public class Forklift extends Subsystem
 	}
 	
 	// FIXME: The values of the constants
-	public static final double kFORKS_BOUNDRY_AB_TICKS = 100;
-	public static final double kFORKS_BOUNDRY_BC_TICKS = 200;
-	public static final double kFORKS_BOUNDRY_CD_TICKS = 300;
+	public static final double kFORKS_BOUNDARY_AB_TICKS = 100;
+	public static final double kFORKS_BOUNDARY_BC_TICKS = 200;
+	public static final double kFORKS_BOUNDARY_CD_TICKS = 300;
 	
-	public static final double kELEVATOR_BOUNDRY_AB_TICKS = 200;
-	public static final double kELEVATOR_BOUNDRY_BC_TICKS = 400;
-	public static final double kELEVATOR_BOUNDRY_CD_TICKS = 600;
+	public static final double kELEVATOR_BOUNDARY_AB_TICKS = 200;
+	public static final double kELEVATOR_BOUNDARY_BC_TICKS = 400;
+	public static final double kELEVATOR_BOUNDARY_CD_TICKS = 600;
 	
 	/*
 	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
@@ -63,12 +71,12 @@ public class Forklift extends Subsystem
 	
 	private void constructForksAbsoluteEncoder()
 	{
-		forksEncoder = new AbsoluteEncoder(forksHome.getCurrentBoundry(), Forklift.ForkliftPart.FORKS);
+		forksEncoder = new AbsoluteEncoder(forksHome.getCurrentBoundary(), Forklift.ForkliftPart.FORKS);
 	}
 	
 	private void constructElevatorAbsoluteEncoder()
 	{
-		elevatorEncoder = new AbsoluteEncoder(elevatorHome.getCurrentBoundry(), Forklift.ForkliftPart.ELEVATOR);
+		elevatorEncoder = new AbsoluteEncoder(elevatorHome.getCurrentBoundary(), Forklift.ForkliftPart.ELEVATOR);
 	}
 	
 	public HomeSensor.Zone getAppropriateZone(Forklift.ForkliftPart part)
@@ -85,19 +93,19 @@ public class Forklift extends Subsystem
 		return null;
 	}
 	
-	public void setAppropriateBoundry(HomeSensor.Boundry boundry, Forklift.ForkliftPart part)
+	public void setAppropriateBoundary(HomeSensor.Boundary boundary, Forklift.ForkliftPart part)
 	{
 		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
 		{
-			setElevatorBoundry(boundry);
+			setElevatorBoundary(boundary);
 		}
 		else if (part.equals(Forklift.ForkliftPart.FORKS))
 		{
-			setForksBoundry(boundry);
+			setForksBoundary(boundary);
 		}
 		else
 		{
-			System.out.println("Something has gone wrong! setAppropriateBoundry() in Forklift did not set a voltage...");
+			System.out.println("Something has gone wrong! setAppropriateBoundary() in Forklift did not set a voltage...");
 		}
 	}
 	
@@ -127,9 +135,9 @@ public class Forklift extends Subsystem
 		return forksHome.getZone();
 	}
 	
-	private void setElevatorBoundry(HomeSensor.Boundry boundry)
+	private void setElevatorBoundary(HomeSensor.Boundary boundary)
 	{
-		elevatorHome.setCurrentBoundry(boundry);
+		elevatorHome.setCurrentBoundary(boundary);
 	}
 	
 	private void setElevatorVoltage(double voltage)
@@ -144,9 +152,9 @@ public class Forklift extends Subsystem
 		}
 	}
 	
-	private void setForksBoundry(HomeSensor.Boundry boundry)
+	private void setForksBoundary(HomeSensor.Boundary boundary)
 	{
-		forksHome.setCurrentBoundry(boundry);
+		forksHome.setCurrentBoundary(boundary);
 	}
 	
 	private void setForksVoltage(double voltage)
@@ -168,46 +176,46 @@ public class Forklift extends Subsystem
 		// setDefaultCommand(new GetSwitchStates());
 	}
 	
-	public static double getAppropriateOffset(HomeSensor.Boundry boundry, Forklift.ForkliftPart part)
+	public static double getAppropriateOffset(HomeSensor.Boundary boundary, Forklift.ForkliftPart part)
 	{
 		double toReturn = -1;
 		
 		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
 		{
-			if (boundry.equals(HomeSensor.Boundry.BOUNDRY_AB))
+			if (boundary.equals(HomeSensor.Boundary.BOUNDARY_AB))
 			{
-				toReturn = kELEVATOR_BOUNDRY_AB_TICKS;
+				toReturn = kELEVATOR_BOUNDARY_AB_TICKS;
 			}
-			else if (boundry.equals(HomeSensor.Boundry.BOUNDRY_BC))
+			else if (boundary.equals(HomeSensor.Boundary.BOUNDARY_BC))
 			{
-				toReturn = kELEVATOR_BOUNDRY_BC_TICKS;
+				toReturn = kELEVATOR_BOUNDARY_BC_TICKS;
 			}
-			else if (boundry.equals(HomeSensor.Boundry.BOUNDRY_CD))
+			else if (boundary.equals(HomeSensor.Boundary.BOUNDARY_CD))
 			{
-				toReturn = kELEVATOR_BOUNDRY_CD_TICKS;
+				toReturn = kELEVATOR_BOUNDARY_CD_TICKS;
 			}
 			else
 			{
-				System.out.println("getAppropriateOffset failed! Could not determine boundry in elevator...");
+				System.out.println("getAppropriateOffset failed! Could not determine boundary in elevator...");
 			}
 		}
 		else if (part.equals(Forklift.ForkliftPart.FORKS))
 		{
-			if (boundry.equals(HomeSensor.Boundry.BOUNDRY_AB))
+			if (boundary.equals(HomeSensor.Boundary.BOUNDARY_AB))
 			{
-				toReturn = kFORKS_BOUNDRY_AB_TICKS;
+				toReturn = kFORKS_BOUNDARY_AB_TICKS;
 			}
-			else if (boundry.equals(HomeSensor.Boundry.BOUNDRY_BC))
+			else if (boundary.equals(HomeSensor.Boundary.BOUNDARY_BC))
 			{
-				toReturn = kFORKS_BOUNDRY_BC_TICKS;
+				toReturn = kFORKS_BOUNDARY_BC_TICKS;
 			}
-			else if (boundry.equals(HomeSensor.Boundry.BOUNDRY_CD))
+			else if (boundary.equals(HomeSensor.Boundary.BOUNDARY_CD))
 			{
-				toReturn = kFORKS_BOUNDRY_CD_TICKS;
+				toReturn = kFORKS_BOUNDARY_CD_TICKS;
 			}
 			else
 			{
-				System.out.println("getAppropriateOffset failed! Could not determine boundry in forks...");
+				System.out.println("getAppropriateOffset failed! Could not determine boundary in forks...");
 			}
 		}
 		else
