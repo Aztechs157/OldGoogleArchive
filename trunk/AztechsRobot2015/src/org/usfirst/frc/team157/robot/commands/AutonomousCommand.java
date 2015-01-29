@@ -10,20 +10,23 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  * @author Teju Nareddy
  *
  */
-public class AutonomousCommand extends Command
+public class AutonomousCommand extends CommandGroup
 {
 	
 	public AutonomousCommand()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		addParallel(new HomeAPart(Forklift.ForkliftPart.ELEVATOR));
+		addParallel(new HomeAPart(Forklift.ForkliftPart.FORKS));
 	}
 	
 	// Called once after isFinished returns true

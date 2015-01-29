@@ -102,4 +102,27 @@ public class HomeSensor
 		}
 		return toReturn;
 	}
+	
+	public static HomeSensor.Zone findNearestZone(HomeSensor.Zone initZone)
+	{
+		if (initZone.equals(HomeSensor.Zone.ZONE_A))
+		{
+			return HomeSensor.Zone.ZONE_B;
+		}
+		else if (initZone.equals(HomeSensor.Zone.ZONE_B))
+		{
+			return HomeSensor.Zone.ZONE_A;
+		}
+		else if (initZone.equals(HomeSensor.Zone.ZONE_C))
+		{
+			return HomeSensor.Zone.ZONE_B;
+		}
+		else if (initZone.equals(HomeSensor.Zone.ZONE_D))
+		{
+			return HomeSensor.Zone.ZONE_C;
+		}
+		
+		System.out.println("findNearestZone did not work! Could not determine what the initZone was...");
+		return initZone;
+	}
 }
