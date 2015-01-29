@@ -39,6 +39,8 @@ public class Forklift extends Subsystem
 	public static final double kELEVATOR_BOUNDARY_BC_TICKS = 400;
 	public static final double kELEVATOR_BOUNDARY_CD_TICKS = 600;
 	
+	private boolean isPositionSet = false; // Commands (other than HomeAPart) should not run if this is false
+	
 	/*
 	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
 	 * ScaledCANJaguar in this class. We only use the scaling factor when we instantiate the jaguar, which takes place in RobotMap
@@ -69,14 +71,21 @@ public class Forklift extends Subsystem
 		}
 	}
 	
-	private void constructForksAbsoluteEncoder()
+	public double getAppropriatePosition(Forklift.ForkliftPart part)
 	{
-		forksEncoder = new AbsoluteEncoder(forksHome.getCurrentBoundary(), Forklift.ForkliftPart.FORKS);
-	}
-	
-	private void constructElevatorAbsoluteEncoder()
-	{
-		elevatorEncoder = new AbsoluteEncoder(elevatorHome.getCurrentBoundary(), Forklift.ForkliftPart.ELEVATOR);
+		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+		{
+			return getElevatorPosition();
+		}
+		else if (part.equals(Forklift.ForkliftPart.FORKS))
+		{
+			return getForksPosition();
+		}
+		else
+		{
+			System.out.println("Something has gone wrong! getAppropriatePosition() in Forklift did not return a position...");
+		}
+		return -2;
 	}
 	
 	public HomeSensor.Zone getAppropriateZone(Forklift.ForkliftPart part)
@@ -91,6 +100,21 @@ public class Forklift extends Subsystem
 		}
 		System.out.println("Something has gone wrong! getAppropriateZone() in Forklift is returning null...");
 		return null;
+	}
+	
+	public double getElevatorPosition()
+	{
+		return elevatorJag.getPosition();
+	}
+	
+	public double getForksPosition()
+	{
+		return forksJag.getPosition();
+	}
+	
+	public boolean isPositionSet()
+	{
+		return isPositionSet;
 	}
 	
 	public void setAppropriateBoundary(HomeSensor.Boundary boundary, Forklift.ForkliftPart part)
@@ -123,6 +147,21 @@ public class Forklift extends Subsystem
 		{
 			System.out.println("Something has gone wrong! setAppropriateVoltage() in Forklift did not set a voltage...");
 		}
+	}
+	
+	public void setPositionIsSet()
+	{
+		isPositionSet = true;
+	}
+	
+	private void constructElevatorAbsoluteEncoder()
+	{
+		elevatorEncoder = new AbsoluteEncoder(elevatorHome.getCurrentBoundary(), Forklift.ForkliftPart.ELEVATOR);
+	}
+	
+	private void constructForksAbsoluteEncoder()
+	{
+		forksEncoder = new AbsoluteEncoder(forksHome.getCurrentBoundary(), Forklift.ForkliftPart.FORKS);
 	}
 	
 	private HomeSensor.Zone getElevatorZone()
@@ -224,32 +263,5 @@ public class Forklift extends Subsystem
 		}
 		
 		return toReturn;
-	}
-	
-	public double getElevatorPosition()
-	{
-		return elevatorJag.getPosition();
-	}
-	
-	public double getForksPosition()
-	{
-		return forksJag.getPosition();
-	}
-	
-	public double getAppropriatePosition(Forklift.ForkliftPart part)
-	{
-		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
-		{
-			return getElevatorPosition();
-		}
-		else if (part.equals(Forklift.ForkliftPart.FORKS))
-		{
-			return getForksPosition();
-		}
-		else
-		{
-			System.out.println("Something has gone wrong! getAppropriatePosition() in Forklift did not return a position...");
-		}
-		return -2;
 	}
 }

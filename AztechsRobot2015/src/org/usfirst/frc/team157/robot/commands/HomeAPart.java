@@ -25,15 +25,27 @@ public class HomeAPart extends Command
 	
 	public HomeAPart(HomeSensor.Zone target, Forklift.ForkliftPart part)
 	{
-		requires(Robot.forklift);
+		this(part);
 		targetZone = target;
-		homingPart = part;
 	}
 	
 	public HomeAPart(HomeSensor.Zone target, Forklift.ForkliftPart part, double voltage)
 	{
 		this(target, part);
 		jagVoltage = voltage;
+	}
+	
+	public HomeAPart(Forklift.ForkliftPart part, double voltage)
+	{
+		this(part);
+		jagVoltage = voltage;
+	}
+	
+	public HomeAPart(Forklift.ForkliftPart part)
+	{
+		homingPart = part;
+		initialZone = Robot.forklift.getAppropriateZone(homingPart);
+		targetZone = HomeSensor.findNearestZone(initialZone);
 	}
 	
 	// Called once after isFinished returns true
@@ -95,7 +107,6 @@ public class HomeAPart extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		initialZone = Robot.forklift.getAppropriateZone(homingPart);
 	}
 	
 	// Called when another command which requires one or more of the same
