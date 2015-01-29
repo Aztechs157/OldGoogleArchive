@@ -44,21 +44,21 @@ public class HomeAPart extends Command
 		if (initialZone.equals(HomeSensor.Zone.ZONE_A) && initialZone.equals(HomeSensor.Zone.ZONE_B)
 				|| initialZone.equals(HomeSensor.Zone.ZONE_B) && initialZone.equals(HomeSensor.Zone.ZONE_A))
 		{
-			Robot.forklift.setAppropriateBoundry(HomeSensor.Boundry.BOUNDRY_AB, homingPart);
+			Robot.forklift.setAppropriateBoundary(HomeSensor.Boundary.BOUNDARY_AB, homingPart);
 		}
 		else if (initialZone.equals(HomeSensor.Zone.ZONE_B) && initialZone.equals(HomeSensor.Zone.ZONE_C)
 				|| initialZone.equals(HomeSensor.Zone.ZONE_C) && initialZone.equals(HomeSensor.Zone.ZONE_B))
 		{
-			Robot.forklift.setAppropriateBoundry(HomeSensor.Boundry.BOUNDRY_BC, homingPart);
+			Robot.forklift.setAppropriateBoundary(HomeSensor.Boundary.BOUNDARY_BC, homingPart);
 		}
 		else if (initialZone.equals(HomeSensor.Zone.ZONE_C) && initialZone.equals(HomeSensor.Zone.ZONE_D)
 				|| initialZone.equals(HomeSensor.Zone.ZONE_D) && initialZone.equals(HomeSensor.Zone.ZONE_C))
 		{
-			Robot.forklift.setAppropriateBoundry(HomeSensor.Boundry.BOUNDRY_CD, homingPart);
+			Robot.forklift.setAppropriateBoundary(HomeSensor.Boundary.BOUNDARY_CD, homingPart);
 		}
 		else
 		{
-			System.out.println("HomeAPart Command did not finish successfully! Could not determine which boundry the "
+			System.out.println("HomeAPart Command did not finish successfully! Could not determine which boundary the "
 					+ homingPart.toString() + " was in...");
 		}
 		

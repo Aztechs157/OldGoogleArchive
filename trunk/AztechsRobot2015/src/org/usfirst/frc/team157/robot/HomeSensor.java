@@ -10,9 +10,9 @@ package org.usfirst.frc.team157.robot;
 
 public class HomeSensor
 {
-	public enum Boundry
+	public enum Boundary
 	{
-		BOUNDRY_AB, BOUNDRY_BC, BOUNDRY_CD, UNKNOWN
+		BOUNDARY_AB, BOUNDARY_BC, BOUNDARY_CD, UNKNOWN
 	}
 	
 	public enum Zone
@@ -22,7 +22,7 @@ public class HomeSensor
 	
 	private DigitalLimitSwitch mid;
 	private DigitalLimitSwitch end;
-	private HomeSensor.Boundry currentBoundry = HomeSensor.Boundry.UNKNOWN;
+	private HomeSensor.Boundary currentBoundary = HomeSensor.Boundary.UNKNOWN;
 	
 	public HomeSensor(DigitalLimitSwitch mid, DigitalLimitSwitch end)
 	{
@@ -30,9 +30,9 @@ public class HomeSensor
 		this.end = end;
 	}
 	
-	public HomeSensor.Boundry getCurrentBoundry()
+	public HomeSensor.Boundary getCurrentBoundary()
 	{
-		return currentBoundry;
+		return currentBoundary;
 	}
 	
 	public DigitalLimitSwitch getEndLimitSwitch()
@@ -76,9 +76,9 @@ public class HomeSensor
 		return toReturn;
 	}
 	
-	public void setCurrentBoundry(HomeSensor.Boundry currentBoundry)
+	public void setCurrentBoundary(HomeSensor.Boundary currentBoundary)
 	{
-		this.currentBoundry = currentBoundry;
+		this.currentBoundary = currentBoundary;
 	}
 	
 	public static int zoneToNumber(HomeSensor.Zone z)
