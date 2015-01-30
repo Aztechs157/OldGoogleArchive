@@ -36,18 +36,21 @@ public class OperatorDrive extends Command
 		// Determine the main controller for driving -- See OI.java
 		if (Robot.oi.getDriverType().equals(OI.DriverType.LogitechController))
 		{
-			rightSpeed = Robot.oi.logitechDriver.getRightY();
 			leftSpeed = Robot.oi.logitechDriver.getLeftY();
+			rightSpeed = Robot.oi.logitechDriver.getRightY();
+			
+			System.out.println("Logitech L:" + leftSpeed + " R:" + rightSpeed);
 		}
-		else if (Robot.oi.getDriverType().equals(OI.DriverType.LogitechController))
+		else if (Robot.oi.getDriverType().equals(OI.DriverType.Joysticks))
 		{
 			rightSpeed = Robot.oi.driverRight.getY();
 			leftSpeed = Robot.oi.driverLeft.getY();
+			System.out.println("Joysticks L:" + leftSpeed + " R:" + rightSpeed);
 		}
 		else
 		{
 			System.out.println("OperatorType in RobotMap is not defined properly! Don't know "
-					+ "what to use in OperatorDrive to determine the wheel speeds...");
+					+ "what to use in OperatorDrive to determine the wheel speeds..." + Robot.oi.getDriverType().toString());
 		}
 		
 		// If speeds are close enough, then both speeds are set equal. Allows the robot to drive straight

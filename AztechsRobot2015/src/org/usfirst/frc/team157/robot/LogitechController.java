@@ -239,7 +239,7 @@ public class LogitechController extends GenericHID
 	@Override
 	public int getPOV(int pov)
 	{
-		// TODO Had to add this method, don't know what it does
+		// TODO Auto-generated method stub
 		return 0;
 	}
 	

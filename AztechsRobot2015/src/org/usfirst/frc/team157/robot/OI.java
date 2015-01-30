@@ -4,10 +4,8 @@ package org.usfirst.frc.team157.robot;
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
 import org.usfirst.frc.team157.robot.commands.DriveSpeedForTime;
-import org.usfirst.frc.team157.robot.commands.HomeAPart;
 import org.usfirst.frc.team157.robot.commands.PrintData;
 import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -191,11 +189,6 @@ public class OI
 		// FIXME TEST_MODE variable, Zone Selection
 		driverLeftButtonTrigger.whenPressed(new PrintData());
 		driverLeftButton2.whenPressed(new SwitchDriverType());
-		if (Robot.TEST_MODE)
-		{
-			driverLeftButton3.whenPressed(new HomeAPart(HomeSensor.Zone.ZONE_B, Forklift.ForkliftPart.ELEVATOR));
-			driverLeftButton4.whenPressed(new HomeAPart(HomeSensor.Zone.ZONE_B, Forklift.ForkliftPart.FORKS));
-		}
 		driverLeftButton5.whenPressed(new DriveSpeedForTime(1, 1, 5));
 		
 		// -----------------------------------------//

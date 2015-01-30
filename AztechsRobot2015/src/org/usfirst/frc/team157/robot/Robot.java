@@ -18,6 +18,7 @@ import org.usfirst.frc.team157.robot.subsystems.Drive;
 import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.CANJaguar.NeutralMode;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,8 +31,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot
 {
+	CameraServer camera;
 	// Used for debug purposes --> true: debug mode -- false: Normal Robot Operation
-	public static final boolean TEST_MODE = true;
+	public static final boolean TEST_MODE = false;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -70,6 +72,12 @@ public class Robot extends IterativeRobot
 	{
 		// Instantiate all hardware components
 		RobotMap.init();
+		
+		/*
+		 * CameraServer camera = CameraServer.getInstance();
+		 * camera.setQuality(50);
+		 * camera.startAutomaticCapture("cam0");
+		 */
 		
 		// -----------------------------------------//
 		// -----------------------------------------//

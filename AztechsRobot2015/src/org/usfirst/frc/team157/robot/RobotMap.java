@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
 
 /**
  *
@@ -22,8 +23,8 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG1_ID = 7;
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
-	private static final int FORKS_JAG_ID = 6; // Test ID
-	private static final int ELEVATOR_JAG_ID = 9; // Test ID
+	private static final int FORKS_JAG_ID = 6; // Test ID 11
+	private static final int ELEVATOR_JAG_ID = 9; // Test ID 13
 	
 	private static final int FORKS_HOME_MID_LIMSWITCH_ID = 1;
 	private static final int FORKS_HOME_END_LIMSWITCH_ID = 2;
@@ -77,7 +78,7 @@ public class RobotMap
 			{
 				driveLeftJag1 = new ScaledCANJaguar(DRIVE_LEFT_JAG1_ID, DRIVE_LEFT_JAG1_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Left Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG1_ID);
 			}
@@ -86,7 +87,7 @@ public class RobotMap
 			{
 				driveLeftJag2 = new ScaledCANJaguar(DRIVE_LEFT_JAG2_ID, DRIVE_LEFT_JAG2_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Left Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG2_ID);
 			}
@@ -95,7 +96,7 @@ public class RobotMap
 			{
 				driveRightJag1 = new ScaledCANJaguar(DRIVE_RIGHT_JAG1_ID, DRIVE_RIGHT_JAG1_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Right Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG1_ID);
 			}
@@ -104,7 +105,7 @@ public class RobotMap
 			{
 				driveRightJag2 = new ScaledCANJaguar(DRIVE_RIGHT_JAG2_ID, DRIVE_RIGHT_JAG2_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Right Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG2_ID);
 			}
@@ -115,7 +116,7 @@ public class RobotMap
 			{
 				forksJag = new ScaledCANJaguar(FORKS_JAG_ID, FORKS_JAG_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Forks Jag was not created! Missing CAN ID #" + FORKS_JAG_ID);
 			}
@@ -124,7 +125,7 @@ public class RobotMap
 			{
 				elevatorJag = new ScaledCANJaguar(ELEVATOR_JAG_ID, ELEVATOR_JAG_SCALE);
 			}
-			catch (NullPointerException e)
+			catch (CANMessageNotFoundException e)
 			{
 				System.out.println("Elevator Jag was not created! Missing CAN ID #" + ELEVATOR_JAG_ID);
 			}
