@@ -33,7 +33,6 @@ public class Robot extends IterativeRobot
 {
 	CameraServer camera;
 	// Used for debug purposes --> true: debug mode -- false: Normal Robot Operation
-	public static final boolean TEST_MODE = false;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -142,7 +141,7 @@ public class Robot extends IterativeRobot
 	{
 		if (jag != null)
 		{
-			jag.setVoltageMode(CANJaguar.kQuadEncoder, 1);
+			jag.setVoltageMode();
 			jag.configNeutralMode(mode);
 			jag.enableControl();
 			jag.setVoltageRampRate(0.02);

@@ -1,7 +1,9 @@
 
 package org.usfirst.frc.team157.robot.subsystems;
 
+import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
 import org.usfirst.frc.team157.robot.RobotMap;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -29,46 +31,82 @@ public class Forklift extends Subsystem
 	}
 	
 	// FIXME: The values of the constants
-	public static final double kFORKS_BOUNDARY_AB_TICKS = 100;
-	public static final double kFORKS_BOUNDARY_BC_TICKS = 200;
-	public static final double kFORKS_BOUNDARY_CD_TICKS = 300;
+	public static double forksOpen = 0.25;
+	public static double forksClosed = 4.5;
 	
-	public static final double kELEVATOR_BOUNDARY_AB_TICKS = 200;
-	public static final double kELEVATOR_BOUNDARY_BC_TICKS = 400;
-	public static final double kELEVATOR_BOUNDARY_CD_TICKS = 600;
+	public static double elevatorBottom = 0.25;
+	public static double elevatorTop = 4.5;
 	
 	/*
 	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
 	 * ScaledCANJaguar in this class. We only use the scaling factor when we instantiate the jaguar, which takes place in RobotMap
 	 */
-	public CANJaguar elevatorJag = RobotMap.elevatorJag;
-	public CANJaguar forksJag = RobotMap.forksJag;
 	
-	public double getAppropriatePosition(Forklift.ForkliftPart part)
+	// Jaguars
+	private CANJaguar elevatorJag = RobotMap.elevatorJag;
+	private CANJaguar forksJag = RobotMap.forksJag;
+	
+	// Limit Switches
+	private DigitalLimitSwitch forksEndLimitSwitch = RobotMap.forksEndLimitSwitch;
+	private DigitalLimitSwitch elevatorEndLimitSwitch = RobotMap.elevatorEndLimitSwitch;
+	
+	// Potentiometers
+	private AnalogInput forksPotentiometer = RobotMap.forksPotentiometer;
+	private AnalogInput elevatorPotentiometer = RobotMap.elevatorPotentiometer;
+	
+	/*
+	 * public double getAppropriatePosition(Forklift.ForkliftPart part)
+	 * {
+	 * if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+	 * {
+	 * return getElevatorPosition();
+	 * }
+	 * else if (part.equals(Forklift.ForkliftPart.FORKS))
+	 * {
+	 * return getForksPosition();
+	 * }
+	 * else
+	 * {
+	 * System.out.println("Something has gone wrong! getAppropriatePosition() in Forklift did not return a position...");
+	 * }
+	 * return -2;
+	 * }
+	 */
+	
+	public double getAppropriatePotentiometerPosition(Forklift.ForkliftPart part)
 	{
-		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+		if (part.equals(Forklift.ForkliftPart.FORKS))
 		{
-			return getElevatorPosition();
+			return getForksPotentiometerPosition();
 		}
-		else if (part.equals(Forklift.ForkliftPart.FORKS))
+		else if (part.equals(Forklift.ForkliftPart.ELEVATOR))
 		{
-			return getForksPosition();
+			return getElevatorPotentiometerPosition();
 		}
 		else
 		{
-			System.out.println("Something has gone wrong! getAppropriatePosition() in Forklift did not return a position...");
+			System.out.println("Something has gone wrong! "
+					+ "getAppropriatePotentiometerPosition() in Forklift did return a position value...");
 		}
-		return -2;
+		return 2.5;
 	}
 	
-	public double getElevatorPosition()
+	public boolean isEndLimitSwitchClosed(Forklift.ForkliftPart part)
 	{
-		return elevatorJag.getPosition();
-	}
-	
-	public double getForksPosition()
-	{
-		return forksJag.getPosition();
+		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+		{
+			return isElevatorEndLimitSwitchClosed();
+		}
+		else if (part.equals(Forklift.ForkliftPart.FORKS))
+		{
+			return isForksEndLimitSwitchClosed();
+		}
+		else
+		{
+			System.out.println("Something has gone wrong! "
+					+ "isEndLimitSwitchClosed() in Forklift did return a limit switch state...");
+		}
+		return true;
 	}
 	
 	public void setAppropriateVoltage(double voltage, Forklift.ForkliftPart part)
@@ -85,6 +123,48 @@ public class Forklift extends Subsystem
 		{
 			System.out.println("Something has gone wrong! setAppropriateVoltage() in Forklift did not set a voltage...");
 		}
+	}
+	
+	private double getElevatorPotentiometerPosition()
+	{
+		if (elevatorPotentiometer != null)
+		{
+			return elevatorPotentiometer.getVoltage();
+		}
+		System.out.println("elevatorPotentiometer is null!");
+		return 2.5;
+	}
+	
+	private double getForksPotentiometerPosition()
+	{
+		if (forksPotentiometer != null)
+		{
+			return forksPotentiometer.getVoltage();
+		}
+		System.out.println("forksPotentiometer is null!");
+		return 2.5;
+	}
+	
+	private boolean isElevatorEndLimitSwitchClosed()
+	{
+		return elevatorEndLimitSwitch.get();
+	}
+	
+	/*
+	 * private double getElevatorPosition()
+	 * {
+	 * return elevatorJag.getPosition();
+	 * }
+	 * 
+	 * private double getForksPosition()
+	 * {
+	 * return forksJag.getPosition();
+	 * }
+	 */
+	
+	private boolean isForksEndLimitSwitchClosed()
+	{
+		return forksEndLimitSwitch.get();
 	}
 	
 	private void setElevatorVoltage(double voltage)

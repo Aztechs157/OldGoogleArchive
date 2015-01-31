@@ -45,7 +45,7 @@ public class OperatorDrive extends Command
 		{
 			rightSpeed = Robot.oi.driverRight.getY();
 			leftSpeed = Robot.oi.driverLeft.getY();
-			System.out.println("Joysticks L:" + leftSpeed + " R:" + rightSpeed);
+			// System.out.println("Joysticks L:" + leftSpeed + " R:" + rightSpeed);
 		}
 		else
 		{
