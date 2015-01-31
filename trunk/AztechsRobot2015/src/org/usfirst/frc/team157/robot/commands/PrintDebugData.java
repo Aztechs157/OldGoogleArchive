@@ -1,16 +1,17 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.RobotMap;
+import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Teju Nareddy
  */
-public class PrintData extends Command
+public class PrintDebugData extends Command
 {
 	
-	public PrintData()
+	public PrintDebugData()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -26,9 +27,12 @@ public class PrintData extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.print("[X,Y,Z]: [" + RobotMap.accelerometer.getX());
-		System.out.print(", " + RobotMap.accelerometer.getY());
-		System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
+		/*
+		 * System.out.print("[X,Y,Z]: [" + RobotMap.accelerometer.getX());
+		 * System.out.print(", " + RobotMap.accelerometer.getY());
+		 * System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
+		 */
+		System.out.println("Encoder: " + Robot.forklift.getAppropriatePotentiometerPosition(Forklift.ForkliftPart.FORKS));
 	}
 	
 	// Called just before this Command runs the first time

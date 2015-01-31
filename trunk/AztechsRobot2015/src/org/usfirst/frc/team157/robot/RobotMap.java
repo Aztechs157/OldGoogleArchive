@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team157.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
@@ -23,13 +24,13 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG1_ID = 7;
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
-	private static final int FORKS_JAG_ID = 6; // Test ID 11
-	private static final int ELEVATOR_JAG_ID = 9; // Test ID 13
+	private static final int FORKS_JAG_ID = 11; // Test ID 11
+	private static final int ELEVATOR_JAG_ID = 6; // Actually 13
 	
-	private static final int FORKS_HOME_MID_LIMSWITCH_ID = 1;
-	private static final int FORKS_HOME_END_LIMSWITCH_ID = 2;
-	private static final int ELEVATOR_HOME_MID_LIMSWITCH_ID = 3;
-	private static final int ELEVATOR_HOME_END_LIMSWITCH_ID = 4;
+	private static final int FORKS_END_LIMITSWITCH_ID = 1;
+	private static final int ELEVATOR_END_LIMSWITCH_ID = 2;
+	private static final int FORKS_POTENTIOMETER_ID = 0;
+	private static final int ELEVATOR_POTENTIOMETER_ID = 1;
 	
 	// Jag Scaling Values
 	private static final int DRIVE_LEFT_JAG1_SCALE = -1;
@@ -41,10 +42,8 @@ public class RobotMap
 	
 	// Limit Switches IsReversed variables -- If the wiring of the limit switch is backward, set this to true for the robot to
 	// correctly determine if the limit switch is opened or closed
-	private static final boolean FORKS_HOME_MID_LIMSWITCH_REVERSED = true;
-	private static final boolean FORKS_HOME_END_LIMSWITCH_REVERSED = true;
-	private static final boolean ELEVATOR_HOME_MID_LIMSWITCH_REVERSED = true;
-	private static final boolean ELEVATOR_HOME_END_LIMSWITCH_REVERSED = true;
+	private static final boolean FORKS_END_LIMITSWITCH_REVERSED = true;
+	private static final boolean ELEVATOR_END_LIMSWITCH_REVERSED = true;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -60,10 +59,12 @@ public class RobotMap
 	public static ScaledCANJaguar elevatorJag;
 	
 	// Forklift Subsystem Limit Switches
-	public static DigitalLimitSwitch forkHomeMid;
-	public static DigitalLimitSwitch forkHomeEnd;
-	public static DigitalLimitSwitch elevatorHomeMid;
-	public static DigitalLimitSwitch elevatorHomeEnd;
+	public static DigitalLimitSwitch forksEndLimitSwitch;
+	public static DigitalLimitSwitch elevatorEndLimitSwitch;
+	
+	// Forklift Potentiometer
+	public static AnalogInput forksPotentiometer;
+	public static AnalogInput elevatorPotentiometer;
 	
 	// FIXME What subsystem?
 	// Built-In Accelerometer: Most likely part of the Drive Subsystem
@@ -72,70 +73,67 @@ public class RobotMap
 	public static void init()
 	{
 		// Instantiate all of the jaguars with the scaling factors
-		if (!Robot.TEST_MODE)
+		try
 		{
-			try
-			{
-				driveLeftJag1 = new ScaledCANJaguar(DRIVE_LEFT_JAG1_ID, DRIVE_LEFT_JAG1_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Left Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG1_ID);
-			}
-			
-			try
-			{
-				driveLeftJag2 = new ScaledCANJaguar(DRIVE_LEFT_JAG2_ID, DRIVE_LEFT_JAG2_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Left Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG2_ID);
-			}
-			
-			try
-			{
-				driveRightJag1 = new ScaledCANJaguar(DRIVE_RIGHT_JAG1_ID, DRIVE_RIGHT_JAG1_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Right Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG1_ID);
-			}
-			
-			try
-			{
-				driveRightJag2 = new ScaledCANJaguar(DRIVE_RIGHT_JAG2_ID, DRIVE_RIGHT_JAG2_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Right Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG2_ID);
-			}
+			driveLeftJag1 = new ScaledCANJaguar(DRIVE_LEFT_JAG1_ID, DRIVE_LEFT_JAG1_SCALE);
 		}
-		else
+		catch (CANMessageNotFoundException e)
 		{
-			try
-			{
-				forksJag = new ScaledCANJaguar(FORKS_JAG_ID, FORKS_JAG_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Forks Jag was not created! Missing CAN ID #" + FORKS_JAG_ID);
-			}
-			
-			try
-			{
-				elevatorJag = new ScaledCANJaguar(ELEVATOR_JAG_ID, ELEVATOR_JAG_SCALE);
-			}
-			catch (CANMessageNotFoundException e)
-			{
-				System.out.println("Elevator Jag was not created! Missing CAN ID #" + ELEVATOR_JAG_ID);
-			}
+			System.out.println("Left Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG1_ID);
+		}
+		
+		try
+		{
+			driveLeftJag2 = new ScaledCANJaguar(DRIVE_LEFT_JAG2_ID, DRIVE_LEFT_JAG2_SCALE);
+		}
+		catch (CANMessageNotFoundException e)
+		{
+			System.out.println("Left Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_LEFT_JAG2_ID);
+		}
+		
+		try
+		{
+			driveRightJag1 = new ScaledCANJaguar(DRIVE_RIGHT_JAG1_ID, DRIVE_RIGHT_JAG1_SCALE);
+		}
+		catch (CANMessageNotFoundException e)
+		{
+			System.out.println("Right Drive Jag 1 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG1_ID);
+		}
+		
+		try
+		{
+			driveRightJag2 = new ScaledCANJaguar(DRIVE_RIGHT_JAG2_ID, DRIVE_RIGHT_JAG2_SCALE);
+		}
+		catch (CANMessageNotFoundException e)
+		{
+			System.out.println("Right Drive Jag 2 was not created! Missing CAN ID #" + DRIVE_RIGHT_JAG2_ID);
+		}
+		
+		try
+		{
+			forksJag = new ScaledCANJaguar(FORKS_JAG_ID, FORKS_JAG_SCALE);
+		}
+		catch (CANMessageNotFoundException e)
+		{
+			System.out.println("Forks Jag was not created! Missing CAN ID #" + FORKS_JAG_ID);
+		}
+		
+		try
+		{
+			elevatorJag = new ScaledCANJaguar(ELEVATOR_JAG_ID, ELEVATOR_JAG_SCALE);
+		}
+		catch (CANMessageNotFoundException e)
+		{
+			System.out.println("Elevator Jag was not created! Missing CAN ID #" + ELEVATOR_JAG_ID);
 		}
 		
 		// Instantiate limit switches with the IsReversed variable
-		forkHomeMid = new DigitalLimitSwitch(FORKS_HOME_MID_LIMSWITCH_ID, FORKS_HOME_MID_LIMSWITCH_REVERSED);
-		forkHomeEnd = new DigitalLimitSwitch(FORKS_HOME_END_LIMSWITCH_ID, FORKS_HOME_END_LIMSWITCH_REVERSED);
-		elevatorHomeMid = new DigitalLimitSwitch(ELEVATOR_HOME_MID_LIMSWITCH_ID, ELEVATOR_HOME_MID_LIMSWITCH_REVERSED);
-		elevatorHomeMid = new DigitalLimitSwitch(ELEVATOR_HOME_END_LIMSWITCH_ID, ELEVATOR_HOME_END_LIMSWITCH_REVERSED);
+		forksEndLimitSwitch = new DigitalLimitSwitch(FORKS_END_LIMITSWITCH_ID, FORKS_END_LIMITSWITCH_REVERSED);
+		elevatorEndLimitSwitch = new DigitalLimitSwitch(ELEVATOR_END_LIMSWITCH_ID, ELEVATOR_END_LIMSWITCH_REVERSED);
+		
+		// Instantiate potentiometers
+		forksPotentiometer = new AnalogInput(FORKS_POTENTIOMETER_ID);
+		elevatorPotentiometer = new AnalogInput(ELEVATOR_POTENTIOMETER_ID);
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
