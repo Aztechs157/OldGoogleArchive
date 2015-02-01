@@ -11,6 +11,8 @@ Useful Links for the 2015 season
 
   * How to installing Subclipse & Configuring for Google Code<br> https://code.google.com/p/fastddf/wiki/EclipseSubclipseHowTo
 
+  * On a brand new Eclipse Workspace, checking out the Aztechs code will throw a build path error for the 'wpilib' classpath. The fix is to create (and then delete) a dummy WPILib project in the workspace.  Use File > New > Project... > WPILib Robot Java development > Robot Java Project.  This somehow connects the workspace to WPILIB.
+
   * Docuemntation on WPILIB and 2005 Controls:<br> http://wpilib.screenstepslive.com/s/4485
 
 = 2015 Control System (roboRIO) =
