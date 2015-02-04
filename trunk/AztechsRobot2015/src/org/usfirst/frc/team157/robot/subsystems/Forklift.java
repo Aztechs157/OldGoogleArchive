@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Forklift extends Subsystem
 {
+	public static final double ELEVATOR_DEADBAND = 0.01;
+	
 	// Used to differentiate between the Elevator and Forks in the homing and encoderController commands
 	public enum ForkliftPart
 	{

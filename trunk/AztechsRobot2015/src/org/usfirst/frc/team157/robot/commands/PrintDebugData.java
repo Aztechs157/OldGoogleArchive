@@ -32,7 +32,7 @@ public class PrintDebugData extends Command
 		 * System.out.print(", " + RobotMap.accelerometer.getY());
 		 * System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
 		 */
-		System.out.println("Encoder: " + Robot.forklift.getAppropriatePotentiometerPosition(Forklift.ForkliftPart.FORKS));
+		System.out.println("Encoder: " + Robot.forklift.getAppropriatePotentiometerPosition(Forklift.ForkliftPart.ELEVATOR));
 	}
 	
 	// Called just before this Command runs the first time

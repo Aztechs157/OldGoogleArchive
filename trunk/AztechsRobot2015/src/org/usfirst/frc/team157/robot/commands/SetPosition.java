@@ -41,8 +41,8 @@ public class SetPosition extends Command
 		
 		System.out.println("Last Position = " + lastPosition + " Current Position = " + currentPosition);
 		
-		if (positionToSet == currentPosition || lastPosition < positionToSet && currentPosition > positionToSet
-				|| lastPosition > positionToSet && currentPosition < positionToSet)
+		if (Math.abs(positionToSet - currentPosition) < Forklift.ELEVATOR_DEADBAND
+				&& Math.abs(positionToSet - lastPosition) < Forklift.ELEVATOR_DEADBAND)
 		{
 			allDone = true;
 			Robot.forklift.setAppropriateVoltage(0, part);
@@ -63,6 +63,21 @@ public class SetPosition extends Command
 	{
 		currentPosition = Robot.forklift.getAppropriatePotentiometerPosition(part);
 		allDone = false;
+		
+		/*
+		 * if (Math.abs(positionToSet - currentPosition) < Forklift.ELEVATOR_OVERSHOOT)
+		 * {
+		 * // already there so do nothing
+		 * }
+		 * else if (positionToSet > currentPosition)
+		 * {
+		 * positionToSet -= Forklift.ELEVATOR_OVERSHOOT;
+		 * }
+		 * else if (positionToSet < currentPosition)
+		 * {
+		 * positionToSet += Forklift.ELEVATOR_OVERSHOOT;
+		 * }
+		 */
 	}
 	
 	// Called when another command which requires one or more of the same
