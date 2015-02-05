@@ -29,7 +29,8 @@ public class ManualControlStop extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.forklift.setAppropriateVoltage(0, partToMove);
+		//Robot.forklift.setAppropriateVoltage(0, partToMove);
+		Robot.forklift.stopMotor(partToMove);
 	}
 	
 	// Called just before this Command runs the first time

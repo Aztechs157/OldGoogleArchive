@@ -45,15 +45,15 @@ public class SetPosition extends Command
 				&& Math.abs(positionToSet - lastPosition) < Forklift.ELEVATOR_DEADBAND)
 		{
 			allDone = true;
-			Robot.forklift.setAppropriateVoltage(0, part);
+			Robot.forklift.stopMotor(part);
 		}
 		else if (positionToSet > currentPosition)
 		{
-			Robot.forklift.setAppropriateVoltage(-12, part);
+			Robot.forklift.moveTowardHigherPotentiometerVoltage(part);
 		}
 		else
 		{
-			Robot.forklift.setAppropriateVoltage(12, part);
+			Robot.forklift.moveTowardLowerPotentiometerVoltage(part);
 		}
 	}
 	
