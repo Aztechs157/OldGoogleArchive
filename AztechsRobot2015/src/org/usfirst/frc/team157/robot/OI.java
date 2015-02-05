@@ -195,14 +195,14 @@ public class OI
 		driverLeftButtonTrigger.whenPressed(new PrintDebugData());
 		driverLeftButton11.whenPressed(new SwitchDriverType());
 		driverLeftButton4.whenPressed(new DriveSpeedForTime(1, 1, 5));
-		driverLeftButton5.whenPressed(new SetPosition(Forklift.ForkliftPart.ELEVATOR, 1));
+		driverLeftButton5.whenPressed(new SetPosition(Forklift.ForkliftPart.ELEVATOR, 2.0));
 		
 		driverLeftButton2.whenPressed(new ManualControlDown(Forklift.ForkliftPart.ELEVATOR));
 		driverLeftButton3.whenPressed(new ManualControlUp(Forklift.ForkliftPart.ELEVATOR));
 		driverLeftButton2.whenReleased(new ManualControlStop(Forklift.ForkliftPart.ELEVATOR));
 		driverLeftButton3.whenReleased(new ManualControlStop(Forklift.ForkliftPart.ELEVATOR));
 		
-		driverRightButton4.whenPressed(new SetPosition(Forklift.ForkliftPart.FORKS, 1));
+		driverRightButton4.whenPressed(new SetPosition(Forklift.ForkliftPart.FORKS, 2.0));
 		
 		driverRightButton2.whenPressed(new ManualControlDown(Forklift.ForkliftPart.FORKS));
 		driverRightButton3.whenPressed(new ManualControlUp(Forklift.ForkliftPart.FORKS));

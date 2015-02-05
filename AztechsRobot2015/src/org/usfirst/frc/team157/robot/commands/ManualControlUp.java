@@ -29,7 +29,9 @@ public class ManualControlUp extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.forklift.setAppropriateVoltage(12, partToMove);
+		//Robot.forklift.setAppropriateVoltage(12, partToMove);
+		Robot.forklift.moveTowardHigherPotentiometerVoltage(partToMove);
+
 	}
 	
 	// Called just before this Command runs the first time

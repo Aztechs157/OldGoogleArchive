@@ -26,6 +26,12 @@ public class Forklift extends Subsystem
 {
 	public static final double ELEVATOR_DEADBAND = 0.01;
 	
+	public final double ELEVATOR_LOWER_LIMIT = 1.313; // volts; at revolution 3
+	public final double ELEVATOR_UPPER_LIMIT = 2.375; // volts; at revolution 6
+	
+	public final double FORKS_LOWER_LIMIT = 1.313; // volts; at revolution 3
+	public final double FORKS_UPPER_LIMIT = 2.375; // volts; at revolution 6
+	
 	// Used to differentiate between the Elevator and Forks in the homing and encoderController commands
 	public enum ForkliftPart
 	{
@@ -56,25 +62,13 @@ public class Forklift extends Subsystem
 	private AnalogInput forksPotentiometer = RobotMap.forksPotentiometer;
 	private AnalogInput elevatorPotentiometer = RobotMap.elevatorPotentiometer;
 	
-	/*
-	 * public double getAppropriatePosition(Forklift.ForkliftPart part)
-	 * {
-	 * if (part.equals(Forklift.ForkliftPart.ELEVATOR))
-	 * {
-	 * return getElevatorPosition();
-	 * }
-	 * else if (part.equals(Forklift.ForkliftPart.FORKS))
-	 * {
-	 * return getForksPosition();
-	 * }
-	 * else
-	 * {
-	 * System.out.println("Something has gone wrong! getAppropriatePosition() in Forklift did not return a position...");
-	 * }
-	 * return -2;
-	 * }
-	 */
 	
+	/**
+	 * Gets the Potentiometer Position for a particular Forklift Part
+	 * 
+	 * @param part The Forklift Part to operate on, either FORKS or ELEVATOR
+	 * @return The value of Potentiometer Position as a voltage
+	 */
 	public double getAppropriatePotentiometerPosition(Forklift.ForkliftPart part)
 	{
 		if (part.equals(Forklift.ForkliftPart.FORKS))
@@ -87,45 +81,114 @@ public class Forklift extends Subsystem
 		}
 		else
 		{
-			System.out.println("Something has gone wrong! "
-					+ "getAppropriatePotentiometerPosition() in Forklift did return a position value...");
+			System.out.println("BUGCHECK: Invalid Forklift Part");
 		}
-		return 2.5;
+		return 2.5; // midpoint
 	}
 	
-	public boolean isEndLimitSwitchClosed(Forklift.ForkliftPart part)
+	public void moveTowardHigherPotentiometerVoltage(Forklift.ForkliftPart part)
 	{
 		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
 		{
-			return isElevatorEndLimitSwitchClosed();
+			if ( getElevatorPotentiometerPosition() >= ELEVATOR_UPPER_LIMIT )
+			{
+				setElevatorVoltage(0.0);	//stop!
+				System.out.println("Elevator above UPPER Limit");
+			}
+			else
+			{
+				setElevatorVoltage(-12.0); 
+			}
+			return;
 		}
 		else if (part.equals(Forklift.ForkliftPart.FORKS))
 		{
-			return isForksEndLimitSwitchClosed();
+			if ( getForksPotentiometerPosition() >= FORKS_UPPER_LIMIT )
+			{
+				setForksVoltage(0.0);	//stop!
+				System.out.println("Forks above UPPER Limit");
+			}
+			else
+			{
+				setForksVoltage(-12.0); 
+			}
+			return;
 		}
 		else
 		{
-			System.out.println("Something has gone wrong! "
-					+ "isEndLimitSwitchClosed() in Forklift did return a limit switch state...");
+			System.out.println("BUGCHECK: Invalid Forklift Part");
 		}
-		return true;
+		return;
 	}
-	
-	public void setAppropriateVoltage(double voltage, Forklift.ForkliftPart part)
+
+	public void moveTowardLowerPotentiometerVoltage(Forklift.ForkliftPart part)
 	{
 		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
 		{
-			setElevatorVoltage(voltage);
+			if ( getElevatorPotentiometerPosition() <= ELEVATOR_LOWER_LIMIT )
+			{
+				setElevatorVoltage(0.0);	//stop!
+				System.out.println("Elevator at LOWER Limit");
+			}
+			else
+			{
+				setElevatorVoltage(+12.0); 
+			}
+			return;
 		}
 		else if (part.equals(Forklift.ForkliftPart.FORKS))
 		{
-			setForksVoltage(voltage);
+			if ( getForksPotentiometerPosition() <= FORKS_LOWER_LIMIT )
+			{
+				setForksVoltage(0.0);	//stop!
+				System.out.println("Forks at LOWER Limit");
+			}
+			else
+			{
+				setForksVoltage(+12.0); 
+			}
+			return;
 		}
 		else
 		{
-			System.out.println("Something has gone wrong! setAppropriateVoltage() in Forklift did not set a voltage...");
+			System.out.println("BUGCHECK: Invalid Forklift Part");
 		}
+		return;
 	}
+	
+	public void stopMotor(Forklift.ForkliftPart part)
+	{
+		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+		{
+			setElevatorVoltage(0.0);
+		}
+		else if (part.equals(Forklift.ForkliftPart.FORKS))
+		{
+			setForksVoltage(0.0);
+		}
+		else
+		{
+			System.out.println("BUGCHECK: Invalid Forklift Part");
+		}
+		return;
+	}
+
+//	public void setAppropriateMotorVoltage(double voltage, Forklift.ForkliftPart part)
+//	{
+//		if (part.equals(Forklift.ForkliftPart.ELEVATOR))
+//		{
+//			setElevatorVoltage(voltage);
+//		}
+//		else if (part.equals(Forklift.ForkliftPart.FORKS))
+//		{
+//			setForksVoltage(voltage);
+//		}
+//		else
+//		{
+//			System.out.println("BUGCHECK: Invalid Forklift Part");
+//		}
+//		return;
+//	}
 	
 	private double getElevatorPotentiometerPosition()
 	{
@@ -147,27 +210,6 @@ public class Forklift extends Subsystem
 		return 2.5;
 	}
 	
-	private boolean isElevatorEndLimitSwitchClosed()
-	{
-		return elevatorEndLimitSwitch.get();
-	}
-	
-	/*
-	 * private double getElevatorPosition()
-	 * {
-	 * return elevatorJag.getPosition();
-	 * }
-	 * 
-	 * private double getForksPosition()
-	 * {
-	 * return forksJag.getPosition();
-	 * }
-	 */
-	
-	private boolean isForksEndLimitSwitchClosed()
-	{
-		return forksEndLimitSwitch.get();
-	}
 	
 	private void setElevatorVoltage(double voltage)
 	{
