@@ -2,7 +2,6 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,13 +12,14 @@ public class SetElevatorPosition extends Command
 	private double positionToSet;
 	private boolean allDone;
 	
-	private double lastPosition;
-	private double currentPosition;
+	// private double lastPosition;
+	// private double currentPosition;
 	
 	public SetElevatorPosition(double positionToSet)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		requires(Robot.elevator);
 		this.positionToSet = positionToSet;
 	}
 	
@@ -34,34 +34,37 @@ public class SetElevatorPosition extends Command
 	@Override
 	protected void execute()
 	{
-		lastPosition = currentPosition;
-		currentPosition = Robot.elevator.getPotentiometerPosition();
-		
-		System.out.println("Last Position = " + lastPosition + " Current Position = " + currentPosition);
-		
-		if (Math.abs(positionToSet - currentPosition) < ForkliftElevator.getDeadband()
-				&& Math.abs(positionToSet - lastPosition) < ForkliftElevator.getDeadband())
-		{
-			allDone = true;
-			Robot.elevator.setJagVoltage(0);
-		}
-		else if (positionToSet > currentPosition)
-		{
-			Robot.elevator.setJagVoltage(-12);
-		}
-		else
-		{
-			Robot.elevator.setJagVoltage(12);
-		}
+		/*
+		 * lastPosition = currentPosition;
+		 * currentPosition = Robot.elevator.getRotaryEncoderPosition();
+		 * 
+		 * System.out.println("Last Position = " + lastPosition + " Current Position = " + currentPosition);
+		 * 
+		 * if (Math.abs(positionToSet - currentPosition) < ForkliftElevator.getDeadband()
+		 * && Math.abs(positionToSet - lastPosition) < ForkliftElevator.getDeadband())
+		 * {
+		 * allDone = true;
+		 * Robot.elevator.setJagVoltage(0);
+		 * }
+		 * else if (positionToSet > currentPosition)
+		 * {
+		 * Robot.elevator.setJagVoltage(-12);
+		 * }
+		 * else
+		 * {
+		 * Robot.elevator.setJagVoltage(12);
+		 * }
+		 */
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		currentPosition = Robot.elevator.getPotentiometerPosition();
-		allDone = false;
-		
+		// currentPosition = Robot.elevator.getRotaryEncoderPosition();
+		allDone = true;
+		Robot.elevator.setJagPosition(positionToSet);
+		System.out.println("Setpoint: " + positionToSet);
 		/*
 		 * if (Math.abs(positionToSet - currentPosition) < Forklift.ELEVATOR_OVERSHOOT)
 		 * {

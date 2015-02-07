@@ -151,4 +151,14 @@ public class Robot extends IterativeRobot
 			jag.setVoltageRampRate(0.02);
 		}
 	}
+	
+	public static void setupJagForPositionControl(CANJaguar jag, NeutralMode mode)
+	{
+		if (jag != null)
+		{
+			jag.setPositionMode(CANJaguar.kPotentiometer, -500, 0, 0); // On robot -500, 0, 0
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+		}
+	}
 }

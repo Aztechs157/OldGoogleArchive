@@ -2,39 +2,63 @@
 package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
+import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.RotaryEncoder;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
-import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Forklift
+/**
+ * DO NOT INITALIZE
+ * 
+ * @author Teju Nareddy
+ *
+ */
+public abstract class Forklift extends Subsystem
 {
 	public enum ForkliftPart
 	{
 		FORKS, ELEVATOR
 	}
 	
-	private static double deadband;
-	
-	/*
-	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
-	 * ScaledCANJaguar in this class. We only use the scaling factor when we instantiate the jaguar, which takes place in RobotMap
-	 */
+	// Jaguar
 	protected ScaledCANJaguar jag;
 	
 	// Limit Switches
 	protected DigitalLimitSwitch highLimitSwitch;
 	protected DigitalLimitSwitch lowLimitSwitch;
 	
-	// Potentiometer
-	protected AnalogInput potentiometer;
+	// Rotary Enocder
+	protected RotaryEncoder encoder;
 	
-	public double getPotentiometerPosition()
+	public double getRotaryEncoderPosition()
 	{
-		if (potentiometer != null)
+		if (jag != null)
 		{
-			return potentiometer.getVoltage();
+			return jag.getPosition();
 		}
-		System.out.print("Potentiometer is null! Don't know which part...");
-		return 1;
+		System.out.println("Jag is null");
+		return .5;
+	}
+	
+	public double getHighEndEncoderLimit()
+	{
+		return encoder.highEndVoltage;
+	}
+	
+	public double getLowEndEncoderLimit()
+	{
+		return encoder.lowEndVoltage;
+	}
+	
+	public void setJagPosition(double positionToSet)
+	{
+		if (jag != null)
+		{
+			Robot.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake);
+			jag.set(positionToSet);
+		}
+		
 	}
 	
 	// FIXME null check
@@ -48,25 +72,41 @@ public class Forklift
 		return lowLimitSwitch.get();
 	}
 	
-	public void setJagVoltage(double voltage)
+	public double getJagVoltage()
 	{
 		if (jag != null)
 		{
-			jag.set(voltage);
+			return jag.getOutputVoltage();
 		}
-		else
-		{
-			System.out.println("Jag used in forklift is NULL! Don't know which part...");
-		}
+		return 0;
 	}
 	
-	public static double getDeadband()
+	public void setJagI(double value)
 	{
-		return deadband;
+		jag.setI(value);
 	}
 	
-	public static void setDeadband(double deadband)
+	public double getJagCurrent()
 	{
-		Forklift.deadband = deadband;
+		if (jag != null)
+			return jag.getOutputCurrent();
+		return 0;
 	}
+	
+	/*
+	 * public void setJagVoltage(double voltage)
+	 * {
+	 * if (jag != null)
+	 * {
+	 * Robot.setupJagForVoltageControl(jag, CANJaguar.NeutralMode.Brake);
+	 * System.out.println("A + Mode: " + jag.getControlMode());
+	 * jag.set(voltage);
+	 * System.out.println("B");
+	 * }
+	 * else
+	 * {
+	 * System.out.println("Jag used in forklift is NULL! Don't know which part...");
+	 * }
+	 * }
+	 */
 }

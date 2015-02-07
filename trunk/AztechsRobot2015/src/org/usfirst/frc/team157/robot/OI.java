@@ -194,26 +194,25 @@ public class OI
 		// -----------------------------------------//
 		
 		// Actual commands that we want each button to have
-		// FIXME TEST_MODE variable, Zone Selection
 		driverRightButton4.whenPressed(new PrintDebugData());
 		driverLeftButton11.whenPressed(new SwitchDriverType());
 		driverLeftButton4.whenPressed(new DriveSpeedForTime(1, 1, 3));
-		driverLeftButton5.whenPressed(new SetElevatorPosition(1));
+		driverLeftButton5.whenPressed(new SetElevatorPosition(.5));
 		
-		driverLeftButton2.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
-		driverLeftButton3.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverLeftButton2.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverLeftButton3.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
 		driverLeftButton2.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		driverLeftButton3.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		
-		driverRightButton2.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
-		driverRightButton3.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverRightButton2.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverRightButton3.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
 		driverRightButton2.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		driverRightButton3.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		
 		// driverRightButton4.whenPressed(new SetElevatorPosition(1));
 		
-		driverLeftButtonTrigger.whenPressed(new ManualControlDown(ForkliftPart.FORKS));
-		driverRightButtonTrigger.whenPressed(new ManualControlUp(ForkliftPart.FORKS));
+		driverLeftButtonTrigger.whenPressed(new ManualControlUp(ForkliftPart.FORKS));
+		driverRightButtonTrigger.whenPressed(new ManualControlDown(ForkliftPart.FORKS));
 		driverLeftButtonTrigger.whenReleased(new ManualControlStop(ForkliftPart.FORKS));
 		driverRightButtonTrigger.whenReleased(new ManualControlStop(ForkliftPart.FORKS));
 		
