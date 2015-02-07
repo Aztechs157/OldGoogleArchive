@@ -11,5 +11,6 @@ public class ForkliftForks extends Forklift
 		super.potentiometer = RobotMap.forksPotentiometer;
 		super.highLimitSwitch = RobotMap.forksHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.forksLowLimitSwitch;
+		super.setDeadband(0.01);
 	}
 }

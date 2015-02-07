@@ -2,31 +2,29 @@
 package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
+import org.usfirst.frc.team157.robot.ScaledCANJaguar;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CANJaguar;
 
 public class Forklift
 {
-	public static final double ELEVATOR_DEADBAND = 0.01;
-	
 	public enum ForkliftPart
 	{
 		FORKS, ELEVATOR
 	}
 	
+	private static double deadband;
+	
 	/*
 	 * Use generic CANJaguar (not ScaledCANJaguar) as we don't actually care about the methods associated with the more-specific
 	 * ScaledCANJaguar in this class. We only use the scaling factor when we instantiate the jaguar, which takes place in RobotMap
 	 */
-	
-	// Jaguars
-	protected CANJaguar jag;
+	protected ScaledCANJaguar jag;
 	
 	// Limit Switches
 	protected DigitalLimitSwitch highLimitSwitch;
 	protected DigitalLimitSwitch lowLimitSwitch;
 	
-	// Potentiometers
+	// Potentiometer
 	protected AnalogInput potentiometer;
 	
 	public double getPotentiometerPosition()
@@ -60,5 +58,15 @@ public class Forklift
 		{
 			System.out.println("Jag used in forklift is NULL! Don't know which part...");
 		}
+	}
+	
+	public static double getDeadband()
+	{
+		return deadband;
+	}
+	
+	public static void setDeadband(double deadband)
+	{
+		Forklift.deadband = deadband;
 	}
 }

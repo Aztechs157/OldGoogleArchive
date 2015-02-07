@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI
 {
+	public static final double LEFT_DRIVER_Y_SCALE = -1;
+	public static final double RIGHT_DRIVER_Y_SCALE = -1;
+	
 	// Used to determine the main drive controller --> See OperatorDrive command
 	public enum DriverType
 	{
@@ -194,7 +197,7 @@ public class OI
 		// FIXME TEST_MODE variable, Zone Selection
 		driverRightButton4.whenPressed(new PrintDebugData());
 		driverLeftButton11.whenPressed(new SwitchDriverType());
-		driverLeftButton4.whenPressed(new DriveSpeedForTime(-1, -1, 3));
+		driverLeftButton4.whenPressed(new DriveSpeedForTime(1, 1, 3));
 		driverLeftButton5.whenPressed(new SetElevatorPosition(1));
 		
 		driverLeftButton2.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));

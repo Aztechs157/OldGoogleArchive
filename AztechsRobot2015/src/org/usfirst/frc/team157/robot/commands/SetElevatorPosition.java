@@ -2,7 +2,7 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -39,8 +39,8 @@ public class SetElevatorPosition extends Command
 		
 		System.out.println("Last Position = " + lastPosition + " Current Position = " + currentPosition);
 		
-		if (Math.abs(positionToSet - currentPosition) < Forklift.ELEVATOR_DEADBAND
-				&& Math.abs(positionToSet - lastPosition) < Forklift.ELEVATOR_DEADBAND)
+		if (Math.abs(positionToSet - currentPosition) < ForkliftElevator.getDeadband()
+				&& Math.abs(positionToSet - lastPosition) < ForkliftElevator.getDeadband())
 		{
 			allDone = true;
 			Robot.elevator.setJagVoltage(0);

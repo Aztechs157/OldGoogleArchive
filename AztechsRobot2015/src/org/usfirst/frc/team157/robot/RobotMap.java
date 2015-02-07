@@ -36,12 +36,12 @@ public class RobotMap
 	private static final int ELEVATOR_POTENTIOMETER_ID = 1;
 	
 	// Jag Scaling Values
-	private static final int DRIVE_LEFT_JAG1_SCALE = -1;
-	private static final int DRIVE_LEFT_JAG2_SCALE = -1;
-	private static final int DRIVE_RIGHT_JAG1_SCALE = -1;
-	private static final int DRIVE_RIGHT_JAG2_SCALE = -1;
-	private static final int FORKS_JAG_SCALE = 1;
-	private static final int ELEVATOR_JAG_SCALE = 1;
+	private static final double DRIVE_LEFT_JAG1_SCALE = 0.75;
+	private static final double DRIVE_LEFT_JAG2_SCALE = 0.75;
+	private static final double DRIVE_RIGHT_JAG1_SCALE = 0.75;
+	private static final double DRIVE_RIGHT_JAG2_SCALE = 0.75;
+	private static final double FORKS_JAG_SCALE = 1;
+	private static final double ELEVATOR_JAG_SCALE = 1;
 	
 	// Limit Switches IsReversed variables -- If the wiring of the limit switch is backward, set this to true for the robot to
 	// correctly determine if the limit switch is opened or closed
