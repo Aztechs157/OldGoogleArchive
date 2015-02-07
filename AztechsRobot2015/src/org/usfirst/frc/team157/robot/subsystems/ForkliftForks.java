@@ -8,9 +8,15 @@ public class ForkliftForks extends Forklift
 	public ForkliftForks()
 	{
 		super.jag = RobotMap.forksJag;
-		super.potentiometer = RobotMap.forksPotentiometer;
+		super.encoder = RobotMap.forksRotaryEncoder;
 		super.highLimitSwitch = RobotMap.forksHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.forksLowLimitSwitch;
-		super.setDeadband(0.01);
+	}
+	
+	@Override
+	protected void initDefaultCommand()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

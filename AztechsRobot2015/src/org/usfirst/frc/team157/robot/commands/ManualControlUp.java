@@ -17,6 +17,14 @@ public class ManualControlUp extends Command
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		if (part.equals(ForkliftPart.ELEVATOR))
+		{
+			requires(Robot.elevator);
+		}
+		else
+		{
+			requires(Robot.forks);
+		}
 		this.part = part;
 	}
 	
@@ -32,11 +40,11 @@ public class ManualControlUp extends Command
 	{
 		if (part.equals(ForkliftPart.ELEVATOR))
 		{
-			Robot.elevator.setJagVoltage(12);
+			Robot.elevator.setJagPosition(Robot.elevator.getHighEndEncoderLimit());
 		}
 		else
 		{
-			Robot.forks.setJagVoltage(12);
+			Robot.forks.setJagPosition(Robot.forks.getHighEndEncoderLimit());
 		}
 	}
 	

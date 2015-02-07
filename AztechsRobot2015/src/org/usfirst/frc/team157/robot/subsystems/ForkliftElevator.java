@@ -8,9 +8,15 @@ public class ForkliftElevator extends Forklift
 	public ForkliftElevator()
 	{
 		super.jag = RobotMap.elevatorJag;
-		super.potentiometer = RobotMap.elevatorPotentiometer;
+		super.encoder = RobotMap.elevatorRotaryEncoder;
 		super.highLimitSwitch = RobotMap.elevatorHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.elevatorLowLimitSwitch;
-		super.setDeadband(0.01);
+	}
+	
+	@Override
+	protected void initDefaultCommand()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

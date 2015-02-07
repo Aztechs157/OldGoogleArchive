@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team157.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
@@ -25,7 +24,7 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
 	private static final int FORKS_JAG_ID = 11;
-	private static final int ELEVATOR_JAG_ID = 13; // Test 6
+	private static final int ELEVATOR_JAG_ID = 6; // 13, 6
 	
 	private static final int FORKS_HIGH_LIMITSWITCH_ID = 1;
 	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 3;
@@ -38,8 +37,8 @@ public class RobotMap
 	// Jag Scaling Values
 	private static final double DRIVE_LEFT_JAG1_SCALE = 0.75;
 	private static final double DRIVE_LEFT_JAG2_SCALE = 0.75;
-	private static final double DRIVE_RIGHT_JAG1_SCALE = 0.75;
-	private static final double DRIVE_RIGHT_JAG2_SCALE = 0.75;
+	private static final double DRIVE_RIGHT_JAG1_SCALE = -0.75;
+	private static final double DRIVE_RIGHT_JAG2_SCALE = -0.75;
 	private static final double FORKS_JAG_SCALE = 1;
 	private static final double ELEVATOR_JAG_SCALE = 1;
 	
@@ -70,8 +69,8 @@ public class RobotMap
 	public static DigitalLimitSwitch elevatorLowLimitSwitch;
 	
 	// Forklift Potentiometer
-	public static AnalogInput forksPotentiometer;
-	public static AnalogInput elevatorPotentiometer;
+	public static RotaryEncoder forksRotaryEncoder;
+	public static RotaryEncoder elevatorRotaryEncoder;
 	
 	// FIXME What subsystem?
 	// Built-In Accelerometer: Most likely part of the Drive Subsystem
@@ -141,8 +140,8 @@ public class RobotMap
 		elevatorLowLimitSwitch = new DigitalLimitSwitch(ELEVATOR_LOW_LIMSWITCH_ID, ELEVATOR_LOW_LIMSWITCH_REVERSED);
 		
 		// Instantiate potentiometers
-		forksPotentiometer = new AnalogInput(FORKS_POTENTIOMETER_ID);
-		elevatorPotentiometer = new AnalogInput(ELEVATOR_POTENTIOMETER_ID);
+		forksRotaryEncoder = new RotaryEncoder(FORKS_POTENTIOMETER_ID, "/home/lvuser/ForksEncoderConstants.txt");
+		elevatorRotaryEncoder = new RotaryEncoder(ELEVATOR_POTENTIOMETER_ID, "/home/lvuser/ElevatorEncoderConstants.txt");
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
@@ -155,7 +154,7 @@ public class RobotMap
 		Robot.setupJagForPercentControl(driveLeftJag2, CANJaguar.NeutralMode.Coast);
 		Robot.setupJagForPercentControl(driveRightJag1, CANJaguar.NeutralMode.Coast);
 		Robot.setupJagForPercentControl(driveRightJag2, CANJaguar.NeutralMode.Coast);
-		Robot.setupJagForVoltageControl(forksJag, CANJaguar.NeutralMode.Brake);
-		Robot.setupJagForVoltageControl(elevatorJag, CANJaguar.NeutralMode.Brake);
+		Robot.setupJagForPositionControl(forksJag, CANJaguar.NeutralMode.Brake);
+		Robot.setupJagForPositionControl(elevatorJag, CANJaguar.NeutralMode.Brake);
 	}
 }
