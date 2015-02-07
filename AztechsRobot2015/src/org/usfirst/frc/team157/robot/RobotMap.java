@@ -24,26 +24,31 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG1_ID = 7;
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
-	private static final int FORKS_JAG_ID = 11; // Test ID 11
-	private static final int ELEVATOR_JAG_ID = 6; // Actually 13
+	private static final int FORKS_JAG_ID = 11;
+	private static final int ELEVATOR_JAG_ID = 13; // Test 6
 	
-	private static final int FORKS_END_LIMITSWITCH_ID = 1;
-	private static final int ELEVATOR_END_LIMSWITCH_ID = 2;
+	private static final int FORKS_HIGH_LIMITSWITCH_ID = 1;
+	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 3;
+	private static final int FORKS_LOW_LIMITSWITCH_ID = 2;
+	private static final int ELEVATOR_LOW_LIMSWITCH_ID = 4;
+	
 	private static final int FORKS_POTENTIOMETER_ID = 0;
 	private static final int ELEVATOR_POTENTIOMETER_ID = 1;
 	
 	// Jag Scaling Values
 	private static final int DRIVE_LEFT_JAG1_SCALE = -1;
 	private static final int DRIVE_LEFT_JAG2_SCALE = -1;
-	private static final int DRIVE_RIGHT_JAG1_SCALE = 1;
-	private static final int DRIVE_RIGHT_JAG2_SCALE = 1;
+	private static final int DRIVE_RIGHT_JAG1_SCALE = -1;
+	private static final int DRIVE_RIGHT_JAG2_SCALE = -1;
 	private static final int FORKS_JAG_SCALE = 1;
 	private static final int ELEVATOR_JAG_SCALE = 1;
 	
 	// Limit Switches IsReversed variables -- If the wiring of the limit switch is backward, set this to true for the robot to
 	// correctly determine if the limit switch is opened or closed
-	private static final boolean FORKS_END_LIMITSWITCH_REVERSED = true;
-	private static final boolean ELEVATOR_END_LIMSWITCH_REVERSED = true;
+	private static final boolean FORKS_HIGH_LIMITSWITCH_REVERSED = true;
+	private static final boolean ELEVATOR_HIGH_LIMSWITCH_REVERSED = true;
+	private static final boolean FORKS_LOW_LIMITSWITCH_REVERSED = true;
+	private static final boolean ELEVATOR_LOW_LIMSWITCH_REVERSED = true;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -59,8 +64,10 @@ public class RobotMap
 	public static ScaledCANJaguar elevatorJag;
 	
 	// Forklift Subsystem Limit Switches
-	public static DigitalLimitSwitch forksEndLimitSwitch;
-	public static DigitalLimitSwitch elevatorEndLimitSwitch;
+	public static DigitalLimitSwitch forksHighLimitSwitch;
+	public static DigitalLimitSwitch elevatorHighLimitSwitch;
+	public static DigitalLimitSwitch forksLowLimitSwitch;
+	public static DigitalLimitSwitch elevatorLowLimitSwitch;
 	
 	// Forklift Potentiometer
 	public static AnalogInput forksPotentiometer;
@@ -128,8 +135,10 @@ public class RobotMap
 		}
 		
 		// Instantiate limit switches with the IsReversed variable
-		forksEndLimitSwitch = new DigitalLimitSwitch(FORKS_END_LIMITSWITCH_ID, FORKS_END_LIMITSWITCH_REVERSED);
-		elevatorEndLimitSwitch = new DigitalLimitSwitch(ELEVATOR_END_LIMSWITCH_ID, ELEVATOR_END_LIMSWITCH_REVERSED);
+		forksHighLimitSwitch = new DigitalLimitSwitch(FORKS_HIGH_LIMITSWITCH_ID, FORKS_HIGH_LIMITSWITCH_REVERSED);
+		elevatorHighLimitSwitch = new DigitalLimitSwitch(ELEVATOR_HIGH_LIMSWITCH_ID, ELEVATOR_HIGH_LIMSWITCH_REVERSED);
+		forksLowLimitSwitch = new DigitalLimitSwitch(FORKS_LOW_LIMITSWITCH_ID, FORKS_LOW_LIMITSWITCH_REVERSED);
+		elevatorLowLimitSwitch = new DigitalLimitSwitch(ELEVATOR_LOW_LIMSWITCH_ID, ELEVATOR_LOW_LIMSWITCH_REVERSED);
 		
 		// Instantiate potentiometers
 		forksPotentiometer = new AnalogInput(FORKS_POTENTIOMETER_ID);

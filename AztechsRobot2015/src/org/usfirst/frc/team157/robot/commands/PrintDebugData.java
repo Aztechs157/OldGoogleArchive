@@ -2,7 +2,6 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -32,7 +31,7 @@ public class PrintDebugData extends Command
 		 * System.out.print(", " + RobotMap.accelerometer.getY());
 		 * System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
 		 */
-		System.out.println("Encoder: " + Robot.forklift.getAppropriatePotentiometerPosition(Forklift.ForkliftPart.ELEVATOR));
+		System.out.println("Encoder Elevator: " + Robot.elevator.getPotentiometerPosition());
 	}
 	
 	// Called just before this Command runs the first time

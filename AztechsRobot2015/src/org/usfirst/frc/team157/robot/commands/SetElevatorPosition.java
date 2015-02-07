@@ -8,20 +8,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Teju Nareddy
  */
-public class SetPosition extends Command
+public class SetElevatorPosition extends Command
 {
-	private Forklift.ForkliftPart part;
 	private double positionToSet;
 	private boolean allDone;
 	
 	private double lastPosition;
 	private double currentPosition;
 	
-	public SetPosition(Forklift.ForkliftPart part, double positionToSet)
+	public SetElevatorPosition(double positionToSet)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.part = part;
 		this.positionToSet = positionToSet;
 	}
 	
@@ -37,7 +35,7 @@ public class SetPosition extends Command
 	protected void execute()
 	{
 		lastPosition = currentPosition;
-		currentPosition = Robot.forklift.getAppropriatePotentiometerPosition(part);
+		currentPosition = Robot.elevator.getPotentiometerPosition();
 		
 		System.out.println("Last Position = " + lastPosition + " Current Position = " + currentPosition);
 		
@@ -45,15 +43,15 @@ public class SetPosition extends Command
 				&& Math.abs(positionToSet - lastPosition) < Forklift.ELEVATOR_DEADBAND)
 		{
 			allDone = true;
-			Robot.forklift.stopMotor(part);
+			Robot.elevator.setJagVoltage(0);
 		}
 		else if (positionToSet > currentPosition)
 		{
-			Robot.forklift.moveTowardHigherPotentiometerVoltage(part);
+			Robot.elevator.setJagVoltage(-12);
 		}
 		else
 		{
-			Robot.forklift.moveTowardLowerPotentiometerVoltage(part);
+			Robot.elevator.setJagVoltage(12);
 		}
 	}
 	
@@ -61,7 +59,7 @@ public class SetPosition extends Command
 	@Override
 	protected void initialize()
 	{
-		currentPosition = Robot.forklift.getAppropriatePotentiometerPosition(part);
+		currentPosition = Robot.elevator.getPotentiometerPosition();
 		allDone = false;
 		
 		/*

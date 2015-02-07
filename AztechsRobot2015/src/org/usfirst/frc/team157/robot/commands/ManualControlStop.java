@@ -2,7 +2,7 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import org.usfirst.frc.team157.robot.subsystems.Forklift.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,13 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ManualControlStop extends Command
 {
-	Forklift.ForkliftPart partToMove;
 	
-	public ManualControlStop(Forklift.ForkliftPart part)
+	private ForkliftPart part;
+	
+	public ManualControlStop(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		partToMove = part;
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
@@ -29,8 +30,14 @@ public class ManualControlStop extends Command
 	@Override
 	protected void execute()
 	{
-		//Robot.forklift.setAppropriateVoltage(0, partToMove);
-		Robot.forklift.stopMotor(partToMove);
+		if (part.equals(ForkliftPart.ELEVATOR))
+		{
+			Robot.elevator.setJagVoltage(0);
+		}
+		else
+		{
+			Robot.forks.setJagVoltage(0);
+		}
 	}
 	
 	// Called just before this Command runs the first time

@@ -8,9 +8,9 @@ import org.usfirst.frc.team157.robot.commands.ManualControlDown;
 import org.usfirst.frc.team157.robot.commands.ManualControlStop;
 import org.usfirst.frc.team157.robot.commands.ManualControlUp;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
-import org.usfirst.frc.team157.robot.commands.SetPosition;
+import org.usfirst.frc.team157.robot.commands.SetElevatorPosition;
 import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import org.usfirst.frc.team157.robot.subsystems.Forklift.ForkliftPart;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -192,22 +192,27 @@ public class OI
 		
 		// Actual commands that we want each button to have
 		// FIXME TEST_MODE variable, Zone Selection
-		driverLeftButtonTrigger.whenPressed(new PrintDebugData());
+		driverRightButton4.whenPressed(new PrintDebugData());
 		driverLeftButton11.whenPressed(new SwitchDriverType());
-		driverLeftButton4.whenPressed(new DriveSpeedForTime(1, 1, 5));
-		driverLeftButton5.whenPressed(new SetPosition(Forklift.ForkliftPart.ELEVATOR, 2.0));
+		driverLeftButton4.whenPressed(new DriveSpeedForTime(-1, -1, 3));
+		driverLeftButton5.whenPressed(new SetElevatorPosition(1));
 		
-		driverLeftButton2.whenPressed(new ManualControlDown(Forklift.ForkliftPart.ELEVATOR));
-		driverLeftButton3.whenPressed(new ManualControlUp(Forklift.ForkliftPart.ELEVATOR));
-		driverLeftButton2.whenReleased(new ManualControlStop(Forklift.ForkliftPart.ELEVATOR));
-		driverLeftButton3.whenReleased(new ManualControlStop(Forklift.ForkliftPart.ELEVATOR));
+		driverLeftButton2.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
+		driverLeftButton3.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverLeftButton2.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
+		driverLeftButton3.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		
-		driverRightButton4.whenPressed(new SetPosition(Forklift.ForkliftPart.FORKS, 2.0));
+		driverRightButton2.whenPressed(new ManualControlDown(ForkliftPart.ELEVATOR));
+		driverRightButton3.whenPressed(new ManualControlUp(ForkliftPart.ELEVATOR));
+		driverRightButton2.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
+		driverRightButton3.whenReleased(new ManualControlStop(ForkliftPart.ELEVATOR));
 		
-		driverRightButton2.whenPressed(new ManualControlDown(Forklift.ForkliftPart.FORKS));
-		driverRightButton3.whenPressed(new ManualControlUp(Forklift.ForkliftPart.FORKS));
-		driverRightButton2.whenReleased(new ManualControlStop(Forklift.ForkliftPart.FORKS));
-		driverRightButton3.whenReleased(new ManualControlStop(Forklift.ForkliftPart.FORKS));
+		// driverRightButton4.whenPressed(new SetElevatorPosition(1));
+		
+		driverLeftButtonTrigger.whenPressed(new ManualControlDown(ForkliftPart.FORKS));
+		driverRightButtonTrigger.whenPressed(new ManualControlUp(ForkliftPart.FORKS));
+		driverLeftButtonTrigger.whenReleased(new ManualControlStop(ForkliftPart.FORKS));
+		driverRightButtonTrigger.whenReleased(new ManualControlStop(ForkliftPart.FORKS));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
