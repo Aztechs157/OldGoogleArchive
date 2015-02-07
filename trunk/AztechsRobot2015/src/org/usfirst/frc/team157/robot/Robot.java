@@ -16,6 +16,8 @@ package org.usfirst.frc.team157.robot;
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.subsystems.Drive;
 import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftForks;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.CANJaguar.NeutralMode;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -41,7 +43,10 @@ public class Robot extends IterativeRobot
 	public static Command autonomousCommand;
 	public static OI oi;
 	public static Drive drive;
+	
 	public static Forklift forklift;
+	public static ForkliftElevator elevator;
+	public static ForkliftForks forks;
 	
 	@Override
 	public void autonomousInit()
@@ -84,6 +89,8 @@ public class Robot extends IterativeRobot
 		// Instantiate subsystems
 		drive = new Drive();
 		forklift = new Forklift();
+		elevator = new ForkliftElevator();
+		forks = new ForkliftForks();
 		
 		// OI must be at the end of the list!!!
 		oi = new OI();

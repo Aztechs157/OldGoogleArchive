@@ -2,7 +2,7 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
+import org.usfirst.frc.team157.robot.subsystems.Forklift.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,13 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ManualControlDown extends Command
 {
-	Forklift.ForkliftPart partToMove;
 	
-	public ManualControlDown(Forklift.ForkliftPart part)
+	private ForkliftPart part;
+	
+	public ManualControlDown(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		partToMove = part;
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
@@ -29,8 +30,14 @@ public class ManualControlDown extends Command
 	@Override
 	protected void execute()
 	{
-		//Robot.forklift.setAppropriateVoltage(-12, partToMove);
-		Robot.forklift.moveTowardLowerPotentiometerVoltage(partToMove);
+		if (part.equals(ForkliftPart.ELEVATOR))
+		{
+			Robot.elevator.setJagVoltage(-12);
+		}
+		else
+		{
+			Robot.forks.setJagVoltage(-12);
+		}
 	}
 	
 	// Called just before this Command runs the first time

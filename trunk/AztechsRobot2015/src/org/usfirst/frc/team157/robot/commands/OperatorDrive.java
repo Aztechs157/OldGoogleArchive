@@ -59,6 +59,9 @@ public class OperatorDrive extends Command
 			leftSpeed = rightSpeed; // RightSpeed is dominant
 		}
 		
+		rightSpeed *= 0.75;
+		leftSpeed *= 0.75;
+		
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
 	}
 	
