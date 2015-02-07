@@ -15,7 +15,6 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.subsystems.Drive;
-import org.usfirst.frc.team157.robot.subsystems.Forklift;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftForks;
 import edu.wpi.first.wpilibj.CANJaguar;
@@ -44,7 +43,6 @@ public class Robot extends IterativeRobot
 	public static OI oi;
 	public static Drive drive;
 	
-	public static Forklift forklift;
 	public static ForkliftElevator elevator;
 	public static ForkliftForks forks;
 	
@@ -88,7 +86,6 @@ public class Robot extends IterativeRobot
 		
 		// Instantiate subsystems
 		drive = new Drive();
-		forklift = new Forklift();
 		elevator = new ForkliftElevator();
 		forks = new ForkliftForks();
 		
