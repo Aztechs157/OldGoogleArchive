@@ -31,8 +31,7 @@ public class PrintDebugData extends Command
 		 * System.out.print(", " + RobotMap.accelerometer.getY());
 		 * System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
 		 */
-		System.out.println("Encoder: " + Robot.elevator.getRotaryEncoderPosition() + " Voltage: "
-				+ Robot.elevator.getJagVoltage());
+		System.out.println("Elevator: " + Robot.elevator.getJagPosition() + " Forks: " + Robot.forks.getJagPosition());
 		
 		/*
 		 * if (Math.abs(Robot.elevator.getRotaryEncoderPosition() - 0.5) < 0.005)

@@ -3,7 +3,6 @@ package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
 import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.RotaryEncoder;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,13 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Teju Nareddy
  *
  */
-public abstract class Forklift extends Subsystem
+public abstract class ForkliftPart extends Subsystem
 {
-	public enum ForkliftPart
-	{
-		FORKS, ELEVATOR
-	}
-	
 	// Jaguar
 	protected ScaledCANJaguar jag;
 	
@@ -28,10 +22,11 @@ public abstract class Forklift extends Subsystem
 	protected DigitalLimitSwitch highLimitSwitch;
 	protected DigitalLimitSwitch lowLimitSwitch;
 	
-	// Rotary Enocder
-	protected RotaryEncoder encoder;
+	// Rotary Encoder Positions
+	protected double highEndVoltage;
+	protected double lowEndVoltage;
 	
-	public double getRotaryEncoderPosition()
+	public double getJagPosition()
 	{
 		if (jag != null)
 		{
@@ -43,12 +38,12 @@ public abstract class Forklift extends Subsystem
 	
 	public double getHighEndEncoderLimit()
 	{
-		return encoder.highEndVoltage;
+		return highEndVoltage;
 	}
 	
 	public double getLowEndEncoderLimit()
 	{
-		return encoder.lowEndVoltage;
+		return lowEndVoltage;
 	}
 	
 	public void setJagPosition(double positionToSet)
@@ -64,12 +59,22 @@ public abstract class Forklift extends Subsystem
 	// FIXME null check
 	public boolean isHighLimitSwitchClosed()
 	{
-		return highLimitSwitch.get();
+		if (highLimitSwitch != null)
+		{
+			return highLimitSwitch.get();
+		}
+		System.out.println("HighLimitSwitch is null!");
+		return true;
 	}
 	
 	public boolean isLowLimitSwitchClosed()
 	{
-		return lowLimitSwitch.get();
+		if (lowLimitSwitch != null)
+		{
+			return lowLimitSwitch.get();
+		}
+		System.out.println("LowLimitSwitch is null!");
+		return true;
 	}
 	
 	public double getJagVoltage()
@@ -81,15 +86,13 @@ public abstract class Forklift extends Subsystem
 		return 0;
 	}
 	
-	public void setJagI(double value)
-	{
-		jag.setI(value);
-	}
-	
 	public double getJagCurrent()
 	{
 		if (jag != null)
+		{
 			return jag.getOutputCurrent();
+		}
+		System.out.println("Could not get jag current!");
 		return 0;
 	}
 	

@@ -1,26 +1,28 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Teju Nareddy
  */
-public class SetElevatorPosition extends Command
+public class SetPosition extends Command
 {
 	private double positionToSet;
 	private boolean allDone;
+	private ForkliftPart part;
 	
 	// private double lastPosition;
 	// private double currentPosition;
 	
-	public SetElevatorPosition(double positionToSet)
+	public SetPosition(double positionToSet, ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.elevator);
+		requires(part);
 		this.positionToSet = positionToSet;
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
@@ -63,8 +65,9 @@ public class SetElevatorPosition extends Command
 	{
 		// currentPosition = Robot.elevator.getRotaryEncoderPosition();
 		allDone = true;
-		Robot.elevator.setJagPosition(positionToSet);
+		part.setJagPosition(positionToSet);
 		System.out.println("Setpoint: " + positionToSet);
+		
 		/*
 		 * if (Math.abs(positionToSet - currentPosition) < Forklift.ELEVATOR_OVERSHOOT)
 		 * {

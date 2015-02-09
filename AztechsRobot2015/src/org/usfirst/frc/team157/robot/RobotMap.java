@@ -68,10 +68,6 @@ public class RobotMap
 	public static DigitalLimitSwitch forksLowLimitSwitch;
 	public static DigitalLimitSwitch elevatorLowLimitSwitch;
 	
-	// Forklift Potentiometer
-	public static RotaryEncoder forksRotaryEncoder;
-	public static RotaryEncoder elevatorRotaryEncoder;
-	
 	// FIXME What subsystem?
 	// Built-In Accelerometer: Most likely part of the Drive Subsystem
 	public static BuiltInAccelerometer accelerometer;
@@ -140,8 +136,10 @@ public class RobotMap
 		elevatorLowLimitSwitch = new DigitalLimitSwitch(ELEVATOR_LOW_LIMSWITCH_ID, ELEVATOR_LOW_LIMSWITCH_REVERSED);
 		
 		// Instantiate potentiometers
-		forksRotaryEncoder = new RotaryEncoder(FORKS_POTENTIOMETER_ID, "/home/lvuser/ForksEncoderConstants.txt");
-		elevatorRotaryEncoder = new RotaryEncoder(ELEVATOR_POTENTIOMETER_ID, "/home/lvuser/ElevatorEncoderConstants.txt");
+		/*
+		 * forksRotaryEncoder = new RotaryEncoder(FORKS_POTENTIOMETER_ID, "/home/lvuser/ForksEncoderConstants.txt");
+		 * elevatorRotaryEncoder = new RotaryEncoder(ELEVATOR_POTENTIOMETER_ID, "/home/lvuser/ElevatorEncoderConstants.txt");
+		 */
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
