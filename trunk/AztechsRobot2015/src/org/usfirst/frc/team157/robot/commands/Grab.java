@@ -50,9 +50,18 @@ public class Grab extends Command
 		}
 		averageCurrent /= 5;
 		
-		if (averageCurrent > 4)
+		if (averageCurrent > 4) // Threshold
 		{
 			allDone = true;
+			System.out.println("Grabbed something!");
+			Robot.forks.setJagPosition(Robot.forks.getJagPosition()); // Stop them from crushing the object
+		}
+		
+		if (Robot.forks.getJagPosition() - Robot.forks.getLowEndEncoderLimit() < 0.05)
+		{
+			allDone = true;
+			System.out.println("Did not grab anything!");
+			Robot.forks.setJagPosition(Robot.forks.getHighEndEncoderLimit()); // Open them again
 		}
 		// if the average current is greater than a threshold
 		// then stop (allDone = true)
@@ -69,7 +78,7 @@ public class Grab extends Command
 	@Override
 	protected void end()
 	{
-		Robot.forks.setJagPosition(Robot.forks.getRotaryEncoderPosition());
+		
 	}
 	
 	// Called when another command which requires one or more of the same

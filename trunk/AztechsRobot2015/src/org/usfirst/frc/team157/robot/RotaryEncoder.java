@@ -2,40 +2,106 @@
 package org.usfirst.frc.team157.robot;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
-import edu.wpi.first.wpilibj.AnalogInput;
 
-public class RotaryEncoder extends AnalogInput
+// FIXME replace these in proper place
+
+public class RotaryEncoder
 {
-	public File f;
-	public Scanner fileScanner;
-	public Scanner lineScanner;
+	private File f;
+	private Scanner fileScanner;
+	private Scanner lineScanner;
+	private PrintStream printToFile;
 	
-	public double lowEndVoltage;
-	public double highEndVoltage;
+	private double lowEndVoltage;
 	
-	public RotaryEncoder(int channel, String fileName)
+	public double getLowEndVoltage()
 	{
-		super(channel);
-		
+		return lowEndVoltage;
+	}
+	
+	public double getHighEndVoltage()
+	{
+		return highEndVoltage;
+	}
+	
+	private double highEndVoltage;
+	
+	public RotaryEncoder(String filePath)
+	{
 		lowEndVoltage = -1;
 		highEndVoltage = 4;
 		
-		/*
-		 * f = new File(fileName);
-		 * try
-		 * {
-		 * fileScanner = new Scanner(f);
-		 * }
-		 * catch (FileNotFoundException e)
-		 * {
-		 * // TODO Auto-generated catch block
-		 * e.printStackTrace();
-		 * }
-		 * 
-		 * lineScanner = new Scanner(fileScanner.next);
-		 * 
-		 * System.out.println(lineScanner.next());
-		 */
+		f = new File(filePath);
+		
+		if (!f.exists())
+		{
+			System.out.println("File not found rotary encoder: " + filePath);
+			System.out.println("Setting defualt values!");
+			createDefualtFile();
+		}
+		else
+		{
+			assignValuesFromFile();
+			try
+			{
+				printToFile = new PrintStream(new File("results.txt"));
+			}
+			catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void createDefualtFile()
+	{
+		System.out.println("Creating a defualt values file in rotary encoder: " + f.getName());
+		try
+		{
+			f.createNewFile();
+		}
+		catch (IOException e)
+		{
+			System.out.println("COULD NOT CREATE FILE!");
+		}
+		try
+		{
+			printToFile = new PrintStream(f);
+		}
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		printToFile.println("Low: " + lowEndVoltage);
+		printToFile.println("High: " + highEndVoltage);
+	}
+	
+	private void assignValuesFromFile()
+	{
+		// File should be found by now
+		try
+		{
+			fileScanner = new Scanner(f);
+		}
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		lineScanner = new Scanner(fileScanner.nextLine()); // Low: #
+		lineScanner.next(); // Low:
+		lowEndVoltage = Integer.parseInt(lineScanner.next()); // #
+		
+		lineScanner = new Scanner(fileScanner.nextLine()); // High: #
+		lineScanner.next(); // High:
+		highEndVoltage = Integer.parseInt(lineScanner.next()); // #
 	}
 }

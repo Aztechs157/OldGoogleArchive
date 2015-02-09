@@ -1,8 +1,7 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
-import org.usfirst.frc.team157.robot.subsystems.Forklift.ForkliftPart;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -17,14 +16,7 @@ public class ManualControlDown extends Command
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		if (part.equals(ForkliftPart.ELEVATOR))
-		{
-			requires(Robot.elevator);
-		}
-		else
-		{
-			requires(Robot.forks);
-		}
+		requires(part);
 		this.part = part;
 	}
 	
@@ -38,14 +30,10 @@ public class ManualControlDown extends Command
 	@Override
 	protected void execute()
 	{
-		if (part.equals(ForkliftPart.ELEVATOR))
-		{
-			Robot.elevator.setJagPosition(Robot.elevator.getLowEndEncoderLimit());
-		}
-		else
-		{
-			Robot.forks.setJagPosition(Robot.forks.getLowEndEncoderLimit());
-		}
+		// if (part.getJagPosition() - part.getLowEndEncoderLimit() > 0.05)
+		
+		part.setJagPosition(part.getLowEndEncoderLimit());
+		
 	}
 	
 	// Called just before this Command runs the first time
