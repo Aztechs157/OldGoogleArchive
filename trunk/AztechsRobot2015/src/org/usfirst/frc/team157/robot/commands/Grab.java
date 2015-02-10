@@ -56,7 +56,7 @@ public class Grab extends Command
 			Robot.forks.setJagPosition(Robot.forks.getJagPosition()); // Stop them from crushing the object
 		}
 		else if (Robot.forks.getJagPosition() - Robot.forks.getLowEndEncoderLimit() < 0.05) // Near end limit: Did not grab
-																							// anything
+		// anything
 		{
 			allDone = true;
 			System.out.println("Did not grab anything!");

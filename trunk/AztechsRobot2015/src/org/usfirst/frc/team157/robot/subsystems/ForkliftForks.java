@@ -13,11 +13,6 @@ public class ForkliftForks extends ForkliftPart
 	
 	public final double grabCurrentThreshold = 6;
 	
-	public double getGrabCurrentThreshold()
-	{
-		return grabCurrentThreshold;
-	}
-	
 	public ForkliftForks()
 	{
 		// Setup Jag and PID
@@ -41,6 +36,11 @@ public class ForkliftForks extends ForkliftPart
 	public double getContainerUprightPosition()
 	{
 		return positions[2];
+	}
+	
+	public double getGrabCurrentThreshold()
+	{
+		return grabCurrentThreshold;
 	}
 	
 	public double getToteNormalPosition()

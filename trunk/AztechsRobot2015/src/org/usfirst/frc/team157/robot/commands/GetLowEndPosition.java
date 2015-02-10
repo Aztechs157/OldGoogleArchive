@@ -21,12 +21,15 @@ public class GetLowEndPosition extends Command
 		this.part = part;
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
-		part.setJagScale(0.25);
-		allDone = false;
+		double position = part.getJagPosition();
+		part.setJagPosition(position); // Stops it
+		part.setLowEndEncoderLimit(position);
+		System.out.println("Low end position for " + part.getName() + " is: " + position);
+		part.setJagScale(1);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -40,22 +43,12 @@ public class GetLowEndPosition extends Command
 		}
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
+	protected void initialize()
 	{
-		return allDone;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
-		double position = part.getJagPosition();
-		part.setJagPosition(position); // Stops it
-		part.setLowEndEncoderLimit(position);
-		System.out.println("Low end position for " + part.getName() + " is: " + position);
-		part.setJagScale(1);
+		part.setJagScale(0.25);
+		allDone = false;
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -64,5 +57,12 @@ public class GetLowEndPosition extends Command
 	protected void interrupted()
 	{
 		part.setJagScale(1);
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return allDone;
 	}
 }
