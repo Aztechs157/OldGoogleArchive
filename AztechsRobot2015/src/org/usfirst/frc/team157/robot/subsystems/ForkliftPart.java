@@ -65,21 +65,6 @@ public abstract class ForkliftPart extends Subsystem
 		return lowEndVoltage;
 	}
 	
-	public void setLowEndEncoderLimit(double position)
-	{
-		lowEndVoltage = position;
-	}
-	
-	public void setHighEndEncoderLimit(double position)
-	{
-		highEndVoltage = position;
-	}
-	
-	public void setJagScale(double scalingFactor)
-	{
-		jag.setScalingFactor(scalingFactor);
-	}
-	
 	// FIXME null check
 	public boolean isHighLimitSwitchClosed()
 	{
@@ -103,6 +88,34 @@ public abstract class ForkliftPart extends Subsystem
 		return true;
 	}
 	
+	public boolean isNearALimit()
+	{
+		return isNearHighLimit() || isNearLowLimit();
+	}
+	
+	public boolean isNearHighLimit()
+	{
+		if (isHighLimitSwitchClosed() || highEndVoltage - getJagPosition() < 0.05)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isNearLowLimit()
+	{
+		if (isLowLimitSwitchClosed() || getJagPosition() - lowEndVoltage < 0.05)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public void setHighEndEncoderLimit(double position)
+	{
+		highEndVoltage = position;
+	}
+	
 	public void setJagPID(double P, double I, double D)
 	{
 		jag.setPID(P, I, D);
@@ -117,23 +130,14 @@ public abstract class ForkliftPart extends Subsystem
 		}
 	}
 	
-	public boolean isNearHighLimit()
+	public void setJagScale(double scalingFactor)
 	{
-		if (this.isHighLimitSwitchClosed() || this.highEndVoltage - this.getJagPosition() < 0.05)
-			return true;
-		return false;
+		jag.setScalingFactor(scalingFactor);
 	}
 	
-	public boolean isNearLowLimit()
+	public void setLowEndEncoderLimit(double position)
 	{
-		if (this.isLowLimitSwitchClosed() || this.getJagPosition() - this.lowEndVoltage < 0.05)
-			return true;
-		return false;
-	}
-	
-	public boolean isNearALimit()
-	{
-		return this.isNearHighLimit() || this.isNearLowLimit();
+		lowEndVoltage = position;
 	}
 	
 	/*
