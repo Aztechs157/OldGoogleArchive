@@ -15,7 +15,6 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.subsystems.Drive;
-import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftForks;
 import edu.wpi.first.wpilibj.CANJaguar;
@@ -44,8 +43,8 @@ public class Robot extends IterativeRobot
 	public static OI oi;
 	public static Drive drive;
 	
-	public static ForkliftPart elevator;
-	public static ForkliftPart forks;
+	public static ForkliftElevator elevator;
+	public static ForkliftForks forks;
 	
 	@Override
 	public void autonomousInit()
@@ -142,6 +141,16 @@ public class Robot extends IterativeRobot
 		}
 	}
 	
+	public static void setupJagForPositionControl(CANJaguar jag, NeutralMode mode)
+	{
+		if (jag != null)
+		{
+			jag.setPositionMode(CANJaguar.kPotentiometer, -500, 0, 0); // On robot -500, 0, 0
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+		}
+	}
+	
 	public static void setupJagForVoltageControl(CANJaguar jag, NeutralMode mode)
 	{
 		if (jag != null)
@@ -150,16 +159,6 @@ public class Robot extends IterativeRobot
 			jag.configNeutralMode(mode);
 			jag.enableControl();
 			jag.setVoltageRampRate(0.02);
-		}
-	}
-	
-	public static void setupJagForPositionControl(CANJaguar jag, NeutralMode mode)
-	{
-		if (jag != null)
-		{
-			jag.setPositionMode(CANJaguar.kPotentiometer, -500, 0, 0); // On robot -500, 0, 0
-			jag.configNeutralMode(mode);
-			jag.enableControl();
 		}
 	}
 }

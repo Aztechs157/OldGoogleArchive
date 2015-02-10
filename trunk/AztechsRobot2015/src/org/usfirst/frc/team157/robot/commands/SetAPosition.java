@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Teju Nareddy
  */
-public class SetPosition extends Command
+public class SetAPosition extends Command
 {
 	private double positionToSet;
 	private boolean allDone;
@@ -16,7 +16,7 @@ public class SetPosition extends Command
 	// private double lastPosition;
 	// private double currentPosition;
 	
-	public SetPosition(double positionToSet, ForkliftPart part)
+	public SetAPosition(double positionToSet, ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
