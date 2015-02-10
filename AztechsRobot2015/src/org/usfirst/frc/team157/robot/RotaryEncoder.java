@@ -8,7 +8,9 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 // FIXME replace these in proper place
+// TODO calibration technique... forget about that until end of build day
 
+@Deprecated
 public class RotaryEncoder
 {
 	private File f;
@@ -17,16 +19,6 @@ public class RotaryEncoder
 	private PrintStream printToFile;
 	
 	private double lowEndVoltage;
-	
-	public double getLowEndVoltage()
-	{
-		return lowEndVoltage;
-	}
-	
-	public double getHighEndVoltage()
-	{
-		return highEndVoltage;
-	}
 	
 	private double highEndVoltage;
 	
@@ -58,6 +50,38 @@ public class RotaryEncoder
 		}
 	}
 	
+	public double getHighEndVoltage()
+	{
+		return highEndVoltage;
+	}
+	
+	public double getLowEndVoltage()
+	{
+		return lowEndVoltage;
+	}
+	
+	private void assignValuesFromFile()
+	{
+		// File should be found by now
+		try
+		{
+			fileScanner = new Scanner(f);
+		}
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		lineScanner = new Scanner(fileScanner.nextLine()); // Low: #
+		lineScanner.next(); // Low:
+		lowEndVoltage = Integer.parseInt(lineScanner.next()); // #
+		
+		lineScanner = new Scanner(fileScanner.nextLine()); // High: #
+		lineScanner.next(); // High:
+		highEndVoltage = Integer.parseInt(lineScanner.next()); // #
+	}
+	
 	private void createDefualtFile()
 	{
 		System.out.println("Creating a defualt values file in rotary encoder: " + f.getName());
@@ -81,27 +105,5 @@ public class RotaryEncoder
 		
 		printToFile.println("Low: " + lowEndVoltage);
 		printToFile.println("High: " + highEndVoltage);
-	}
-	
-	private void assignValuesFromFile()
-	{
-		// File should be found by now
-		try
-		{
-			fileScanner = new Scanner(f);
-		}
-		catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		lineScanner = new Scanner(fileScanner.nextLine()); // Low: #
-		lineScanner.next(); // Low:
-		lowEndVoltage = Integer.parseInt(lineScanner.next()); // #
-		
-		lineScanner = new Scanner(fileScanner.nextLine()); // High: #
-		lineScanner.next(); // High:
-		highEndVoltage = Integer.parseInt(lineScanner.next()); // #
 	}
 }

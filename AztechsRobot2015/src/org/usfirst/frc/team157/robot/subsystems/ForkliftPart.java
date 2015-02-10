@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * DO NOT INITALIZE
- * 
+ * CANNOT BE INITALIZED
+ *
  * @author Teju Nareddy
  *
  */
@@ -26,6 +26,21 @@ public abstract class ForkliftPart extends Subsystem
 	protected double highEndVoltage;
 	protected double lowEndVoltage;
 	
+	public double getHighEndEncoderLimit()
+	{
+		return highEndVoltage;
+	}
+	
+	public double getJagCurrent()
+	{
+		if (jag != null)
+		{
+			return jag.getOutputCurrent();
+		}
+		System.out.println("Could not get jag current!");
+		return 0;
+	}
+	
 	public double getJagPosition()
 	{
 		if (jag != null)
@@ -34,47 +49,6 @@ public abstract class ForkliftPart extends Subsystem
 		}
 		System.out.println("Jag is null");
 		return .5;
-	}
-	
-	public double getHighEndEncoderLimit()
-	{
-		return highEndVoltage;
-	}
-	
-	public double getLowEndEncoderLimit()
-	{
-		return lowEndVoltage;
-	}
-	
-	public void setJagPosition(double positionToSet)
-	{
-		if (jag != null)
-		{
-			Robot.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake);
-			jag.set(positionToSet);
-		}
-		
-	}
-	
-	// FIXME null check
-	public boolean isHighLimitSwitchClosed()
-	{
-		if (highLimitSwitch != null)
-		{
-			return highLimitSwitch.get();
-		}
-		System.out.println("HighLimitSwitch is null!");
-		return true;
-	}
-	
-	public boolean isLowLimitSwitchClosed()
-	{
-		if (lowLimitSwitch != null)
-		{
-			return lowLimitSwitch.get();
-		}
-		System.out.println("LowLimitSwitch is null!");
-		return true;
 	}
 	
 	public double getJagVoltage()
@@ -86,14 +60,80 @@ public abstract class ForkliftPart extends Subsystem
 		return 0;
 	}
 	
-	public double getJagCurrent()
+	public double getLowEndEncoderLimit()
+	{
+		return lowEndVoltage;
+	}
+	
+	public void setLowEndEncoderLimit(double position)
+	{
+		lowEndVoltage = position;
+	}
+	
+	public void setHighEndEncoderLimit(double position)
+	{
+		highEndVoltage = position;
+	}
+	
+	public void setJagScale(double scalingFactor)
+	{
+		jag.setScalingFactor(scalingFactor);
+	}
+	
+	// FIXME null check
+	public boolean isHighLimitSwitchClosed()
+	{
+		if (highLimitSwitch != null)
+		{
+			System.out.println("High end limit switch was closed!");
+			return highLimitSwitch.get();
+		}
+		System.out.println("HighLimitSwitch is null!");
+		return true;
+	}
+	
+	public boolean isLowLimitSwitchClosed()
+	{
+		if (lowLimitSwitch != null)
+		{
+			System.out.println("Low end limit switch was closed!");
+			return lowLimitSwitch.get();
+		}
+		System.out.println("LowLimitSwitch is null!");
+		return true;
+	}
+	
+	public void setJagPID(double P, double I, double D)
+	{
+		jag.setPID(P, I, D);
+	}
+	
+	public void setJagPosition(double positionToSet)
 	{
 		if (jag != null)
 		{
-			return jag.getOutputCurrent();
+			Robot.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake);
+			jag.set(positionToSet);
 		}
-		System.out.println("Could not get jag current!");
-		return 0;
+	}
+	
+	public boolean isNearHighLimit()
+	{
+		if (this.isHighLimitSwitchClosed() || this.highEndVoltage - this.getJagPosition() < 0.05)
+			return true;
+		return false;
+	}
+	
+	public boolean isNearLowLimit()
+	{
+		if (this.isLowLimitSwitchClosed() || this.getJagPosition() - this.lowEndVoltage < 0.05)
+			return true;
+		return false;
+	}
+	
+	public boolean isNearALimit()
+	{
+		return this.isNearHighLimit() || this.isNearLowLimit();
 	}
 	
 	/*

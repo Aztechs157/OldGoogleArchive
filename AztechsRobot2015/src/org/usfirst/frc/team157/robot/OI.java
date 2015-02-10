@@ -3,12 +3,11 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.DriveSpeedForTime;
 import org.usfirst.frc.team157.robot.commands.ManualControlDown;
 import org.usfirst.frc.team157.robot.commands.ManualControlStop;
 import org.usfirst.frc.team157.robot.commands.ManualControlUp;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
-import org.usfirst.frc.team157.robot.commands.SetPosition;
+import org.usfirst.frc.team157.robot.commands.SetAPosition;
 import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,14 +21,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI
 {
-	public static final double LEFT_DRIVER_Y_SCALE = -1;
-	public static final double RIGHT_DRIVER_Y_SCALE = -1;
-	
 	// Used to determine the main drive controller --> See OperatorDrive command
 	public enum DriverType
 	{
 		Joysticks, LogitechController
 	}
+	
+	public static final double LEFT_DRIVER_Y_SCALE = -1;
+	
+	public static final double RIGHT_DRIVER_Y_SCALE = -1;
 	
 	// Default driver type is joysticks
 	private DriverType driverType = DriverType.Joysticks;
@@ -196,7 +196,7 @@ public class OI
 		driverRightButton4.whenPressed(new PrintDebugData());
 		driverLeftButton11.whenPressed(new SwitchDriverType());
 		// driverLeftButton4.whenPressed(new DriveSpeedForTime(0.5, 0.5, 3));
-		driverLeftButton5.whenPressed(new SetPosition(.5, Robot.elevator));
+		driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
 		
 		driverLeftButton2.whenPressed(new ManualControlDown(Robot.elevator));
 		driverLeftButton3.whenPressed(new ManualControlUp(Robot.elevator));
@@ -221,8 +221,6 @@ public class OI
 		// TODO
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-		SmartDashboard.putData("Test Command", new PrintDebugData());
-		SmartDashboard.putData("Drive: Full Speed 5 Secs", new DriveSpeedForTime(1, 1, 5));
 	}
 	
 	public DriverType getDriverType()
