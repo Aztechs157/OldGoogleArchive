@@ -17,8 +17,6 @@ import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.subsystems.Drive;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftElevator;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftForks;
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.CANJaguar.NeutralMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -128,37 +126,5 @@ public class Robot extends IterativeRobot
 	public void testPeriodic()
 	{
 		LiveWindow.run();
-	}
-	
-	public static void setupJagForPercentControl(CANJaguar jag, NeutralMode mode)
-	{
-		if (jag != null)
-		{
-			jag.setPercentMode();
-			jag.configNeutralMode(mode);
-			jag.enableControl();
-			jag.setVoltageRampRate(0.02);
-		}
-	}
-	
-	public static void setupJagForPositionControl(CANJaguar jag, NeutralMode mode)
-	{
-		if (jag != null)
-		{
-			jag.setPositionMode(CANJaguar.kPotentiometer, -500, 0, 0); // On robot -500, 0, 0
-			jag.configNeutralMode(mode);
-			jag.enableControl();
-		}
-	}
-	
-	public static void setupJagForVoltageControl(CANJaguar jag, NeutralMode mode)
-	{
-		if (jag != null)
-		{
-			jag.setVoltageMode();
-			jag.configNeutralMode(mode);
-			jag.enableControl();
-			jag.setVoltageRampRate(0.02);
-		}
 	}
 }

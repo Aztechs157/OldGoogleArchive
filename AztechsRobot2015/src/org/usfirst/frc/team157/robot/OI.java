@@ -2,13 +2,15 @@
 package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team157.robot.commands.CalibrateEncoders;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
+import org.usfirst.frc.team157.robot.commands.Grab;
 import org.usfirst.frc.team157.robot.commands.ManualControlDown;
 import org.usfirst.frc.team157.robot.commands.ManualControlStop;
 import org.usfirst.frc.team157.robot.commands.ManualControlUp;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
+import org.usfirst.frc.team157.robot.commands.Release;
 import org.usfirst.frc.team157.robot.commands.SetAPosition;
-import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -87,7 +89,7 @@ public class OI
 		// Instantiate Joysticks and Logitech Controllers
 		driverLeft = new Joystick(RobotMap.LEFT_JOYSTICK_ID);
 		driverRight = new Joystick(RobotMap.RIGHT_JOYSTICK_ID);
-		logitechDriver = new LogitechController(RobotMap.LOGITECH_CONTROLLER_ID);
+		// logitechDriver = new LogitechController(RobotMap.LOGITECH_CONTROLLER_ID);
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
@@ -117,31 +119,36 @@ public class OI
 		driverRightButton10 = new JoystickButton(driverRight, 10);
 		driverRightButton11 = new JoystickButton(driverRight, 11);
 		
-		logitechDriverButtonLeftB = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonLeftB.value);
-		logitechDriverButtonRightB = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonRightB.value);
-		logitechDriverButtonLeftTop = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonLeftTop.value);
-		logitechDriverButtonRightTop = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonRightTop.value);
-		logitechDriverButtonA = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonA.value);
-		logitechDriverButtonB = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonB.value);
-		logitechDriverButtonX = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonX.value);
-		logitechDriverButtonY = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonY.value);
-		logitechDriverButtonStart = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonStart.value);
-		logitechDriverButtonBack = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonBack.value);
-		logitechDriverButtonLeftTrigger = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonLeftTrigger.value);
-		logitechDriverButtonRightTrigger = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonRightTrigger.value);
-		logitechDriverButtonGameUp = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonGameUp.value);
-		logitechDriverButtonGameDown = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonGameDown.value);
-		logitechDriverButtonGameLeft = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonGameLeft.value);
-		logitechDriverButtonGameRight = new LogitechControllerButton(logitechDriver,
-				LogitechController.ButtonType.kButtonGameRight.value);
+		/*
+		 * logitechDriverButtonLeftB = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonLeftB.value);
+		 * logitechDriverButtonRightB = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonRightB.value);
+		 * logitechDriverButtonLeftTop = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonLeftTop.value);
+		 * logitechDriverButtonRightTop = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonRightTop.value);
+		 * logitechDriverButtonA = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonA.value);
+		 * logitechDriverButtonB = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonB.value);
+		 * logitechDriverButtonX = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonX.value);
+		 * logitechDriverButtonY = new LogitechControllerButton(logitechDriver, LogitechController.ButtonType.kButtonY.value);
+		 * logitechDriverButtonStart = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonStart.value);
+		 * logitechDriverButtonBack = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonBack.value);
+		 * logitechDriverButtonLeftTrigger = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonLeftTrigger.value);
+		 * logitechDriverButtonRightTrigger = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonRightTrigger.value);
+		 * logitechDriverButtonGameUp = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonGameUp.value);
+		 * logitechDriverButtonGameDown = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonGameDown.value);
+		 * logitechDriverButtonGameLeft = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonGameLeft.value);
+		 * logitechDriverButtonGameRight = new LogitechControllerButton(logitechDriver,
+		 * LogitechController.ButtonType.kButtonGameRight.value);
+		 */
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
@@ -172,29 +179,31 @@ public class OI
 		driverRightButton10.whenPressed(new DebugPrint("driverRightButton10 Pressed"));
 		driverRightButton11.whenPressed(new DebugPrint("driverRightButton11 Pressed"));
 		
-		logitechDriverButtonLeftB.whenPressed(new DebugPrint("logitechDriverButtonLeftB Pressed"));
-		logitechDriverButtonRightB.whenPressed(new DebugPrint("logitechDriverButtonRightB Pressed"));
-		logitechDriverButtonLeftTop.whenPressed(new DebugPrint("logitechDriverButtonLeftTop Pressed"));
-		logitechDriverButtonRightTop.whenPressed(new DebugPrint("logitechDriverButtonRightTop Pressed"));
-		logitechDriverButtonA.whenPressed(new DebugPrint("logitechDriverButtonA Pressed"));
-		logitechDriverButtonB.whenPressed(new DebugPrint("logitechDriverButtonB Pressed"));
-		logitechDriverButtonX.whenPressed(new DebugPrint("logitechDriverButtonX Pressed"));
-		logitechDriverButtonY.whenPressed(new DebugPrint("logitechDriverButtonY Pressed"));
-		logitechDriverButtonStart.whenPressed(new DebugPrint("logitechDriverButtonStart Pressed"));
-		logitechDriverButtonBack.whenPressed(new DebugPrint("logitechDriverButtonBack Pressed"));
-		logitechDriverButtonLeftTrigger.whenPressed(new DebugPrint("logitechDriverButtonLeftTrigger Pressed"));
-		logitechDriverButtonRightTrigger.whenPressed(new DebugPrint("logitechDriverButtonRightTrigger Pressed"));
-		logitechDriverButtonGameUp.whenPressed(new DebugPrint("logitechDriverButtonGameUp Pressed"));
-		logitechDriverButtonGameDown.whenPressed(new DebugPrint("logitechDriverButtonGameDown Pressed"));
-		logitechDriverButtonGameLeft.whenPressed(new DebugPrint("logitechDriverButtonGameLeft Pressed"));
-		logitechDriverButtonGameRight.whenPressed(new DebugPrint("logitechDriverButtonGameRight Pressed"));
+		/*
+		 * logitechDriverButtonLeftB.whenPressed(new DebugPrint("logitechDriverButtonLeftB Pressed"));
+		 * logitechDriverButtonRightB.whenPressed(new DebugPrint("logitechDriverButtonRightB Pressed"));
+		 * logitechDriverButtonLeftTop.whenPressed(new DebugPrint("logitechDriverButtonLeftTop Pressed"));
+		 * logitechDriverButtonRightTop.whenPressed(new DebugPrint("logitechDriverButtonRightTop Pressed"));
+		 * logitechDriverButtonA.whenPressed(new DebugPrint("logitechDriverButtonA Pressed"));
+		 * logitechDriverButtonB.whenPressed(new DebugPrint("logitechDriverButtonB Pressed"));
+		 * logitechDriverButtonX.whenPressed(new DebugPrint("logitechDriverButtonX Pressed"));
+		 * logitechDriverButtonY.whenPressed(new DebugPrint("logitechDriverButtonY Pressed"));
+		 * logitechDriverButtonStart.whenPressed(new DebugPrint("logitechDriverButtonStart Pressed"));
+		 * logitechDriverButtonBack.whenPressed(new DebugPrint("logitechDriverButtonBack Pressed"));
+		 * logitechDriverButtonLeftTrigger.whenPressed(new DebugPrint("logitechDriverButtonLeftTrigger Pressed"));
+		 * logitechDriverButtonRightTrigger.whenPressed(new DebugPrint("logitechDriverButtonRightTrigger Pressed"));
+		 * logitechDriverButtonGameUp.whenPressed(new DebugPrint("logitechDriverButtonGameUp Pressed"));
+		 * logitechDriverButtonGameDown.whenPressed(new DebugPrint("logitechDriverButtonGameDown Pressed"));
+		 * logitechDriverButtonGameLeft.whenPressed(new DebugPrint("logitechDriverButtonGameLeft Pressed"));
+		 * logitechDriverButtonGameRight.whenPressed(new DebugPrint("logitechDriverButtonGameRight Pressed"));
+		 */
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
 		
 		// Actual commands that we want each button to have
-		driverRightButton4.whenPressed(new PrintDebugData());
-		driverLeftButton11.whenPressed(new SwitchDriverType());
+		driverLeftButton4.whenPressed(new PrintDebugData());
+		// driverLeftButton11.whenPressed(new SwitchDriverType());
 		// driverLeftButton4.whenPressed(new DriveSpeedForTime(0.5, 0.5, 3));
 		driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
 		
@@ -203,15 +212,13 @@ public class OI
 		driverLeftButton2.whenReleased(new ManualControlStop(Robot.elevator));
 		driverLeftButton3.whenReleased(new ManualControlStop(Robot.elevator));
 		
-		driverRightButton2.whenPressed(new ManualControlDown(Robot.elevator));
-		driverRightButton3.whenPressed(new ManualControlUp(Robot.elevator));
-		driverRightButton2.whenReleased(new ManualControlStop(Robot.elevator));
-		driverRightButton3.whenReleased(new ManualControlStop(Robot.elevator));
+		driverRightButton2.whenPressed(new CalibrateEncoders());
 		
-		// driverRightButton4.whenPressed(new SetElevatorPosition(1));
+		driverRightButton6.whenPressed(new Grab());
+		driverRightButton6.whenReleased(new Release());
 		
-		driverLeftButtonTrigger.whenPressed(new ManualControlDown(Robot.forks));
-		driverRightButtonTrigger.whenPressed(new ManualControlUp(Robot.forks));
+		driverRightButtonTrigger.whenPressed(new ManualControlDown(Robot.forks));
+		driverLeftButtonTrigger.whenPressed(new ManualControlUp(Robot.forks));
 		driverLeftButtonTrigger.whenReleased(new ManualControlStop(Robot.forks));
 		driverRightButtonTrigger.whenReleased(new ManualControlStop(Robot.forks));
 		

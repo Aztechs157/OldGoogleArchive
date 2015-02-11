@@ -2,9 +2,7 @@
 package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
-import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
-import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -93,21 +91,34 @@ public abstract class ForkliftPart extends Subsystem
 		return isNearHighLimit() || isNearLowLimit();
 	}
 	
+	// FIXME enable limit switches
 	public boolean isNearHighLimit()
 	{
-		if (isHighLimitSwitchClosed() || highEndVoltage - getJagPosition() < 0.05)
+		if (highEndVoltage - getJagPosition() < 0.05)
 		{
 			return true;
 		}
+		/*
+		 * if (isHighLimitSwitchClosed() || highEndVoltage - getJagPosition() < 0.05)
+		 * {
+		 * return true;
+		 * }
+		 */
 		return false;
 	}
 	
 	public boolean isNearLowLimit()
 	{
-		if (isLowLimitSwitchClosed() || getJagPosition() - lowEndVoltage < 0.05)
+		if (getJagPosition() - lowEndVoltage < 0.05)
 		{
 			return true;
 		}
+		/*
+		 * if (isLowLimitSwitchClosed() || getJagPosition() - lowEndVoltage < 0.05)
+		 * {
+		 * return true;
+		 * }
+		 */
 		return false;
 	}
 	
@@ -116,17 +127,15 @@ public abstract class ForkliftPart extends Subsystem
 		highEndVoltage = position;
 	}
 	
-	public void setJagPID(double P, double I, double D)
-	{
-		jag.setPID(P, I, D);
-	}
-	
-	public void setJagPosition(double positionToSet)
+	public void setJag(double positionToSet)
 	{
 		if (jag != null)
 		{
-			Robot.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake);
 			jag.set(positionToSet);
+		}
+		else
+		{
+			System.out.println("Jag is null!");
 		}
 	}
 	
@@ -140,20 +149,8 @@ public abstract class ForkliftPart extends Subsystem
 		lowEndVoltage = position;
 	}
 	
-	/*
-	 * public void setJagVoltage(double voltage)
-	 * {
-	 * if (jag != null)
-	 * {
-	 * Robot.setupJagForVoltageControl(jag, CANJaguar.NeutralMode.Brake);
-	 * System.out.println("A + Mode: " + jag.getControlMode());
-	 * jag.set(voltage);
-	 * System.out.println("B");
-	 * }
-	 * else
-	 * {
-	 * System.out.println("Jag used in forklift is NULL! Don't know which part...");
-	 * }
-	 * }
-	 */
+	public double getJagSetpoint()
+	{
+		return jag.get();
+	}
 }

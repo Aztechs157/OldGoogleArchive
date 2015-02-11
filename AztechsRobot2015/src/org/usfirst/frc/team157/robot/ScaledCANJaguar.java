@@ -54,4 +54,49 @@ public class ScaledCANJaguar extends CANJaguar
 	{
 		scalingFactor = scale;
 	}
+	
+	public static void setupJagForPercentControl(CANJaguar jag, NeutralMode mode)
+	{
+		if (jag != null)
+		{
+			jag.setPercentMode();
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+			jag.setVoltageRampRate(0.02);
+		}
+	}
+	
+	public static void setupJagForPositionControl(CANJaguar jag, NeutralMode mode, double P, double I, double D)
+	{
+		if (jag != null)
+		{
+			jag.setPositionMode(CANJaguar.kPotentiometer, P, I, D);
+			// Forks 1000, 0.05, 0
+			// Elevator -500, 0, 0
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+		}
+	}
+	
+	public static void setupJagForCurrentControl(CANJaguar jag, NeutralMode mode, double P, double I, double D)
+	{
+		if (jag != null)
+		{
+			jag.setCurrentMode(P, I, D);
+			// Forks -0.05, 0, 0
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+		}
+	}
+	
+	public static void setupJagForVoltageControl(CANJaguar jag, NeutralMode mode)
+	{
+		if (jag != null)
+		{
+			jag.setVoltageMode();
+			jag.configNeutralMode(mode);
+			jag.enableControl();
+			jag.setVoltageRampRate(0.02);
+		}
+	}
 }

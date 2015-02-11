@@ -65,7 +65,7 @@ public class SetAPosition extends Command
 	{
 		// currentPosition = Robot.elevator.getRotaryEncoderPosition();
 		allDone = true;
-		part.setJagPosition(positionToSet);
+		part.setJag(positionToSet);
 		System.out.println("Setpoint: " + positionToSet);
 		
 		/*

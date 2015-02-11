@@ -32,7 +32,8 @@ public class ManualControlDown extends Command
 	{
 		// if (part.getJagPosition() - part.getLowEndEncoderLimit() > 0.05)
 		
-		part.setJagPosition(part.getLowEndEncoderLimit());
+		System.out.println("Setpoint = " + part.getJagSetpoint());
+		part.setJag(part.getLowEndEncoderLimit());
 		
 	}
 	

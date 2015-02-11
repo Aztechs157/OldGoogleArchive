@@ -26,7 +26,7 @@ public class GetLowEndPosition extends Command
 	protected void end()
 	{
 		double position = part.getJagPosition();
-		part.setJagPosition(position); // Stops it
+		part.setJag(position); // Stops it
 		part.setLowEndEncoderLimit(position);
 		System.out.println("Low end position for " + part.getName() + " is: " + position);
 		part.setJagScale(1);
@@ -36,7 +36,7 @@ public class GetLowEndPosition extends Command
 	@Override
 	protected void execute()
 	{
-		part.setJagPosition(part.getLowEndEncoderLimit());
+		part.setJag(part.getLowEndEncoderLimit());
 		if (part.isLowLimitSwitchClosed())
 		{
 			allDone = true;
