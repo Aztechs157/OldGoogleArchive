@@ -2,7 +2,6 @@
 package org.usfirst.frc.team157.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
 
 /**
@@ -23,8 +22,8 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG1_ID = 7;
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
-	private static final int FORKS_JAG_ID = 11;
-	private static final int ELEVATOR_JAG_ID = 6; // 13, 6
+	private static final int FORKS_JAG_ID = 11; // 11
+	private static final int ELEVATOR_JAG_ID = 13; // 13, 6
 	
 	private static final int FORKS_HIGH_LIMITSWITCH_ID = 1;
 	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 3;
@@ -140,16 +139,5 @@ public class RobotMap
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
-		
-		// -----------------------------------------//
-		// -----------------------------------------//
-		
-		// Set proper jag control modes
-		Robot.setupJagForPercentControl(driveLeftJag1, CANJaguar.NeutralMode.Coast);
-		Robot.setupJagForPercentControl(driveLeftJag2, CANJaguar.NeutralMode.Coast);
-		Robot.setupJagForPercentControl(driveRightJag1, CANJaguar.NeutralMode.Coast);
-		Robot.setupJagForPercentControl(driveRightJag2, CANJaguar.NeutralMode.Coast);
-		Robot.setupJagForPositionControl(forksJag, CANJaguar.NeutralMode.Brake);
-		Robot.setupJagForPositionControl(elevatorJag, CANJaguar.NeutralMode.Brake);
 	}
 }

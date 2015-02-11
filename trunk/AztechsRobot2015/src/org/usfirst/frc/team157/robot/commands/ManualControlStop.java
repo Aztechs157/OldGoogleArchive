@@ -30,7 +30,7 @@ public class ManualControlStop extends Command
 	@Override
 	protected void execute()
 	{
-		part.setJagPosition(part.getJagPosition());
+		part.setJag(part.getJagPosition());
 	}
 	
 	// Called just before this Command runs the first time

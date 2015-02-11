@@ -21,6 +21,14 @@ public class Drive extends Subsystem
 	private ScaledCANJaguar rightJag1 = RobotMap.driveRightJag1;
 	private ScaledCANJaguar rightJag2 = RobotMap.driveRightJag2;
 	
+	public Drive()
+	{
+		ScaledCANJaguar.setupJagForPercentControl(leftJag1, CANJaguar.NeutralMode.Coast);
+		ScaledCANJaguar.setupJagForPercentControl(leftJag2, CANJaguar.NeutralMode.Coast);
+		ScaledCANJaguar.setupJagForPercentControl(rightJag1, CANJaguar.NeutralMode.Coast);
+		ScaledCANJaguar.setupJagForPercentControl(rightJag2, CANJaguar.NeutralMode.Coast);
+	}
+	
 	public void tankDrive(double left, double right)
 	{
 		byte group = 22; // Some random number

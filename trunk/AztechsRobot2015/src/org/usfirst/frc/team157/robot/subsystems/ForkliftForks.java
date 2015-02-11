@@ -2,6 +2,8 @@
 package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.RobotMap;
+import org.usfirst.frc.team157.robot.ScaledCANJaguar;
+import edu.wpi.first.wpilibj.CANJaguar;
 
 public class ForkliftForks extends ForkliftPart
 {
@@ -17,13 +19,15 @@ public class ForkliftForks extends ForkliftPart
 	{
 		// Setup Jag and PID
 		super.jag = RobotMap.forksJag;
-		super.setJagPID(PID[0], PID[1], PID[2]);
+		// super.setJagPID(PID[0], PID[1], PID[2]);
 		
 		super.highLimitSwitch = RobotMap.forksHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.forksLowLimitSwitch;
 		
-		super.highEndVoltage = 0.8;
-		super.lowEndVoltage = 0.1;
+		super.highEndVoltage = 0.13;
+		super.lowEndVoltage = 0.3997;
+		
+		setJagForPositionControl();
 		
 		calculatePositions();
 	}
@@ -63,5 +67,15 @@ public class ForkliftForks extends ForkliftPart
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setJagForPositionControl()
+	{
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 1000, 0.05, 0);
+	}
+	
+	public void setJagForCurrentControl()
+	{
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, -2, 0, 0);
 	}
 }
