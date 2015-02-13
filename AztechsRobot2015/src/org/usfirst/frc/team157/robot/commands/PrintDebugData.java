@@ -26,7 +26,8 @@ public class PrintDebugData extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.println("Current = " + Robot.forks.getJagCurrent());
+		System.out.println("Position = " + Robot.elevator.getJagPosition() + " Top Limit Switch = "
+				+ Robot.elevator.isHighLimitSwitchClosed());
 		/*
 		 * System.out.print("[X,Y,Z]: [" + RobotMap.accelerometer.getX());
 		 * System.out.print(", " + RobotMap.accelerometer.getY());

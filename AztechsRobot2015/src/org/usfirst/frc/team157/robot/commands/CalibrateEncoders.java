@@ -29,8 +29,8 @@ public class CalibrateEncoders extends CommandGroup
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		
-		addSequential(new GetLowEndPosition(Robot.elevator));
-		addSequential(new GetHighEndPosition(Robot.elevator));
+		// addSequential(new GetLowEndPosition(Robot.elevator));
+		// addSequential(new GetHighEndPosition(Robot.elevator));
 		addSequential(new GetLowEndPosition(Robot.forks));
 		addSequential(new GetHighEndPosition(Robot.forks));
 	}

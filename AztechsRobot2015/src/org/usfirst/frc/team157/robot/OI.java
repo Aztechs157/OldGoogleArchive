@@ -2,15 +2,16 @@
 package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
-import org.usfirst.frc.team157.robot.commands.CalibrateEncoders;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
 import org.usfirst.frc.team157.robot.commands.Grab;
+import org.usfirst.frc.team157.robot.commands.ManualControlClose;
 import org.usfirst.frc.team157.robot.commands.ManualControlDown;
-import org.usfirst.frc.team157.robot.commands.ManualControlStop;
+import org.usfirst.frc.team157.robot.commands.ManualControlExtend;
+import org.usfirst.frc.team157.robot.commands.ManualControlStopPosition;
+import org.usfirst.frc.team157.robot.commands.ManualControlStopVoltage;
 import org.usfirst.frc.team157.robot.commands.ManualControlUp;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
 import org.usfirst.frc.team157.robot.commands.Release;
-import org.usfirst.frc.team157.robot.commands.SetAPosition;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -205,22 +206,22 @@ public class OI
 		driverLeftButton4.whenPressed(new PrintDebugData());
 		// driverLeftButton11.whenPressed(new SwitchDriverType());
 		// driverLeftButton4.whenPressed(new DriveSpeedForTime(0.5, 0.5, 3));
-		driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
+		// driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
 		
-		driverLeftButton2.whenPressed(new ManualControlDown(Robot.elevator));
-		driverLeftButton3.whenPressed(new ManualControlUp(Robot.elevator));
-		driverLeftButton2.whenReleased(new ManualControlStop(Robot.elevator));
-		driverLeftButton3.whenReleased(new ManualControlStop(Robot.elevator));
+		driverLeftButton2.whenPressed(new ManualControlDown());
+		driverLeftButton3.whenPressed(new ManualControlUp());
+		driverLeftButton2.whenReleased(new ManualControlStopVoltage());
+		driverLeftButton3.whenReleased(new ManualControlStopVoltage());
 		
-		driverRightButton2.whenPressed(new CalibrateEncoders());
+		// driverRightButton2.whenPressed(new CalibrateEncoders());
 		
-		driverRightButton6.whenPressed(new Grab());
-		driverRightButton6.whenReleased(new Release());
+		driverRightButtonTrigger.whenPressed(new Grab());
+		driverLeftButtonTrigger.whenPressed(new Release());
 		
-		driverRightButtonTrigger.whenPressed(new ManualControlDown(Robot.forks));
-		driverLeftButtonTrigger.whenPressed(new ManualControlUp(Robot.forks));
-		driverLeftButtonTrigger.whenReleased(new ManualControlStop(Robot.forks));
-		driverRightButtonTrigger.whenReleased(new ManualControlStop(Robot.forks));
+		driverRightButton4.whenPressed(new ManualControlClose(Robot.forks));
+		driverRightButton5.whenPressed(new ManualControlExtend(Robot.forks));
+		driverRightButton4.whenReleased(new ManualControlStopPosition(Robot.forks));
+		driverRightButton5.whenReleased(new ManualControlStopPosition(Robot.forks));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//

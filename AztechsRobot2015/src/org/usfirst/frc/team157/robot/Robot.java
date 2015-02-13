@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot
 {
 	CameraServer camera;
-	// Used for debug purposes --> true: debug mode -- false: Normal Robot Operation
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -74,7 +73,7 @@ public class Robot extends IterativeRobot
 		RobotMap.init();
 		
 		/*
-		 * CameraServer camera = CameraServer.getInstance();
+		 * camera = CameraServer.getInstance();
 		 * camera.setQuality(50);
 		 * camera.startAutomaticCapture("cam0");
 		 */

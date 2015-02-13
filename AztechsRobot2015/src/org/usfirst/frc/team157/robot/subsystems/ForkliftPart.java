@@ -49,6 +49,11 @@ public abstract class ForkliftPart extends Subsystem
 		return .5;
 	}
 	
+	public double getJagSetpoint()
+	{
+		return jag.get();
+	}
+	
 	public double getJagVoltage()
 	{
 		if (jag != null)
@@ -94,7 +99,7 @@ public abstract class ForkliftPart extends Subsystem
 	// FIXME enable limit switches
 	public boolean isNearHighLimit()
 	{
-		if (highEndVoltage - getJagPosition() < 0.05)
+		if (Math.abs(highEndVoltage - getJagPosition()) < 0.01)
 		{
 			return true;
 		}
@@ -109,7 +114,7 @@ public abstract class ForkliftPart extends Subsystem
 	
 	public boolean isNearLowLimit()
 	{
-		if (getJagPosition() - lowEndVoltage < 0.05)
+		if (Math.abs(getJagPosition() - lowEndVoltage) < 0.01)
 		{
 			return true;
 		}
@@ -131,7 +136,14 @@ public abstract class ForkliftPart extends Subsystem
 	{
 		if (jag != null)
 		{
-			jag.set(positionToSet);
+			try
+			{
+				jag.set(positionToSet);
+			}
+			catch (Exception e)
+			{
+				System.out.println("============= EXCEPTION ==============");
+			}
 		}
 		else
 		{
@@ -147,10 +159,5 @@ public abstract class ForkliftPart extends Subsystem
 	public void setLowEndEncoderLimit(double position)
 	{
 		lowEndVoltage = position;
-	}
-	
-	public double getJagSetpoint()
-	{
-		return jag.get();
 	}
 }

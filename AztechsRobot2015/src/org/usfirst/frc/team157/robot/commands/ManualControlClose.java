@@ -1,46 +1,46 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ManualControlUp extends Command
+public class ManualControlClose extends Command
 {
-	private boolean allDone;
 	
-	public ManualControlUp()
+	private ForkliftPart part;
+	
+	public ManualControlClose(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.elevator);
+		requires(part);
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		Robot.elevator.setJag(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if (Robot.elevator.isHighLimitSwitchClosed())
-		{
-			allDone = true;
-		}
+		// if (part.getJagPosition() - part.getLowEndEncoderLimit() > 0.05)
+		
+		// System.out.println("Setpoint = " + part.getJagSetpoint());
+		
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		Robot.elevator.setJag(12);
-		allDone = false;
+		part.setJag(part.getLowEndEncoderLimit());
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -48,13 +48,12 @@ public class ManualControlUp extends Command
 	@Override
 	protected void interrupted()
 	{
-		Robot.elevator.setJag(0);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return allDone;
+		return true;
 	}
 }

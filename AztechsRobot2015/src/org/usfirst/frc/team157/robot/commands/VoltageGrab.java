@@ -7,39 +7,47 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualControlUp extends Command
+@Deprecated
+public class VoltageGrab extends Command
 {
+	
 	private boolean allDone;
 	
-	public ManualControlUp()
+	public VoltageGrab()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.elevator);
+		requires(Robot.forks);
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		Robot.elevator.setJag(0);
+		System.out.println("================================= VoltageGrab end");
+		Robot.forks.setJag(0);
+		Robot.forks.setJagForPositionControl();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if (Robot.elevator.isHighLimitSwitchClosed())
-		{
-			allDone = true;
-		}
+		/*
+		 * if (Robot.forks.getJagCurrent() > 8 && Robot.forks.getJagSetpoint() == 12)
+		 * {
+		 * Robot.forks.setJag(6);
+		 * }
+		 */
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		Robot.elevator.setJag(12);
+		System.out.println("================================= VoltageGrab initialize");
+		Robot.forks.setJagForVoltageControl();
+		Robot.forks.setJag(12);
 		allDone = false;
 	}
 	
@@ -48,7 +56,9 @@ public class ManualControlUp extends Command
 	@Override
 	protected void interrupted()
 	{
-		Robot.elevator.setJag(0);
+		System.out.println("================================= VoltageGrab interupted");
+		Robot.forks.setJag(0);
+		Robot.forks.setJagForPositionControl();
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

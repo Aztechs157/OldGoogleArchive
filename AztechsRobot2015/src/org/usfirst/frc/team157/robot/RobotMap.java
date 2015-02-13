@@ -26,15 +26,15 @@ public class RobotMap
 	private static final int ELEVATOR_JAG_ID = 13; // 13, 6
 	
 	private static final int FORKS_HIGH_LIMITSWITCH_ID = 1;
-	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 3;
+	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 9;
 	private static final int FORKS_LOW_LIMITSWITCH_ID = 2;
-	private static final int ELEVATOR_LOW_LIMSWITCH_ID = 4;
+	private static final int ELEVATOR_LOW_LIMSWITCH_ID = 8;
 	
 	// Jag Scaling Values
-	private static final double DRIVE_LEFT_JAG1_SCALE = 0.75;
-	private static final double DRIVE_LEFT_JAG2_SCALE = 0.75;
-	private static final double DRIVE_RIGHT_JAG1_SCALE = -0.75;
-	private static final double DRIVE_RIGHT_JAG2_SCALE = -0.75;
+	private static final double DRIVE_LEFT_JAG1_SCALE = 0.5;
+	private static final double DRIVE_LEFT_JAG2_SCALE = 0.5;
+	private static final double DRIVE_RIGHT_JAG1_SCALE = -0.5;
+	private static final double DRIVE_RIGHT_JAG2_SCALE = -0.5;
 	private static final double FORKS_JAG_SCALE = 1;
 	private static final double ELEVATOR_JAG_SCALE = 1;
 	

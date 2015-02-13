@@ -23,6 +23,7 @@ public class Grab extends Command
 	
 	public Grab()
 	{
+		System.out.println("================================ Grab.Grab");
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.forks);
@@ -32,6 +33,7 @@ public class Grab extends Command
 	@Override
 	protected void end()
 	{
+		System.out.println("================================ Grab.end");
 		Robot.forks.setJag(0);
 		Robot.forks.setJagForPositionControl();
 	}
@@ -42,10 +44,13 @@ public class Grab extends Command
 	{
 		System.out.println("Current = " + Robot.forks.getJagCurrent());
 		
-		if (Robot.forks.isNearALimit())
-		{
-			allDone = true;
-		}
+		/*
+		 * if (Robot.forks.isNearLowLimit())
+		 * {
+		 * System.out.println("================================ Grab.execute - Done");
+		 * allDone = true;
+		 * }
+		 */
 		
 		/*
 		 * double current = Robot.forks.getJagCurrent();
@@ -82,10 +87,11 @@ public class Grab extends Command
 	@Override
 	protected void initialize()
 	{
+		System.out.println("================================ Grab.initialize");
 		Robot.forks.setJagForCurrentControl();
 		allDone = false;
 		
-		Robot.forks.setJag(4);
+		Robot.forks.setJag(2);
 		/*
 		 * Robot.forks.setJagPosition(Robot.forks.getLowEndEncoderLimit());
 		 * currents = new double[SAMPLE_SIZE];
@@ -99,6 +105,7 @@ public class Grab extends Command
 	@Override
 	protected void interrupted()
 	{
+		System.out.println("================================ Grab.interrupted");
 		Robot.forks.setJag(0);
 		Robot.forks.setJagForPositionControl();
 	}
