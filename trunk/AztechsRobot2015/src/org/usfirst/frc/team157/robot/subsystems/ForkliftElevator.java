@@ -18,10 +18,20 @@ public class ForkliftElevator extends ForkliftPart
 		super.highLimitSwitch = RobotMap.elevatorHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.elevatorLowLimitSwitch;
 		
-		super.highEndVoltage = 0.8;
-		super.lowEndVoltage = 0.1;
+		super.highEndVoltage = 0.29;
+		super.lowEndVoltage = 0.88;
 		
-		setJagForPositionControl();
+		setJagForVoltageControl();
+	}
+	
+	public void setJagForPositionControl()
+	{
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, -800, -0.05, 0);
+	}
+	
+	public void setJagForVoltageControl()
+	{
+		ScaledCANJaguar.setupJagForVoltageControl(jag, CANJaguar.NeutralMode.Brake);
 	}
 	
 	@Override
@@ -29,10 +39,5 @@ public class ForkliftElevator extends ForkliftPart
 	{
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void setJagForPositionControl()
-	{
-		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, -500, 0, 0);
 	}
 }

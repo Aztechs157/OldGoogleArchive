@@ -10,9 +10,6 @@ public class ForkliftForks extends ForkliftPart
 	public double[] positions =
 	{ 0.4, 0.6, 0.65, 0.8 }; // Tote Sideways, Tote Regular, Container Upright, Container Sideways
 	
-	public double[] PID =
-	{ -500, 0, 0 };
-	
 	public final double grabCurrentThreshold = 6;
 	
 	public ForkliftForks()
@@ -57,6 +54,21 @@ public class ForkliftForks extends ForkliftPart
 		return positions[0];
 	}
 	
+	public void setJagForCurrentControl()
+	{
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 75, 1, 0);
+	}
+	
+	public void setJagForPositionControl()
+	{
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 1200, 0.15, 0);
+	}
+	
+	public void setJagForVoltageControl()
+	{
+		ScaledCANJaguar.setupJagForVoltageControl(jag, CANJaguar.NeutralMode.Brake);
+	}
+	
 	private void calculatePositions()
 	{
 		// TODO set the positions array based on low and high end positions... Need to calculate equation
@@ -67,15 +79,5 @@ public class ForkliftForks extends ForkliftPart
 	{
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void setJagForPositionControl()
-	{
-		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 1000, 0.05, 0);
-	}
-	
-	public void setJagForCurrentControl()
-	{
-		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, -2, 0, 0);
 	}
 }

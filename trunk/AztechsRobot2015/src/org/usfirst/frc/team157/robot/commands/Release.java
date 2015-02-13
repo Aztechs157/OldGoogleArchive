@@ -17,9 +17,9 @@ public class Release extends Command
 		requires(Robot.forks);
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
 		
 	}
@@ -31,16 +31,9 @@ public class Release extends Command
 		Robot.forks.setJag(Robot.forks.getHighEndEncoderLimit());
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
-	{
-		return true;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
+	protected void initialize()
 	{
 		
 	}
@@ -51,5 +44,12 @@ public class Release extends Command
 	protected void interrupted()
 	{
 		
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return true;
 	}
 }
