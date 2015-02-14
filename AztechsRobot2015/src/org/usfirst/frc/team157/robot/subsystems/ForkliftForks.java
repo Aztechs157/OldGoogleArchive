@@ -21,12 +21,12 @@ public class ForkliftForks extends ForkliftPart
 		super.highLimitSwitch = RobotMap.forksHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.forksLowLimitSwitch;
 		
-		super.highEndVoltage = 0.13;
-		super.lowEndVoltage = 0.3997;
+		super.highEndVoltage = 0.14;
+		super.lowEndVoltage = 0.41;
 		
-		setJagForPositionControl();
+		setJagForVoltageControl();
 		
-		calculatePositions();
+		// calculatePositions();
 	}
 	
 	public double getContainerSideWaysPosition()
@@ -61,7 +61,7 @@ public class ForkliftForks extends ForkliftPart
 	
 	public void setJagForPositionControl()
 	{
-		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 1200, 0.15, 0);
+		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, 2000, 0.15, 0);
 	}
 	
 	public void setJagForVoltageControl()
