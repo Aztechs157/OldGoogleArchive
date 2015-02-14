@@ -73,7 +73,6 @@ public abstract class ForkliftPart extends Subsystem
 	{
 		if (highLimitSwitch != null)
 		{
-			System.out.println("High end limit switch was closed!");
 			return highLimitSwitch.get();
 		}
 		System.out.println("HighLimitSwitch is null!");
@@ -84,7 +83,6 @@ public abstract class ForkliftPart extends Subsystem
 	{
 		if (lowLimitSwitch != null)
 		{
-			System.out.println("Low end limit switch was closed!");
 			return lowLimitSwitch.get();
 		}
 		System.out.println("LowLimitSwitch is null!");
@@ -132,13 +130,13 @@ public abstract class ForkliftPart extends Subsystem
 		highEndVoltage = position;
 	}
 	
-	public void setJag(double positionToSet)
+	public void setJag(double setPoint)
 	{
 		if (jag != null)
 		{
 			try
 			{
-				jag.set(positionToSet);
+				jag.set(setPoint);
 			}
 			catch (Exception e)
 			{

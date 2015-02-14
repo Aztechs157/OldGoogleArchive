@@ -14,7 +14,7 @@ public class RobotMap
 	// Joystick and Logitech Controller IDS
 	public static final int LEFT_JOYSTICK_ID = 0;
 	public static final int RIGHT_JOYSTICK_ID = 1;
-	public static final int LOGITECH_CONTROLLER_ID = 2;
+	public static final int OPERATOR_JOYSTICK_ID = 2;
 	
 	// Hardware IDs
 	private static final int DRIVE_LEFT_JAG1_ID = 2;

@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.RobotMap;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
+import org.usfirst.frc.team157.robot.commands.JoystickVoltageControlElevator;
 import edu.wpi.first.wpilibj.CANJaguar;
 
 public class ForkliftElevator extends ForkliftPart
@@ -37,7 +38,6 @@ public class ForkliftElevator extends ForkliftPart
 	@Override
 	protected void initDefaultCommand()
 	{
-		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new JoystickVoltageControlElevator());
 	}
 }

@@ -28,13 +28,13 @@ public class SwitchDriverType extends Command
 	protected void execute()
 	{
 		DriverType current = Robot.oi.getDriverType();
-		if (current.equals(DriverType.Joysticks))
+		if (current.equals(DriverType.DRIVER_ONLY))
 		{
-			Robot.oi.setLogitechDriveMode();
+			Robot.oi.setOperatorMode();
 		}
-		else if (current.equals(DriverType.LogitechController))
+		else if (current.equals(DriverType.OPERATOR))
 		{
-			Robot.oi.setJoystickDriveMode();
+			Robot.oi.setDriverMode();
 		}
 		else
 		{
