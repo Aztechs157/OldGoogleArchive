@@ -3,19 +3,13 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.SimpleManualControlDown;
-import org.usfirst.frc.team157.robot.commands.SimpleManualControlStop;
-import org.usfirst.frc.team157.robot.commands.SimpleManualControlUp;
-import org.usfirst.frc.team157.robot.commands.Grab;
-import org.usfirst.frc.team157.robot.commands.ManualControlClose;
+import org.usfirst.frc.team157.robot.commands.ForksClose;
+import org.usfirst.frc.team157.robot.commands.ForksExtend;
+import org.usfirst.frc.team157.robot.commands.ForksSmartClose;
 import org.usfirst.frc.team157.robot.commands.ManualControlDown;
-import org.usfirst.frc.team157.robot.commands.ManualControlExtend;
-import org.usfirst.frc.team157.robot.commands.ManualControlStopPosition;
 import org.usfirst.frc.team157.robot.commands.ManualControlStopVoltage;
 import org.usfirst.frc.team157.robot.commands.ManualControlUp;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
-import org.usfirst.frc.team157.robot.commands.Release;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -214,26 +208,21 @@ public class OI
 		
 		driverLeftButton2.whenPressed(new ManualControlDown());
 		driverLeftButton3.whenPressed(new ManualControlUp());
-		driverLeftButton2.whenReleased(new ManualControlStopVoltage());
-		driverLeftButton3.whenReleased(new ManualControlStopVoltage());
+		driverLeftButton2.whenReleased(new ManualControlStopVoltage(Robot.elevator));
+		driverLeftButton3.whenReleased(new ManualControlStopVoltage(Robot.elevator));
 		
 		// driverRightButton2.whenPressed(new CalibrateEncoders());
 		
+		// driverRightButton4.whenPressed(new Grab());
+		// driverRightButton5.whenPressed(new Release());
 		
-		// JV - Disable Matt & Teju Grab / Release and replace with manual control
-		// driverRightButtonTrigger.whenPressed(new Grab());
-		// driverLeftButtonTrigger.whenPressed(new Release());
-		driverRightButtonTrigger.whenPressed(new SimpleManualControlDown(Robot.forks));
-		driverLeftButtonTrigger.whenPressed(new SimpleManualControlUp(Robot.forks));
-		driverLeftButtonTrigger.whenReleased(new SimpleManualControlStop(Robot.forks));
-		driverRightButtonTrigger.whenReleased(new SimpleManualControlStop(Robot.forks));
+		driverRightButtonTrigger.whenPressed(new ForksSmartClose());
+		driverLeftButtonTrigger.whenPressed(new ForksExtend());
+		driverRightButtonTrigger.whenReleased(new ManualControlStopVoltage(Robot.forks));
+		driverLeftButtonTrigger.whenReleased(new ManualControlStopVoltage(Robot.forks));
 		
-		
-		
-		driverRightButton4.whenPressed(new ManualControlClose(Robot.forks));
-		driverRightButton5.whenPressed(new ManualControlExtend(Robot.forks));
-		driverRightButton4.whenReleased(new ManualControlStopPosition(Robot.forks));
-		driverRightButton5.whenReleased(new ManualControlStopPosition(Robot.forks));
+		driverRightButton3.whenPressed(new ForksClose());
+		driverRightButton3.whenReleased(new ManualControlStopVoltage(Robot.forks));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//
