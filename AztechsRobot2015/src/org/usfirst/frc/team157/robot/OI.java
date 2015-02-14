@@ -3,13 +3,13 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.ForksClose;
 import org.usfirst.frc.team157.robot.commands.ForksExtend;
 import org.usfirst.frc.team157.robot.commands.ForksSmartClose;
-import org.usfirst.frc.team157.robot.commands.ManualControlDown;
-import org.usfirst.frc.team157.robot.commands.ManualControlStopVoltage;
-import org.usfirst.frc.team157.robot.commands.ManualControlUp;
+import org.usfirst.frc.team157.robot.commands.ManualVoltageHigherPart;
+import org.usfirst.frc.team157.robot.commands.ManualVoltageLowerPart;
+import org.usfirst.frc.team157.robot.commands.ManualVoltageStopPart;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
+import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,15 +25,15 @@ public class OI
 	// Used to determine the main drive controller --> See OperatorDrive command
 	public enum DriverType
 	{
-		Joysticks, LogitechController
+		DRIVER_ONLY, OPERATOR
 	}
 	
 	public static final double LEFT_DRIVER_Y_SCALE = -1;
-	
 	public static final double RIGHT_DRIVER_Y_SCALE = -1;
+	public static final double OPERATOR_Y_SCALE = -1;
 	
 	// Default driver type is joysticks
-	private DriverType driverType = DriverType.Joysticks;
+	private DriverType driverType = DriverType.DRIVER_ONLY;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -65,29 +65,45 @@ public class OI
 	private JoystickButton driverLeftButton10; // Button 10 - Base Right Close
 	private JoystickButton driverLeftButton11; // Button 11 - Base RIght Away
 	
-	public LogitechController logitechDriver;
-	private LogitechControllerButton logitechDriverButtonLeftB; // Left Button (Above Trigger)
-	private LogitechControllerButton logitechDriverButtonRightB; // Right Button (Above Trigger)
-	private LogitechControllerButton logitechDriverButtonLeftTop; // Left Stick Pressing
-	private LogitechControllerButton logitechDriverButtonRightTop; // Right Stick Pressing
-	private LogitechControllerButton logitechDriverButtonA; // A Button (Green)
-	private LogitechControllerButton logitechDriverButtonB; // B Button (Red)
-	private LogitechControllerButton logitechDriverButtonX; // X Button (Blue)
-	private LogitechControllerButton logitechDriverButtonY; // Y Button (Yellow)
-	private LogitechControllerButton logitechDriverButtonStart; // Start Button
-	private LogitechControllerButton logitechDriverButtonBack; // Back Button
-	private LogitechControllerButton logitechDriverButtonLeftTrigger; // Left Trigger (Used as button)
-	private LogitechControllerButton logitechDriverButtonRightTrigger; // Right Trigger (Used as button)
-	private LogitechControllerButton logitechDriverButtonGameUp; // Game Pad Up
-	private LogitechControllerButton logitechDriverButtonGameDown; // Game Pad Down
-	private LogitechControllerButton logitechDriverButtonGameLeft; // Game Pad Left
-	private LogitechControllerButton logitechDriverButtonGameRight; // Game Pad Right
+	public Joystick operator;
+	private JoystickButton operatorButtonTrigger; // Button 1 - Trigger
+	private JoystickButton operatorButton2; // Button 2 - Stick down
+	private JoystickButton operatorButton3; // Button 3 - Stick center
+	private JoystickButton operatorButton4; // Button 4 - Stick left
+	private JoystickButton operatorButton5; // Button 5 - Stick right
+	private JoystickButton operatorButton6; // Button 6 - Base Left Away
+	private JoystickButton operatorButton7; // Button 7 - Base Left Close
+	private JoystickButton operatorButton8; // Button 8 - Base Near Left
+	private JoystickButton operatorButton9; // Button 9 - Base Near Right
+	private JoystickButton operatorButton10; // Button 10 - Base Right Close
+	private JoystickButton operatorButton11; // Button 11 - Base RIght Away
+	
+	/*
+	 * public LogitechController logitechDriver;
+	 * private LogitechControllerButton logitechDriverButtonLeftB; // Left Button (Above Trigger)
+	 * private LogitechControllerButton logitechDriverButtonRightB; // Right Button (Above Trigger)
+	 * private LogitechControllerButton logitechDriverButtonLeftTop; // Left Stick Pressing
+	 * private LogitechControllerButton logitechDriverButtonRightTop; // Right Stick Pressing
+	 * private LogitechControllerButton logitechDriverButtonA; // A Button (Green)
+	 * private LogitechControllerButton logitechDriverButtonB; // B Button (Red)
+	 * private LogitechControllerButton logitechDriverButtonX; // X Button (Blue)
+	 * private LogitechControllerButton logitechDriverButtonY; // Y Button (Yellow)
+	 * private LogitechControllerButton logitechDriverButtonStart; // Start Button
+	 * private LogitechControllerButton logitechDriverButtonBack; // Back Button
+	 * private LogitechControllerButton logitechDriverButtonLeftTrigger; // Left Trigger (Used as button)
+	 * private LogitechControllerButton logitechDriverButtonRightTrigger; // Right Trigger (Used as button)
+	 * private LogitechControllerButton logitechDriverButtonGameUp; // Game Pad Up
+	 * private LogitechControllerButton logitechDriverButtonGameDown; // Game Pad Down
+	 * private LogitechControllerButton logitechDriverButtonGameLeft; // Game Pad Left
+	 * private LogitechControllerButton logitechDriverButtonGameRight; // Game Pad Right
+	 */
 	
 	public OI()
 	{
 		// Instantiate Joysticks and Logitech Controllers
 		driverLeft = new Joystick(RobotMap.LEFT_JOYSTICK_ID);
 		driverRight = new Joystick(RobotMap.RIGHT_JOYSTICK_ID);
+		operator = new Joystick(2);
 		// logitechDriver = new LogitechController(RobotMap.LOGITECH_CONTROLLER_ID);
 		
 		// -----------------------------------------//
@@ -117,6 +133,18 @@ public class OI
 		driverRightButton9 = new JoystickButton(driverRight, 9);
 		driverRightButton10 = new JoystickButton(driverRight, 10);
 		driverRightButton11 = new JoystickButton(driverRight, 11);
+		
+		operatorButtonTrigger = new JoystickButton(operator, 1);
+		operatorButton2 = new JoystickButton(operator, 2);
+		operatorButton3 = new JoystickButton(operator, 3);
+		operatorButton4 = new JoystickButton(operator, 4);
+		operatorButton5 = new JoystickButton(operator, 5);
+		operatorButton6 = new JoystickButton(operator, 6);
+		operatorButton7 = new JoystickButton(operator, 7);
+		operatorButton8 = new JoystickButton(operator, 8);
+		operatorButton9 = new JoystickButton(operator, 9);
+		operatorButton10 = new JoystickButton(operator, 10);
+		operatorButton11 = new JoystickButton(operator, 11);
 		
 		/*
 		 * logitechDriverButtonLeftB = new LogitechControllerButton(logitechDriver,
@@ -178,6 +206,19 @@ public class OI
 		driverRightButton10.whenPressed(new DebugPrint("driverRightButton10 Pressed"));
 		driverRightButton11.whenPressed(new DebugPrint("driverRightButton11 Pressed"));
 		
+		operatorButtonTrigger.whenPressed(new DebugPrint("operatorButtonTrigger Pressed"));
+		operatorButton2.whenPressed(new DebugPrint("operatorButton2 Pressed"));
+		operatorButton3.whenPressed(new DebugPrint("operatorButton3 Pressed"));
+		operatorButton3.whenPressed(new DebugPrint("operatorButton3 Pressed"));
+		operatorButton4.whenPressed(new DebugPrint("operatorButton4 Pressed"));
+		operatorButton5.whenPressed(new DebugPrint("operatorButton5 Pressed"));
+		operatorButton6.whenPressed(new DebugPrint("operatorButton6 Pressed"));
+		operatorButton7.whenPressed(new DebugPrint("operatorButton7 Pressed"));
+		operatorButton8.whenPressed(new DebugPrint("operatorButton8 Pressed"));
+		operatorButton9.whenPressed(new DebugPrint("operatorButton9 Pressed"));
+		operatorButton10.whenPressed(new DebugPrint("operatorButton10 Pressed"));
+		operatorButton11.whenPressed(new DebugPrint("operatorButton11 Pressed"));
+		
 		/*
 		 * logitechDriverButtonLeftB.whenPressed(new DebugPrint("logitechDriverButtonLeftB Pressed"));
 		 * logitechDriverButtonRightB.whenPressed(new DebugPrint("logitechDriverButtonRightB Pressed"));
@@ -206,24 +247,31 @@ public class OI
 		// driverLeftButton4.whenPressed(new DriveSpeedForTime(0.5, 0.5, 3));
 		// driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
 		
-		driverLeftButton2.whenPressed(new ManualControlDown());
-		driverLeftButton3.whenPressed(new ManualControlUp());
-		driverLeftButton2.whenReleased(new ManualControlStopVoltage(Robot.elevator));
-		driverLeftButton3.whenReleased(new ManualControlStopVoltage(Robot.elevator));
+		driverLeftButton2.whenPressed(new ManualVoltageLowerPart());
+		driverLeftButton3.whenPressed(new ManualVoltageHigherPart());
+		driverLeftButton2.whenReleased(new ManualVoltageStopPart(Robot.elevator));
+		driverLeftButton3.whenReleased(new ManualVoltageStopPart(Robot.elevator));
 		
 		// driverRightButton2.whenPressed(new CalibrateEncoders());
-		
 		// driverRightButton4.whenPressed(new Grab());
 		// driverRightButton5.whenPressed(new Release());
 		
 		driverRightButtonTrigger.whenPressed(new ForksSmartClose());
 		driverLeftButtonTrigger.whenPressed(new ForksExtend());
-		driverRightButtonTrigger.whenReleased(new ManualControlStopVoltage(Robot.forks));
-		driverLeftButtonTrigger.whenReleased(new ManualControlStopVoltage(Robot.forks));
+		driverRightButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
+		driverLeftButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
 		
-		driverRightButton3.whenPressed(new ForksClose());
-		driverRightButton3.whenReleased(new ManualControlStopVoltage(Robot.forks));
+		/*
+		 * driverRightButton3.whenPressed(new ForksTimedClose());
+		 * driverRightButton3.whenReleased(new ManualVoltageStopPart(Robot.forks));
+		 */
 		
+		operatorButton4.whenPressed(new SwitchDriverType());
+		
+		operatorButtonTrigger.whenPressed(new ForksSmartClose());
+		operatorButton2.whenPressed(new ForksExtend());
+		operatorButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
+		operatorButton2.whenReleased(new ManualVoltageStopPart(Robot.forks));
 		// -----------------------------------------//
 		// -----------------------------------------//
 		
@@ -237,13 +285,13 @@ public class OI
 		return driverType;
 	}
 	
-	public void setJoystickDriveMode()
+	public void setDriverMode()
 	{
-		driverType = DriverType.Joysticks;
+		driverType = DriverType.DRIVER_ONLY;
 	}
 	
-	public void setLogitechDriveMode()
+	public void setOperatorMode()
 	{
-		driverType = DriverType.LogitechController;
+		driverType = DriverType.OPERATOR;
 	}
 }

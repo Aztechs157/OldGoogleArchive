@@ -1,43 +1,50 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.OI;
 import org.usfirst.frc.team157.robot.Robot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ForksClose extends Command
+public class JoystickVoltageControlElevator extends Command
 {
-	private boolean allDone;
-	private double gripTime;
-	private double stopTime;
 	
-	public ForksClose()
+	public JoystickVoltageControlElevator()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.forks);
-		gripTime = 1;
+		requires(Robot.elevator);
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		stopTime = Timer.getFPGATimestamp() + gripTime;
-		allDone = false;
-		Robot.forks.setJag(12);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if (Robot.forks.isNearLowLimit() || stopTime <= Timer.getFPGATimestamp())
+		double speed = Robot.oi.operator.getY();
+		speed *= OI.OPERATOR_Y_SCALE;
+		
+		// System.out.println("Speed = " + speed + " Type = " + Robot.oi.getDriverType().toString());
+		
+		if (speed > 0 && Robot.elevator.isHighLimitSwitchClosed())
 		{
-			allDone = true;
+			speed = 0;
+		}
+		else if (speed < 0 && Robot.elevator.isLowLimitSwitchClosed())
+		{
+			speed = 0;
+		}
+		
+		if (Robot.oi.getDriverType().equals(OI.DriverType.OPERATOR))
+		{
+			Robot.elevator.setJag(speed * 12);
 		}
 	}
 	
@@ -45,14 +52,13 @@ public class ForksClose extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return allDone;
+		return false;
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		Robot.forks.setJag(0);
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -60,7 +66,5 @@ public class ForksClose extends Command
 	@Override
 	protected void interrupted()
 	{
-		System.out.println("ForksClose ================= Interrupted");
-		Robot.forks.setJag(0);
 	}
 }

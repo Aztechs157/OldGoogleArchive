@@ -7,35 +7,43 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualControlStopVoltage extends Command
+public class ManualPositionHigherPart extends Command
 {
+	
 	private ForkliftPart part;
 	
-	public ManualControlStopVoltage(ForkliftPart part)
+	public ManualPositionHigherPart(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.part = part;
 		requires(part);
+		this.part = part;
+		System.out.println("============================= ManualControlUp.ManualControlUp()");
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
+		System.out.println("============================= ManualControlUp.end");
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
+		// if (part.getHighEndEncoderLimit() - part.getJagPosition() > 0.05)
+		System.out.println("============================= ManualControlUp.execute");
+		// System.out.println("Setpoint = " + part.getJagSetpoint());
+		
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		part.setJag(0);
+		System.out.println("============================= ManualControlUp.initialize");
+		part.setJag(part.getHighEndEncoderLimit());
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -43,6 +51,7 @@ public class ManualControlStopVoltage extends Command
 	@Override
 	protected void interrupted()
 	{
+		System.out.println("============================= ManualControlUp.interrupted");
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

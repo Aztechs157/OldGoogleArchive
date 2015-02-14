@@ -118,6 +118,12 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 	}
 	
+	@Override
+	public void disabledInit()
+	{
+		// Do nothing
+	}
+	
 	/**
 	 * This function called periodically during test mode
 	 */

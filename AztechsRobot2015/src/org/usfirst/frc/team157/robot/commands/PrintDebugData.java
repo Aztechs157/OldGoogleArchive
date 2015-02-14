@@ -26,7 +26,7 @@ public class PrintDebugData extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.println("Current = " + Robot.forks.getJagCurrent());
+		System.out.println("Position = " + Robot.forks.getJagPosition());
 		/*
 		 * System.out.print("[X,Y,Z]: [" + RobotMap.accelerometer.getX());
 		 * System.out.print(", " + RobotMap.accelerometer.getY());

@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+
+@Deprecated
 public class Grab extends Command
 {
 	/*

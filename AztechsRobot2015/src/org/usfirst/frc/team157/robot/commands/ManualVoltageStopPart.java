@@ -7,17 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualControlStopPosition extends Command
+public class ManualVoltageStopPart extends Command
 {
-	
 	private ForkliftPart part;
 	
-	public ManualControlStopPosition(ForkliftPart part)
+	public ManualVoltageStopPart(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(part);
 		this.part = part;
+		requires(part);
 	}
 	
 	// Called once after isFinished returns true
@@ -30,14 +29,13 @@ public class ManualControlStopPosition extends Command
 	@Override
 	protected void execute()
 	{
-		
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		part.setJag(part.getJagPosition());
+		part.setJag(0);
 	}
 	
 	// Called when another command which requires one or more of the same

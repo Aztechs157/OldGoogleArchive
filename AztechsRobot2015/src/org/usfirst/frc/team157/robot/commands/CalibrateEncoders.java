@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+
+@Deprecated
 public class CalibrateEncoders extends CommandGroup
 {
 	
