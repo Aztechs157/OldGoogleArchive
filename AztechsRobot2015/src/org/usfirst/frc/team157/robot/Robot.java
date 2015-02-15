@@ -73,9 +73,16 @@ public class Robot extends IterativeRobot
 		RobotMap.init();
 		
 		/*
+		 * try
+		 * {
 		 * camera = CameraServer.getInstance();
 		 * camera.setQuality(50);
 		 * camera.startAutomaticCapture("cam0");
+		 * }
+		 * catch (Exception E)
+		 * {
+		 * System.out.println("Problem with camera!");
+		 * }
 		 */
 		
 		// -----------------------------------------//

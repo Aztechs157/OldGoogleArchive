@@ -27,21 +27,6 @@ public class PrintDebugData extends Command
 	protected void execute()
 	{
 		System.out.println("Position = " + Robot.forks.getJagPosition());
-		/*
-		 * System.out.print("[X,Y,Z]: [" + RobotMap.accelerometer.getX());
-		 * System.out.print(", " + RobotMap.accelerometer.getY());
-		 * System.out.print(", " + RobotMap.accelerometer.getZ() + "]\n");
-		 */
-		// System.out.println("Elevator: " + Robot.elevator.getJagPosition() + " Forks: " + Robot.forks.getJagPosition());
-		
-		/*
-		 * if (Math.abs(Robot.elevator.getRotaryEncoderPosition() - 0.5) < 0.005)
-		 * {
-		 * Robot.elevator.setJagI(-0.75);
-		 * System.out.println("RESET JAG VOLTAGE");
-		 * 
-		 * }
-		 */
 	}
 	
 	// Called just before this Command runs the first time

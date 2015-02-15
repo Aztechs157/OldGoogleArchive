@@ -1,47 +1,44 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
+import org.usfirst.frc.team157.robot.OI.DriverType;
+import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Teju Nareddy
  */
-
-@Deprecated
-public class GetHighEndPosition extends Command
+public class SwitchOperatorControls extends Command
 {
 	
-	private ForkliftPart part;
-	private boolean allDone;
-	
-	public GetHighEndPosition(ForkliftPart part)
+	public SwitchOperatorControls()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(part);
-		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		double position = part.getJagPosition();
-		part.setJag(position); // Stops it
-		part.setHighEndEncoderLimit(position);
-		System.out.println("High end position for " + part.getName() + " is: " + position);
-		part.setJagScale(1);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		part.setJag(part.getHighEndEncoderLimit());
-		if (part.isHighLimitSwitchClosed())
+		DriverType current = Robot.oi.getDriverType();
+		if (current.equals(DriverType.DRIVER_ONLY))
 		{
-			allDone = true;
+			Robot.oi.setDualControlMode();
+		}
+		else if (current.equals(DriverType.DUAL_CONTROL))
+		{
+			Robot.oi.setDriverOnlyMode();
+		}
+		else
+		{
+			System.out.println("SwitchDriverType failed to execute! driverType is not set properly...");
 		}
 	}
 	
@@ -49,8 +46,6 @@ public class GetHighEndPosition extends Command
 	@Override
 	protected void initialize()
 	{
-		part.setJagScale(0.25);
-		allDone = false;
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -58,13 +53,12 @@ public class GetHighEndPosition extends Command
 	@Override
 	protected void interrupted()
 	{
-		part.setJagScale(1);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return allDone;
+		return true;
 	}
 }

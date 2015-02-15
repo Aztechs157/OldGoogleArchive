@@ -2,36 +2,59 @@
 package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class VoltageDecreasePart extends Command
+public class VoltageSetPart extends Command
 {
 	private boolean allDone;
+	private double voltage;
+	private ForkliftPart part;
 	
-	public VoltageDecreasePart()
+	public VoltageSetPart(double voltageToSet, ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.elevator);
+		requires(part);
+		this.voltage = voltageToSet;
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		Robot.elevator.setJag(0);
+		part.setJag(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if (Robot.elevator.isLowLimitSwitchClosed())
+		if (part.equals(Robot.forks))
 		{
-			allDone = true;
+			if (voltage < 0 && part.isNearLowLimit())
+			{
+				allDone = true;
+			}
+			else if (voltage > 0 && part.isNearHighLimit())
+			{
+				allDone = true;
+			}
+		}
+		else if (part.equals(Robot.elevator))
+		{
+			if (voltage < 0 && part.isLowLimitSwitchClosed())
+			{
+				allDone = true;
+			}
+			else if (voltage > 0 && part.isHighLimitSwitchClosed())
+			{
+				allDone = true;
+			}
 		}
 	}
 	
@@ -39,9 +62,8 @@ public class VoltageDecreasePart extends Command
 	@Override
 	protected void initialize()
 	{
-		Robot.oi.setDriverOnlyMode();
 		allDone = false;
-		Robot.elevator.setJag(-12);
+		part.setJag(voltage);
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -49,7 +71,7 @@ public class VoltageDecreasePart extends Command
 	@Override
 	protected void interrupted()
 	{
-		Robot.elevator.setJag(0);
+		part.setJag(0);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

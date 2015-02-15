@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 
 @Deprecated
-public class CalibrateEncoders extends CommandGroup
+public class CalibratePositions extends CommandGroup
 {
 	
 	@SuppressWarnings("deprecation")
-	public CalibrateEncoders()
+	public CalibratePositions()
 	{
 		// Add Commands here:
 		// e.g. addSequential(new Command1());
@@ -34,7 +34,7 @@ public class CalibrateEncoders extends CommandGroup
 		
 		// addSequential(new GetLowEndPosition(Robot.elevator));
 		// addSequential(new GetHighEndPosition(Robot.elevator));
-		addSequential(new GetLowEndPosition(Robot.forks));
-		addSequential(new GetHighEndPosition(Robot.forks));
+		addSequential(new CalibrateLowPosition(Robot.forks));
+		addSequential(new CalibrateHighPosition(Robot.forks));
 	}
 }
