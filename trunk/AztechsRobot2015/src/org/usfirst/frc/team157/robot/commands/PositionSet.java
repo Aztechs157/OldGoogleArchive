@@ -1,27 +1,25 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Teju Nareddy
  */
-public class RunAPartForTime extends Command
+
+@Deprecated
+public class PositionSet extends Command
 {
-	private double speed;
-	private double driveTime;
-	private double stopTime;
+	private double positionToSet;
 	private ForkliftPart part;
 	
-	public RunAPartForTime(double leftSpeed, double timeSeconds, ForkliftPart part)
+	public PositionSet(double positionToSet, ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.drive);
-		this.speed = leftSpeed;
-		driveTime = timeSeconds;
+		// eg. requires(chassis);
+		requires(part);
+		this.positionToSet = positionToSet;
 		this.part = part;
 	}
 	
@@ -29,7 +27,7 @@ public class RunAPartForTime extends Command
 	@Override
 	protected void end()
 	{
-		part.setJag(0);
+		
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -43,8 +41,7 @@ public class RunAPartForTime extends Command
 	@Override
 	protected void initialize()
 	{
-		stopTime = Timer.getFPGATimestamp() + driveTime;
-		part.setJag(speed);
+		part.setJag(positionToSet);
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -52,12 +49,13 @@ public class RunAPartForTime extends Command
 	@Override
 	protected void interrupted()
 	{
+		
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return Timer.getFPGATimestamp() > stopTime;
+		return true;
 	}
 }

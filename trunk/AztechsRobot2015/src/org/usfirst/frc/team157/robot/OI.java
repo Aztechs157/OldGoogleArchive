@@ -3,13 +3,11 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
-import org.usfirst.frc.team157.robot.commands.PositionIncreasePart;
-import org.usfirst.frc.team157.robot.commands.VoltageIncreasePart;
-import org.usfirst.frc.team157.robot.commands.VoltageDecreasePart;
-import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
-import org.usfirst.frc.team157.robot.commands.SwitchDriverControls;
+import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
+import org.usfirst.frc.team157.robot.commands.SwitchOperatorControls;
+import org.usfirst.frc.team157.robot.commands.VoltageSetPart;
+import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +26,12 @@ public class OI
 		DRIVER_ONLY, DUAL_CONTROL
 	}
 	
+	// Joystick and Logitech Controller IDS
+	public static final int LEFT_JOYSTICK_ID = 0;
+	public static final int RIGHT_JOYSTICK_ID = 1;
+	public static final int OPERATOR_JOYSTICK_ID = 2;
+	
+	// Scaling factors
 	public static final double LEFT_DRIVER_Y_SCALE = -1;
 	public static final double RIGHT_DRIVER_Y_SCALE = -1;
 	public static final double OPERATOR_Y_SCALE = -1;
@@ -101,9 +105,9 @@ public class OI
 	public OI()
 	{
 		// Instantiate Joysticks and Logitech Controllers
-		driverLeft = new Joystick(RobotMap.LEFT_JOYSTICK_ID);
-		driverRight = new Joystick(RobotMap.RIGHT_JOYSTICK_ID);
-		operator = new Joystick(2);
+		driverLeft = new Joystick(OI.LEFT_JOYSTICK_ID);
+		driverRight = new Joystick(OI.RIGHT_JOYSTICK_ID);
+		operator = new Joystick(OI.OPERATOR_JOYSTICK_ID);
 		// logitechDriver = new LogitechController(RobotMap.LOGITECH_CONTROLLER_ID);
 		
 		// -----------------------------------------//
@@ -244,20 +248,20 @@ public class OI
 		// Actual commands that we want each button to have
 		driverLeftButton4.whenPressed(new PrintDebugData());
 		
-		driverLeftButton2.whenPressed(new VoltageDecreasePart());
-		driverLeftButton3.whenPressed(new VoltageIncreasePart());
+		driverLeftButton2.whenPressed(new VoltageSetPart(-12, Robot.elevator));
+		driverLeftButton3.whenPressed(new VoltageSetPart(12, Robot.elevator));
 		driverLeftButton2.whenReleased(new VoltageStopPart(Robot.elevator));
 		driverLeftButton3.whenReleased(new VoltageStopPart(Robot.elevator));
 		
 		driverRightButtonTrigger.whenPressed(new SmartGrabForks());
-		driverLeftButtonTrigger.whenPressed(new PositionIncreasePart(Robot.forks));
+		driverLeftButtonTrigger.whenPressed(new VoltageSetPart(-12, Robot.forks));
 		driverRightButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
 		driverLeftButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
 		
-		operatorButton4.whenPressed(new SwitchDriverControls());
+		operatorButton4.whenPressed(new SwitchOperatorControls());
 		
 		operatorButtonTrigger.whenPressed(new SmartGrabForks());
-		operatorButton2.whenPressed(new PositionIncreasePart(Robot.forks));
+		operatorButton2.whenPressed(new VoltageSetPart(-12, Robot.forks));
 		operatorButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
 		operatorButton2.whenReleased(new VoltageStopPart(Robot.forks));
 		// -----------------------------------------//
