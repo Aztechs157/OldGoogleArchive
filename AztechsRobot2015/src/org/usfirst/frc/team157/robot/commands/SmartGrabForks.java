@@ -7,11 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ForksExtend extends Command
+public class SmartGrabForks extends Command
 {
 	private boolean allDone;
+	private boolean hasBox;
 	
-	public ForksExtend()
+	private double[] currents;
+	int count;
+	
+	public SmartGrabForks()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -23,17 +27,35 @@ public class ForksExtend extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		Robot.forks.setJag(-12);
+		hasBox = false;
+		Robot.forks.setJag(12);
+		currents = new double[5];
+		count = 0;
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if (Robot.forks.isNearHighLimit())
+		currents[count % 5] = Robot.forks.getJagCurrent();
+		
+		double averageCurrent = 0;
+		for (int i = 0; i < 5; i++)
+		{
+			averageCurrent += currents[i];
+		}
+		averageCurrent /= 5;
+		
+		if (Robot.forks.isNearLowLimit())
 		{
 			allDone = true;
 		}
+		if (averageCurrent > 8 && !hasBox)
+		{
+			hasBox = true;
+			Robot.forks.setJag(2);
+		}
+		count++;
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
@@ -55,7 +77,6 @@ public class ForksExtend extends Command
 	@Override
 	protected void interrupted()
 	{
-		System.out.println("ForksExtend ================= Interrupted");
 		Robot.forks.setJag(0);
 	}
 }

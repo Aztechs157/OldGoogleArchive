@@ -42,7 +42,7 @@ public class JoystickVoltageControlElevator extends Command
 			speed = 0;
 		}
 		
-		if (Robot.oi.getDriverType().equals(OI.DriverType.OPERATOR))
+		if (Robot.oi.getDriverType().equals(OI.DriverType.DUAL_CONTROL))
 		{
 			Robot.elevator.setJag(speed * 12);
 		}
@@ -52,7 +52,7 @@ public class JoystickVoltageControlElevator extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return false;
+		return true;
 	}
 	
 	// Called once after isFinished returns true

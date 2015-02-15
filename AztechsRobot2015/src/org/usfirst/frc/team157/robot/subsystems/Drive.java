@@ -39,7 +39,7 @@ public class Drive extends Subsystem
 		}
 		else
 		{
-			// System.out.println("Drive Left Jag 1 is null!");
+			System.out.println("Drive Left Jag 1 is null!");
 		}
 		
 		if (leftJag2 != null)
@@ -48,7 +48,7 @@ public class Drive extends Subsystem
 		}
 		else
 		{
-			// System.out.println("Drive Left Jag 2 is null!");
+			System.out.println("Drive Left Jag 2 is null!");
 		}
 		
 		if (rightJag1 != null)
@@ -57,7 +57,7 @@ public class Drive extends Subsystem
 		}
 		else
 		{
-			// System.out.println("Drive Right Jag 1 is null!");
+			System.out.println("Drive Right Jag 1 is null!");
 		}
 		
 		if (rightJag2 != null)
@@ -66,10 +66,9 @@ public class Drive extends Subsystem
 		}
 		else
 		{
-			// System.out.println("Drive Right Jag 2 is null!");
+			System.out.println("Drive Right Jag 2 is null!");
 		}
 		
-		// System.out.println("LEFT = " + left + ", RIGHT = " + right);
 		CANJaguar.updateSyncGroup(group);
 		
 	}
@@ -78,7 +77,6 @@ public class Drive extends Subsystem
 	protected void initDefaultCommand()
 	{
 		// Set the subsystem's default command here: Will call this command repeatedly
-		
 		setDefaultCommand(new OperatorDrive());
 		
 	}

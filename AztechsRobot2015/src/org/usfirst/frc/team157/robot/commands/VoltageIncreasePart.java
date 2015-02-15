@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualVoltageLowerPart extends Command
+public class VoltageIncreasePart extends Command
 {
 	private boolean allDone;
 	
-	public ManualVoltageLowerPart()
+	public VoltageIncreasePart()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -29,7 +29,7 @@ public class ManualVoltageLowerPart extends Command
 	@Override
 	protected void execute()
 	{
-		if (Robot.elevator.isLowLimitSwitchClosed())
+		if (Robot.elevator.isHighLimitSwitchClosed())
 		{
 			allDone = true;
 		}
@@ -39,9 +39,9 @@ public class ManualVoltageLowerPart extends Command
 	@Override
 	protected void initialize()
 	{
-		Robot.oi.setDriverMode();
+		Robot.oi.setDriverOnlyMode();
+		Robot.elevator.setJag(12);
 		allDone = false;
-		Robot.elevator.setJag(-12);
 	}
 	
 	// Called when another command which requires one or more of the same

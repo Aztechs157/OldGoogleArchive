@@ -1,22 +1,27 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
+import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ManualPositionLowerPart extends Command
+public class RunAPartForTime extends Command
 {
-	
+	private double speed;
+	private double driveTime;
+	private double stopTime;
 	private ForkliftPart part;
 	
-	public ManualPositionLowerPart(ForkliftPart part)
+	public RunAPartForTime(double leftSpeed, double timeSeconds, ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(part);
+		requires(Robot.drive);
+		this.speed = leftSpeed;
+		driveTime = timeSeconds;
 		this.part = part;
 	}
 	
@@ -24,15 +29,13 @@ public class ManualPositionLowerPart extends Command
 	@Override
 	protected void end()
 	{
+		part.setJag(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		// if (part.getJagPosition() - part.getLowEndEncoderLimit() > 0.05)
-		
-		// System.out.println("Setpoint = " + part.getJagSetpoint());
 		
 	}
 	
@@ -40,7 +43,8 @@ public class ManualPositionLowerPart extends Command
 	@Override
 	protected void initialize()
 	{
-		part.setJag(part.getLowEndEncoderLimit());
+		stopTime = Timer.getFPGATimestamp() + driveTime;
+		part.setJag(speed);
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -54,6 +58,6 @@ public class ManualPositionLowerPart extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return true;
+		return Timer.getFPGATimestamp() > stopTime;
 	}
 }

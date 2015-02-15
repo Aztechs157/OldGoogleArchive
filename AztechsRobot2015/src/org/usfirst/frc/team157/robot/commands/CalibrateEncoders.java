@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CalibrateEncoders extends CommandGroup
 {
 	
+	@SuppressWarnings("deprecation")
 	public CalibrateEncoders()
 	{
 		// Add Commands here:

@@ -8,28 +8,29 @@ import edu.wpi.first.wpilibj.CANJaguar;
 
 public class ForkliftElevator extends ForkliftPart
 {
-	public double[] PID =
-	{ -500, 0, 0 };
-	
 	public ForkliftElevator()
 	{
 		super.jag = RobotMap.elevatorJag;
-		// super.setJagPID(PID[0], PID[1], PID[2]);
 		
 		super.highLimitSwitch = RobotMap.elevatorHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.elevatorLowLimitSwitch;
 		
+		// FIXME
 		super.highEndVoltage = 0.29;
 		super.lowEndVoltage = 0.88;
 		
 		setJagForVoltageControl();
 	}
 	
+	@Deprecated
+	@Override
 	public void setJagForPositionControl()
 	{
+		// FIXME
 		ScaledCANJaguar.setupJagForPositionControl(jag, CANJaguar.NeutralMode.Brake, -800, -0.05, 0);
 	}
 	
+	@Override
 	public void setJagForVoltageControl()
 	{
 		ScaledCANJaguar.setupJagForVoltageControl(jag, CANJaguar.NeutralMode.Brake);

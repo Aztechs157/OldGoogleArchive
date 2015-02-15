@@ -25,8 +25,8 @@ public class AutonomousCommand extends CommandGroup
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		addParallel(new ForksSmartClose());
-		addSequential(new RunPartMotorForTime(12, 1, Robot.elevator));
+		addParallel(new SmartGrabForks());
+		addSequential(new RunAPartForTime(12, 1, Robot.elevator));
 		addSequential(new DriveSpeedForTime(1, 1, 3));
 	}
 	
