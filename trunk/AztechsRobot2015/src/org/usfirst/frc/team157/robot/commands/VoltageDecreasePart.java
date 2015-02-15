@@ -1,41 +1,47 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
+import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ManualVoltageStopPart extends Command
+public class VoltageDecreasePart extends Command
 {
-	private ForkliftPart part;
+	private boolean allDone;
 	
-	public ManualVoltageStopPart(ForkliftPart part)
+	public VoltageDecreasePart()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.part = part;
-		requires(part);
+		requires(Robot.elevator);
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
+		Robot.elevator.setJag(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
+		if (Robot.elevator.isLowLimitSwitchClosed())
+		{
+			allDone = true;
+		}
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		part.setJag(0);
+		Robot.oi.setDriverOnlyMode();
+		allDone = false;
+		Robot.elevator.setJag(-12);
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -43,12 +49,13 @@ public class ManualVoltageStopPart extends Command
 	@Override
 	protected void interrupted()
 	{
+		Robot.elevator.setJag(0);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return true;
+		return allDone;
 	}
 }

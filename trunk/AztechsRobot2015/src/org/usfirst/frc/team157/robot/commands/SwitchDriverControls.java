@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Teju Nareddy
  */
-public class SwitchDriverType extends Command
+public class SwitchDriverControls extends Command
 {
 	
-	public SwitchDriverType()
+	public SwitchDriverControls()
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -30,11 +30,11 @@ public class SwitchDriverType extends Command
 		DriverType current = Robot.oi.getDriverType();
 		if (current.equals(DriverType.DRIVER_ONLY))
 		{
-			Robot.oi.setOperatorMode();
+			Robot.oi.setDualControlMode();
 		}
-		else if (current.equals(DriverType.OPERATOR))
+		else if (current.equals(DriverType.DUAL_CONTROL))
 		{
-			Robot.oi.setDriverMode();
+			Robot.oi.setDriverOnlyMode();
 		}
 		else
 		{

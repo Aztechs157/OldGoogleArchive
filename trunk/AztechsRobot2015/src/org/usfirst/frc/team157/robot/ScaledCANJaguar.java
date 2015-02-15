@@ -70,6 +70,7 @@ public class ScaledCANJaguar extends CANJaguar
 	{
 		if (jag != null)
 		{
+			// jag.setPercentMode(CANJaguar.kQuadEncoder, 1);
 			jag.setPercentMode();
 			jag.configNeutralMode(mode);
 			jag.enableControl();

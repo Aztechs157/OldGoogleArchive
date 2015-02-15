@@ -1,54 +1,46 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-@Deprecated
-public class VoltageGrab extends Command
+public class PositionDecreasePart extends Command
 {
 	
-	private boolean allDone;
+	private ForkliftPart part;
 	
-	public VoltageGrab()
+	public PositionDecreasePart(ForkliftPart part)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.forks);
+		requires(part);
+		this.part = part;
 	}
 	
 	// Called once after isFinished returns true
 	@Override
 	protected void end()
 	{
-		System.out.println("================================= VoltageGrab end");
-		Robot.forks.setJag(0);
-		Robot.forks.setJagForPositionControl();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		/*
-		 * if (Robot.forks.getJagCurrent() > 8 && Robot.forks.getJagSetpoint() == 12)
-		 * {
-		 * Robot.forks.setJag(6);
-		 * }
-		 */
+		// if (part.getJagPosition() - part.getLowEndEncoderLimit() > 0.05)
+		
+		// System.out.println("Setpoint = " + part.getJagSetpoint());
+		
 	}
 	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
-		System.out.println("================================= VoltageGrab initialize");
-		Robot.forks.setJagForVoltageControl();
-		Robot.forks.setJag(12);
-		allDone = false;
+		part.setJag(part.getLowEndEncoderLimit());
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -56,15 +48,12 @@ public class VoltageGrab extends Command
 	@Override
 	protected void interrupted()
 	{
-		System.out.println("================================= VoltageGrab interupted");
-		Robot.forks.setJag(0);
-		Robot.forks.setJagForPositionControl();
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished()
 	{
-		return allDone;
+		return true;
 	}
 }

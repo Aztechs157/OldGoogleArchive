@@ -3,13 +3,13 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.ForksExtend;
-import org.usfirst.frc.team157.robot.commands.ForksSmartClose;
-import org.usfirst.frc.team157.robot.commands.ManualVoltageHigherPart;
-import org.usfirst.frc.team157.robot.commands.ManualVoltageLowerPart;
-import org.usfirst.frc.team157.robot.commands.ManualVoltageStopPart;
+import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
+import org.usfirst.frc.team157.robot.commands.PositionIncreasePart;
+import org.usfirst.frc.team157.robot.commands.VoltageIncreasePart;
+import org.usfirst.frc.team157.robot.commands.VoltageDecreasePart;
+import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
-import org.usfirst.frc.team157.robot.commands.SwitchDriverType;
+import org.usfirst.frc.team157.robot.commands.SwitchDriverControls;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,7 +25,7 @@ public class OI
 	// Used to determine the main drive controller --> See OperatorDrive command
 	public enum DriverType
 	{
-		DRIVER_ONLY, OPERATOR
+		DRIVER_ONLY, DUAL_CONTROL
 	}
 	
 	public static final double LEFT_DRIVER_Y_SCALE = -1;
@@ -243,35 +243,23 @@ public class OI
 		
 		// Actual commands that we want each button to have
 		driverLeftButton4.whenPressed(new PrintDebugData());
-		// driverLeftButton11.whenPressed(new SwitchDriverType());
-		// driverLeftButton4.whenPressed(new DriveSpeedForTime(0.5, 0.5, 3));
-		// driverLeftButton5.whenPressed(new SetAPosition(.5, Robot.elevator));
 		
-		driverLeftButton2.whenPressed(new ManualVoltageLowerPart());
-		driverLeftButton3.whenPressed(new ManualVoltageHigherPart());
-		driverLeftButton2.whenReleased(new ManualVoltageStopPart(Robot.elevator));
-		driverLeftButton3.whenReleased(new ManualVoltageStopPart(Robot.elevator));
+		driverLeftButton2.whenPressed(new VoltageDecreasePart());
+		driverLeftButton3.whenPressed(new VoltageIncreasePart());
+		driverLeftButton2.whenReleased(new VoltageStopPart(Robot.elevator));
+		driverLeftButton3.whenReleased(new VoltageStopPart(Robot.elevator));
 		
-		// driverRightButton2.whenPressed(new CalibrateEncoders());
-		// driverRightButton4.whenPressed(new Grab());
-		// driverRightButton5.whenPressed(new Release());
+		driverRightButtonTrigger.whenPressed(new SmartGrabForks());
+		driverLeftButtonTrigger.whenPressed(new PositionIncreasePart(Robot.forks));
+		driverRightButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
+		driverLeftButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
 		
-		driverRightButtonTrigger.whenPressed(new ForksSmartClose());
-		driverLeftButtonTrigger.whenPressed(new ForksExtend());
-		driverRightButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
-		driverLeftButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
+		operatorButton4.whenPressed(new SwitchDriverControls());
 		
-		/*
-		 * driverRightButton3.whenPressed(new ForksTimedClose());
-		 * driverRightButton3.whenReleased(new ManualVoltageStopPart(Robot.forks));
-		 */
-		
-		operatorButton4.whenPressed(new SwitchDriverType());
-		
-		operatorButtonTrigger.whenPressed(new ForksSmartClose());
-		operatorButton2.whenPressed(new ForksExtend());
-		operatorButtonTrigger.whenReleased(new ManualVoltageStopPart(Robot.forks));
-		operatorButton2.whenReleased(new ManualVoltageStopPart(Robot.forks));
+		operatorButtonTrigger.whenPressed(new SmartGrabForks());
+		operatorButton2.whenPressed(new PositionIncreasePart(Robot.forks));
+		operatorButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));
+		operatorButton2.whenReleased(new VoltageStopPart(Robot.forks));
 		// -----------------------------------------//
 		// -----------------------------------------//
 		
@@ -285,13 +273,13 @@ public class OI
 		return driverType;
 	}
 	
-	public void setDriverMode()
+	public void setDriverOnlyMode()
 	{
 		driverType = DriverType.DRIVER_ONLY;
 	}
 	
-	public void setOperatorMode()
+	public void setDualControlMode()
 	{
-		driverType = DriverType.OPERATOR;
+		driverType = DriverType.DUAL_CONTROL;
 	}
 }
