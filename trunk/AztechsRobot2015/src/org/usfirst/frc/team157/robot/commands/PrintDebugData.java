@@ -47,6 +47,6 @@ public class PrintDebugData extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return true;
+		return false;
 	}
 }

@@ -14,8 +14,8 @@ public class ForkliftForks extends ForkliftPart
 		super.highLimitSwitch = RobotMap.forksHighLimitSwitch;
 		super.lowLimitSwitch = RobotMap.forksLowLimitSwitch;
 		
-		super.highEndVoltage = 0.195;
-		super.lowEndVoltage = 0.46;
+		super.highEndVoltage = 0.143;
+		super.lowEndVoltage = 0.395;
 		
 		setJagForVoltageControl();
 	}
