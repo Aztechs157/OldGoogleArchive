@@ -11,7 +11,7 @@ import java.util.Scanner;
 // TODO calibration technique... forget about that until end of build day
 
 @Deprecated
-public class RotaryEncoder
+public class Calibration
 {
 	private File f;
 	private Scanner fileScanner;
@@ -22,7 +22,7 @@ public class RotaryEncoder
 	
 	private double highEndVoltage;
 	
-	public RotaryEncoder(String filePath)
+	public Calibration(String filePath)
 	{
 		lowEndVoltage = -1;
 		highEndVoltage = 4;

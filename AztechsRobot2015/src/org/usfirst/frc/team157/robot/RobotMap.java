@@ -30,7 +30,7 @@ public class RobotMap
 	private static final double DRIVE_LEFT_JAG2_SCALE = 0.5;
 	private static final double DRIVE_RIGHT_JAG1_SCALE = -0.5;
 	private static final double DRIVE_RIGHT_JAG2_SCALE = -0.5;
-	private static final double FORKS_JAG_SCALE = 1;
+	private static final double FORKS_JAG_SCALE = -1;
 	private static final double ELEVATOR_JAG_SCALE = 1;
 	
 	// Limit Switches IsReversed variables -- If the wiring of the limit switch is backward, set this to true for the robot to

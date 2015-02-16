@@ -117,23 +117,40 @@ public abstract class ForkliftPart extends Subsystem
 		highEndVoltage = position;
 	}
 	
-	public void setJag(double setPoint)
+	public boolean setJag(double setPoint)
 	{
 		if (jag != null)
 		{
+			/*
+			 * if (setPoint > 0 && isHighLimitSwitchClosed())
+			 * {
+			 * jag.set(0);
+			 * System.out.println("Hit high limit!");
+			 * return false;
+			 * }
+			 * else if (setPoint < 0 && isLowLimitSwitchClosed())
+			 * {
+			 * jag.set(0);
+			 * System.out.println("Hit low limit!");
+			 * return false;
+			 * }
+			 * else
+			 * {
+			 */
 			try
 			{
 				jag.set(setPoint);
+				System.out.println(jag.get());
 			}
 			catch (Exception e)
 			{
 				System.out.println("============= EXCEPTION ==============");
 			}
+			return true;
+			// }
 		}
-		else
-		{
-			System.out.println("Jag is null!");
-		}
+		System.out.println("Jag is null!");
+		return false;
 	}
 	
 	public void setJagScale(double scalingFactor)

@@ -248,11 +248,13 @@ public class OI
 		// Actual commands that we want each button to have
 		driverLeftButton4.whenPressed(new PrintDebugData());
 		
+		// ELEVATOR -12 = down, +12 = up
 		driverLeftButton2.whenPressed(new VoltageSetPart(-12, Robot.elevator));
 		driverLeftButton3.whenPressed(new VoltageSetPart(12, Robot.elevator));
 		driverLeftButton2.whenReleased(new VoltageStopPart(Robot.elevator));
 		driverLeftButton3.whenReleased(new VoltageStopPart(Robot.elevator));
 		
+		// FORKS -12 = open, 12 = close
 		driverRightButtonTrigger.whenPressed(new SmartGrabForks());
 		driverLeftButtonTrigger.whenPressed(new VoltageSetPart(-12, Robot.forks));
 		driverRightButtonTrigger.whenReleased(new VoltageStopPart(Robot.forks));

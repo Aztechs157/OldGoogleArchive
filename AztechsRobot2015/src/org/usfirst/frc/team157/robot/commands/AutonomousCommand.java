@@ -24,19 +24,33 @@ public class AutonomousCommand extends CommandGroup
 		addSequential(new SleepForTime(1));
 		
 		addParallel(new VoltageSetPart(12, Robot.elevator));
-		addSequential(new SleepForTime(2));
+		addSequential(new SleepForTime(1.5));
 		addSequential(new VoltageStopPart(Robot.elevator));
 		
-		addSequential(new DriveSpeedForTime(0.5, 0.5, 0.5));
+		addSequential(new DriveSpeedForTime(0.6, 0.8, 0.75));
+		addParallel(new DriveSpeedForTime(0, 0, 0.1));
 		
 		addParallel(new VoltageSetPart(-12, Robot.elevator));
-		addSequential(new SleepForTime(1));
+		addSequential(new SleepForTime(0.5));
 		addSequential(new VoltageStopPart(Robot.elevator));
 		
 		addSequential(new VoltageSetPart(-12, Robot.forks));
 		
+		addSequential(new DriveSpeedForTime(-.5, -.5, 0.5));
+		addParallel(new VoltageSetPart(-12, Robot.elevator));
+		addSequential(new DriveSpeedForTime(.5, .5, 0.5));
+		addParallel(new DriveSpeedForTime(0, 0, 0.1));
+		
 		addParallel(new SmartGrabForks());
-		addSequential(new SleepForTime(1));
+		addSequential(new SleepForTime(2));
+		
+		addParallel(new VoltageSetPart(12, Robot.elevator));
+		addSequential(new SleepForTime(0.5));
+		addSequential(new VoltageStopPart(Robot.elevator));
+		
+		addSequential(new DriveSpeedForTime(0.5, 0.5, .75));
+		addParallel(new DriveSpeedForTime(0, 0, 0.1));
+		// addSequential(new SleepForTime(1));
 		
 	}
 }

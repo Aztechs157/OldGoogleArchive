@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledInit()
 	{
-		// Do nothing
+		// Do Nothing
 	}
 	
 	/**

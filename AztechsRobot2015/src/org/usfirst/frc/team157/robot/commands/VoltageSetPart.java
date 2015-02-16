@@ -36,11 +36,11 @@ public class VoltageSetPart extends Command
 	{
 		if (part.equals(Robot.forks))
 		{
-			if (voltage < 0 && part.isNearLowLimit())
+			if (voltage > 0 && part.isNearLowLimit())
 			{
 				allDone = true;
 			}
-			else if (voltage > 0 && part.isNearHighLimit())
+			else if (voltage < 0 && part.isNearHighLimit())
 			{
 				allDone = true;
 			}
