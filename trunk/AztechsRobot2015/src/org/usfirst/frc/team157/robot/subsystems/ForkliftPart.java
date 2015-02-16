@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot.subsystems;
 
 import org.usfirst.frc.team157.robot.DigitalLimitSwitch;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
+import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -39,6 +40,16 @@ public abstract class ForkliftPart extends Subsystem
 		return 0;
 	}
 	
+	public double getJagOutputVoltage()
+	{
+		if (jag != null)
+		{
+			return jag.getOutputVoltage();
+		}
+		return 0;
+	}
+	
+	@Deprecated
 	public double getJagPosition()
 	{
 		if (jag != null)
@@ -58,21 +69,11 @@ public abstract class ForkliftPart extends Subsystem
 		return 0;
 	}
 	
-	public double getJagOutputVoltage()
-	{
-		if (jag != null)
-		{
-			return jag.getOutputVoltage();
-		}
-		return 0;
-	}
-	
 	public double getLowEndEncoderLimit()
 	{
 		return lowEndVoltage;
 	}
 	
-	// FIXME null check
 	public boolean isHighLimitSwitchClosed()
 	{
 		if (highLimitSwitch != null)
@@ -93,7 +94,6 @@ public abstract class ForkliftPart extends Subsystem
 		return true;
 	}
 	
-	// FIXME enable limit switches
 	public boolean isNearHighLimit()
 	{
 		if (Math.abs(highEndVoltage - getJagPosition()) < 0.01)
@@ -117,40 +117,9 @@ public abstract class ForkliftPart extends Subsystem
 		highEndVoltage = position;
 	}
 	
-	public boolean setJag(double setPoint)
+	public boolean setJagPosition(double position)
 	{
-		if (jag != null)
-		{
-			/*
-			 * if (setPoint > 0 && isHighLimitSwitchClosed())
-			 * {
-			 * jag.set(0);
-			 * System.out.println("Hit high limit!");
-			 * return false;
-			 * }
-			 * else if (setPoint < 0 && isLowLimitSwitchClosed())
-			 * {
-			 * jag.set(0);
-			 * System.out.println("Hit low limit!");
-			 * return false;
-			 * }
-			 * else
-			 * {
-			 */
-			try
-			{
-				jag.set(setPoint);
-				System.out.println(jag.get());
-			}
-			catch (Exception e)
-			{
-				System.out.println("============= EXCEPTION ==============");
-			}
-			return true;
-			// }
-		}
-		System.out.println("Jag is null!");
-		return false;
+		return setJag(position, CANJaguar.ControlMode.Position);
 	}
 	
 	public void setJagScale(double scalingFactor)
@@ -162,12 +131,52 @@ public abstract class ForkliftPart extends Subsystem
 		System.out.println("Jag is null!");
 	}
 	
+	public boolean setJagVoltage(double voltage)
+	{
+		return setJag(voltage, CANJaguar.ControlMode.Voltage);
+	}
+	
 	public void setLowEndEncoderLimit(double position)
 	{
 		lowEndVoltage = position;
 	}
 	
-	public abstract void setJagForPositionControl();
+	protected void setAppropriateJagControlMode(CANJaguar.ControlMode mode)
+	{
+		if (mode.equals(CANJaguar.ControlMode.Position))
+		{
+			setJagForPositionControl();
+		}
+		else if (mode.equals(CANJaguar.ControlMode.Voltage))
+		{
+			setJagForVoltageControl();
+		}
+	}
 	
-	public abstract void setJagForVoltageControl();
+	protected boolean setJag(double setPoint, CANJaguar.ControlMode mode)
+	{
+		if (jag != null)
+		{
+			if (!jag.getControlMode().equals(mode))
+			{
+				setAppropriateJagControlMode(mode);
+			}
+			try
+			{
+				jag.set(setPoint);
+			}
+			catch (Exception e)
+			{
+				System.out.println("============= EXCEPTION ==============");
+			}
+			return true;
+			
+		}
+		System.out.println("Jag is null!");
+		return false;
+	}
+	
+	protected abstract void setJagForPositionControl();
+	
+	protected abstract void setJagForVoltageControl();
 }

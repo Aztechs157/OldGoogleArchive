@@ -41,7 +41,7 @@ public class PositionSet extends Command
 	@Override
 	protected void initialize()
 	{
-		part.setJag(positionToSet);
+		part.setJagPosition(positionToSet);
 	}
 	
 	// Called when another command which requires one or more of the same

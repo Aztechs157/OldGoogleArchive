@@ -28,7 +28,7 @@ public class CalibrateHighPosition extends Command
 	protected void end()
 	{
 		double position = part.getJagPosition();
-		part.setJag(position); // Stops it
+		part.setJagPosition(position); // Stops it
 		part.setHighEndEncoderLimit(position);
 		System.out.println("High end position for " + part.getName() + " is: " + position);
 		part.setJagScale(1);
@@ -38,7 +38,7 @@ public class CalibrateHighPosition extends Command
 	@Override
 	protected void execute()
 	{
-		part.setJag(part.getHighEndEncoderLimit());
+		part.setJagPosition(part.getHighEndEncoderLimit());
 		if (part.isHighLimitSwitchClosed())
 		{
 			allDone = true;

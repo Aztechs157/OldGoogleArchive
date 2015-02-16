@@ -2,6 +2,7 @@
 package org.usfirst.frc.team157.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
 
 /**
@@ -17,27 +18,33 @@ public class RobotMap
 	private static final int DRIVE_RIGHT_JAG1_ID = 7;
 	private static final int DRIVE_RIGHT_JAG2_ID = 10;
 	
-	private static final int FORKS_JAG_ID = 11; // 11
-	private static final int ELEVATOR_JAG_ID = 13; // 13, 6
+	private static final int FORKS_JAG_ID = 11;
+	private static final int ELEVATOR_JAG_ID = 13;
 	
-	private static final int FORKS_HIGH_LIMITSWITCH_ID = 1;
+	private static final int DRIVE_QUAD_ENCODER_LEFT_ID1 = 1;
+	private static final int DRIVE_QUAD_ENCODER_LEFT_ID2 = 2;
+	private static final int DRIVE_QUAD_ENCODER_RIGHT_ID1 = 3;
+	private static final int DRIVE_QUAD_ENCODER_RIGHT_ID2 = 4;
+	private static final int FORKS_HIGH_LIMITSWITCH_ID = 7;
+	private static final int FORKS_LOW_LIMITSWITCH_ID = 6;
 	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 9;
-	private static final int FORKS_LOW_LIMITSWITCH_ID = 2;
 	private static final int ELEVATOR_LOW_LIMSWITCH_ID = 8;
+	
+	private static final int ANALOG_SWITCH_ID = 0;
 	
 	// Jag Scaling Values
 	private static final double DRIVE_LEFT_JAG1_SCALE = 0.5;
 	private static final double DRIVE_LEFT_JAG2_SCALE = 0.5;
 	private static final double DRIVE_RIGHT_JAG1_SCALE = -0.5;
 	private static final double DRIVE_RIGHT_JAG2_SCALE = -0.5;
-	private static final double FORKS_JAG_SCALE = -1;
+	private static final double FORKS_JAG_SCALE = 1;
 	private static final double ELEVATOR_JAG_SCALE = 1;
 	
 	// Limit Switches IsReversed variables -- If the wiring of the limit switch is backward, set this to true for the robot to
 	// correctly determine if the limit switch is opened or closed
 	private static final boolean FORKS_HIGH_LIMITSWITCH_REVERSED = true;
-	private static final boolean ELEVATOR_HIGH_LIMSWITCH_REVERSED = true;
 	private static final boolean FORKS_LOW_LIMITSWITCH_REVERSED = true;
+	private static final boolean ELEVATOR_HIGH_LIMSWITCH_REVERSED = true;
 	private static final boolean ELEVATOR_LOW_LIMSWITCH_REVERSED = true;
 	
 	// -----------------------------------------//
@@ -59,9 +66,15 @@ public class RobotMap
 	public static DigitalLimitSwitch forksLowLimitSwitch;
 	public static DigitalLimitSwitch elevatorLowLimitSwitch;
 	
-	// FIXME What subsystem?
 	// Built-In Accelerometer: Most likely part of the Drive Subsystem
 	public static BuiltInAccelerometer accelerometer;
+	
+	// Quad Encoders
+	public static Encoder driveQuadEncoderLeft;
+	public static Encoder driveQuadEncoderRight;
+	
+	// Auto switch
+	public static AnalogSwitch autoSwitch = new AnalogSwitch(ANALOG_SWITCH_ID);
 	
 	public static void init()
 	{
@@ -134,5 +147,11 @@ public class RobotMap
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
+		
+		// Instantiate quad encoders
+		driveQuadEncoderLeft = new Encoder(DRIVE_QUAD_ENCODER_LEFT_ID1, DRIVE_QUAD_ENCODER_LEFT_ID2, false);
+		driveQuadEncoderLeft.reset();
+		driveQuadEncoderRight = new Encoder(DRIVE_QUAD_ENCODER_RIGHT_ID1, DRIVE_QUAD_ENCODER_RIGHT_ID2, true);
+		driveQuadEncoderRight.reset();
 	}
 }

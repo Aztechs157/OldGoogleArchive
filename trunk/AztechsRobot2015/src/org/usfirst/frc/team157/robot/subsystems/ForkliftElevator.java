@@ -41,4 +41,20 @@ public class ForkliftElevator extends ForkliftPart
 	{
 		setDefaultCommand(new JoystickVoltageControlElevator());
 	}
+	
+	/*
+	 * @Override
+	 * public boolean setJagVoltage(double voltage)
+	 * {
+	 * if (voltage < 0 && this.isLowLimitSwitchClosed())
+	 * {
+	 * return false;
+	 * }
+	 * else if (voltage > 0 && this.isHighLimitSwitchClosed())
+	 * {
+	 * return false;
+	 * }
+	 * return super.setJagVoltage(voltage);
+	 * }
+	 */
 }
