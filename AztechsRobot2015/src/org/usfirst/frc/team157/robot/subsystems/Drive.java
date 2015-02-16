@@ -6,6 +6,7 @@ import org.usfirst.frc.team157.robot.RobotMap;
 import org.usfirst.frc.team157.robot.ScaledCANJaguar;
 import org.usfirst.frc.team157.robot.commands.OperatorDrive;
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,6 +21,9 @@ public class Drive extends Subsystem
 	private ScaledCANJaguar leftJag2 = RobotMap.driveLeftJag2;
 	private ScaledCANJaguar rightJag1 = RobotMap.driveRightJag1;
 	private ScaledCANJaguar rightJag2 = RobotMap.driveRightJag2;
+	
+	private Encoder leftQuadEncoder = RobotMap.driveQuadEncoderLeft;
+	private Encoder rightQuadEncoder = RobotMap.driveQuadEncoderRight;
 	
 	public Drive()
 	{
@@ -71,6 +75,41 @@ public class Drive extends Subsystem
 		
 		CANJaguar.updateSyncGroup(group);
 		
+	}
+	
+	public void brake()
+	{
+		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Brake);
+		leftJag1.set(0);
+		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
+		
+		leftJag2.configNeutralMode(CANJaguar.NeutralMode.Brake);
+		leftJag2.set(0);
+		leftJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
+		
+		rightJag1.configNeutralMode(CANJaguar.NeutralMode.Brake);
+		rightJag1.set(0);
+		rightJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
+		
+		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Brake);
+		rightJag2.set(0);
+		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
+	}
+	
+	public void resetEncoders()
+	{
+		leftQuadEncoder.reset();
+		rightQuadEncoder.reset();
+	}
+	
+	public int getLeftEncoderTicks()
+	{
+		return leftQuadEncoder.get();
+	}
+	
+	public int getRightEncoderTicks()
+	{
+		return rightQuadEncoder.get();
 	}
 	
 	@Override

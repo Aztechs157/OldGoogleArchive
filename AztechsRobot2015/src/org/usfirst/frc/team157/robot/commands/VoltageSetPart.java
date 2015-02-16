@@ -27,7 +27,7 @@ public class VoltageSetPart extends Command
 	@Override
 	protected void end()
 	{
-		part.setJag(0);
+		part.setJagVoltage(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -36,13 +36,18 @@ public class VoltageSetPart extends Command
 	{
 		if (part.equals(Robot.forks))
 		{
-			if (voltage > 0 && part.isNearLowLimit())
+			if (voltage > 0 && part.isLowLimitSwitchClosed())
 			{
 				allDone = true;
 			}
-			else if (voltage < 0 && part.isNearHighLimit())
+			else if (voltage < 0 && part.isHighLimitSwitchClosed())
 			{
 				allDone = true;
+			}
+			else if (voltage < 0 && Robot.forks.hasBox)
+			{
+				Robot.forks.hasBox = false;
+				System.out.println("====== Forks has dropped an object! ======");
 			}
 		}
 		else if (part.equals(Robot.elevator))
@@ -63,7 +68,21 @@ public class VoltageSetPart extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		part.setJag(voltage);
+		if (part.equals(Robot.forks))
+		{
+			if (voltage < 0 && part.isHighLimitSwitchClosed())
+			{
+				// Do nothing
+			}
+			else
+			{
+				part.setJagVoltage(voltage);
+			}
+		}
+		else
+		{
+			part.setJagVoltage(voltage);
+		}
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -71,7 +90,7 @@ public class VoltageSetPart extends Command
 	@Override
 	protected void interrupted()
 	{
-		part.setJag(0);
+		part.setJagVoltage(0);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

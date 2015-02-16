@@ -35,7 +35,7 @@ public class VoltageStopPart extends Command
 	@Override
 	protected void initialize()
 	{
-		part.setJag(0);
+		part.setJagVoltage(0);
 	}
 	
 	// Called when another command which requires one or more of the same

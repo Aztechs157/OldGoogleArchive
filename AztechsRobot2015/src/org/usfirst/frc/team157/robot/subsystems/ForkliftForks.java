@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.CANJaguar;
 
 public class ForkliftForks extends ForkliftPart
 {
+	public boolean hasBox;
+	
 	public ForkliftForks()
 	{
 		super.jag = RobotMap.forksJag;
@@ -19,6 +21,22 @@ public class ForkliftForks extends ForkliftPart
 		
 		setJagForVoltageControl();
 	}
+	
+	/*
+	 * @Override
+	 * public boolean setJagVoltage(double voltage)
+	 * {
+	 * if (voltage > 0 && this.isLowLimitSwitchClosed())
+	 * {
+	 * return false;
+	 * }
+	 * else if (voltage < 0 && this.isHighLimitSwitchClosed())
+	 * {
+	 * return false;
+	 * }
+	 * return super.setJagVoltage(voltage);
+	 * }
+	 */
 	
 	@Override
 	public void setJagForPositionControl()

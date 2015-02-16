@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot
 {
-	CameraServer camera;
+	public CameraServer camera;
 	
 	// -----------------------------------------//
 	// -----------------------------------------//
@@ -72,18 +72,16 @@ public class Robot extends IterativeRobot
 		// Instantiate all hardware components
 		RobotMap.init();
 		
-		/*
-		 * try
-		 * {
-		 * camera = CameraServer.getInstance();
-		 * camera.setQuality(50);
-		 * camera.startAutomaticCapture("cam0");
-		 * }
-		 * catch (Exception E)
-		 * {
-		 * System.out.println("Problem with camera!");
-		 * }
-		 */
+		try
+		{
+			camera = CameraServer.getInstance();
+			camera.setQuality(50);
+			camera.startAutomaticCapture("cam0");
+		}
+		catch (Exception E)
+		{
+			System.out.println("Problem with camera!");
+		}
 		
 		// -----------------------------------------//
 		// -----------------------------------------//

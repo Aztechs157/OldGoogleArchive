@@ -26,7 +26,7 @@ public class PrintDebugData extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.println("Position = " + Robot.forks.getJagPosition());
+		System.out.println("Right = " + Robot.drive.getRightEncoderTicks() + " Left " + Robot.drive.getLeftEncoderTicks());
 	}
 	
 	// Called just before this Command runs the first time

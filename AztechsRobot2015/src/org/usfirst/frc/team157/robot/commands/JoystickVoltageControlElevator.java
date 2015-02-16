@@ -28,23 +28,22 @@ public class JoystickVoltageControlElevator extends Command
 	@Override
 	protected void execute()
 	{
-		double speed = Robot.oi.operator.getY();
-		speed *= OI.OPERATOR_Y_SCALE;
+		double voltage = Robot.oi.logitechDriver.getRightY();
+		voltage *= OI.OPERATOR_Y_SCALE;
+		// System.out.println("Speed = " + speed);
 		
-		// System.out.println("Speed = " + speed + " Type = " + Robot.oi.getDriverType().toString());
-		
-		if (speed > 0 && Robot.elevator.isHighLimitSwitchClosed())
+		if (voltage > 0 && Robot.elevator.isHighLimitSwitchClosed())
 		{
-			speed = 0;
+			voltage = 0;
 		}
-		else if (speed < 0 && Robot.elevator.isLowLimitSwitchClosed())
+		else if (voltage < 0 && Robot.elevator.isLowLimitSwitchClosed())
 		{
-			speed = 0;
+			voltage = 0;
 		}
 		
 		if (Robot.oi.getDriverType().equals(OI.DriverType.DUAL_CONTROL))
 		{
-			Robot.elevator.setJag(speed * 12);
+			Robot.elevator.setJagVoltage(voltage * 12);
 		}
 	}
 	
