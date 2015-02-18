@@ -80,19 +80,53 @@ public class Drive extends Subsystem
 	public void brake()
 	{
 		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Brake);
-		leftJag1.set(0);
-		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
-		
 		leftJag2.configNeutralMode(CANJaguar.NeutralMode.Brake);
-		leftJag2.set(0);
-		leftJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
-		
 		rightJag1.configNeutralMode(CANJaguar.NeutralMode.Brake);
-		rightJag1.set(0);
-		rightJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
-		
 		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Brake);
-		rightJag2.set(0);
+		
+		byte group = 24;
+		
+		if (leftJag1 != null)
+		{
+			leftJag1.set(0, group);
+		}
+		else
+		{
+			System.out.println("Drive Left Jag 1 is null!");
+		}
+		
+		if (leftJag2 != null)
+		{
+			leftJag2.set(0, group);
+		}
+		else
+		{
+			System.out.println("Drive Left Jag 2 is null!");
+		}
+		
+		if (rightJag1 != null)
+		{
+			rightJag1.set(0, group);
+		}
+		else
+		{
+			System.out.println("Drive Right Jag 1 is null!");
+		}
+		
+		if (rightJag2 != null)
+		{
+			rightJag2.set(0, group);
+		}
+		else
+		{
+			System.out.println("Drive Right Jag 2 is null!");
+		}
+		
+		CANJaguar.updateSyncGroup(group);
+		
+		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
+		leftJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
+		rightJag1.configNeutralMode(CANJaguar.NeutralMode.Coast);
 		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
 	}
 	

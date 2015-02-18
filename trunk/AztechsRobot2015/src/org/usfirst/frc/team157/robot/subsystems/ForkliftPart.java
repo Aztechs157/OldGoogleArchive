@@ -94,6 +94,7 @@ public abstract class ForkliftPart extends Subsystem
 		return true;
 	}
 	
+	@Deprecated
 	public boolean isNearHighLimit()
 	{
 		if (Math.abs(highEndVoltage - getJagPosition()) < 0.01)
@@ -103,6 +104,7 @@ public abstract class ForkliftPart extends Subsystem
 		return false;
 	}
 	
+	@Deprecated
 	public boolean isNearLowLimit()
 	{
 		if (Math.abs(getJagPosition() - lowEndVoltage) < 0.01)

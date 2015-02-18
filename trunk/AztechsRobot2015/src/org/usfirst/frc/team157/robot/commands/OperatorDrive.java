@@ -3,7 +3,9 @@ package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.OI;
 import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -48,6 +50,16 @@ public class OperatorDrive extends Command
 		leftSpeed *= OI.LEFT_DRIVER_Y_SCALE;
 		
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
+		
+		SmartDashboard.putNumber("Accelerometer X", RobotMap.accelerometer.getX());
+		SmartDashboard.putNumber("Accelerometer Y", RobotMap.accelerometer.getY());
+		SmartDashboard.putNumber("Accelerometer Z", RobotMap.accelerometer.getZ());
+		/*
+		 * if (RobotMap.accelerometer.getZ() < 0.9)
+		 * {
+		 * System.out.println("======================= TIPPING =======================");
+		 * }
+		 */
 	}
 	
 	// Called just before this Command runs the first time
@@ -68,6 +80,6 @@ public class OperatorDrive extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		return true;
+		return false;
 	}
 }

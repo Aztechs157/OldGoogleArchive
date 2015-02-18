@@ -4,6 +4,7 @@ package org.usfirst.frc.team157.robot.commands;
 import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.subsystems.ForkliftPart;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -47,6 +48,7 @@ public class VoltageSetPart extends Command
 			else if (voltage < 0 && Robot.forks.hasBox)
 			{
 				Robot.forks.hasBox = false;
+				SmartDashboard.putBoolean("Has Box", false);
 				System.out.println("====== Forks has dropped an object! ======");
 			}
 		}

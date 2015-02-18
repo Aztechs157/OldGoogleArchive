@@ -3,10 +3,8 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.DriveStraightForTicks;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
 import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
-import org.usfirst.frc.team157.robot.commands.TurnForTicks;
 import org.usfirst.frc.team157.robot.commands.VoltageSetPart;
 import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import edu.wpi.first.wpilibj.Joystick;
@@ -70,18 +68,20 @@ public class OI
 	private JoystickButton driverLeftButton10; // Button 10 - Base Right Close
 	private JoystickButton driverLeftButton11; // Button 11 - Base RIght Away
 	
-	public Joystick operator;
-	private JoystickButton operatorButtonTrigger; // Button 1 - Trigger
-	private JoystickButton operatorButton2; // Button 2 - Stick down
-	private JoystickButton operatorButton3; // Button 3 - Stick center
-	private JoystickButton operatorButton4; // Button 4 - Stick left
-	private JoystickButton operatorButton5; // Button 5 - Stick right
-	private JoystickButton operatorButton6; // Button 6 - Base Left Away
-	private JoystickButton operatorButton7; // Button 7 - Base Left Close
-	private JoystickButton operatorButton8; // Button 8 - Base Near Left
-	private JoystickButton operatorButton9; // Button 9 - Base Near Right
-	private JoystickButton operatorButton10; // Button 10 - Base Right Close
-	private JoystickButton operatorButton11; // Button 11 - Base RIght Away
+	/*
+	 * public Joystick operator;
+	 * private JoystickButton operatorButtonTrigger; // Button 1 - Trigger
+	 * private JoystickButton operatorButton2; // Button 2 - Stick down
+	 * private JoystickButton operatorButton3; // Button 3 - Stick center
+	 * private JoystickButton operatorButton4; // Button 4 - Stick left
+	 * private JoystickButton operatorButton5; // Button 5 - Stick right
+	 * private JoystickButton operatorButton6; // Button 6 - Base Left Away
+	 * private JoystickButton operatorButton7; // Button 7 - Base Left Close
+	 * private JoystickButton operatorButton8; // Button 8 - Base Near Left
+	 * private JoystickButton operatorButton9; // Button 9 - Base Near Right
+	 * private JoystickButton operatorButton10; // Button 10 - Base Right Close
+	 * private JoystickButton operatorButton11; // Button 11 - Base RIght Away
+	 */
 	
 	public LogitechController logitechDriver;
 	private LogitechControllerButton logitechDriverButtonLeftB; // Left Button (Above Trigger)
@@ -264,15 +264,15 @@ public class OI
 		logitechDriverButtonRightB.whenReleased(new VoltageStopPart(Robot.forks));
 		logitechDriverButtonLeftB.whenReleased(new VoltageStopPart(Robot.forks));
 		
-		logitechDriverButtonA.whenPressed(new TurnForTicks(400));
-		logitechDriverButtonB.whenPressed(new DriveStraightForTicks(1800));
-		
 		// -----------------------------------------//
 		// -----------------------------------------//
 		
 		// TODO
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
+		SmartDashboard.putData("Print Debug Data", new PrintDebugData());
+		SmartDashboard.putData("Smart Grab Forks", new SmartGrabForks());
+		SmartDashboard.putData("Open Forks", new VoltageSetPart(-12, Robot.forks));
 	}
 	
 	public DriverType getDriverType()
