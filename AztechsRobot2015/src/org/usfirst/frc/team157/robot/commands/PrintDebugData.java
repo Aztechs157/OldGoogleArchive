@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team157.robot.commands;
 
-import org.usfirst.frc.team157.robot.Robot;
+import org.usfirst.frc.team157.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -26,7 +26,7 @@ public class PrintDebugData extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.println("Right = " + Robot.drive.getRightEncoderTicks() + " Left " + Robot.drive.getLeftEncoderTicks());
+		System.out.println("Voltage = " + RobotMap.autoSwitch.getVoltage());
 	}
 	
 	// Called just before this Command runs the first time

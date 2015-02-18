@@ -23,15 +23,19 @@ public class AutonomousCommand extends CommandGroup
 		
 		int switchPosition = RobotMap.autoSwitch.getCase();
 		
-		System.out.println("Switch = " + switchPosition);
+		// System.out.println("Switch = " + switchPosition);
 		if (switchPosition == 2)
 		{
 			// Grab, lift, drive forward, put down, release
+			
+			// Drive forward to tote
+			addSequential(new DriveSpeedForTime(0.6, 0.9, 0.75));
+			addParallel(new DriveSpeedForTime(0, 0, 0.1));
+			
 			// Grab container/tote
 			addParallel(new SmartGrabForks());
 			// addSequential(new SleepForTime(1.5));
 			addSequential(new SleepUntilHasBox());
-			addSequential(new SleepForTime(0.2));
 			
 			// Lift it up
 			addParallel(new VoltageSetPart(12, Robot.elevator));
@@ -39,7 +43,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive Forward
-			addSequential(new DriveStraightForTicks(2000));
+			addSequential(new DriveStraightForTicks(1650));
 			addSequential(new Brake());
 			
 			// Put down and release
@@ -50,12 +54,66 @@ public class AutonomousCommand extends CommandGroup
 		{
 			// Drive forward only
 			
-			addSequential(new DriveStraightForTicks(2000));
+			addSequential(new DriveStraightForTicks(1600));
 			addSequential(new Brake());
 		}
 		else if (switchPosition == 4)
 		{
 			// Should do nothing
+		}
+		else if (switchPosition == 5)
+		{
+			// Grab recycling container, move back, turn, and go forward
+			
+			// Grab recycling container
+			addParallel(new SmartGrabForks());
+			addSequential(new SleepUntilHasBox());
+			
+			// Lift it up
+			addParallel(new VoltageSetPart(12, Robot.elevator));
+			addSequential(new SleepForTime(0.25));
+			addSequential(new VoltageStopPart(Robot.elevator));
+			
+			// Drive backward stop
+			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.1));
+			addSequential(new Brake());
+			
+			// Turn left and stop
+			addSequential(new TurnLeftForTicks(92));
+			addSequential(new Brake());
+			
+			// Drive Forward, put down, and release
+			addSequential(new DriveStraightForTicks(1400));
+			addSequential(new Brake());
+			addSequential(new VoltageSetPart(-12, Robot.elevator));
+			addSequential(new VoltageSetPart(-12, Robot.forks));
+		}
+		else if (switchPosition == 6)
+		{
+			// Grab tote, move back, turn opposite way, and go forward
+			
+			// Grab recycling container
+			addParallel(new SmartGrabForks());
+			addSequential(new SleepUntilHasBox());
+			
+			// Lift it up
+			addParallel(new VoltageSetPart(12, Robot.elevator));
+			addSequential(new SleepForTime(0.25));
+			addSequential(new VoltageStopPart(Robot.elevator));
+			
+			// Drive backward stop
+			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.1));
+			addSequential(new Brake());
+			
+			// Turn right and stop
+			addSequential(new TurnRightForTicks(120));
+			addSequential(new Brake());
+			
+			// Drive Forward, put down, and release
+			addSequential(new DriveStraightForTicks(1400));
+			addSequential(new Brake());
+			addSequential(new VoltageSetPart(-12, Robot.elevator));
+			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}
 		else
 		{
@@ -63,9 +121,7 @@ public class AutonomousCommand extends CommandGroup
 			
 			// Grab recycling container
 			addParallel(new SmartGrabForks());
-			// addSequential(new SleepForTime(1.5));
 			addSequential(new SleepUntilHasBox());
-			addSequential(new SleepForTime(0.2));
 			
 			// Lift it up
 			addParallel(new VoltageSetPart(12, Robot.elevator));
@@ -73,7 +129,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive forward to tote and stop
-			addSequential(new DriveSpeedForTime(0.6, 0.8, 0.75));
+			addSequential(new DriveSpeedForTime(0.6, 0.9, 0.75));
 			addParallel(new DriveSpeedForTime(0, 0, 0.1));
 			
 			// Lower container
@@ -83,7 +139,7 @@ public class AutonomousCommand extends CommandGroup
 			
 			// Release container
 			addParallel(new VoltageSetPart(-12, Robot.forks));
-			addSequential(new SleepForTime(1));
+			addSequential(new SleepForTime(1.5));
 			addSequential(new VoltageStopPart(Robot.forks));
 			
 			// Drive back a little, stop, lower elevator, drive forward, and stop
@@ -96,20 +152,13 @@ public class AutonomousCommand extends CommandGroup
 			// Grab the tote (now has container on top!)
 			addParallel(new SmartGrabForks());
 			addSequential(new SleepUntilHasBox());
-			addSequential(new SleepForTime(0.2));
 			
-			// Lift the stack up just a little bit
-			// addParallel(new VoltageSetPart(12, Robot.elevator));
-			// addSequential(new SleepForTime(0.5));
-			// addSequential(new VoltageStopPart(Robot.elevator));
-			
-			// Turn right and stop
-			addSequential(new DriveSpeedForTime(-0.75, 0.75, 1));
+			// Turn left and stop
+			addSequential(new TurnLeftForTicks(92));
 			addSequential(new Brake());
-			// addSequential(new SleepForTime(1));
 			
 			// Drive Forward and release
-			addSequential(new DriveStraightForTicks(1800));
+			addSequential(new DriveStraightForTicks(1625));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}

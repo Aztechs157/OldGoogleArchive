@@ -21,10 +21,10 @@ public class RobotMap
 	private static final int FORKS_JAG_ID = 11;
 	private static final int ELEVATOR_JAG_ID = 13;
 	
-	private static final int DRIVE_QUAD_ENCODER_LEFT_ID1 = 1;
-	private static final int DRIVE_QUAD_ENCODER_LEFT_ID2 = 2;
-	private static final int DRIVE_QUAD_ENCODER_RIGHT_ID1 = 3;
-	private static final int DRIVE_QUAD_ENCODER_RIGHT_ID2 = 4;
+	private static final int DRIVE_QUAD_ENCODER_LEFT_IDA = 1;
+	private static final int DRIVE_QUAD_ENCODER_LEFT_IDB = 2;
+	private static final int DRIVE_QUAD_ENCODER_RIGHT_IDA = 3;
+	private static final int DRIVE_QUAD_ENCODER_RIGHT_IDB = 4;
 	private static final int FORKS_HIGH_LIMITSWITCH_ID = 7;
 	private static final int FORKS_LOW_LIMITSWITCH_ID = 6;
 	private static final int ELEVATOR_HIGH_LIMSWITCH_ID = 9;
@@ -149,9 +149,7 @@ public class RobotMap
 		accelerometer = new BuiltInAccelerometer();
 		
 		// Instantiate quad encoders
-		driveQuadEncoderLeft = new Encoder(DRIVE_QUAD_ENCODER_LEFT_ID1, DRIVE_QUAD_ENCODER_LEFT_ID2, false);
-		driveQuadEncoderLeft.reset();
-		driveQuadEncoderRight = new Encoder(DRIVE_QUAD_ENCODER_RIGHT_ID1, DRIVE_QUAD_ENCODER_RIGHT_ID2, true);
-		driveQuadEncoderRight.reset();
+		driveQuadEncoderLeft = new Encoder(DRIVE_QUAD_ENCODER_LEFT_IDA, DRIVE_QUAD_ENCODER_LEFT_IDB, false);
+		driveQuadEncoderRight = new Encoder(DRIVE_QUAD_ENCODER_RIGHT_IDA, DRIVE_QUAD_ENCODER_RIGHT_IDB, true);
 	}
 }

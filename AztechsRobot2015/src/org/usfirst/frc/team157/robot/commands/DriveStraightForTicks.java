@@ -12,13 +12,13 @@ public class DriveStraightForTicks extends Command
 	private int ticks;
 	private boolean allDone;
 	
-	private int initTicksLeft;
-	private int initTicksRight;
 	private int currentTicksLeft;
 	private int currentTicksRight;
+	private int lastTicksLeft;
+	private int lastTicksRight;
 	
-	private double leftSpeed = 0.8;
-	private double rightSpeed = 0.8;
+	private double leftSpeed;
+	private double rightSpeed;
 	
 	public DriveStraightForTicks(int ticksToDrive)
 	{
@@ -33,8 +33,11 @@ public class DriveStraightForTicks extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		initTicksLeft = Robot.drive.getLeftEncoderTicks();
-		initTicksRight = Robot.drive.getRightEncoderTicks();
+		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
+		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		leftSpeed = 0.8;
+		rightSpeed = 0.9;
+		Robot.drive.resetEncoders();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -43,21 +46,27 @@ public class DriveStraightForTicks extends Command
 	{
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
 		
-		currentTicksLeft = Robot.drive.getLeftEncoderTicks() - initTicksLeft;
-		currentTicksRight = Robot.drive.getRightEncoderTicks() - initTicksRight;
+		lastTicksLeft = currentTicksLeft;
+		lastTicksRight = currentTicksRight;
 		
-		if (currentTicksLeft - currentTicksRight > 1)
+		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
+		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		
+		int leftChange = currentTicksLeft - lastTicksLeft;
+		int rightChange = currentTicksRight - lastTicksRight;
+		
+		if (leftChange > rightChange)
 		{
-			leftSpeed -= 0.0025;
-			rightSpeed += 0.0025;
+			leftSpeed -= 0.005;
+			rightSpeed += 0.005;
 		}
-		else if (currentTicksLeft - currentTicksRight < 1)
+		else if (leftChange < rightChange)
 		{
-			leftSpeed += 0.0025;
-			rightSpeed -= 0.0025;
+			leftSpeed += 0.005;
+			rightSpeed -= 0.005;
 		}
 		
-		if (currentTicksLeft > ticks && currentTicksRight > ticks)
+		if (currentTicksLeft >= ticks && currentTicksRight > ticks)
 		{
 			allDone = true;
 		}

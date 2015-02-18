@@ -7,13 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnForTicks extends Command
+public class TurnLeftForTicks extends Command
 {
 	private int ticks;
 	private boolean allDone;
-	private int initTick;
 	
-	public TurnForTicks(int ticks)
+	public TurnLeftForTicks(int ticks)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -26,16 +25,26 @@ public class TurnForTicks extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		initTick = Robot.drive.getRightEncoderTicks();
-		Robot.drive.tankDrive(-1, 1);
+		if (ticks > 0)
+		{
+			Robot.drive.tankDrive(-0.8, 0.8);
+		}
+		else if (ticks < 0)
+		{
+			Robot.drive.tankDrive(0.8, -0.8);
+		}
+		ticks = Math.abs(ticks);
+		Robot.drive.resetEncoders();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		System.out.println("Current = " + Robot.drive.getRightEncoderTicks() + " Init = " + initTick + " Total = " + ticks);
-		if (Robot.drive.getRightEncoderTicks() - initTick > ticks)
+		// System.out.println("Current = " + Robot.drive.getRightEncoderTicks() + " Total = " + ticks);
+		// System.out.println("Current = " + RobotMap.driveRightJag1.getOutputCurrent() + " 2 = "
+		// + RobotMap.driveRightJag2.getOutputCurrent());
+		if (Math.abs(Robot.drive.getRightEncoderTicks()) >= ticks)
 		{
 			allDone = true;
 		}
