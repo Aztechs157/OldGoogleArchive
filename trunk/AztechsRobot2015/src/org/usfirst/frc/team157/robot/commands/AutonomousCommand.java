@@ -43,7 +43,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive Forward
-			addSequential(new DriveStraightForTicks(1650));
+			addSequential(new DriveStraightForTicks(1500));
 			addSequential(new Brake());
 			
 			// Put down and release
@@ -75,7 +75,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive backward stop
-			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.1));
+			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.05));
 			addSequential(new Brake());
 			
 			// Turn left and stop
@@ -102,7 +102,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive backward stop
-			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.1));
+			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.05));
 			addSequential(new Brake());
 			
 			// Turn right and stop
@@ -158,7 +158,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward and release
-			addSequential(new DriveStraightForTicks(1625));
+			addSequential(new DriveStraightForTicks(1500));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}
