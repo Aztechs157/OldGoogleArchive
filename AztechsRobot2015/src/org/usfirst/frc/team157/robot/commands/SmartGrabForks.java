@@ -46,7 +46,7 @@ public class SmartGrabForks extends Command
 			averageCurrent += currents[i];
 		}
 		averageCurrent /= 5;
-		
+		SmartDashboard.putNumber("Current", averageCurrent);
 		if (Robot.forks.isLowLimitSwitchClosed())
 		{
 			allDone = true;
