@@ -79,7 +79,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Turn left and stop
-			addSequential(new TurnLeftForTicks(92));
+			addSequential(new TurnLeftForTicks(20));
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release

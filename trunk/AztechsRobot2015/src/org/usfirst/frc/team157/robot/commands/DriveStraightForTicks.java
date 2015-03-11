@@ -28,16 +28,11 @@ public class DriveStraightForTicks extends Command
 		ticks = ticksToDrive;
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
-		allDone = false;
-		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
-		currentTicksRight = Robot.drive.getRightEncoderTicks();
-		leftSpeed = 0.8;
-		rightSpeed = 0.9;
-		Robot.drive.resetEncoders();
+		Robot.drive.tankDrive(0, 0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -66,24 +61,22 @@ public class DriveStraightForTicks extends Command
 			rightSpeed -= 0.005;
 		}
 		
-		if (currentTicksLeft >= ticks && currentTicksRight > ticks)
+		if (currentTicksLeft >= ticks || currentTicksRight > ticks)
 		{
 			allDone = true;
 		}
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
+	protected void initialize()
 	{
-		return allDone;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
-		Robot.drive.tankDrive(0, 0);
+		allDone = false;
+		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
+		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		leftSpeed = 0.8;
+		rightSpeed = 0.9;
+		Robot.drive.resetEncoders();
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -92,5 +85,12 @@ public class DriveStraightForTicks extends Command
 	protected void interrupted()
 	{
 		Robot.drive.tankDrive(0, 0);
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return allDone;
 	}
 }

@@ -62,6 +62,12 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 	}
 	
+	@Override
+	public void disabledInit()
+	{
+		// Do Nothing
+	}
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -121,12 +127,6 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
-	}
-	
-	@Override
-	public void disabledInit()
-	{
-		// Do Nothing
 	}
 	
 	/**

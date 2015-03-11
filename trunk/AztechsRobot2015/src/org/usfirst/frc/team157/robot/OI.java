@@ -3,8 +3,10 @@ package org.usfirst.frc.team157.robot;
 
 import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
+import org.usfirst.frc.team157.robot.commands.DriveGyroStraightForTicks;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
 import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
+import org.usfirst.frc.team157.robot.commands.TurnGyro;
 import org.usfirst.frc.team157.robot.commands.VoltageSetPart;
 import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import edu.wpi.first.wpilibj.Joystick;
@@ -263,6 +265,9 @@ public class OI
 		logitechDriverButtonLeftB.whenPressed(new VoltageSetPart(-12, Robot.forks));
 		logitechDriverButtonRightB.whenReleased(new VoltageStopPart(Robot.forks));
 		logitechDriverButtonLeftB.whenReleased(new VoltageStopPart(Robot.forks));
+		
+		logitechDriverButtonA.whenPressed(new DriveGyroStraightForTicks(1400));
+		logitechDriverButtonB.whenPressed(new TurnGyro(90));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//

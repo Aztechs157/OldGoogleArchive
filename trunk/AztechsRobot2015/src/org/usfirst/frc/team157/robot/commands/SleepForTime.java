@@ -22,11 +22,10 @@ public class SleepForTime extends Command
 		sleepIntervalSec = timeToSleep;
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
-		wakeTime = Timer.getFPGATimestamp() + sleepIntervalSec;
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -35,17 +34,11 @@ public class SleepForTime extends Command
 	{
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
+	protected void initialize()
 	{
-		return Timer.getFPGATimestamp() > wakeTime;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
+		wakeTime = Timer.getFPGATimestamp() + sleepIntervalSec;
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -54,5 +47,12 @@ public class SleepForTime extends Command
 	protected void interrupted()
 	{
 		end();
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return Timer.getFPGATimestamp() > wakeTime;
 	}
 }

@@ -7,6 +7,7 @@ import org.usfirst.frc.team157.robot.ScaledCANJaguar;
 import org.usfirst.frc.team157.robot.commands.OperatorDrive;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -25,6 +26,8 @@ public class Drive extends Subsystem
 	private Encoder leftQuadEncoder = RobotMap.driveQuadEncoderLeft;
 	private Encoder rightQuadEncoder = RobotMap.driveQuadEncoderRight;
 	
+	private Gyro gyro = RobotMap.gyro;
+	
 	public Drive()
 	{
 		ScaledCANJaguar.setupJagForPercentControl(leftJag1, CANJaguar.NeutralMode.Coast);
@@ -33,48 +36,14 @@ public class Drive extends Subsystem
 		ScaledCANJaguar.setupJagForPercentControl(rightJag2, CANJaguar.NeutralMode.Coast);
 	}
 	
-	public void tankDrive(double left, double right)
+	public double getAngle()
 	{
-		byte group = 22; // Some random number
-		
-		if (leftJag1 != null)
-		{
-			leftJag1.set(left, group);
-		}
-		else
-		{
-			System.out.println("Drive Left Jag 1 is null!");
-		}
-		
-		if (leftJag2 != null)
-		{
-			leftJag2.set(left, group);
-		}
-		else
-		{
-			System.out.println("Drive Left Jag 2 is null!");
-		}
-		
-		if (rightJag1 != null)
-		{
-			rightJag1.set(right, group);
-		}
-		else
-		{
-			System.out.println("Drive Right Jag 1 is null!");
-		}
-		
-		if (rightJag2 != null)
-		{
-			rightJag2.set(right, group);
-		}
-		else
-		{
-			System.out.println("Drive Right Jag 2 is null!");
-		}
-		
-		CANJaguar.updateSyncGroup(group);
-		
+		return gyro.getAngle();
+	}
+	
+	public void resetGyro()
+	{
+		gyro.reset();
 	}
 	
 	public void brake()
@@ -130,12 +99,6 @@ public class Drive extends Subsystem
 		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
 	}
 	
-	public void resetEncoders()
-	{
-		leftQuadEncoder.reset();
-		rightQuadEncoder.reset();
-	}
-	
 	public int getLeftEncoderTicks()
 	{
 		return leftQuadEncoder.get();
@@ -144,6 +107,56 @@ public class Drive extends Subsystem
 	public int getRightEncoderTicks()
 	{
 		return rightQuadEncoder.get();
+	}
+	
+	public void resetEncoders()
+	{
+		leftQuadEncoder.reset();
+		rightQuadEncoder.reset();
+	}
+	
+	public void tankDrive(double left, double right)
+	{
+		byte group = 22; // Some random number
+		
+		if (leftJag1 != null)
+		{
+			leftJag1.set(left, group);
+		}
+		else
+		{
+			System.out.println("Drive Left Jag 1 is null!");
+		}
+		
+		if (leftJag2 != null)
+		{
+			leftJag2.set(left, group);
+		}
+		else
+		{
+			System.out.println("Drive Left Jag 2 is null!");
+		}
+		
+		if (rightJag1 != null)
+		{
+			rightJag1.set(right, group);
+		}
+		else
+		{
+			System.out.println("Drive Right Jag 1 is null!");
+		}
+		
+		if (rightJag2 != null)
+		{
+			rightJag2.set(right, group);
+		}
+		else
+		{
+			System.out.println("Drive Right Jag 2 is null!");
+		}
+		
+		CANJaguar.updateSyncGroup(group);
+		
 	}
 	
 	@Override

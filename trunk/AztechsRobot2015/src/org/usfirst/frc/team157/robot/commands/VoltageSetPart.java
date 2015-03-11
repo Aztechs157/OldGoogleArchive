@@ -20,7 +20,7 @@ public class VoltageSetPart extends Command
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(part);
-		this.voltage = voltageToSet;
+		voltage = voltageToSet;
 		this.part = part;
 	}
 	
