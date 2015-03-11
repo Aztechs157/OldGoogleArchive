@@ -22,16 +22,11 @@ public class SmartGrabForks extends Command
 		requires(Robot.forks);
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
-		allDone = false;
-		Robot.forks.hasBox = false;
-		SmartDashboard.putBoolean("Has Box", false);
-		Robot.forks.setJagVoltage(12);
-		currents = new double[5];
-		count = 0;
+		Robot.forks.setJagVoltage(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -61,18 +56,16 @@ public class SmartGrabForks extends Command
 		count++;
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
+	protected void initialize()
 	{
-		return allDone;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
-		Robot.forks.setJagVoltage(0);
+		allDone = false;
+		Robot.forks.hasBox = false;
+		SmartDashboard.putBoolean("Has Box", false);
+		Robot.forks.setJagVoltage(12);
+		currents = new double[5];
+		count = 0;
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -81,5 +74,12 @@ public class SmartGrabForks extends Command
 	protected void interrupted()
 	{
 		Robot.forks.setJagVoltage(0);
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return allDone;
 	}
 }

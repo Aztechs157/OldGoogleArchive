@@ -7,17 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnLeftForTicks extends Command
+public class DriveGyroStraightForTicks extends Command
 {
+	private double P = 0.01;
+	
 	private int ticks;
 	private boolean allDone;
 	
-	public TurnLeftForTicks(int ticks)
+	private int currentTicksLeft;
+	private int currentTicksRight;
+	
+	private double currentGyroAngle;
+	
+	private double leftSpeed;
+	private double rightSpeed;
+	
+	public DriveGyroStraightForTicks(int ticksToDrive)
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.drive);
-		this.ticks = ticks;
+		ticks = ticksToDrive;
 	}
 	
 	// Called once after isFinished returns true
@@ -31,10 +41,18 @@ public class TurnLeftForTicks extends Command
 	@Override
 	protected void execute()
 	{
-		// System.out.println("Current = " + Robot.drive.getRightEncoderTicks() + " Total = " + ticks);
-		// System.out.println("Current = " + RobotMap.driveRightJag1.getOutputCurrent() + " 2 = "
-		// + RobotMap.driveRightJag2.getOutputCurrent());
-		if (Math.abs(Robot.drive.getRightEncoderTicks()) >= ticks)
+		Robot.drive.tankDrive(leftSpeed, rightSpeed);
+		
+		currentGyroAngle = Robot.drive.getAngle();
+		
+		double changeInSpeed = currentGyroAngle * P;
+		rightSpeed += changeInSpeed;
+		leftSpeed -= changeInSpeed;
+		
+		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
+		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		
+		if (currentTicksLeft >= ticks || currentTicksRight > ticks)
 		{
 			allDone = true;
 		}
@@ -45,16 +63,12 @@ public class TurnLeftForTicks extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		if (ticks > 0)
-		{
-			Robot.drive.tankDrive(-0.8, 0.8);
-		}
-		else if (ticks < 0)
-		{
-			Robot.drive.tankDrive(0.8, -0.8);
-		}
-		ticks = Math.abs(ticks);
+		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
+		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		leftSpeed = 0.7;
+		rightSpeed = 0.8;
 		Robot.drive.resetEncoders();
+		Robot.drive.resetGyro();
 	}
 	
 	// Called when another command which requires one or more of the same

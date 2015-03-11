@@ -17,11 +17,10 @@ public class Brake extends Command
 		requires(Robot.drive);
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
-		Robot.drive.brake();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
@@ -31,17 +30,11 @@ public class Brake extends Command
 		
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
+	protected void initialize()
 	{
-		return true;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
+		Robot.drive.brake();
 	}
 	
 	// Called when another command which requires one or more of the same
@@ -49,5 +42,12 @@ public class Brake extends Command
 	@Override
 	protected void interrupted()
 	{
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return true;
 	}
 }

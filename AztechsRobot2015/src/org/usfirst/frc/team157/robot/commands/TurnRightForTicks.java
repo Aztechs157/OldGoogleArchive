@@ -20,6 +20,26 @@ public class TurnRightForTicks extends Command
 		this.ticks = ticks;
 	}
 	
+	// Called once after isFinished returns true
+	@Override
+	protected void end()
+	{
+		Robot.drive.tankDrive(0, 0);
+	}
+	
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute()
+	{
+		// System.out.println("Current = " + Robot.drive.getRightEncoderTicks() + " Total = " + ticks);
+		// System.out.println("Current = " + RobotMap.driveRightJag1.getOutputCurrent() + " 2 = "
+		// + RobotMap.driveRightJag2.getOutputCurrent());
+		if (Math.abs(Robot.drive.getLeftEncoderTicks()) >= ticks)
+		{
+			allDone = true;
+		}
+	}
+	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
@@ -37,17 +57,12 @@ public class TurnRightForTicks extends Command
 		Robot.drive.resetEncoders();
 	}
 	
-	// Called repeatedly when this Command is scheduled to run
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
 	@Override
-	protected void execute()
+	protected void interrupted()
 	{
-		// System.out.println("Current = " + Robot.drive.getRightEncoderTicks() + " Total = " + ticks);
-		// System.out.println("Current = " + RobotMap.driveRightJag1.getOutputCurrent() + " 2 = "
-		// + RobotMap.driveRightJag2.getOutputCurrent());
-		if (Math.abs(Robot.drive.getLeftEncoderTicks()) >= ticks)
-		{
-			allDone = true;
-		}
+		Robot.drive.tankDrive(0, 0);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()
@@ -55,20 +70,5 @@ public class TurnRightForTicks extends Command
 	protected boolean isFinished()
 	{
 		return allDone;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
-	{
-		Robot.drive.tankDrive(0, 0);
-	}
-	
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted()
-	{
-		Robot.drive.tankDrive(0, 0);
 	}
 }

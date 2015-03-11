@@ -15,7 +15,7 @@ public class AnalogSwitch extends AnalogInput
 	
 	public int getCase()
 	{
-		double current = this.getVoltage();
+		double current = getVoltage();
 		if (Math.abs(current - voltages[0]) < 0.1)
 		{
 			return 1;

@@ -16,9 +16,9 @@ public class SleepUntilHasBox extends Command
 		// eg. requires(chassis);
 	}
 	
-	// Called just before this Command runs the first time
+	// Called once after isFinished returns true
 	@Override
-	protected void initialize()
+	protected void end()
 	{
 	}
 	
@@ -28,16 +28,9 @@ public class SleepUntilHasBox extends Command
 	{
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
+	// Called just before this Command runs the first time
 	@Override
-	protected boolean isFinished()
-	{
-		return Robot.forks.hasBox;
-	}
-	
-	// Called once after isFinished returns true
-	@Override
-	protected void end()
+	protected void initialize()
 	{
 	}
 	
@@ -46,5 +39,12 @@ public class SleepUntilHasBox extends Command
 	@Override
 	protected void interrupted()
 	{
+	}
+	
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		return Robot.forks.hasBox;
 	}
 }

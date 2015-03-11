@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
 
 /**
@@ -31,6 +32,7 @@ public class RobotMap
 	private static final int ELEVATOR_LOW_LIMSWITCH_ID = 8;
 	
 	private static final int ANALOG_SWITCH_ID = 0;
+	private static final int ANALOG_GYRO_ID = 1;
 	
 	// Jag Scaling Values
 	private static final double DRIVE_LEFT_JAG1_SCALE = 0.5;
@@ -68,6 +70,9 @@ public class RobotMap
 	
 	// Built-In Accelerometer: Most likely part of the Drive Subsystem
 	public static BuiltInAccelerometer accelerometer;
+	
+	// Gyro
+	public static Gyro gyro;
 	
 	// Quad Encoders
 	public static Encoder driveQuadEncoderLeft;
@@ -147,6 +152,9 @@ public class RobotMap
 		
 		// Instantiate Built In Accelerometer
 		accelerometer = new BuiltInAccelerometer();
+		
+		// Gyrometer
+		gyro = new Gyro(ANALOG_GYRO_ID);
 		
 		// Instantiate quad encoders
 		driveQuadEncoderLeft = new Encoder(DRIVE_QUAD_ENCODER_LEFT_IDA, DRIVE_QUAD_ENCODER_LEFT_IDB, false);
