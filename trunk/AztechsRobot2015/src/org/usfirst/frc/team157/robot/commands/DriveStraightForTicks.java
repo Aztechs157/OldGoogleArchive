@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+@Deprecated
 public class DriveStraightForTicks extends Command
 {
 	private int ticks;

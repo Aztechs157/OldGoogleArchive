@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveGyroStraightForTicks extends Command
 {
-	private double P = 0.01;
+	// FIXME Check constant
+	private double P = -0.00025;
 	
 	private int ticks;
 	private boolean allDone;
@@ -41,16 +42,19 @@ public class DriveGyroStraightForTicks extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drive.tankDrive(leftSpeed, rightSpeed);
-		
+		currentTicksLeft = Math.abs(Robot.drive.getLeftEncoderTicks());
+		currentTicksRight = Math.abs(Robot.drive.getRightEncoderTicks());
 		currentGyroAngle = Robot.drive.getAngle();
 		
 		double changeInSpeed = currentGyroAngle * P;
 		rightSpeed += changeInSpeed;
 		leftSpeed -= changeInSpeed;
 		
-		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
-		currentTicksRight = Robot.drive.getRightEncoderTicks();
+		System.out.println("Angle = " + currentGyroAngle);
+		System.out.println("Left T = " + currentTicksLeft + " Right T = " + currentTicksRight);
+		System.out.println("Left S = " + leftSpeed + " Right S = " + rightSpeed);
+		
+		Robot.drive.tankDrive(leftSpeed, rightSpeed);
 		
 		if (currentTicksLeft >= ticks || currentTicksRight > ticks)
 		{
@@ -63,10 +67,8 @@ public class DriveGyroStraightForTicks extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		currentTicksLeft = Robot.drive.getLeftEncoderTicks();
-		currentTicksRight = Robot.drive.getRightEncoderTicks();
-		leftSpeed = 0.7;
-		rightSpeed = 0.8;
+		leftSpeed = 0.75;
+		rightSpeed = 0.95;
 		Robot.drive.resetEncoders();
 		Robot.drive.resetGyro();
 	}
