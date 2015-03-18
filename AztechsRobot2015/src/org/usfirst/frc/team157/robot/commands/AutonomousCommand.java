@@ -43,7 +43,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive Forward
-			addSequential(new DriveStraightForTicks(1500));
+			addSequential(new DriveGyroStraightForTicks(1800));
 			addSequential(new Brake());
 			
 			// Put down and release
@@ -54,7 +54,7 @@ public class AutonomousCommand extends CommandGroup
 		{
 			// Drive forward only
 			
-			addSequential(new DriveStraightForTicks(1600));
+			addSequential(new DriveGyroStraightForTicks(1800));
 			addSequential(new Brake());
 		}
 		else if (switchPosition == 4)
@@ -83,7 +83,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release
-			addSequential(new DriveStraightForTicks(1400));
+			addSequential(new DriveGyroStraightForTicks(1800));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.elevator));
 			addSequential(new VoltageSetPart(-12, Robot.forks));
@@ -110,7 +110,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release
-			addSequential(new DriveStraightForTicks(1400));
+			addSequential(new DriveGyroStraightForTicks(1800));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.elevator));
 			addSequential(new VoltageSetPart(-12, Robot.forks));
@@ -158,7 +158,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward and release
-			addSequential(new DriveStraightForTicks(1500));
+			addSequential(new DriveGyroStraightForTicks(1800));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}

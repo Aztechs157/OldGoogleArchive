@@ -36,16 +36,6 @@ public class Drive extends Subsystem
 		ScaledCANJaguar.setupJagForPercentControl(rightJag2, CANJaguar.NeutralMode.Coast);
 	}
 	
-	public double getAngle()
-	{
-		return gyro.getAngle();
-	}
-	
-	public void resetGyro()
-	{
-		gyro.reset();
-	}
-	
 	public void brake()
 	{
 		leftJag1.configNeutralMode(CANJaguar.NeutralMode.Brake);
@@ -99,6 +89,11 @@ public class Drive extends Subsystem
 		rightJag2.configNeutralMode(CANJaguar.NeutralMode.Coast);
 	}
 	
+	public double getAngle()
+	{
+		return gyro.getAngle();
+	}
+	
 	public int getLeftEncoderTicks()
 	{
 		return leftQuadEncoder.get();
@@ -113,6 +108,12 @@ public class Drive extends Subsystem
 	{
 		leftQuadEncoder.reset();
 		rightQuadEncoder.reset();
+	}
+	
+	public void resetGyro()
+	{
+		gyro.reset();
+		System.out.println("Gyro Reset: " + gyro.getAngle());
 	}
 	
 	public void tankDrive(double left, double right)
