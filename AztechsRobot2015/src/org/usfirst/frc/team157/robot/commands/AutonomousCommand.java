@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
 import org.usfirst.frc.team157.robot.RobotMap;
+import org.usfirst.frc.team157.robot.commands.TurnGyro.ANGLES;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -17,15 +18,16 @@ public class AutonomousCommand extends CommandGroup
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		
 		requires(Robot.drive);
 		requires(Robot.forks);
 		requires(Robot.elevator);
 		
 		int switchPosition = RobotMap.autoSwitch.getCase();
 		
-		// System.out.println("Switch = " + switchPosition);
 		if (switchPosition == 2)
 		{
+			// Grab and Drive Straight
 			// Grab, lift, drive forward, put down, release
 			
 			// Drive forward to tote
@@ -59,10 +61,12 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else if (switchPosition == 4)
 		{
-			// Should do nothing
+			// Auto Tote Stack?
+			
 		}
 		else if (switchPosition == 5)
 		{
+			// Grab RC and move
 			// Grab recycling container, move back, turn, and go forward
 			
 			// Grab recycling container
@@ -79,7 +83,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Turn left and stop
-			addSequential(new TurnLeftForTicks(20));
+			addSequential(new TurnGyro(ANGLES.RC));
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release
@@ -90,6 +94,7 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else if (switchPosition == 6)
 		{
+			// Grab tote and move
 			// Grab tote, move back, turn opposite way, and go forward
 			
 			// Grab recycling container
@@ -106,7 +111,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Turn right and stop
-			addSequential(new TurnRightForTicks(120));
+			addSequential(new TurnGyro(ANGLES.TOTE));
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release
@@ -117,7 +122,8 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else
 		{
-			// If switch = 1 OR switch is nonexistent: Grab container/tote stack, turn, drive forward
+			// If switch = 1 OR switch is nonexistent:
+			// Full Auto: Make container/tote stack, turn, drive forward
 			
 			// Grab recycling container
 			addParallel(new SmartGrabForks());
@@ -154,7 +160,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new SleepUntilHasBox());
 			
 			// Turn left and stop
-			addSequential(new TurnLeftForTicks(92));
+			addSequential(new TurnGyro(ANGLES.BOTH));
 			addSequential(new Brake());
 			
 			// Drive Forward and release
