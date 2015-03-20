@@ -14,7 +14,7 @@ public class TurnGyro extends Command
 	
 	public enum ANGLES
 	{
-		NOTHING, TOTE, RC, BOTH
+		NOTHING, TOTE, RC, BOTH, TOTE_180
 	}
 	
 	public TurnGyro(ANGLES type)
@@ -22,21 +22,30 @@ public class TurnGyro extends Command
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drive);
 		
+		// Negative angle = turn left, positive angle = turn right
 		if (type.equals(ANGLES.NOTHING))
 		{
-			degreesToTurn = 33;
+			degreesToTurn = -33;
 		}
 		else if (type.equals(ANGLES.RC))
 		{
-			degreesToTurn = 45;
+			degreesToTurn = -45;
 		}
 		else if (type.equals(ANGLES.TOTE))
 		{
 			degreesToTurn = 50;
 		}
+		else if (type.equals(ANGLES.BOTH))
+		{
+			degreesToTurn = -70;
+		}
+		else if (type.equals(ANGLES.TOTE_180))
+		{
+			degreesToTurn = 100;
+		}
 		else
 		{
-			degreesToTurn = 70;
+			degreesToTurn = 1;
 		}
 	}
 	
