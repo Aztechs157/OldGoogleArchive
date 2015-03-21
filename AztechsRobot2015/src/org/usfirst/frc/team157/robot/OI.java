@@ -268,7 +268,7 @@ public class OI
 		logitechDriverButtonLeftB.whenReleased(new VoltageStopPart(Robot.forks));
 		
 		logitechDriverButtonA.whenPressed(new DriveGyroStraightForTicks(1800));
-		logitechDriverButtonB.whenPressed(new TurnGyro(ANGLES.NOTHING));
+		logitechDriverButtonB.whenPressed(new TurnGyro(ANGLES.TOTE_180));
 		
 		// -----------------------------------------//
 		// -----------------------------------------//

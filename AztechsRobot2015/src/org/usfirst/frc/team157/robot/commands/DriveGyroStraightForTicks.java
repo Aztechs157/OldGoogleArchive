@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveGyroStraightForTicks extends Command
 {
 	// FIXME Check constant
-	private double P = -0.00025;
+	private double P = -0.0002;
 	
 	private int ticks;
 	private boolean allDone;
@@ -49,10 +49,6 @@ public class DriveGyroStraightForTicks extends Command
 		double changeInSpeed = currentGyroAngle * P;
 		rightSpeed += changeInSpeed;
 		leftSpeed -= changeInSpeed;
-		
-		System.out.println("Angle = " + currentGyroAngle);
-		System.out.println("Left T = " + currentTicksLeft + " Right T = " + currentTicksRight);
-		System.out.println("Left S = " + leftSpeed + " Right S = " + rightSpeed);
 		
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
 		
