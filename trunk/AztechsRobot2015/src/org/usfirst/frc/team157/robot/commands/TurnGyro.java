@@ -25,19 +25,19 @@ public class TurnGyro extends Command
 		// Negative angle = turn left, positive angle = turn right
 		if (type.equals(ANGLES.NOTHING))
 		{
-			degreesToTurn = -33;
+			degreesToTurn = -35;
 		}
 		else if (type.equals(ANGLES.RC))
 		{
-			degreesToTurn = -45;
+			degreesToTurn = -40;
 		}
 		else if (type.equals(ANGLES.TOTE))
 		{
-			degreesToTurn = 50;
+			degreesToTurn = 45;
 		}
 		else if (type.equals(ANGLES.BOTH))
 		{
-			degreesToTurn = -70;
+			degreesToTurn = -50;
 		}
 		else if (type.equals(ANGLES.TOTE_180))
 		{
@@ -60,8 +60,6 @@ public class TurnGyro extends Command
 	@Override
 	protected void execute()
 	{
-		System.out.println("Turn = " + Robot.drive.getAngle());
-		
 		if (Math.abs(Robot.drive.getAngle()) > Math.abs(degreesToTurn))
 		{
 			allDone = true;
@@ -77,11 +75,11 @@ public class TurnGyro extends Command
 		
 		if (degreesToTurn > 0)
 		{
-			Robot.drive.tankDrive(0.9, -0.9);
+			Robot.drive.tankDrive(0.8, -0.8);
 		}
 		else if (degreesToTurn < 0)
 		{
-			Robot.drive.tankDrive(-0.9, 0.9);
+			Robot.drive.tankDrive(-0.8, 0.8);
 		}
 	}
 	
