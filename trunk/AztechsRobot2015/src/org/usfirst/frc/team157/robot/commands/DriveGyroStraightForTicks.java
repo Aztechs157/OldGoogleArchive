@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveGyroStraightForTicks extends Command
 {
 	// FIXME Check constant
-	private double P = -0.0002;
+	private double P = -0.00015;
 	
 	private int ticks;
 	private boolean allDone;
@@ -52,7 +52,9 @@ public class DriveGyroStraightForTicks extends Command
 		
 		Robot.drive.tankDrive(leftSpeed, rightSpeed);
 		
-		if (currentTicksLeft >= ticks || currentTicksRight > ticks)
+		System.out.println("Left = " + leftSpeed + " Right = " + rightSpeed + " Angle = " + currentGyroAngle);
+		
+		if (Math.abs(currentTicksLeft) >= Math.abs(ticks) || Math.abs(currentTicksRight) > Math.abs(ticks))
 		{
 			allDone = true;
 		}
@@ -63,8 +65,16 @@ public class DriveGyroStraightForTicks extends Command
 	protected void initialize()
 	{
 		allDone = false;
-		leftSpeed = 0.75;
-		rightSpeed = 0.95;
+		if (ticks > 0)
+		{
+			leftSpeed = 0.75;
+			rightSpeed = 0.95;
+		}
+		else
+		{
+			leftSpeed = -0.75;
+			rightSpeed = -0.95;
+		}
 		Robot.drive.resetEncoders();
 		Robot.drive.resetGyro();
 	}
