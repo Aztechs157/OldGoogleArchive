@@ -129,7 +129,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive backward
-			addSequential(new DriveGyroStraightForTicks(-1450));
+			addSequential(new DriveGyroStraightForTicks(-1600));
 			addSequential(new Brake());
 		}
 		else if (switchPosition == 6)
