@@ -36,7 +36,6 @@ public class AutonomousCommand extends CommandGroup
 			
 			// Grab container/tote
 			addParallel(new SmartGrabForks());
-			// addSequential(new SleepForTime(1.5));
 			addSequential(new SleepUntilHasBox());
 			
 			// Lift it up
@@ -45,7 +44,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
 			// Drive Forward
-			addSequential(new DriveGyroStraightForTicks(1600));
+			addSequential(new DriveGyroStraightForTicks(1700));
 			addSequential(new Brake());
 			
 			// Put down and release
@@ -61,7 +60,7 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else if (switchPosition == 4)
 		{
-			// TODO
+			// FIXME
 			// 2 Yellow Tote Stack
 			
 			// Grab Tote
@@ -117,7 +116,7 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else if (switchPosition == 5)
 		{
-			// Grab RC and move
+			// Grab RC/tote backward and move
 			// Grab recycling container, move back, turn, and go forward
 			
 			// Grab recycling container
@@ -129,19 +128,9 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new SleepForTime(0.25));
 			addSequential(new VoltageStopPart(Robot.elevator));
 			
-			// Drive backward stop
-			addSequential(new DriveSpeedForTime(-0.6, -0.9, 0.05));
+			// Drive backward
+			addSequential(new DriveGyroStraightForTicks(-1450));
 			addSequential(new Brake());
-			
-			// Turn left and stop
-			addSequential(new TurnGyro(ANGLES.RC));
-			addSequential(new Brake());
-			
-			// Drive Forward, put down, and release
-			addSequential(new DriveGyroStraightForTicks(1600));
-			addSequential(new Brake());
-			addSequential(new VoltageSetPart(-12, Robot.elevator));
-			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}
 		else if (switchPosition == 6)
 		{
@@ -166,7 +155,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward, put down, and release
-			addSequential(new DriveGyroStraightForTicks(1600));
+			addSequential(new DriveGyroStraightForTicks(1700));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.elevator));
 			addSequential(new VoltageSetPart(-12, Robot.forks));
@@ -176,7 +165,6 @@ public class AutonomousCommand extends CommandGroup
 			// If switch = 1 OR switch is nonexistent:
 			// Full Auto: Make container/tote stack, turn, drive forward
 			
-			// FIXME
 			// Grab recycling container
 			addParallel(new SmartGrabForks());
 			addSequential(new SleepUntilHasBox());
@@ -216,7 +204,7 @@ public class AutonomousCommand extends CommandGroup
 			addSequential(new Brake());
 			
 			// Drive Forward and release
-			addSequential(new DriveGyroStraightForTicks(1600));
+			addSequential(new DriveGyroStraightForTicks(1700));
 			addSequential(new Brake());
 			addSequential(new VoltageSetPart(-12, Robot.forks));
 		}

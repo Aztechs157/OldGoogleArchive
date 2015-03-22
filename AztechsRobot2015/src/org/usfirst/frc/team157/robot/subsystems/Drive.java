@@ -157,7 +157,6 @@ public class Drive extends Subsystem
 		}
 		
 		CANJaguar.updateSyncGroup(group);
-		
 	}
 	
 	@Override

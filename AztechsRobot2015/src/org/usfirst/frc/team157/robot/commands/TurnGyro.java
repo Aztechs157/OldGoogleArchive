@@ -3,6 +3,7 @@ package org.usfirst.frc.team157.robot.commands;
 
 import org.usfirst.frc.team157.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,23 +26,23 @@ public class TurnGyro extends Command
 		// Negative angle = turn left, positive angle = turn right
 		if (type.equals(ANGLES.NOTHING))
 		{
-			degreesToTurn = -35;
+			degreesToTurn = -50;
 		}
 		else if (type.equals(ANGLES.RC))
 		{
-			degreesToTurn = -40;
+			degreesToTurn = -55;
 		}
 		else if (type.equals(ANGLES.TOTE))
 		{
-			degreesToTurn = 45;
+			degreesToTurn = 60;
 		}
 		else if (type.equals(ANGLES.BOTH))
 		{
-			degreesToTurn = -50;
+			degreesToTurn = -65;
 		}
 		else if (type.equals(ANGLES.TOTE_180))
 		{
-			degreesToTurn = 100;
+			degreesToTurn = 140;
 		}
 		else
 		{
@@ -60,6 +61,16 @@ public class TurnGyro extends Command
 	@Override
 	protected void execute()
 	{
+		// System.out.println("Angle = " + Robot.drive.getAngle());
+		if (degreesToTurn > 0)
+		{
+			Robot.drive.tankDrive(0.8, -0.8);
+		}
+		else if (degreesToTurn < 0)
+		{
+			Robot.drive.tankDrive(-0.8, 0.8);
+		}
+		
 		if (Math.abs(Robot.drive.getAngle()) > Math.abs(degreesToTurn))
 		{
 			allDone = true;
@@ -72,6 +83,9 @@ public class TurnGyro extends Command
 	{
 		Robot.drive.resetGyro();
 		allDone = false;
+		
+		// FIXME DELETE THIS!
+		degreesToTurn = (int) SmartDashboard.getNumber("Angle");
 		
 		if (degreesToTurn > 0)
 		{
