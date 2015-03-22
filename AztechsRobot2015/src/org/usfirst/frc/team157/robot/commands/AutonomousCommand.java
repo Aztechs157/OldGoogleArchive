@@ -60,7 +60,7 @@ public class AutonomousCommand extends CommandGroup
 		}
 		else if (switchPosition == 4)
 		{
-			// FIXME
+			// TODO
 			// 2 Yellow Tote Stack
 			
 			// Grab Tote
