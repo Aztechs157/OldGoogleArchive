@@ -1,18 +1,13 @@
 
 package org.usfirst.frc.team157.robot;
 
-import org.usfirst.frc.team157.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team157.robot.commands.DebugPrint;
-import org.usfirst.frc.team157.robot.commands.DriveGyroStraightForTicks;
 import org.usfirst.frc.team157.robot.commands.PrintDebugData;
 import org.usfirst.frc.team157.robot.commands.SmartGrabForks;
-import org.usfirst.frc.team157.robot.commands.TurnGyro;
-import org.usfirst.frc.team157.robot.commands.TurnGyro.ANGLES;
 import org.usfirst.frc.team157.robot.commands.VoltageSetPart;
 import org.usfirst.frc.team157.robot.commands.VoltageStopPart;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -266,19 +261,6 @@ public class OI
 		logitechDriverButtonLeftB.whenPressed(new VoltageSetPart(-12, Robot.forks));
 		logitechDriverButtonRightB.whenReleased(new VoltageStopPart(Robot.forks));
 		logitechDriverButtonLeftB.whenReleased(new VoltageStopPart(Robot.forks));
-		
-		logitechDriverButtonA.whenPressed(new DriveGyroStraightForTicks(1800));
-		logitechDriverButtonB.whenPressed(new TurnGyro(ANGLES.TOTE_180));
-		
-		// -----------------------------------------//
-		// -----------------------------------------//
-		
-		// TODO
-		// SmartDashboard Buttons
-		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-		SmartDashboard.putData("Print Debug Data", new PrintDebugData());
-		SmartDashboard.putData("Smart Grab Forks", new SmartGrabForks());
-		SmartDashboard.putData("Open Forks", new VoltageSetPart(-12, Robot.forks));
 	}
 	
 	public DriverType getDriverType()
