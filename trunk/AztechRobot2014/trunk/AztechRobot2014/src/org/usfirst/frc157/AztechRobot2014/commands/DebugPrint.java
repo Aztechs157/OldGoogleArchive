@@ -17,7 +17,7 @@ import org.usfirst.frc157.AztechRobot2014.Robot;
 /**
  *
  */
-public class  DebugPrint extends Command {
+public class DebugPrint extends Command {
 
     private String printString;
     
