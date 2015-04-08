@@ -1,0 +1,13 @@
+#summary How to set up netbeans to display the javadoc for the wpi libraries.
+#labels Phase-Support
+
+= Introduction =
+
+Explains how to set up netbeans to display javadoc.
+
+= Details =
+
+1) Click on the _Attach Javadoc_ button. To get to this button, type in one of the wpi methods (ex: jag.setX()). As this is being types, a pop-up box should open. The button should be in the pop-up box.
+2) Navigate to the _supspotfrc_ folder.
+3) Inside this folder, double click on the _doc_ folder.
+4) Inside this folder, single click on the _javadoc_ folder and press on the attach javadoc button.
