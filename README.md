@@ -1,6 +1,4 @@
-# OldGoogleArchive
-
-=== PLEASE DO NOT PUSH TO THIS REPOSITORY ====
+# === PLEASE DO NOT PUSH TO THIS REPOSITORY ====
 
 Google Code is going away, so we have found a new home on GitHub for all our code.
 
