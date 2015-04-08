@@ -1,0 +1,36 @@
+#summary 2015 Useful Links
+#labels Links,roboRIO
+
+= Introduction =
+
+Useful Links for the 2015 season
+
+= 2015 Software =
+
+  * Installing Eclipse for FRC 2015 (pdf)<br>http://www.usfirst.org/sites/default/files/uploadedFiles/Robotics_Programs/FRC/Game_and_Season__Info/2015/Installing_Eclipse_C_Java_for_FRC_2015.pdf
+
+  * How to installing Subclipse & Configuring for Google Code<br> https://code.google.com/p/fastddf/wiki/EclipseSubclipseHowTo
+
+  * On a brand new Eclipse Workspace, checking out the Aztechs code will throw a build path error for the 'wpilib' classpath. The fix is to create (and then delete) a dummy WPILib project in the workspace.  In Eclipse, select <b>File > New > Project... > WPILib Robot Java development > Robot Java Project</b> and give it a dummy name.  This somehow connects the entire workspace to WPILib.
+
+  * Docuemntation on WPILIB and 2005 Controls:<br> http://wpilib.screenstepslive.com/s/4485
+
+= 2015 Control System (roboRIO) =
+
+  * 2015 FRC Beta Test Forum <br>http://forums.usfirst.org/forumdisplay.php?1559-2015-FRC-Beta-Test
+
+  * NI RoboRIO Page <br>https://decibel.ni.com/content/docs/DOC-30419
+
+  * Team 358's Beta summary of roboRIO <br>http://www.team358.org/files/programming/ControlSystem2015-2019/
+
+  * Team 900's Beta summary of roboRIO <br>http://www.reddit.com/r/FRC/comments/2qx9be/im_a_mentor_from_team_900_and_were_a_roborio_beta/
+
+  * Intro to Electronics Slides (2014-2015) <br>https://docs.google.com/presentation/d/1X2fpmsWsW0b68SuFX9lKt1Ui-BnW1hne2BM1f2J1Fz0/edit?usp=sharing
+ 
+  * 2015 Control System (roboRIO) Google Folder <br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_nT0lqN1oyMHA1cUk&usp=sharing  
+
+= Other Technical Resources =
+
+  * FRC Electronics Documentation Google Folder <br>https://drive.google.com/folderview?id=0B3oE1gSOFJ_ncWhWRFgxUFFrMzQ&usp=sharing 
+
+  
